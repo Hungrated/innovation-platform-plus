@@ -2,6 +2,8 @@
 
 > An advanced on-line information-managing & resource-sharing platform for Innovation Practice courses.
 
+> initial commit on 27 Nov 2017
+
 ## Build Setup
 
 ``` bash
@@ -23,5 +25,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
