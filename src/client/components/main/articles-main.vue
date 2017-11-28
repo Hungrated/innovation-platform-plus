@@ -1,21 +1,19 @@
 <template>
-  <main id="global" class="container">
-  </main>
+  <div>
+    {{msg}}
+  </div>
 </template>
 
 <script>
   export default {
-    name: 'global',
+    name: 'articles-main',
     data () {
       return {
+        msg: '文章'
       }
     }
   }
 </script>
 
 <style scoped>
-  main {
-    min-height: 500px;
-    padding: 0 80px;
-  }
 </style>

@@ -50,6 +50,7 @@
 </template>
 <script>
   export default {
+    name: 'global-header',
     data () {
       return {
         brand: {

@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-<global-header></global-header>
-    <global></global>
+    <global-header></global-header>
+    <global-main></global-main>
     <global-footer></global-footer>
   </div>
 </template>
 
 <script>
-  import global from './components/global/global';
   import globalHeader from './components/global/global-header';
+  import globalMain from './components/global/global-main';
   import globalFooter from './components/global/global-footer';
+
   export default {
     name: 'app',
     components: {
-      global, globalHeader, globalFooter
+      globalHeader, globalMain, globalFooter
     }
   };
 </script>
