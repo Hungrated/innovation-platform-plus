@@ -62,30 +62,3 @@
   }
 </script>
 
-<style scoped>
-  .layout-header {
-    background: #222222;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-    display: flex;
-  }
-
-  .layout-nav {
-    height: 100%;
-    flex: 1 0 auto;
-  }
-
-  .layout-nav > * {
-    font-size: 16px;
-    height: 100%;
-    margin: 0 auto;
-  }
-
-  .layout-brand {
-    height: 100%;
-    padding: 5px;
-  }
-
-  .layout-users {
-    font-size: 16px;
-  }
-</style>

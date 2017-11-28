@@ -1,5 +1,5 @@
 <template>
-  <footer id="global-footer">
+  <footer id="global-footer" class="layout-footer">
       <Row>
         <i-col span="6">
           <div class="layout-sites">
@@ -66,39 +66,3 @@
     }
   }
 </script>
-
-<style scoped>
-  footer {
-    position: absolute;
-    bottom: 0;
-    height: 360px;
-    width: 100%;
-    background: #EEEEEE;
-    padding: 20px 80px;
-    display: flex;
-    flex-direction: column;
-    user-select: none;
-  }
-
-  .layout-sites {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .layout-sites span {
-    font-size: 13px;
-    padding-bottom: 10px;
-    cursor: pointer;
-    transition: all 350ms;
-  }
-
-  .layout-sites span:hover {
-    color: #222222;
-  }
-
-  .layout-sites-title {
-    font-size: 16px;
-    padding: 20px 0;
-  }
-
-</style>

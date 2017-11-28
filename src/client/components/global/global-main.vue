@@ -13,10 +13,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .layout-container {
-    min-height: 500px;
-    padding: 0 80px;
-  }
-</style>
