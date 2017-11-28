@@ -1,6 +1,6 @@
 <template>
   <main id="global-main" class="layout-container">
-    <router-view></router-view>
+    <transition name="fade"><router-view></router-view></transition>
   </main>
 </template>
 
@@ -13,3 +13,10 @@
     }
   }
 </script>
+
+<style scoped>
+  .layout-container {
+    background: url('../../assets/bg.png') repeat-y;
+    background-size: 100% auto;
+  }
+</style>

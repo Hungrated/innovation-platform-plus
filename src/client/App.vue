@@ -21,4 +21,5 @@
 
 <style>
   @import './styles/global.css';
+  @import './styles/iview-overwrite-global.css';
 </style>

@@ -1,35 +1,50 @@
 <template>
   <header id="global-header">
     <Menu mode="horizontal" class="layout-header" :theme="theme">
+      <div class="layout-brand">
+        <router-link tag="span" to="/index"><img :src="brand.src"></router-link>
+      </div>
       <div class="layout-nav">
         <MenuItem name="1">
-          <img class="layout-brand" :src="brand.src">
+          <router-link tag="span" to="/index">
+            <Icon type="ios-people"></Icon>
+            主 页
+          </router-link>
         </MenuItem>
-        <MenuItem name="2">
-          <Icon type="ios-people"></Icon>
-          主 页
-        </MenuItem>
-        <Submenu name="3">
+        <Submenu name="2">
           <template slot="title">
-            <Icon type="stats-bars"></Icon>
+            <router-link tag="span" to="/articles">
+            <Icon type="ios-people"></Icon>
             文 章
+            </router-link>
           </template>
-          <MenuGroup title="类别">
-            <MenuItem name="3-1">项目成果展示</MenuItem>
-            <MenuItem name="3-2">活动展示</MenuItem>
-            <MenuItem name="3-3">文章动态</MenuItem>
+          <MenuGroup title="类 别">
+            <MenuItem name="2-1"><span @click="changeRoute('/articles?label=0')">所有文章</span></MenuItem>
+            <MenuItem name="2-2"><span @click="changeRoute('/articles?label=0')">项目成果展示</span></MenuItem>
+            <MenuItem name="2-3"><span @click="changeRoute('/articles?label=0')">活动展示</span></MenuItem>
+            <MenuItem name="2-4"><span @click="changeRoute('/articles?label=0')">技术交流</span></MenuItem>
           </MenuGroup>
-          <MenuGroup title="发布">
-            <MenuItem name="3-4">文章发布</MenuItem>
+          <MenuGroup title="发 布">
+            <MenuItem name="2-4"><span @click="changeRoute('/articles/')">发布</span></MenuItem>
           </MenuGroup>
         </Submenu>
+        <MenuItem name="3">
+          <router-link tag="span" to="/bulletin">
+            <Icon type="ios-people"></Icon>
+            公告栏
+          </router-link>
+        </MenuItem>
         <MenuItem name="4">
-          <Icon type="ios-people"></Icon>
-          公告栏
+          <router-link tag="span" to="/discussion">
+            <Icon type="ios-people"></Icon>
+            讨论区
+          </router-link>
         </MenuItem>
         <MenuItem name="5">
-          <Icon type="ios-people"></Icon>
-          讨论区
+          <router-link tag="span" to="/resources">
+            <Icon type="ios-people"></Icon>
+            资源共享
+          </router-link>
         </MenuItem>
       </div>
       <div class="layout-users">
@@ -57,6 +72,11 @@
           src: require('../../assets/innovation_practice_brand.png')
         },
         theme: 'dark'
+      }
+    },
+    methods: {
+      changeRoute: function (path) {
+        this.$router.push({path: path});
       }
     }
   }

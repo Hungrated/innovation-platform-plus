@@ -14,17 +14,30 @@ body {
   min-height: 100vh;
 }
 
+.router-link-active {
+  color: rgba(255, 255, 255, 1);
+}
+
 #app {
   min-height: 100vh;
   padding-bottom: 360px;
-  background: url('./assets/bg.png') repeat-y;
-  background-size: 100% auto;
 }
 
 .layout-header {
   background: #222222;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   display: flex;
+  user-select: none;
+}
+
+.layout-brand {
+  height: 100%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.layout-brand img {
+  height: 100%;
 }
 
 .layout-nav {
@@ -36,11 +49,6 @@ body {
   font-size: 16px;
   height: 100%;
   margin: 0 auto;
-}
-
-.layout-brand {
-  height: 100%;
-  padding: 5px;
 }
 
 .layout-users {
@@ -62,6 +70,7 @@ body {
 .layout-sites {
   display: flex;
   flex-direction: column;
+  user-select: none;
 }
 
 .layout-sites span {

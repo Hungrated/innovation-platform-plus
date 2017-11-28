@@ -7,7 +7,7 @@ import resourcesMain from './components/main/resources-main.vue';
 const routers = [
   {
     path: '/',
-    component: indexMain
+    redirect: '/index'
   },
   {
     path: '/index',
