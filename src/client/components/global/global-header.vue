@@ -4,18 +4,18 @@
       <div class="layout-brand">
         <router-link tag="span" to="/index"><img :src="brand.src"></router-link>
       </div>
-      <div class="layout-nav">
+      <ul class="layout-nav">
         <MenuItem name="1">
           <router-link tag="span" to="/index">
-            <Icon type="ios-people"></Icon>
-            &nbsp;主 页
+            <Icon type="home"></Icon>
+            &nbsp;<strong>主 页</strong>
           </router-link>
         </MenuItem>
         <Submenu name="2">
           <template slot="title">
             <router-link tag="span" to="/articles">
             <Icon type="document-text"></Icon>
-              文 章
+              <strong>文 章</strong>
             </router-link>
           </template>
           <MenuGroup title="类 别">
@@ -31,36 +31,34 @@
         <MenuItem name="3">
           <router-link tag="span" to="/resources">
             <Icon type="folder"></Icon>
-            &nbsp;资源共享
+            &nbsp;<strong>资源共享</strong>
           </router-link>
         </MenuItem>
         <MenuItem name="4">
           <router-link tag="span" to="/bulletin">
             <Icon type="information-circled"></Icon>
-            &nbsp;公告栏
+            &nbsp;<strong>公告栏</strong>
           </router-link>
         </MenuItem>
         <MenuItem name="5">
           <router-link tag="span" to="/discussion">
             <Icon type="chatboxes"></Icon>
-            &nbsp;讨论区
+            &nbsp;<strong>讨论区</strong>
           </router-link>
         </MenuItem>
-      </div>
+      </ul>
       <div class="layout-users">
         <Submenu name="6">
           <template slot="title">
             <Icon type="person"></Icon>
-            用 户
+            <strong>用 户</strong>
           </template>
           <MenuGroup title="用户管理">
             <MenuItem name="6-1">登录</MenuItem>
           </MenuGroup>
         </Submenu>
       </div>
-
     </Menu>
-
   </header>
 </template>
 <script>

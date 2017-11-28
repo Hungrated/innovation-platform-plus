@@ -17,3 +17,11 @@
   background: #f3f3f3;
   color: rgb(73, 80, 96);
 }
+
+.ivu-menu-horizontal .ivu-menu-item, .ivu-menu-horizontal .ivu-menu-submenu {
+  padding-right: 15px;
+}
+
+.ivu-menu-submenu-title>i {
+  margin-right: 0;
+}
