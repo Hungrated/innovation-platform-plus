@@ -3,29 +3,24 @@
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import routers from './routers';
+import Routers from './routers';
+import VueResource from 'vue-resource';
 import App from './App';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
 Vue.use(iView);
 Vue.use(VueRouter);
+Vue.use(VueResource);
 Vue.config.productionTip = false;
 
 const router = new VueRouter({
   mode: 'history',
-  routes: routers
+  routes: Routers
 });
 
-/* eslint-disable no-new */
-// new Vue({
-//   el: '#app',
-//   template: '<App/>',
-//   components: { App }
-// });
-
-new Vue({
+let vm = new Vue({
   el: '#app',
-  router,
+  router: router,
   render: h => h(App)
 });

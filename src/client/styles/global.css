@@ -12,6 +12,7 @@ html {
 
 body {
   min-height: 100vh;
+  min-width: 900px;
 }
 
 .router-link-active {
