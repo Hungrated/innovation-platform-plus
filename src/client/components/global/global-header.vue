@@ -50,10 +50,9 @@
       <div class="layout-users">
         <Submenu name="6">
           <template slot="title">
-            <Icon type="person"></Icon>
-            <strong>用 户</strong>
+            <Icon type="person"></Icon>&nbsp;
           </template>
-          <MenuGroup title="用户管理">
+          <MenuGroup title="用户">
             <MenuItem name="6-1">登录</MenuItem>
           </MenuGroup>
         </Submenu>
