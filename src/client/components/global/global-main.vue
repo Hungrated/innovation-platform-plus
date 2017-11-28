@@ -13,10 +13,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .layout-container {
-    background: url('../../assets/bg.png') repeat-y;
-    background-size: 100% auto;
-  }
-</style>

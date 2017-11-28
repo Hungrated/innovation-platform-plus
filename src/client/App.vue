@@ -22,4 +22,11 @@
 <style>
   @import './styles/global.css';
   @import './styles/iview-overwrite-global.css';
+  #app {
+    background: url('./assets/bg.png') repeat-y;
+    background-size: 100% auto;
+  }
+  * {
+    /*border: 1px solid red;*/
+  }
 </style>

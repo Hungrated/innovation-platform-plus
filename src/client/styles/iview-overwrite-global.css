@@ -1,3 +1,19 @@
+/* header */
 .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-item-active {
   color: rgba(255, 255, 255, .7);
+}
+
+.ivu-menu-horizontal {
+  height: 45px;
+  line-height: 45px;
+}
+
+.ivu-menu-horizontal .ivu-menu-submenu .ivu-select-dropdown .ivu-menu-item-selected {
+  background: transparent;
+  color: rgb(73, 80, 96);
+}
+
+.ivu-menu-horizontal .ivu-menu-submenu .ivu-select-dropdown .ivu-menu-item-selected:hover {
+  background: #f3f3f3;
+  color: rgb(73, 80, 96);
 }

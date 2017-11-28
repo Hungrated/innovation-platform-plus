@@ -4,28 +4,30 @@
         <i-col span="6">
           <div class="layout-sites">
             <strong class="layout-sites-title">所有服务</strong>
-            <h-sites class="sites-col" v-for="site in sites.siteList0" v-bind:site="site" v-bind:key="site.id"></h-sites>
+            <router-link class="sites-col" tag="span" v-for="site in sites.siteList0" :key="site.id" :to="site.route">{{site.text}}</router-link>
           </div>
         </i-col>
         <i-col span="6">
         <div class="layout-sites">
           <strong class="layout-sites-title">管 理</strong>
-          <h-sites class="sites-col" v-for="site in sites.siteList1" v-bind:site="site" v-bind:key="site.id"></h-sites>
+          <router-link class="sites-col" tag="span" v-for="site in sites.siteList1" :key="site.id" :to="site.route">{{site.text}}</router-link>
         </div>
         </i-col>
         <i-col span="6">
         <div class="layout-sites">
           <strong class="layout-sites-title">技术支持</strong>
-          <h-sites class="sites-col" v-for="site in sites.siteList2" v-bind:site="site" v-bind:key="site.id"></h-sites>
+          <router-link class="sites-col" tag="span" v-for="site in sites.siteList2" :key="site.id" :to="site.route">{{site.text}}</router-link>
         </div>
         </i-col>
         <i-col span="6">
         <div class="layout-sites">
           <strong class="layout-sites-title">其 他</strong>
-          <h-sites class="sites-col" v-for="site in sites.siteList2" v-bind:site="site" v-bind:key="site.id"></h-sites>
+          <router-link class="sites-col" tag="span" v-for="site in sites.siteList2" :key="site.id" :to="site.route">{{site.text}}</router-link>
         </div>
         </i-col>
       </Row>
+    <hr>
+    <span class="layout-footer-cprt">Copyright © 2017 Hungrated, Hangzhou Dianzi University, All rights reserved.</span>
   </footer>
 </template>
 
@@ -36,33 +38,27 @@
       return {
         sites: {
           siteList0: [
-            {id: 0, text: '主 页', href: '../index.html'},
-            {id: 1, text: '文章浏览', href: '../articles.html'},
-            {id: 2, text: '活动展示', href: '../articles.html'},
-            {id: 3, text: '成果展示', href: '../articles.html'},
-            {id: 4, text: '公告栏', href: '../index.html'},
-            {id: 5, text: '资源共享', href: '../resources.html'},
-            {id: 6, text: '讨论区', href: '../discussion.html'}
+            {id: 0, text: '主 页', route: '/index'},
+            {id: 1, text: '所有文章', route: '/articles?label=0'},
+            {id: 2, text: '项目成果展示', route: '/articles?label=1'},
+            {id: 3, text: '活动展示', route: '/articles?label=2'},
+            {id: 4, text: '技术交流', route: '/articles?label=3'},
+            {id: 5, text: '资源共享', route: '/resources'},
+            {id: 6, text: '公告栏', route: '/bulletin'},
+            {id: 7, text: '讨论区', route: '/discussion'}
           ],
           siteList1: [
-            {id: 7, text: '教师注册', href: '../index.html'}
+            {id: 8, text: '教师注册', route: '/index'}
           ],
           siteList2: [
-            {id: 8, text: '关于创新实践交流平台', href: '../index.html'},
-            {id: 9, text: '联系我们（课程对接）', href: '../index.html'}
+            {id: 9, text: '关于创新实践交流平台', route: '/index'},
+            {id: 10, text: '联系我们（课程对接）', route: '/index'}
           ]
 
-        },
-        cprt: {
-          msg: 'Copyright © 2017 Hungrated, Hangzhou Dianzi University, All rights reserved.'
         }
       }
     },
     components: {
-      'h-sites': {
-        props: ['site'],
-        template: '<span>{{site.text}}</span>'
-      }
     }
   }
 </script>

@@ -1,7 +1,6 @@
 * {
   box-sizing: border-box;
   position: relative;
-  /*border: 1px solid red;*/
   margin: 0;
   padding: 0;
 }
@@ -15,25 +14,31 @@ body {
   min-width: 900px;
 }
 
+.layout-container {
+  min-height: 500px;
+  padding: 0 80px;
+}
+
 .router-link-active {
   color: rgba(255, 255, 255, 1);
 }
 
 #app {
   min-height: 100vh;
-  padding-bottom: 360px;
+  padding-bottom: 325px;
 }
 
 .layout-header {
   background: #222222;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
   display: flex;
   user-select: none;
 }
 
 .layout-brand {
-  height: 100%;
-  padding: 5px;
+  height: 45px;
+  display: flex;
+  width: 145px;
   cursor: pointer;
 }
 
@@ -58,8 +63,9 @@ body {
 
 .layout-footer {
   position: absolute;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, .1);
   bottom: 0;
-  height: 360px;
+  height: 325px;
   width: 100%;
   background: #EEEEEE;
   padding: 20px 80px;
@@ -71,12 +77,14 @@ body {
 .layout-sites {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
   user-select: none;
 }
 
 .layout-sites span {
   font-size: 13px;
-  padding-bottom: 10px;
+  padding-bottom: 6px;
+  color: rgb(73, 80, 96);
   cursor: pointer;
   transition: all 350ms;
 }
@@ -87,10 +95,11 @@ body {
 
 .layout-sites-title {
   font-size: 16px;
-  padding: 20px 0;
+  padding-bottom: 14px;
 }
 
-.layout-container {
-  min-height: 500px;
-  padding: 0 80px;
+.layout-footer-cprt {
+  padding: 10px 0;
+  color: rgb(73, 80, 96);
+  text-align: center;
 }
