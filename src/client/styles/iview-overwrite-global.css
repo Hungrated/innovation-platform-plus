@@ -25,3 +25,7 @@
 .ivu-menu-submenu-title>i {
   margin-right: 0;
 }
+
+.ivu-menu-item-group-title {
+  cursor: default;
+}

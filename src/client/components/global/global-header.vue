@@ -47,20 +47,14 @@
           </router-link>
         </MenuItem>
       </ul>
-      <div class="layout-users">
-        <Submenu name="6">
-          <template slot="title">
-            <Icon type="person"></Icon>&nbsp;
-          </template>
-          <MenuGroup title="用户">
-            <MenuItem name="6-1">登录</MenuItem>
-          </MenuGroup>
-        </Submenu>
-      </div>
+      <global-header-user></global-header-user>
     </Menu>
+    <BackTop></BackTop>
   </header>
+
 </template>
 <script>
+  import globalHeaderUser from '../public/global-header-user';
   export default {
     name: 'global-header',
     data () {
@@ -70,6 +64,9 @@
         },
         theme: 'dark'
       }
+    },
+    components: {
+      globalHeaderUser
     },
     methods: {
       changeRoute: function (path) {

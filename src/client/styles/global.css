@@ -1,3 +1,5 @@
+/* global */
+
 * {
   box-sizing: border-box;
   position: relative;
@@ -15,8 +17,8 @@ body {
 }
 
 .layout-container {
-  min-height: 500px;
-  padding: 0 80px;
+  min-height: 2000px;
+  padding: 0 90px;
 }
 
 .router-link-active {
@@ -29,7 +31,8 @@ body {
 }
 
 
-/*header*/
+/* global-header */
+
 .layout-header {
   padding: 0 35px;
   background: #222222;
@@ -58,13 +61,20 @@ body {
   font-size: 16px;
 }
 
+
+/* global-header-user */
+
 .layout-users {
   font-size: 16px;
   padding-right: 20px;
 }
 
+.login-btn {
 
-/*footer*/
+}
+
+/* global-footer */
+
 .layout-footer {
   position: absolute;
   box-shadow: 0 -1px 3px rgba(0, 0, 0, .1);
@@ -72,7 +82,7 @@ body {
   height: 325px;
   width: 100%;
   background: #EEEEEE;
-  padding: 20px 80px;
+  padding: 20px 90px;
   display: flex;
   flex-direction: column;
   user-select: none;
