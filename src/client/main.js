@@ -4,14 +4,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Routers from './routers';
-// import axios from 'axios';
+import axios from 'axios';
 import App from './App';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
 Vue.use(iView);
 Vue.use(VueRouter);
-// Vue.use(axios);
+
+Vue.prototype.$ajax = axios;
 
 const router = new VueRouter({
   mode: 'history',

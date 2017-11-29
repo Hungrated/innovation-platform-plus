@@ -10,12 +10,10 @@
     </Submenu>
     <Modal
       v-model="userMng"
-      title="Common Modal dialog box title"
+      title="用户登录"
       @on-ok="ok"
       @on-cancel="cancel">
-      <p>Content of dialog</p>
-      <p>Content of dialog</p>
-      <p>Content of dialog</p>
+      <!--用户输入框-->
     </Modal>
   </div>
 </template>
@@ -34,6 +32,16 @@
       },
       cancel () {
         this.$Message.info('Clicked cancel');
+      },
+      submit () {
+        this.$ajax({
+          method: 'post',
+          url: '/user',
+          data: {
+            name: '14051531',
+            password: '14051531'
+          }
+        });
       }
     }
   }
