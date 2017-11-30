@@ -1,7 +1,7 @@
 @media only screen and (min-width: 1600px) {
   .index-banner {
     padding: 0 calc((100vw - 1600px) / 2);
-   }
+  }
 }
 
 .index-banner-container {

@@ -5,7 +5,8 @@
 </template>
 
 <script>
-  import indexMain from '../main/index-main';
+  import indexMain from '../main/index-main'
+
   export default {
     name: 'global-main',
     components: {

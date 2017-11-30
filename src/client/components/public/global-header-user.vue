@@ -11,9 +11,14 @@
     <Modal
       v-model="userMng"
       title="用户登录"
-      @on-ok="ok"
-      @on-cancel="cancel">
+      @on-ok="handleSubmit('signInData')">
       <!--用户输入框-->
+      <i-input type="text" v-model="signInData.username" placeholder="用户名">
+        <Icon type="ios-person-outline" slot="prepend"></Icon>
+      </i-input>
+      <i-input type="password" v-model="signInData.password" placeholder="密码">
+        <Icon type="ios-locked-outline" slot="prepend"></Icon>
+      </i-input>
     </Modal>
   </div>
 </template>
@@ -23,25 +28,24 @@
     name: 'global-header-user',
     data () {
       return {
-        userMng: false
+        userMng: false,
+        signInData: {
+          username: '',
+          password: ''
+        },
+        resData: {}
       }
     },
     methods: {
-      ok () {
-        this.$Message.info('Clicked ok');
-      },
-      cancel () {
-        this.$Message.info('Clicked cancel');
-      },
-      submit () {
-        this.$ajax({
-          method: 'post',
-          url: '/user',
-          data: {
-            name: '14051531',
-            password: '14051531'
-          }
-        });
+      handleSubmit () {
+        let _this = this;
+        this.$ajax.post('/user/login', this.signInData)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     }
   }

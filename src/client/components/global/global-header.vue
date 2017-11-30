@@ -14,7 +14,7 @@
         <Submenu name="2">
           <template slot="title">
             <router-link tag="span" to="/articles">
-            <Icon type="document-text"></Icon>
+              <Icon type="document-text"></Icon>
               <strong>文 章</strong>
             </router-link>
           </template>
@@ -25,7 +25,8 @@
             <MenuItem name="2-4"><span @click="changeRoute('/articles?label=3')">技术交流</span></MenuItem>
           </MenuGroup>
           <MenuGroup title="发 布">
-            <MenuItem name="2-5"><span @click="changeRoute('/articles')"><Icon type="compose"></Icon>&emsp;发 布</span></MenuItem>
+            <MenuItem name="2-5"><span @click="changeRoute('/articles')"><Icon type="compose"></Icon>&emsp;发 布</span>
+            </MenuItem>
           </MenuGroup>
         </Submenu>
         <MenuItem name="3">
@@ -54,7 +55,8 @@
 
 </template>
 <script>
-  import globalHeaderUser from '../public/global-header-user';
+  import globalHeaderUser from '../public/global-header-user'
+
   export default {
     name: 'global-header',
     data () {
@@ -70,7 +72,7 @@
     },
     methods: {
       changeRoute: function (path) {
-        this.$router.push({path: path});
+        this.$router.push({path: path})
       }
     }
   }

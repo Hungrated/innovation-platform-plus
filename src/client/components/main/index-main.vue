@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import indexMainBanner from '../public/index-main-banner.vue';
+  import indexMainBanner from '../public/index-main-banner.vue'
 
   export default {
     name: 'index-main',

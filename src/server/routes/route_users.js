@@ -16,7 +16,6 @@ const statusLib = require('../libs/status');
 const User = db.User;
 const Profile = db.Profile;
 
-
 let objMulter = multer({
   dest: path.userinfo // file upload destination
 });
@@ -60,7 +59,6 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
       });
   }
 });
-
 
 router.post('/import', objMulter.any(), function (req, res, next) { // XLS file upload
 
@@ -116,7 +114,7 @@ router.post('/import', function (req, res) { // create database record
 
   let flag = 0; // flag of all users imported
 
-  function createUser(userIdx) {
+  function createUser (userIdx) {
     User.findOne({ // check record to ensure no duplication
       where: {
         username: users[userIdx].username
@@ -152,7 +150,7 @@ router.post('/import', function (req, res) { // create database record
                     }).then(function () {
                       flag++;
                       if (flag === users.length) {
-                        console.log("all users imported");
+                        console.log('all users imported');
                         res.json(statusLib.USERINFO_IMPORT_SUCCEEDED);
                       }
                     }).catch(function (e) {
@@ -175,9 +173,9 @@ router.post('/import', function (req, res) { // create database record
   }
 });
 
-
 router.post('/login', function (req, res) {
   const {username, password} = req.body;
+  console.log(username, password);
   if (!req.session.isLogin || username !== req.session.username) {
     // when not logged in or different user logging in
 
@@ -227,13 +225,11 @@ router.post('/login', function (req, res) {
   }
 });
 
-
 router.post('/logout', function (req, res) {
   delete req.session.username;
   req.session.isLogin = false;
   res.json(statusLib.LOGGED_OUT);
 });
-
 
 router.post('/pwdmod', function (req, res, next) {
   const {username, password, new_password} = req.body;
@@ -265,7 +261,6 @@ router.post('/pwdmod', function (req, res, next) {
   }
 });
 
-
 router.post('/pwdmod', function (req, res) { // password checked
   User.update({
     password: req.body.new_password
@@ -283,6 +278,5 @@ router.post('/pwdmod', function (req, res) { // password checked
       res.json(statusLib.CONNECTION_ERROR);
     });
 });
-
 
 module.exports = router;
