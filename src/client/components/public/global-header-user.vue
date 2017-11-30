@@ -50,8 +50,3 @@
   };
 </script>
 
-<style scoped>
-  .layout-header-user * {
-    border: 1px solid red;
-  }
-</style>
