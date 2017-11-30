@@ -55,7 +55,7 @@
 
 </template>
 <script>
-  import globalHeaderUser from '../public/global-header-user'
+  import globalHeaderUser from '../public/global-header-user';
 
   export default {
     name: 'global-header',
@@ -65,16 +65,16 @@
           src: require('../../assets/innovation_practice_brand.png')
         },
         theme: 'dark'
-      }
+      };
     },
     components: {
       globalHeaderUser
     },
     methods: {
       changeRoute: function (path) {
-        this.$router.push({path: path})
+        this.$router.push({path: path});
       }
     }
-  }
+  };
 </script>
 

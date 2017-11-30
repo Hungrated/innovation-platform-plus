@@ -34,7 +34,7 @@
           password: ''
         },
         resData: {}
-      }
+      };
     },
     methods: {
       handleSubmit () {
@@ -48,7 +48,7 @@
           });
       }
     }
-  }
+  };
 </script>
 
 <style scoped>

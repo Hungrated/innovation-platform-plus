@@ -1,4 +1,4 @@
-function date(time, school_id) {
+function date (time, school_id) {
   let curTime = undefined;
   if (time && typeof time === 'string')
     curTime = new Date(time);

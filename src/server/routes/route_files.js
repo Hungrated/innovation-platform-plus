@@ -12,7 +12,6 @@ const fs = require('fs');
 
 const File = db.File;
 
-
 let objMulter = multer({
   dest: path.sources // file upload destination
 });
@@ -29,7 +28,7 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
   for (let i = 0; i < req.files.length; i++) { // for each file uploaded
 
     //rename a file
-     let newName = req.files[i].path + pathLib.parse(req.files[i].originalname).ext;
+    let newName = req.files[i].path + pathLib.parse(req.files[i].originalname).ext;
 
     fs.rename(req.files[i].path, newName, function (err) {
       if (err) {
@@ -62,7 +61,6 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
 
 });
 
-
 router.post('/query', function (req, res) { // fetch file list
 
   const request = req.body.request;
@@ -86,18 +84,16 @@ router.post('/query', function (req, res) { // fetch file list
     });
 });
 
-
 router.post('/download', function (req, res) { // download a file
 
   const realDir = req.body.url;
   res.download(realDir, function (err) {
-    if(err) {
+    if (err) {
       console.log(err);
       res.json(statusLib.FILE_DOWNLOAD_FAILED);
     }
   });
 
 });
-
 
 module.exports = router;

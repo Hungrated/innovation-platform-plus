@@ -17,7 +17,7 @@ module.exports = {
 
   INVALID_USERNAME: {
     'status': 1101,
-   'msg': '无此用户名'
+    'msg': '无此用户名'
   },
 
   PASSWORD_CHECK_FAILED: {
@@ -31,7 +31,7 @@ module.exports = {
   },
 
   NOT_YET_LOGGED_IN: {
-   'status': 1104,
+    'status': 1104,
     'msg': '尚未登录状态'
   },
 
@@ -81,7 +81,7 @@ module.exports = {
   },
 
   BLOG_PUB_SUCCEEDED: {
-   'status': 3000,
+    'status': 3000,
     'msg': '博文发布成功'
   },
 

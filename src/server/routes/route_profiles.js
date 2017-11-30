@@ -44,7 +44,6 @@ router.post('/modify', function (req, res) { // modify a profile
     });
 });
 
-
 router.post('/avatar', objMulter.any(), function (req, res, next) { // upload an avatar
   const school_id = req.body.school_id; // id is school_id
   const url = pathLib.join(path.avatars, school_id + '.jpg');
@@ -76,7 +75,6 @@ router.post('/avatar', objMulter.any(), function (req, res, next) { // upload an
     });
 });
 
-
 router.post('/avatar', function (req, res, next) { // rename avatar file
   fs.rename(req.files[0].path, req.avatarURL, function (err) {
     if (err) {
@@ -86,7 +84,6 @@ router.post('/avatar', function (req, res, next) { // rename avatar file
       next();
   });
 });
-
 
 router.post('/avatar', function (req, res) { // update database record
 
@@ -107,7 +104,6 @@ router.post('/avatar', function (req, res) { // update database record
     });
 });
 
-
 router.post('/getinfo', function (req, res) { // fetch profile information
 
   const request = req.body.request;
@@ -125,7 +121,6 @@ router.post('/getinfo', function (req, res) { // fetch profile information
     }
   });
 });
-
 
 router.post('/getavatar', function (req, res) { // fetch an avatar
   const school_id = req.body.school_id;
@@ -154,6 +149,5 @@ router.post('/getavatar', function (req, res) { // fetch an avatar
     }
   });
 });
-
 
 module.exports = router;

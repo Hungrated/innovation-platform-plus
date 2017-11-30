@@ -28,8 +28,8 @@
           {id: 4, src: require('../../assets/banner_05.jpg')},
           {id: 5, src: require('../../assets/banner_06.jpg')}
         ]
-      }
+      };
     }
-  }
+  };
 </script>
 

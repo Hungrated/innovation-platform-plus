@@ -64,8 +64,8 @@
           ]
 
         }
-      }
+      };
     },
     components: {}
-  }
+  };
 </script>

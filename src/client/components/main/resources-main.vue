@@ -10,9 +10,9 @@
     data () {
       return {
         msg: '资源共享'
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style scoped>

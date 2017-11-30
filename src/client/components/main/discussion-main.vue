@@ -10,9 +10,9 @@
     data () {
       return {
         msg: '讨论区'
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style scoped>

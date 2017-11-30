@@ -1,8 +1,8 @@
-import indexMain from './components/main/index-main.vue'
-import articlesMain from './components/main/articles-main.vue'
-import discussionMain from './components/main/discussion-main.vue'
-import bulletinMain from './components/main/bulletin-main.vue'
-import resourcesMain from './components/main/resources-main.vue'
+import indexMain from './components/main/index-main.vue';
+import articlesMain from './components/main/articles-main.vue';
+import discussionMain from './components/main/discussion-main.vue';
+import bulletinMain from './components/main/bulletin-main.vue';
+import resourcesMain from './components/main/resources-main.vue';
 
 const routers = [
   {
@@ -34,6 +34,6 @@ const routers = [
     name: 'resources',
     component: resourcesMain
   }
-]
+];
 
-export default routers
+export default routers;

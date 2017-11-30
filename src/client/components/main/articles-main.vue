@@ -10,9 +10,9 @@
     data () {
       return {
         msg: '文章'
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style scoped>

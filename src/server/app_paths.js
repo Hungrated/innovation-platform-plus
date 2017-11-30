@@ -2,7 +2,7 @@ const pathLib = require('path');
 
 const root = __dirname;
 
-const app = pathLib.join(root, 'app.js');
+// const app = pathLib.join(root, 'app.js');
 
 const upload = pathLib.join(root, 'public', 'files');
 

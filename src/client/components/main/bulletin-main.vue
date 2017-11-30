@@ -10,9 +10,9 @@
     data () {
       return {
         msg: '公告板'
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style scoped>

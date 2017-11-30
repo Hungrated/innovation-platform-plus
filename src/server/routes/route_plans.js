@@ -16,7 +16,6 @@ const async = require('async');
 const fs = require('fs');
 const officeGen = require('officegen');
 
-
 router.post('/submit', function (req, res) { // a student create a plan
   const {
     student_id,
@@ -55,7 +54,6 @@ router.post('/submit', function (req, res) { // a student create a plan
     });
 });
 
-
 router.post('/modify', function (req, res, next) { // check plan status before modification
 
   Plan.findOne({
@@ -77,7 +75,6 @@ router.post('/modify', function (req, res, next) { // check plan status before m
       console.log('plan modify failed');
     });
 });
-
 
 router.post('/modify', function (req, res) { // a student modifies a plan
 
@@ -118,7 +115,6 @@ router.post('/modify', function (req, res) { // a student modifies a plan
     });
 });
 
-
 router.post('/op', function (req, res, next) { // check plan status before modification
 
   Plan.findOne({
@@ -139,7 +135,6 @@ router.post('/op', function (req, res, next) { // check plan status before modif
       console.log('plan modify failed');
     });
 });
-
 
 router.post('/op', function (req, res) { // teacher changes plan status
 
@@ -162,7 +157,6 @@ router.post('/op', function (req, res) { // teacher changes plan status
       console.log('plan verify failed');
     });
 });
-
 
 router.post('/rate', function (req, res) { // a teacher rates a plan
   const {
@@ -193,7 +187,6 @@ router.post('/rate', function (req, res) { // a teacher rates a plan
 
 });
 
-
 router.post('/query', function (req, res) { // get list of all (or personal) plans
 
   const request = req.body.request;
@@ -203,7 +196,7 @@ router.post('/query', function (req, res) { // get list of all (or personal) pla
     where: where
   })
     .then(function (plans) {
-      for (let i = 0; i <  plans.length; i++) {
+      for (let i = 0; i < plans.length; i++) {
         plans[i].dataValues.submitTime = timeFormat(plans[i].dataValues.created_at);
       }
       res.json(plans);
@@ -217,7 +210,6 @@ router.post('/query', function (req, res) { // get list of all (or personal) pla
     });
 });
 
-
 router.post('/export', function (req, res, next) { // fetch profile records from database
   const student_id = req.body.student_id;
   Profile.findByPrimary(student_id)
@@ -230,7 +222,6 @@ router.post('/export', function (req, res, next) { // fetch profile records from
       res.json(statusLib.PLAN_EXPORT_FAILED);
     })
 });
-
 
 router.post('/export', function (req, res, next) { // fetch plan records from database
   let student_id = req.body.student_id;
@@ -253,7 +244,6 @@ router.post('/export', function (req, res, next) { // fetch plan records from da
       res.json(statusLib.PLAN_EXPORT_FAILED);
     })
 });
-
 
 router.post('/export', function (req, res) { // export plan archive
 
@@ -564,9 +554,9 @@ router.post('/export', function (req, res) { // export plan archive
       out.on('close', function () {
         console.log('plan export succeeded');
         res.json({
-            status: statusLib.PLAN_EXPORT_SUCCEEDED.status,
-            msg: statusLib.PLAN_EXPORT_SUCCEEDED.msg,
-            path: filePath
+          status: statusLib.PLAN_EXPORT_SUCCEEDED.status,
+          msg: statusLib.PLAN_EXPORT_SUCCEEDED.msg,
+          path: filePath
         });
         // res.download(filePath);
         done(null);
@@ -580,6 +570,5 @@ router.post('/export', function (req, res) { // export plan archive
     }
   });
 });
-
 
 module.exports = router;
