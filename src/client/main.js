@@ -30,3 +30,7 @@ let vm = new Vue({
 vm.$Message.config({
   top: 50
 });
+
+vm.$Notice.config({
+  top: 50
+});

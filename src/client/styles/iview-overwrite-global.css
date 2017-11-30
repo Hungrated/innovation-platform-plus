@@ -30,7 +30,17 @@
   cursor: default;
 }
 
+.ivu-notice-notice, .ivu-notice-notice-content {
+  padding: 0;
+}
 
+.ivu-notice-notice .ivu-notice-notice-closable .ivu-notice-notice-with-desc {
+  padding: 0;
+}
+
+.ivu-notice-with-desc {
+  padding: 16px;
+}
 
 
 

@@ -32,8 +32,7 @@
         signInData: {
           username: '',
           password: ''
-        },
-        resData: {}
+        }
       };
     },
     methods: {
