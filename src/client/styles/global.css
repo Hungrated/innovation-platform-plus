@@ -16,18 +16,17 @@ body {
   min-width: 900px;
 }
 
+#app {
+  min-height: 100vh;
+  padding-bottom: 325px;
+}
+
 .layout-container {
-  min-height: 2000px;
-  padding: 0 90px;
+  min-height: 500px;
 }
 
 .router-link-active {
   color: rgba(255, 255, 255, 1);
-}
-
-#app {
-  min-height: 100vh;
-  padding-bottom: 325px;
 }
 
 
@@ -67,10 +66,6 @@ body {
 .layout-users {
   font-size: 16px;
   padding-right: 20px;
-}
-
-.login-btn {
-
 }
 
 /* global-footer */

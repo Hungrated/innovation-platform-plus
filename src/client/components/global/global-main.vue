@@ -1,6 +1,6 @@
 <template>
   <main id="global-main" class="layout-container">
-    <transition name="fade"><router-view></router-view></transition>
+    <router-view></router-view>
   </main>
 </template>
 
