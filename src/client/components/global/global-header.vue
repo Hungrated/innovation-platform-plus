@@ -25,7 +25,7 @@
             <MenuItem name="2-4"><span @click="changeRoute('/articles?label=3')">技术交流</span></MenuItem>
           </MenuGroup>
           <MenuGroup title="发 布">
-            <MenuItem name="2-5"><span @click="changeRoute('/articles')"><Icon type="compose"></Icon>&emsp;发 布</span>
+            <MenuItem name="2-5"><span @click="changeRoute('/articles/compose')"><Icon type="compose"></Icon>&emsp;发 布</span>
             </MenuItem>
           </MenuGroup>
         </Submenu>

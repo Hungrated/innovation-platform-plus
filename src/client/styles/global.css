@@ -25,6 +25,12 @@ body {
   min-height: 500px;
 }
 
+@media only screen and (min-width: 1600px) {
+  .layout-container {
+    padding: 0 calc((100vw - 1600px) / 2);
+  }
+}
+
 .router-link-active {
   color: rgba(255, 255, 255, 1);
 }
