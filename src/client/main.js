@@ -8,9 +8,11 @@ import axios from 'axios';
 import App from './App';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import VueQuillEditor from 'vue-quill-editor';
 
 Vue.use(iView);
 Vue.use(VueRouter);
+Vue.use(VueQuillEditor);
 
 Vue.prototype.$ajax = axios;
 

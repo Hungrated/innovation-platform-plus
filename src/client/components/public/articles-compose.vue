@@ -18,6 +18,7 @@
       </Card>
     </div>
     <div class="articles-compose-body">
+      <rt-editor></rt-editor>
     </div>
     <div class="articles-compose-footer">
     </div>
@@ -26,9 +27,13 @@
 </template>
 
 <script>
+  import rtEditor from './articles-compose-richTextEditor';
+
   export default {
     name: 'articles-compose',
-    components: {},
+    components: {
+      rtEditor
+    },
     data () {
       return {
         articleTypes: [
