@@ -20,7 +20,7 @@ let objMulter = multer({
   dest: path.userinfo // file upload destination
 });
 
-//student register interface disabled: use '/import' instead
+// student register interface disabled: use '/import' instead
 
 router.post('/reg', function (req, res) { // only for teachers, only in backend
   const {school_id, name, password, identity} = req.body;
@@ -175,7 +175,6 @@ router.post('/import', function (req, res) { // create database record
 
 router.post('/login', function (req, res) {
   const {username, password} = req.body;
-  console.log(username, password);
   if (!req.session.isLogin || username !== req.session.username) {
     // when not logged in or different user logging in
 

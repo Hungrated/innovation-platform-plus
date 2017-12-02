@@ -18,7 +18,7 @@
       </Card>
     </div>
     <div class="articles-compose-body">
-      <rt-editor></rt-editor>
+      <md-editor></md-editor>
     </div>
     <div class="articles-compose-footer">
     </div>
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-  import rtEditor from './articles-compose-richTextEditor';
+  import mdEditor from './articles-compose-markDownEditor';
 
   export default {
     name: 'articles-compose',
     components: {
-      rtEditor
+      mdEditor
     },
     data () {
       return {
