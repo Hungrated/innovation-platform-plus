@@ -1,4 +1,17 @@
-
 .articles-compose-header {
+  padding: 20px 50px;
+}
 
+.articles-compose-header-label {
+  width: 200px;
+  margin-right: 10px;
+}
+
+.articles-compose-header-type {
+  margin-left: 10px;
+  display: flex;
+}
+
+.articles-compose-body {
+  min-height: calc(100vh - 158px);
 }

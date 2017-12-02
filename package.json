@@ -19,7 +19,6 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "scss-loader": "0.0.1",
-    "tt-vue-editor": "^2.1.26",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

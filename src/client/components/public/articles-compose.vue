@@ -4,13 +4,13 @@
       <Card disHover>
         <span slot="title">发表文章</span>
         <div style="display: flex">
-          <Select size="large" style="width:150px; margin-right: 10px" v-model="label">
+          <Select class="articles-compose-header-label" size="large" v-model="label">
             <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
               {{ type.label }}
             </Option>
           </Select>
           <Input v-model="editor.title" size="large" placeholder="文章标题"/>
-          <ButtonGroup shape="circle" size="large" style="margin-left: 10px; display: flex">
+          <ButtonGroup class="articles-compose-header-type" shape="circle" size="large">
             <Button :type="editType.richText" @click="changeEditType('richText')">富文本</Button>
             <Button :type="editType.markDown" @click="changeEditType('markDown')">MarkDown</Button>
           </ButtonGroup>
@@ -18,21 +18,17 @@
       </Card>
     </div>
     <div class="articles-compose-body">
-      <rt-editor></rt-editor>
     </div>
     <div class="articles-compose-footer">
     </div>
   </div>
+
 </template>
 
 <script>
-  import rtEditor from './articles-compose-richTextEditor';
-
   export default {
     name: 'articles-compose',
-    components: {
-      rtEditor
-    },
+    components: {},
     data () {
       return {
         articleTypes: [
@@ -60,9 +56,7 @@
         },
         editor: {
           title: '',
-          content: '',
-          // set image upload api url
-          path: '/api/v1/help/upload/wangEditorH5File'
+          content: ''
         }
       };
     },
