@@ -2,6 +2,10 @@
   padding: 20px 50px;
 }
 
+.articles-compose-header-card {
+  box-shadow: 0 0 1px #999999;
+}
+
 .articles-compose-header-label {
   width: 200px;
   margin-right: 10px;
@@ -14,4 +18,5 @@
 
 .articles-compose-body {
   min-height: calc(100vh - 158px);
+  padding: 0 50px 45px 50px;
 }
