@@ -36,22 +36,22 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
       password: password,
       identity: identity
     })
-      .then(function () { // teachers don't need profiles
-
-        // Profile.create({
-        //         school_id: school_id,
-        //         name: name,
-        //         user_id: user.id
-        //     })
-        //     .then(function() {
-        //         res.json(statusLib.REG_SUCCEEDED);
-        //     })
-        //     .catch(function(e) {
-        //         console.error(e);
-        //         res.json(statusLib.CONNECTION_ERROR);
-        //     });
-        res.json(statusLib.REG_SUCCEEDED);
-        console.log('teacher reg succeeded');
+      .then(function (user) {
+        console.log(user);
+        console.log(user.dataValues);
+        Profile.create({
+          school_id: school_id,
+          name: name,
+          user_id: user.dataValues.id
+        })
+          .then(function () {
+            res.json(statusLib.REG_SUCCEEDED);
+            console.log('teacher reg succeeded');
+          })
+          .catch(function (e) {
+            console.error(e);
+            res.json(statusLib.CONNECTION_ERROR);
+          });
       })
       .catch(function (e) {
         console.error(e);
@@ -201,7 +201,10 @@ router.post('/login', function (req, res) {
             .digest('hex').slice(0, 255)) { // password checked
 
           req.session.isLogin = true;
-          req.session.username = username;
+          req.session.username = user.username;
+          res.cookie('isLogin', true);
+          res.cookie('username', user.username);
+          res.cookie('identity', user.identity);
           res.json({
             status: statusLib.LOGIN_SUCCEEDED.status,
             msg: statusLib.LOGIN_SUCCEEDED.msg,
@@ -227,9 +230,9 @@ router.post('/login', function (req, res) {
 });
 
 router.post('/logout', function (req, res) {
+  req.session.isLogin = false;
   res.clearCookie('isLogin');
   res.clearCookie('username');
-  req.session.destroy();
   res.json(statusLib.LOGGED_OUT);
 });
 

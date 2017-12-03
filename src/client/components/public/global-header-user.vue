@@ -32,15 +32,28 @@
         signInData: {
           username: '',
           password: ''
-        }
+        },
+        userIdentity: 'none'
       };
     },
     methods: {
+      checkLogin () {
+        const cookie = this.getCookie();
+        if (!cookie.isLogin) {
+          this.userMng = true;
+        }
+      },
       handleSubmit () {
         let _this = this;
-        this.$ajax.post('/user/login', this.signInData)
+        this.$ajax.post('/api/user/login', this.signInData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
+            let user = {};
+            user.id = res.data.id;
+            user.school_id = res.data.school_id;
+            user.name = res.data.name;
+            window.localStorage.user = JSON.stringify(user);
+            _this.$emit('updateUserStatus');
           })
           .catch(function (e) {
             console.log(e);

@@ -49,10 +49,10 @@
           </router-link>
         </MenuItem>
       </ul>
-      <div>
-        <global-header-user v-if="userIdentity === 'none'"></global-header-user>
-        <global-header-user-student v-if="userIdentity === 'student'"></global-header-user-student>
-        <global-header-user-teacher v-if="userIdentity === 'teacher'"></global-header-user-teacher>
+      <div v-model="userIdentity">
+        <global-header-user v-if="userIdentity === 'none'" @updateUserStatus="changeUserStatus()"></global-header-user>
+        <global-header-user-student :name="name" v-if="userIdentity === 'student'" @updateUserStatus="changeUserStatus()"></global-header-user-student>
+        <global-header-user-teacher v-if="userIdentity === 'teacher'" :name="name" @updateUserStatus="changeUserStatus()"></global-header-user-teacher>
       </div>
     </Menu>
     <BackTop></BackTop>
@@ -72,17 +72,44 @@
           src: require('../../assets/innovation_practice_brand.png')
         },
         theme: 'dark',
-        userIdentity: 'student'
+        userIdentity: 'none',
+        username: '',
+        name: ''
       };
     },
     components: {
       globalHeaderUser, globalHeaderUserStudent, globalHeaderUserTeacher
     },
     methods: {
+      getCookie () {
+        let cookie = {};
+        let cookieArr = document.cookie.split(' ');
+        for (let i = 0; i < cookieArr.length; i++) {
+          let unit = cookieArr[i].split(';')[0];
+          cookie[unit.split('=')[0]] = unit.split('=')[1];
+        }
+        return cookie;
+      },
+      changeUserStatus () {
+        const cookie = this.getCookie();
+        let user = {};
+        if (window.localStorage.user) {
+          user = JSON.parse(window.localStorage.user);
+        }
+        if (!cookie.isLogin) {
+          this.userIdentity = 'none';
+        } else {
+          this.userIdentity = cookie.identity;
+          this.username = cookie.username;
+          this.name = user.name;
+        }
+      },
       changeRoute: function (path) {
         this.$router.push({path: path});
       }
+    },
+    mounted () {
+      this.changeUserStatus();
     }
   };
 </script>
-

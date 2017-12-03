@@ -4,7 +4,7 @@
       <Card class="articles-compose-header-card" disHover>
         <span slot="title">发表文章</span>
         <div style="display: flex">
-          <Select class="articles-compose-header-label" size="large" v-model="label">
+          <Select class="articles-compose-header-label" placeholder="文章分类" size="large" v-model="label">
             <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
               {{ type.label }}
             </Option>

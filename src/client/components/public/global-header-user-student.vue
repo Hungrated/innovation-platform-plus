@@ -2,14 +2,14 @@
   <div class="layout-users">
     <Submenu name="6">
       <template slot="title">
-        <Icon type="person"></Icon>&nbsp;
+        <Icon type="person"></Icon>&nbsp;{{name}}
       </template>
-      <MenuGroup title="用 户">
-        <MenuItem name="7-1"><span class="login-btn" @click="userMng = true">个人资料</span></MenuItem>
-        <MenuItem name="7-2"><span class="login-btn" @click="userMng = true">退出登录</span></MenuItem>
-      </MenuGroup>
       <MenuGroup title="管 理">
-        <MenuItem name="7-3"><span class="login-btn" @click="userMng = true">修改密码</span></MenuItem>
+        <MenuItem name="7-1"><span class="login-btn" @click="userMng = true">个人资料</span></MenuItem>
+        <MenuItem name="7-2"><span class="login-btn" @click="userMng = true">修改密码</span></MenuItem>
+      </MenuGroup>
+      <MenuGroup title="用 户">
+        <MenuItem name="7-3"><span class="login-btn" @click="logout()">退出登录</span></MenuItem>
       </MenuGroup>
     </Submenu>
   </div>
@@ -17,18 +17,26 @@
 
 <script>
   export default {
-    name: 'global-header-user',
+    name: 'global-header-user-student',
+    props: ['name'],
     data () {
       return {
-        userMng: false,
-        signInData: {
-          username: '',
-          password: ''
-        }
+        userMng: false
       };
     },
     methods: {
-
+      logout () {
+        let _this = this;
+        this.$ajax.post('/api/user/logout', {})
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            delete window.localStorage.user;
+            _this.$emit('updateUserStatus');
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      }
     }
   };
 </script>

@@ -11,6 +11,7 @@
     name: 'global-main',
     components: {
       indexMain
-    }
+    },
+    methods: {}
   };
 </script>
