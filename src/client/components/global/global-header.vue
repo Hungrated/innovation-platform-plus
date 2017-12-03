@@ -51,11 +51,12 @@
       </ul>
       <div v-model="userIdentity">
         <global-header-user v-if="userIdentity === 'none'" @updateUserStatus="changeUserStatus()"></global-header-user>
-        <global-header-user-student :name="name" v-if="userIdentity === 'student'" @updateUserStatus="changeUserStatus()"></global-header-user-student>
-        <global-header-user-teacher v-if="userIdentity === 'teacher'" :name="name" @updateUserStatus="changeUserStatus()"></global-header-user-teacher>
+        <global-header-user-student :name="name" v-if="userIdentity === 'student'"
+                                    @updateUserStatus="changeUserStatus()"></global-header-user-student>
+        <global-header-user-teacher v-if="userIdentity === 'teacher'" :name="name"
+                                    @updateUserStatus="changeUserStatus()"></global-header-user-teacher>
       </div>
     </Menu>
-    <BackTop></BackTop>
   </header>
 
 </template>

@@ -13,12 +13,14 @@
       title="用户登录"
       @on-ok="handleSubmit('signInData')">
       <!--用户输入框-->
-      <i-input type="text" v-model="signInData.username" placeholder="用户名">
-        <Icon type="ios-person-outline" slot="prepend"></Icon>
-      </i-input>
-      <i-input type="password" v-model="signInData.password" placeholder="密码">
-        <Icon type="ios-locked-outline" slot="prepend"></Icon>
-      </i-input>
+      <div class="layout-login">
+        <i-input class="layout-login-input" type="text" v-model="signInData.username" placeholder="用户名">
+          <Icon type="ios-person-outline" slot="prepend"></Icon>
+        </i-input>
+        <i-input class="layout-login-input" type="password" v-model="signInData.password" placeholder="密码">
+          <Icon type="ios-locked-outline" slot="prepend"></Icon>
+        </i-input>
+      </div>
     </Modal>
   </div>
 </template>

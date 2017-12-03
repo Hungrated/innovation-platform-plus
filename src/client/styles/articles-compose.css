@@ -1,14 +1,26 @@
-.articles-compose-header {
+.articles-compose-header, .articles-compose-footer{
   padding: 20px 50px;
 }
 
-.articles-compose-header-card {
+.articles-compose-header-container, .articles-compose-footer-container {
+  display: flex;
+}
+
+.articles-compose-header-card, .articles-compose-footer-card {
   box-shadow: 0 0 1px #999999;
 }
 
 .articles-compose-header-label {
-  width: 200px;
+  flex: 0 0 200px;
   margin-right: 10px;
+}
+
+.articles-compose-header-title {
+  flex: 1 1 auto;
+}
+
+.articles-compose-header-description {
+  margin-top: 30px;
 }
 
 .articles-compose-header-type {
@@ -18,5 +30,14 @@
 
 .articles-compose-body {
   min-height: calc(100vh - 158px);
-  padding: 0 50px 45px 50px;
+  padding: 0 50px;
+}
+
+.articles-compose-footer-container  {
+  justify-content: space-between;
+}
+
+.articles-compose-footer-submit {
+  flex: 0 0 100px;
+  font-size: 15px;
 }

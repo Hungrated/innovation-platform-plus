@@ -74,6 +74,14 @@ body {
   padding-right: 20px;
 }
 
+.layout-login {
+  padding: 10px 65px;
+}
+
+.layout-login-input {
+  padding: 10px;
+}
+
 /* global-footer */
 
 .layout-footer {
