@@ -15,6 +15,7 @@ Vue.use(iView);
 Vue.use(VueRouter);
 Vue.use(mavonEditor);
 
+axios.defaults.withCredentials = true;
 Vue.prototype.$ajax = axios;
 
 const router = new VueRouter({

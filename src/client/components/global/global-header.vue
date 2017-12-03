@@ -25,7 +25,8 @@
             <MenuItem name="2-4"><span @click="changeRoute('/articles?label=3')">技术交流</span></MenuItem>
           </MenuGroup>
           <MenuGroup title="发 布">
-            <MenuItem name="2-5"><span @click="changeRoute('/articles/compose')"><Icon type="compose"></Icon>&emsp;发 布</span>
+            <MenuItem name="2-5"><span @click="changeRoute('/articles/compose')"><Icon
+              type="compose"></Icon>&emsp;发 布</span>
             </MenuItem>
           </MenuGroup>
         </Submenu>
@@ -48,7 +49,11 @@
           </router-link>
         </MenuItem>
       </ul>
-      <global-header-user></global-header-user>
+      <div>
+        <global-header-user v-if="userIdentity === 'none'"></global-header-user>
+        <global-header-user-student v-if="userIdentity === 'student'"></global-header-user-student>
+        <global-header-user-teacher v-if="userIdentity === 'teacher'"></global-header-user-teacher>
+      </div>
     </Menu>
     <BackTop></BackTop>
   </header>
@@ -56,6 +61,8 @@
 </template>
 <script>
   import globalHeaderUser from '../public/global-header-user';
+  import globalHeaderUserStudent from '../public/global-header-user-student';
+  import globalHeaderUserTeacher from '../public/global-header-user-teacher';
 
   export default {
     name: 'global-header',
@@ -64,11 +71,12 @@
         brand: {
           src: require('../../assets/innovation_practice_brand.png')
         },
-        theme: 'dark'
+        theme: 'dark',
+        userIdentity: 'student'
       };
     },
     components: {
-      globalHeaderUser
+      globalHeaderUser, globalHeaderUserStudent, globalHeaderUserTeacher
     },
     methods: {
       changeRoute: function (path) {

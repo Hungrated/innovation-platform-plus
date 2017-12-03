@@ -4,28 +4,16 @@
       <template slot="title">
         <Icon type="person"></Icon>&nbsp;
       </template>
-      <MenuGroup title="用 户">
-        <MenuItem name="6-1"><span class="login-btn" @click="userMng = true">登 录</span></MenuItem>
+      <MenuGroup title="管 理">
+        <MenuItem name="8-1"><span class="login-btn" @click="userMng = true">学生管理</span></MenuItem>
       </MenuGroup>
     </Submenu>
-    <Modal
-      v-model="userMng"
-      title="用户登录"
-      @on-ok="handleSubmit('signInData')">
-      <!--用户输入框-->
-      <i-input type="text" v-model="signInData.username" placeholder="用户名">
-        <Icon type="ios-person-outline" slot="prepend"></Icon>
-      </i-input>
-      <i-input type="password" v-model="signInData.password" placeholder="密码">
-        <Icon type="ios-locked-outline" slot="prepend"></Icon>
-      </i-input>
-    </Modal>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'global-header-user',
+    name: 'global-header-user-teacher',
     data () {
       return {
         userMng: false,

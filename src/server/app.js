@@ -15,7 +15,10 @@ app.use(bodyParser.urlencoded({
 
 (function () {
   // cookie handler
-  app.use(cookieParser());
+  app.use(cookieParser({
+    secret: 'floating-cloud-plus',
+    expires: 3600 * 24 * 7
+  }));
 
   // session handler
   let arr = [];
@@ -24,8 +27,9 @@ app.use(bodyParser.urlencoded({
   }
   app.use(cookieSession({
     name: 'session_id',
+    secret: 'floating-cloud-plus',
     keys: arr,
-    maxAge: 30 * 3600 * 1000
+    maxAge: 3600 * 24 * 3 * 1000
   }));
 })();
 

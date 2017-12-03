@@ -41,3 +41,7 @@
 .ivu-notice-with-desc {
   padding: 16px;
 }
+
+.ivu-modal-close {
+  z-index: 5;
+}

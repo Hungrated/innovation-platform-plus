@@ -201,6 +201,7 @@ router.post('/login', function (req, res) {
             .digest('hex').slice(0, 255)) { // password checked
 
           req.session.isLogin = true;
+          req.session.username = username;
           res.json({
             status: statusLib.LOGIN_SUCCEEDED.status,
             msg: statusLib.LOGIN_SUCCEEDED.msg,
@@ -209,6 +210,7 @@ router.post('/login', function (req, res) {
             school_id: user.profile.school_id,
             name: user.profile.name
           });
+          console.log('log in succeeded');
         } else {
           res.json(statusLib.PASSWORD_CHECK_FAILED);
           console.log('password wrong');
@@ -219,18 +221,24 @@ router.post('/login', function (req, res) {
         res.json(statusLib.CONNECTION_ERROR);
       });
   } else {
-    res.json(statusLib.LOGIN_SUCCEEDED);
+    res.json(statusLib.ALREADY_LOGGED_IN);
     console.log('already logged in');
   }
 });
 
 router.post('/logout', function (req, res) {
-  delete req.session.username;
-  req.session.isLogin = false;
+  res.clearCookie('isLogin');
+  res.clearCookie('username');
+  req.session.destroy();
   res.json(statusLib.LOGGED_OUT);
 });
 
 router.post('/pwdmod', function (req, res, next) {
+  if (!req.session.isLogin) {
+    res.json(statusLib.USER_PWD_MOD_FAILED);
+    console.log('not logged in');
+  }
+
   const {username, password, new_password} = req.body;
 
   if (!username || !password || !new_password) {
