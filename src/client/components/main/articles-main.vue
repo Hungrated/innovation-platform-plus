@@ -17,4 +17,5 @@
 </script>
 
 <style scoped>
+  @import '../../styles/articles.css';
 </style>

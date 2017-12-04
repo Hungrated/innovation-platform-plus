@@ -22,6 +22,7 @@
 <style>
   @import './styles/global.css';
   @import './styles/iview-overwrite-global.css';
+  @import './styles/transition.css';
 
   #app {
     background: url('./assets/bg.png') repeat-y;
