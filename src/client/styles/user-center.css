@@ -20,14 +20,13 @@
 }
 
 .user-center-right {
-  display: flex;
-  flex-direction: column;
   width: 300px;
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-center-unit-container {
-  max-width: 100%;
 }
 
 .profile-avatar {
@@ -58,5 +57,15 @@
 }
 
 .profile-container, .plan-container, .article-container {
-  width: 100%;
+}
+
+.plan-container {
+  width: calc(100vw - 469px);
+  min-width: 446px;
+}
+
+@media only screen and (min-width: 1600px) {
+  .plan-container {
+    width: 1131px;
+  }
 }

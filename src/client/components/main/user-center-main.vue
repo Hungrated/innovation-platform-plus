@@ -1,6 +1,5 @@
 <template>
-  <div id="user-center-container">
-    <div class="user-center-main">
+    <div id="user-center-container" class="user-center-main">
       <div class="user-center-left">
         <Card class="user-center-card" disHover>
           <span slot="title">
@@ -49,10 +48,7 @@
           </div>
         </Card>
       </div>
-
     </div>
-  </div>
-
 </template>
 
 <script>
