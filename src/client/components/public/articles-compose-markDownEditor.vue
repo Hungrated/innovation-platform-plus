@@ -1,5 +1,5 @@
 <template>
-  <mavon-editor :ishljs="ishljs" :toolbars="toolbars"></mavon-editor>
+  <mavon-editor :ishljs="ishljs" :toolbars="toolbars" style="min-height: 100vh; z-index: 1"></mavon-editor>
 </template>
 <script>
   import 'mavon-editor/dist/css/index.css';
@@ -98,10 +98,3 @@
     }
   };
 </script>
-
-<style>
-  .v-note-wrapper {
-    min-height: 100vh;
-    z-index: 1;
-  }
-</style>

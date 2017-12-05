@@ -1,5 +1,5 @@
 <template>
-  <div id="profile-container">
+  <div id="profile-container" class="profile-container">
     <div class="profile-avatar">
       <img :src="profile.avatar">
     </div>

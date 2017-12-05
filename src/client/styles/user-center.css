@@ -21,8 +21,7 @@
 }
 
 .user-center-unit-container {
-  display: flex;
-  padding: 10px;
+
 }
 
 .profile-avatar {
@@ -39,6 +38,7 @@
 }
 
 .profile-info-unit {
+  font-size: 15px;
   margin-bottom: 7px;
 }
 
@@ -49,4 +49,8 @@
 
 .profile-info-sub {
   color: #999999
+}
+
+.profile-container, .plan-container, .article-container {
+  width: 100%;
 }
