@@ -1,6 +1,6 @@
 <template>
   <div class="layout-users">
-    <Submenu name="6">
+    <Submenu name="8">
       <template slot="title">
         <Icon type="person"></Icon>&nbsp;{{name}}
       </template>

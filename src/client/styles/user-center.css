@@ -1,0 +1,29 @@
+.user-center-main {
+  display: flex;
+  padding: 20px 50px;
+}
+
+.user-center-card {
+  margin-bottom: 20px;
+}
+
+.user-center-left {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.user-center-right {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 300px;
+  margin-left: 20px;
+}
+
+.user-center-unit-container {
+  background: #999;
+}
+
+.user-profile {
+
+}

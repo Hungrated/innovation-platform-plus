@@ -4,6 +4,7 @@ import articlesCompose from './components/public/articles-compose.vue';
 import discussionMain from './components/main/discussion-main.vue';
 import bulletinMain from './components/main/bulletin-main.vue';
 import resourcesMain from './components/main/resources-main.vue';
+import userCenterMain from './components/main/user-center-main.vue';
 
 const routers = [
   {
@@ -14,6 +15,11 @@ const routers = [
     path: '/index',
     name: 'index',
     component: indexMain
+  },
+  {
+    path: '/user-center',
+    name: 'user-center',
+    component: userCenterMain
   },
   {
     path: '/articles',
