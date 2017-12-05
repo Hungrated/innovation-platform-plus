@@ -7,6 +7,12 @@
   margin-bottom: 20px;
 }
 
+.user-center-card-header {
+  display: flex;
+  justify-content: space-between;
+  line-height: 25px;
+}
+
 .user-center-left {
   display: flex;
   flex-direction: column;
@@ -21,7 +27,7 @@
 }
 
 .user-center-unit-container {
-
+  max-width: 100%;
 }
 
 .profile-avatar {

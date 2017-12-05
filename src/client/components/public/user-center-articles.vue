@@ -1,6 +1,6 @@
 <template>
   <div id="article-container" class="article-container">
-    <Table :columns="articleCols" :data="articleData" :width="auto" stripe></Table>
+    <Table :columns="articleCols" :data="articleData" stripe></Table>
   </div>
 </template>
 

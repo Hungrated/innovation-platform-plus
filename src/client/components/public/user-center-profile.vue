@@ -34,6 +34,27 @@
           description: 'A Dream Pursuer'
         }
       };
+    },
+    methods: {
+      refreshData () {
+        let _this = this;
+        const schoolId = JSON.parse(window.localStorage.user).school_id;
+        this.$ajax.post('/api/profile/getinfo', {
+          request: schoolId
+        })
+          .then(function (res) {
+            _this.profile = res.data[0];
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      edit () {
+        console.log('editprofile');
+      }
+    },
+    mounted () {
+      this.refreshData();
     }
   };
 </script>

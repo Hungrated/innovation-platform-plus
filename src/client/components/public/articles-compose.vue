@@ -80,7 +80,7 @@
             label: '其 他'
           }
         ],
-        editType: 'richText',
+        editType: 'markDown',
         editor: {
           title: '',
           label: '',

@@ -1,9 +1,7 @@
 <template>
   <div id="plan-container" class="plan-container">
-
-    <Table :columns="planCols" :data="planData" :width="auto" stripe></Table>
+    <Table :columns="planCols" :data="planData" stripe></Table>
   </div>
-
 </template>
 
 <script>
@@ -53,18 +51,7 @@
                       this.show(params.index);
                     }
                   }
-                }, 'View'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, 'Delete')
+                }, 'View')
               ]);
             }
           }
@@ -94,14 +81,14 @@
       };
     },
     methods: {
+      edit () {
+        console.log('editplan');
+      },
       show (index) {
         this.$Modal.info({
           title: 'User Info',
           content: `Name：${this.planData[index].name}<br>Age：${this.planData[index].age}<br>Address：${this.planData[index].address}`
         });
-      },
-      remove (index) {
-        this.planData.splice(index, 1);
       }
     }
   };
