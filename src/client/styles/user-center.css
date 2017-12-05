@@ -16,14 +16,37 @@
 .user-center-right {
   display: flex;
   flex-direction: column;
-  flex: 0 0 300px;
+  width: 300px;
   margin-left: 20px;
 }
 
 .user-center-unit-container {
-  background: #999;
+  display: flex;
+  padding: 10px;
 }
 
-.user-profile {
+.profile-avatar {
+  margin-bottom: 20px;
+}
 
+.profile-avatar img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.profile-info hr {
+  color: #999999;
+}
+
+.profile-info-unit {
+  margin-bottom: 7px;
+}
+
+.profile-info-name {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.profile-info-sub {
+  color: #999999
 }

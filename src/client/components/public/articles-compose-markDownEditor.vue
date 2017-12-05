@@ -99,7 +99,7 @@
   };
 </script>
 
-<style scoped>
+<style>
   .v-note-wrapper {
     min-height: 100vh;
     z-index: 1;

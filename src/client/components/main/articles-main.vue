@@ -16,6 +16,6 @@
   };
 </script>
 
-<style scoped>
+<style>
   @import '../../styles/articles.css';
 </style>

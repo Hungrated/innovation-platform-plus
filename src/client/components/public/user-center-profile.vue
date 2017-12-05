@@ -1,8 +1,18 @@
 <template>
-  <div>
-    {{msg}}
+  <div id="profile-container">
+    <div class="profile-avatar">
+      <img :src="profile.avatar">
+    </div>
+    <div class="profile-info">
+      <p class="profile-info-unit profile-info-name"><strong>{{profile.name}}</strong></p>
+      <p class="profile-info-unit">{{profile.academy}}&emsp;{{profile.grade}}级&emsp;{{profile.class_id}}班</p>
+      <p class="profile-info-unit profile-info-sub">导 师：{{profile.supervisor}}</p>
+      <hr><br>
+      <p class="profile-info-unit profile-info-sub">{{profile.school_id}}</p>
+      <p class="profile-info-unit profile-info-sub">{{profile.phone_num}}</p>
+      <p class="profile-info-unit profile-info-sub">{{profile.description}}</p>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -10,7 +20,19 @@
     name: 'user-center-profile',
     data () {
       return {
-        msg: 'profile'
+        profile: {
+          school_id: 14051531,
+          avatar: require('../../assets/avatar.jpg'),
+          name: '章梓航',
+          sex: '男',
+          academy: '计算机学院',
+          class_id: '14052313',
+          grade: '2014',
+          supervisor: '邬惠峰',
+          birth_date: '1996-4-29',
+          phone_num: '13588096570',
+          description: 'A Dream Pursuer'
+        }
       };
     }
   };

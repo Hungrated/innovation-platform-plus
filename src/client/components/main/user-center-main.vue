@@ -53,6 +53,6 @@
   };
 </script>
 
-<style scoped>
+<style>
   @import '../../styles/user-center.css';
 </style>
