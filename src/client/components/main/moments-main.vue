@@ -10,7 +10,7 @@
     name: 'articles-main',
     data () {
       return {
-        msg: '动态'
+        msg: '动 态'
       };
     }
   };

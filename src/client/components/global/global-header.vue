@@ -13,7 +13,7 @@
         </MenuItem>
         <MenuItem name="2">
           <router-link tag="span" to="/moments">
-            <Icon type="home"></Icon>
+            <Icon type="compass"></Icon>
             &nbsp;<strong>动 态</strong>
           </router-link>
         </MenuItem>

@@ -56,9 +56,6 @@
   color: #999999
 }
 
-.profile-container, .plan-container, .article-container {
-}
-
 .plan-container {
   width: calc(100vw - 469px);
   min-width: 446px;
@@ -68,4 +65,8 @@
   .plan-container {
     width: 1131px;
   }
+}
+
+.profile-edit-input {
+  margin: 10px 0;
 }

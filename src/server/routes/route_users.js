@@ -234,6 +234,7 @@ router.post('/logout', function (req, res) {
   res.clearCookie('isLogin');
   res.clearCookie('username');
   res.json(statusLib.LOGGED_OUT);
+  console.log('logged out');
 });
 
 router.post('/pwdmod', function (req, res, next) {
