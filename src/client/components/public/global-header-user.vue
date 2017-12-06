@@ -1,11 +1,11 @@
 <template>
   <div class="layout-users">
-    <Submenu name="6">
+    <Submenu name="7">
       <template slot="title">
         <Icon type="person"></Icon>&nbsp;
       </template>
       <MenuGroup title="用 户">
-        <MenuItem name="6-1"><span class="login-btn" @click="userMng = true">登 录</span></MenuItem>
+        <MenuItem name="7-1"><span class="login-btn" @click="userMng = true">登 录</span></MenuItem>
       </MenuGroup>
     </Submenu>
     <Modal

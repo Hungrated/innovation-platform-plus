@@ -5,6 +5,7 @@ import discussionMain from './components/main/discussion-main.vue';
 import bulletinMain from './components/main/bulletin-main.vue';
 import resourcesMain from './components/main/resources-main.vue';
 import userCenterMain from './components/main/user-center-main.vue';
+import momentsMain from './components/main/moments-main.vue';
 
 const routers = [
   {
@@ -20,6 +21,11 @@ const routers = [
     path: '/user-center',
     name: 'user-center',
     component: userCenterMain
+  },
+  {
+    path: '/moments',
+    name: 'moments',
+    component: momentsMain
   },
   {
     path: '/articles',

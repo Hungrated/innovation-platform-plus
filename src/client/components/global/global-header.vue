@@ -11,7 +11,13 @@
             &nbsp;<strong>主 页</strong>
           </router-link>
         </MenuItem>
-        <Submenu name="2">
+        <MenuItem name="2">
+          <router-link tag="span" to="/moments">
+            <Icon type="home"></Icon>
+            &nbsp;<strong>动 态</strong>
+          </router-link>
+        </MenuItem>
+        <Submenu name="3">
           <template slot="title">
             <router-link tag="span" to="/articles">
               <Icon type="document-text"></Icon>
@@ -19,30 +25,30 @@
             </router-link>
           </template>
           <MenuGroup title="类 别">
-            <MenuItem name="2-1"><span @click="changeRoute('/articles?label=0')">所有文章</span></MenuItem>
-            <MenuItem name="2-2"><span @click="changeRoute('/articles?label=1')">项目成果展示</span></MenuItem>
-            <MenuItem name="2-3"><span @click="changeRoute('/articles?label=2')">活动展示</span></MenuItem>
-            <MenuItem name="2-4"><span @click="changeRoute('/articles?label=3')">技术交流</span></MenuItem>
+            <MenuItem name="3-1"><span @click="changeRoute('/articles?label=0')">所有文章</span></MenuItem>
+            <MenuItem name="3-2"><span @click="changeRoute('/articles?label=1')">项目成果展示</span></MenuItem>
+            <MenuItem name="3-3"><span @click="changeRoute('/articles?label=2')">活动展示</span></MenuItem>
+            <MenuItem name="3-4"><span @click="changeRoute('/articles?label=3')">技术交流</span></MenuItem>
           </MenuGroup>
           <MenuGroup title="发 布">
-            <MenuItem name="2-5"><span @click="changeRoute('/articles/compose')"><Icon
+            <MenuItem name="3-5"><span @click="changeRoute('/articles/compose')"><Icon
               type="compose"></Icon>&emsp;发 布</span>
             </MenuItem>
           </MenuGroup>
         </Submenu>
-        <MenuItem name="3">
+        <MenuItem name="4">
           <router-link tag="span" to="/resources">
             <Icon type="folder"></Icon>
             &nbsp;<strong>资源共享</strong>
           </router-link>
         </MenuItem>
-        <MenuItem name="4">
+        <MenuItem name="5">
           <router-link tag="span" to="/bulletin">
             <Icon type="information-circled"></Icon>
             &nbsp;<strong>公告栏</strong>
           </router-link>
         </MenuItem>
-        <MenuItem name="5">
+        <MenuItem name="6">
           <router-link tag="span" to="/discussion">
             <Icon type="chatboxes"></Icon>
             &nbsp;<strong>讨论区</strong>

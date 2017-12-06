@@ -7,7 +7,8 @@
       <p class="profile-info-unit profile-info-name"><strong>{{profile.name}}</strong></p>
       <p class="profile-info-unit">{{profile.academy}}&emsp;{{profile.grade}}级&emsp;{{profile.class_id}}班</p>
       <p class="profile-info-unit profile-info-sub">导 师：{{profile.supervisor}}</p>
-      <hr><br>
+      <hr>
+      <br>
       <p class="profile-info-unit profile-info-sub">{{profile.school_id}}</p>
       <p class="profile-info-unit profile-info-sub">{{profile.phone_num}}</p>
       <p class="profile-info-unit profile-info-sub">{{profile.description}}</p>
@@ -44,6 +45,9 @@
         })
           .then(function (res) {
             _this.profile = res.data[0];
+            if (!res.data[0].avatar) {
+              _this.profile.avatar = require('../../assets/avatar.jpg');
+            }
           })
           .catch(function (e) {
             console.log(e);

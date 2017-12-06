@@ -1,14 +1,15 @@
 <template>
   <div class="layout-users">
-    <Submenu name="8">
+    <Submenu name="9">
       <template slot="title">
         <Icon type="person"></Icon>&nbsp;{{name}}
       </template>
       <MenuGroup title="管 理">
-        <MenuItem name="8-1"><span class="login-btn" @click="userMng = true">学生管理</span></MenuItem>
+        <MenuItem name="9-1"><span class="login-btn" @click="userMng = true">学生管理</span></MenuItem>
+        <MenuItem name="9-2"><span class="login-btn" @click="userMng = true">修改密码</span></MenuItem>
       </MenuGroup>
       <MenuGroup title="用 户">
-        <MenuItem name="8-2"><span class="login-btn" @click="logout()">退出登录</span></MenuItem>
+        <MenuItem name="9-3"><span class="login-btn" @click="logout()">退出登录</span></MenuItem>
       </MenuGroup>
     </Submenu>
   </div>
