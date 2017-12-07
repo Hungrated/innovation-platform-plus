@@ -53,17 +53,6 @@
   color: #999999
 }
 
-.plan-container {
-  width: calc(100vw - 469px);
-  min-width: 446px;
-}
-
-@media only screen and (min-width: 1600px) {
-  .plan-container {
-    width: 1131px;
-  }
-}
-
 .profile-edit {
   padding: 10px 25px;
   display: flex;
@@ -83,6 +72,22 @@
 }
 
 /* plan */
+
+.plan-container {
+  /*overflow: auto;*/
+  min-width: 446px;
+}
+
+.plan-list {
+  width: calc(100vw - 469px);
+  overflow: auto;
+}
+
+@media only screen and (min-width: 1600px) {
+  .plan-list {
+    width: 1131px;
+  }
+}
 
 .plan-empty {
   height: 84px;

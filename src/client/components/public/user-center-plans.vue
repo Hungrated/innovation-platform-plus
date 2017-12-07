@@ -1,7 +1,7 @@
 <template>
   <div id="plan-container" class="plan-container">
     <div class="plan-list">
-      <Table :columns="planCols" :data="planData" stripe></Table>
+      <Table :columns="planCols" :data="planData" style="min-width: 850px" stripe></Table>
     </div>
     <div class="plan-empty" v-if="planEmpty">
       <span><strong>当前暂无计划</strong>&emsp;<Button type="primary" size="large" @click="editPlan()">制定一个新计划</Button></span>
@@ -72,29 +72,50 @@
         ],
         planCols: [
           {
-            title: '学 期',
-            key: 'term',
-            render: (h, params) => {
-              return h('div', [
-                h('Icon', {
-                  props: {
-                    type: 'person'
-                  }
-                }),
-                h('strong', params.row.term)
-              ]);
-            }
+            title: '学 年',
+            key: 'year',
+            width: 120,
+            sortable: true
           },
           {
-            title: '起止时间',
-            key: 'range'
+            title: '学 期',
+            key: 'term',
+            width: 70
+
+//            render: (h, params) => {
+//              return h('div', [
+//                h('Icon', {
+//                  props: {
+//                    type: 'person'
+//                  }
+//                }),
+//                h('strong', params.row.term)
+//              ]);
+//            }
+          },
+          {
+            title: '实行日期',
+            key: 'start',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '截止日期',
+            key: 'deadline',
+            width: 120,
+            sortable: true
           },
           {
             title: '内 容',
             key: 'content'
           },
           {
-            title: 'Action',
+            title: '状 态',
+            key: 'status',
+            width: 75
+          },
+          {
+            title: '操 作',
             key: 'action',
             width: 150,
             align: 'center',
@@ -176,6 +197,9 @@
           request: JSON.parse(window.localStorage.user).school_id
         })
           .then(function (res) {
+            if (res.data.length) {
+              _this.planEmpty = false;
+            }
             _this.planData = res.data;
           })
           .catch(function (e) {
