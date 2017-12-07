@@ -33,11 +33,6 @@
   margin-bottom: 20px;
 }
 
-.profile-avatar img {
-  width: 100%;
-  border-radius: 5px;
-}
-
 .profile-info hr {
   color: #999999;
 }
@@ -65,6 +60,20 @@
   .plan-container {
     width: 1131px;
   }
+}
+
+.profile-edit {
+  padding: 10px 25px;
+  display: flex;
+}
+
+.profile-edit-left {
+  flex: 0 0 100px;
+}
+
+.profile-edit-right {
+  flex: 1 0 auto;
+  margin-left: 25px;
 }
 
 .profile-edit-input {
