@@ -110,19 +110,26 @@
 }
 
 .plan-edit-left {
-  flex: 0 0 280px;
+  width: 250px;
 }
 
 .plan-edit-right {
-  margin-left: 10px;
+  margin-left: 25px;
   flex: 1 0 auto;
+  overflow: auto;
 }
 
 .plan-edit-unit {
   font-size: 15px;
-  margin-bottom: 7px;
+  margin-bottom: 12px;
+  max-width: 100%;
 }
 
 .plan-edit-input {
   margin: 10px 0;
+}
+
+.plan-edit-textarea textarea {
+  resize: none;
+  height: 84px;
 }

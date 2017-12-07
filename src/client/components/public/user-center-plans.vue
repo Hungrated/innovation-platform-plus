@@ -1,7 +1,7 @@
 <template>
   <div id="plan-container" class="plan-container">
     <div class="plan-list">
-      <!--<Table :columns="planCols" :data="planData" stripe></Table>-->
+      <Table :columns="planCols" :data="planData" stripe></Table>
     </div>
     <div class="plan-empty" v-if="planEmpty">
       <span><strong>当前暂无计划</strong>&emsp;<Button type="primary" size="large" @click="editPlan()">制定一个新计划</Button></span>
@@ -17,17 +17,23 @@
         </div>
         <div class="plan-edit-body">
           <div class="plan-edit-left">
-            左栏
             <p class="plan-edit-unit">
-              <Icon type="card"></Icon>&emsp;
-              {{planUnit}}
+              <Select placeholder="学 期" size="large" v-model="planUnit.term">
+                <Option v-for="term in terms" :value="term.label" :key="term.index">
+                  {{ term.label }}
+                </Option>
+              </Select>
             </p>
-            <i-input class="plan-edit-input" type="text" placeholder="电话号码">
-              <Icon type="ios-telephone-outline" slot="prepend"></Icon>
-            </i-input>
+            <p class="plan-edit-unit">
+              <DatePicker v-model="planUnit.range" size="large" format="yyyy-MM-dd" type="daterange"
+                          placeholder="计划起止日期" style="width: 100%"></DatePicker>
+            </p>
           </div>
           <div class="plan-edit-right">
-            右栏
+            <div class="plan-edit-unit">
+              <i-input class="plan-edit-textarea" type="textarea" v-model="planUnit.content"
+                       placeholder="计划内容..."></i-input>
+            </div>
           </div>
         </div>
       </div>
@@ -41,11 +47,33 @@
       return {
         planEmpty: true,
         planEdit: false,
-        planUnit: {},
+        planUnit: {
+          term: '',
+          range: ['', ''],
+          content: ''
+        },
+        terms: [
+          {
+            index: 0,
+            label: '2017-2018-1'
+          },
+          {
+            index: 1,
+            label: '2017-2018-2'
+          },
+          {
+            index: 2,
+            label: '2018-2019-1'
+          },
+          {
+            index: 3,
+            label: '2018-2019-2'
+          }
+        ],
         planCols: [
           {
-            title: 'Name',
-            key: 'name',
+            title: '学 期',
+            key: 'term',
             render: (h, params) => {
               return h('div', [
                 h('Icon', {
@@ -53,17 +81,17 @@
                     type: 'person'
                   }
                 }),
-                h('strong', params.row.name)
+                h('strong', params.row.term)
               ]);
             }
           },
           {
-            title: 'Age',
-            key: 'age'
+            title: '起止时间',
+            key: 'range'
           },
           {
-            title: 'Address',
-            key: 'address'
+            title: '内 容',
+            key: 'content'
           },
           {
             title: 'Action',
@@ -90,31 +118,21 @@
             }
           }
         ],
-        planData: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park'
-          }
-        ]
+        planData: []
       };
     },
     methods: {
+      date (time) {
+        let curTime = time;
+        let convert = function (digit) {
+          if (digit < 10) return '0' + digit;
+          else return digit.toString();
+        };
+        let year = curTime.getFullYear();
+        let month = convert(curTime.getMonth() + 1);
+        let day = convert(curTime.getDate());
+        return year + '-' + month + '-' + day;
+      },
       editPlan () {
         this.planEdit = true;
         this.planEmpty = false;
@@ -126,8 +144,43 @@
         console.log('editplancancel');
       },
       submitPlan () {
-        this.planEdit = false;
-        console.log('submitplan');
+        let _this = this;
+        let planData = {
+          student_id: JSON.parse(window.localStorage.user).school_id,
+          year: this.planUnit.term.split('-')[0] + '-' + this.planUnit.term.split('-')[1],
+          term: this.planUnit.term.split('-')[2],
+          content: this.planUnit.content,
+          start: this.date(this.planUnit.range[0]),
+          deadline: this.date(this.planUnit.range[1])
+        };
+
+        console.log(planData);
+        this.$ajax.post('/api/plan/submit', planData)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            _this.planUnit = {
+              term: '',
+              range: ['', ''],
+              content: ''
+            };
+            _this.planEdit = false;
+            _this.refreshPlanList();
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      refreshPlanList () {
+        let _this = this;
+        this.$ajax.post('/api/plan/query', {
+          request: JSON.parse(window.localStorage.user).school_id
+        })
+          .then(function (res) {
+            _this.planData = res.data;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       },
       show (index) {
         this.$Modal.info({
@@ -135,6 +188,9 @@
           content: `Name：${this.planData[index].name}<br>Age：${this.planData[index].age}<br>Address：${this.planData[index].address}`
         });
       }
+    },
+    mounted () {
+      this.refreshPlanList();
     }
   };
 </script>
