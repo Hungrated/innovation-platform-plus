@@ -65,7 +65,7 @@
     },
     methods: {
       editPlans () {
-        this.$refs.plans.edit();
+        this.$refs.plans.editPlan();
       },
       editProfile () {
         this.$refs.profile.edit();
