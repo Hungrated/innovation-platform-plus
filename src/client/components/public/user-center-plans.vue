@@ -162,12 +162,10 @@
       editPlan () {
         this.planEdit = true;
         this.planEmpty = false;
-        console.log('editplan');
       },
       editPlanCancel () {
         this.$Message.info('编辑计划取消');
         this.planEdit = false;
-        console.log('editplancancel');
       },
       submitPlan () {
         if (!this.planUnit.term || !this.planUnit.range || !this.planUnit.content) {

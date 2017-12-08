@@ -1,7 +1,7 @@
 <template>
   <Card disHover>
     <span slot="title">
-      list unit
+      {{msg}}
     </span>
   </Card>
 </template>
@@ -9,7 +9,12 @@
 <script>
   export default {
     name: 'articles-list-unit',
-    props: ['data']
+    props: ['data'],
+    data () {
+      return {
+        msg: 'list unit
+      };
+    }
   };
 </script>
 
