@@ -80,6 +80,7 @@
 
 .plan-list {
   width: calc(100vw - 469px);
+  min-width: 446px;
   overflow: auto;
 }
 

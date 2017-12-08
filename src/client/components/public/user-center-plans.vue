@@ -25,8 +25,13 @@
               </Select>
             </p>
             <p class="plan-edit-unit">
-              <DatePicker v-model="planUnit.range" size="large" format="yyyy-MM-dd" type="daterange"
-                          placeholder="计划起止日期" style="width: 100%"></DatePicker>
+              <DatePicker v-model="planUnit.range"
+                          size="large"
+                          format="yyyy-MM-dd"
+                          type="daterange"
+                          placeholder="计划起止日期"
+                          style="width: 100%">
+              </DatePicker>
             </p>
           </div>
           <div class="plan-edit-right">
@@ -165,6 +170,10 @@
         console.log('editplancancel');
       },
       submitPlan () {
+        if (!this.planUnit.term || !this.planUnit.range || !this.planUnit.content) {
+          this.$Message.info('请将计划内容填写完整');
+          return;
+        }
         let _this = this;
         let planData = {
           student_id: JSON.parse(window.localStorage.user).school_id,
@@ -174,8 +183,6 @@
           start: this.date(this.planUnit.range[0]),
           deadline: this.date(this.planUnit.range[1])
         };
-
-        console.log(planData);
         this.$ajax.post('/api/plan/submit', planData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
