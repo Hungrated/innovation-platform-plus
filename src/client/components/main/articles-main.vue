@@ -1,6 +1,35 @@
 <template>
-  <div>
-    {{msg}}
+  <div id="articles" class="articles-main">
+    <div class="articles-main-header">
+      <Card class="articles-main-header-card" disHover>
+        <div class="articles-main-header-container">
+          <strong>文 章</strong>
+          <Dropdown style="margin-left: 10px; height: 100%">
+            <Button type="primary" v-model="articleListLabel">
+              {{articleListLabel}}&nbsp;
+              <Icon type="arrow-down-b"></Icon>
+            </Button>
+            <DropdownMenu slot="list">
+              <DropdownItem v-for="type in labelList"
+                            :value="type.label"
+                            :key="type.index">
+                <span @click="changeLabel(type)">{{type.label}}</span>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+      </Card>
+    </div>
+    <div class="articles-main-body">
+
+    </div>
+    <div class="articles-main-footer">
+      <Card class="articles-main-footer-card" disHover>
+        <div class="articles-main-footer-container">
+
+        </div>
+      </Card>
+    </div>
   </div>
 
 </template>
@@ -10,8 +39,46 @@
     name: 'articles-main',
     data () {
       return {
-        msg: '文章'
+        articleListLabel: '所有文章',
+        labelList: [
+          {
+            index: 0,
+            label: '所有文章'
+          },
+          {
+            index: 1,
+            label: '项目成果'
+          },
+          {
+            index: 2,
+            label: '技术交流'
+          },
+          {
+            index: 3,
+            label: '活 动'
+          },
+          {
+            index: 4,
+            label: '我的文章'
+          }
+        ],
+        editor: {
+          title: '',
+          label: '',
+          description: ''
+        }
       };
+    },
+    methods: {
+      changeRoute (path) {
+        this.$router.push({path: path});
+      },
+      changeLabel (type) {
+        this.changeRoute('/articles?label=' + type.index);
+        this.articleListLabel = type.label;
+      }
+    },
+    mounted () {
     }
   };
 </script>

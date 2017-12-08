@@ -1,0 +1,32 @@
+.articles-main-header, .articles-main-footer {
+  padding: 20px 50px;
+}
+
+.articles-main-header-container, .articles-main-footer-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.articles-main-header-container {
+
+  line-height: 30px;
+}
+
+.articles-main-header-type {
+  margin-left: 10px;
+  display: flex;
+}
+
+.articles-main-body {
+  min-height: calc(100vh - 158px);
+  padding: 0 50px;
+}
+
+.articles-main-footer-container {
+  justify-content: space-between;
+}
+
+.articles-main-footer-submit {
+  flex: 0 0 100px;
+  font-size: 15px;
+}

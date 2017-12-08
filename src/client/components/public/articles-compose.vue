@@ -2,7 +2,7 @@
   <div id="compose" class="articles-compose">
     <div class="articles-compose-header">
       <Card class="articles-compose-header-card" disHover>
-        <span slot="title">发表文章</span>
+        <span slot="title"><strong>发表文章</strong></span>
         <div class="articles-compose-header-container">
           <div class="articles-compose-header-label">
             <Select placeholder="文章分类" size="large" v-model="editor.label">
@@ -14,9 +14,11 @@
           <Input class="articles-compose-header-topic" v-model="editor.title" size="large" placeholder="文章标题"/>
           <ButtonGroup class="articles-compose-header-type" shape="circle" size="large">
             <Button :type="(editType === 'richText') ? ('primary') : ('default')" @click="changeEditType('richText')">
+              <Icon type="document-text" style="font-size: 17px"></Icon>
               富文本
             </Button>
             <Button :type="(editType === 'markDown') ? ('primary') : ('default')" @click="changeEditType('markDown')">
+              <Icon type="social-markdown" style="font-size: 17px"></Icon>
               MarkDown
             </Button>
           </ButtonGroup>

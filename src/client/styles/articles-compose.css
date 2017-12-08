@@ -1,13 +1,9 @@
-.articles-compose-header, .articles-compose-footer{
+.articles-compose-header, .articles-compose-footer {
   padding: 20px 50px;
 }
 
 .articles-compose-header-container, .articles-compose-footer-container {
   display: flex;
-}
-
-.articles-compose-header-card, .articles-compose-footer-card {
-  box-shadow: 0 0 1px #999999;
 }
 
 .articles-compose-header-label {
@@ -33,7 +29,7 @@
   padding: 0 50px;
 }
 
-.articles-compose-footer-container  {
+.articles-compose-footer-container {
   justify-content: space-between;
 }
 

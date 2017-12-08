@@ -40,7 +40,7 @@
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的文章</strong>
-              <Button @click="" type="text" size="small">>> 详 情</Button>
+              <Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>
             </span>
           </span>
           <div class="user-center-unit-container">
@@ -69,6 +69,9 @@
       },
       editProfile () {
         this.$refs.profile.edit();
+      },
+      changeRoute (path) {
+        this.$router.push({path: path});
       }
     },
     components: {

@@ -27,7 +27,7 @@
           imagelink: true, // 图片链接
           code: true, // code
           table: true, // 表格
-          fullscreen: true, // 全屏编辑
+          fullscreen: false, // 全屏编辑
           readmodel: false, // 沉浸式阅读
           htmlcode: true, // 展示html源码
           help: true, // 帮助
