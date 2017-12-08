@@ -113,7 +113,7 @@
         }
       },
       changeRoute: function (path) {
-        this.$router.push({path: path});
+        this.$router.push(path);
       }
     },
     mounted () {

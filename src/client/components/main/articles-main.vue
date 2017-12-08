@@ -21,7 +21,7 @@
       </Card>
     </div>
     <div class="articles-main-body">
-
+      <article-list-unit :data="null"></article-list-unit>
     </div>
     <div class="articles-main-footer">
       <Card class="articles-main-footer-card" disHover>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+  import articleListUnit from '../public/articles-list-unit';
+
   export default {
     name: 'articles-main',
     data () {
@@ -66,19 +68,35 @@
           title: '',
           label: '',
           description: ''
-        }
+        },
+        articleList: []
       };
     },
     methods: {
       changeRoute (path) {
-        this.$router.push({path: path});
+        this.$router.push(path);
       },
       changeLabel (type) {
         this.changeRoute('/articles?label=' + type.index);
         this.articleListLabel = type.label;
       }
     },
+    components: {
+      articleListUnit
+    },
     mounted () {
+      let _this = this;
+      this.$ajax.post('/api/blog/query', {
+        request: 'all'
+      })
+        .then(function (res) {
+          _this.articleList = res.data;
+          console.log(_this.articleList);
+          // _this.refreshArticleList();
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
     }
   };
 </script>

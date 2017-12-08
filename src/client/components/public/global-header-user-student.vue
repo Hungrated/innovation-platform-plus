@@ -48,7 +48,7 @@
     },
     methods: {
       changeRoute: function (path) {
-        this.$router.push({path: path});
+        this.$router.push(path);
       },
       userPwdMod () {
         if (this.password.newPwd !== this.password.newPwdChk) {

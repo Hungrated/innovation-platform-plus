@@ -44,14 +44,15 @@ router.post('/publish', function (req, res) { // publish a blog(project or event
 router.post('/query', function (req, res) { // fetch blog list for brief browsing
 
   const request = req.body.request;
-  const where = (typeof request === 'string') ? {type: request} : {author_id: request};
+  const where = (typeof request === 'string') ? (
+    (request === 'all') ? {} : {type: request}) : {author_id: request};
 
   Blog.findAll({
     where: where,
     include: [{
       model: Profile,
       where: {
-        school_id: sequelize.col('blog.author_id'),
+        school_id: sequelize.col('blog.author_id')
       },
       attributes: ['name']
     }]
