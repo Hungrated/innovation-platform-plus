@@ -239,7 +239,7 @@ router.post('/logout', function (req, res) {
 
 router.post('/pwdmod', function (req, res, next) {
   if (!req.session.isLogin) {
-    res.json(statusLib.USER_PWD_MOD_FAILED);
+    res.json(statusLib.NOT_YET_LOGGED_IN);
     console.log('not logged in');
   }
 

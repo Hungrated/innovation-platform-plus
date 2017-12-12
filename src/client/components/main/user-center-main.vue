@@ -15,6 +15,17 @@
         <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
+              <strong>我的课堂记录</strong>
+              <Button @click="" type="text" size="small">>> 详 情</Button>
+            </span>
+          </span>
+          <div class="user-center-unit-container">
+            <div>我的课堂记录</div>
+          </div>
+        </Card>
+        <Card class="user-center-card" disHover>
+          <span slot="title">
+            <span class="user-center-card-header">
               <strong>我的动态</strong>
               <Button @click="" type="text" size="small">>> 所有动态</Button>
             </span>
