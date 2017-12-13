@@ -2,8 +2,6 @@
   <Card disHover>
     <span slot="title">
       {{msg}}
-      {{msg}}
-      {{msg}}
     </span>
   </Card>
 </template>
