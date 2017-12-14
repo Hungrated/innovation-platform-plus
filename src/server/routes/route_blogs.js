@@ -78,7 +78,7 @@ router.get('/details', function (req, res) { // fetch blog details
     include: [{
       model: Profile,
       where: {
-        school_id: sequelize.col('blog.author_id'),
+        school_id: sequelize.col('blog.author_id')
       },
       attributes: ['name']
     }]

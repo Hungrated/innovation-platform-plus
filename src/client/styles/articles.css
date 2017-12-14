@@ -49,7 +49,6 @@
 }
 
 .article-details {
-  color: #999999;
   display: flex;
   flex: 0 1 45%;
   flex-direction: column;
@@ -59,13 +58,15 @@
 .article-info {
   display: flex;
   line-height: 100%;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   justify-content: right;
+  color: #999999;
 }
 
 .article-desc {
   display: flex;
   line-height: 100%;
+  color: #999999;
 }
 
 .article-desc p {

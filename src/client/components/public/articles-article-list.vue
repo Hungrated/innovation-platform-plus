@@ -1,0 +1,45 @@
+<template>
+  <Card disHover>
+    <div class="article-unit" v-for="article in articleList" :key="article.id">
+      <span class="article-title">
+        <Button type="text" size="large" @click="revealDetails(article.id)">
+          <strong>{{article.title}}</strong>
+        </Button>
+      </span>
+      <span class="article-details">
+        <span class="article-info">
+        <Icon type="ios-person-outline"></Icon>&nbsp;{{article.profile.name}}&emsp;
+        <Icon type="ios-clock-outline"></Icon>&nbsp;{{article.publishTime}}&emsp;
+      </span>
+      <span class="article-desc">
+        <Icon type="ios-star-outline"></Icon>&nbsp;
+        <p>{{article.description}}</p>
+      </span>
+      </span>
+    </div>
+    <div class="article-page">
+      <Page size="small"></Page>
+    </div>
+
+  </Card>
+</template>
+
+<script>
+  export default {
+    name: 'article-list',
+    props: ['articleList'],
+    data () {
+      return {};
+    },
+    methods: {
+      revealDetails (index) {
+        this.$router.push('/articles/details?index=' + index);
+      }
+    }
+  };
+</script>
+
+<style scoped>
+
+</style>
+

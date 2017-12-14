@@ -21,7 +21,7 @@
       </Card>
     </div>
     <div class="articles-main-body">
-      <article-list :data="null"></article-list>
+      <article-list :articleList="articleList"></article-list>
     </div>
     <div class="articles-main-footer">
       <Card class="articles-main-footer-card" disHover>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import articleList from '../public/articles-list-unit';
+  import articleList from '../public/articles-article-list';
 
   export default {
     name: 'articles-main',
