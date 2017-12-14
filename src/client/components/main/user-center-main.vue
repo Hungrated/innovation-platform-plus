@@ -50,14 +50,24 @@
         <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
-              <strong>我的文章</strong>
+              <strong>公告栏</strong>
               <Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>
             </span>
           </span>
           <div class="user-center-unit-container">
             <user-center-articles></user-center-articles>
           </div>
-        </Card>
+        </Card><Card class="user-center-card" disHover>
+          <span slot="title">
+            <span class="user-center-card-header">
+              <strong>我的文章</strong>
+              <Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>
+            </span>
+          </span>
+        <div class="user-center-unit-container">
+          <user-center-articles></user-center-articles>
+        </div>
+      </Card>
       </div>
     </div>
 </template>

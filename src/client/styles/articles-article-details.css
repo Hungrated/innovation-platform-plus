@@ -58,5 +58,29 @@
 }
 
 .article-footer {
-  background: #EEEEEE;
+
 }
+
+.comment-container {
+
+}
+
+.comment-unit {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.comment-edit,
+.comment-edit span {
+  display: flex;
+}
+
+.comment-edit-textarea textarea {
+  resize: none;
+  height: 55px;
+}
+
+
