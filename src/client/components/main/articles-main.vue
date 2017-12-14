@@ -21,7 +21,7 @@
       </Card>
     </div>
     <div class="articles-main-body">
-      <article-list-unit :data="null"></article-list-unit>
+      <article-list :data="null"></article-list>
     </div>
     <div class="articles-main-footer">
       <Card class="articles-main-footer-card" disHover>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import articleListUnit from '../public/articles-list-unit';
+  import articleList from '../public/articles-list-unit';
 
   export default {
     name: 'articles-main',
@@ -82,7 +82,7 @@
       }
     },
     components: {
-      articleListUnit
+      articleList
     },
     mounted () {
       let _this = this;

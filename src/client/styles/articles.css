@@ -30,3 +30,50 @@
   flex: 0 0 100px;
   font-size: 15px;
 }
+
+.article-unit {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #EEEEEE;
+  transition: all 250ms;
+  border-radius: 5px;
+}
+
+.article-unit:hover {
+  background: #F9F9F9;
+}
+
+.article-title {
+  flex: 1 0 auto;
+}
+
+.article-details {
+  color: #999999;
+  display: flex;
+  flex: 0 1 45%;
+  flex-direction: column;
+  justify-content: right;
+}
+
+.article-info {
+  display: flex;
+  line-height: 100%;
+  margin-bottom: 5px;
+  justify-content: right;
+}
+
+.article-desc {
+  display: flex;
+  line-height: 100%;
+}
+
+.article-desc p {
+  word-break: break-all;
+}
+
+.article-page {
+  margin-top: 10px;
+  padding: 20px;
+  text-align: center;
+}
