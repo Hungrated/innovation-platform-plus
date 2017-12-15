@@ -13,7 +13,7 @@
           </div>
           <Input class="articles-compose-header-topic" v-model="editor.title" size="large" placeholder="文章标题"/>
           <ButtonGroup class="articles-compose-header-type" shape="circle" size="large">
-            <Button :type="(editType === 'richText') ? ('primary') : ('default')" @click="changeEditType('richText')">
+            <Button :type="(editType === 'richText') ? ('primary') : ('default')" @click="changeEditType('richText')" disabled>
               <Icon type="document-text" style="font-size: 17px"></Icon>
               富文本
             </Button>
