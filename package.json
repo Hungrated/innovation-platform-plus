@@ -5,7 +5,7 @@
   "author": "hungrated <zhang295415658@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js & node src/server/bin/www",
+    "dev": "webpack-dev-server --inline --config build/webpack.dev.conf.js & node src/server/bin/www",
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
