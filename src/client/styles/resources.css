@@ -52,50 +52,56 @@
 /*}*/
 
 
-.resource-unit {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  border-bottom: 1px solid #EEEEEE;
-  transition: all 250ms;
-  border-radius: 5px;
-}
-
-.resource-unit:hover {
-  background: #F9F9F9;
-}
-
-.resource-title {
-  flex: 1 0 auto;
-}
-
-.resource-details {
-  display: flex;
-  flex: 0 1 45%;
-  flex-direction: column;
-  justify-content: right;
-}
-
-.resource-info {
-  display: flex;
-  line-height: 100%;
-  margin-bottom: 10px;
-  justify-content: right;
-  color: #999999;
-}
-
-.resource-desc {
-  display: flex;
-  line-height: 100%;
-  color: #999999;
-}
-
-.resource-desc p {
-  word-break: break-all;
-}
-
 .resource-page {
   margin-top: 10px;
   padding: 20px;
   text-align: center;
 }
+
+.resource-upload {
+  background: #F9F9F9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.file-edit-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.file-edit-body {
+  padding: 10px 0 20px 0;
+  display: flex;
+}
+
+.file-edit-button {
+  line-height: 36px;
+}
+
+.file-edit-left {
+  width: 130px;
+}
+
+.file-edit-right {
+  line-height: 36px;
+  margin-left: 15px;
+  flex: 1 0 auto;
+  overflow: auto;
+}
+
+.file-edit-unit {
+  font-size: 15px;
+  margin-bottom: 12px;
+  max-width: 100%;
+}
+
+.file-edit-input {
+  margin: 10px 0;
+}
+
+

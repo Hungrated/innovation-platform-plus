@@ -11,14 +11,14 @@
         </div>
         <div class="plan-edit-body">
           <div class="plan-edit-left">
-            <p class="plan-edit-unit">
+            <div class="plan-edit-unit">
               <Select placeholder="学 期" size="large" v-model="planUnit.term">
                 <Option v-for="term in terms" :value="term.label" :key="term.index">
                   {{ term.label }}
                 </Option>
               </Select>
-            </p>
-            <p class="plan-edit-unit">
+            </div>
+            <div class="plan-edit-unit">
               <DatePicker v-model="planUnit.range"
                           size="large"
                           format="yyyy-MM-dd"
@@ -26,7 +26,7 @@
                           placeholder="计划起止日期"
                           style="width: 100%">
               </DatePicker>
-            </p>
+            </div>
           </div>
           <div class="plan-edit-right">
             <div class="plan-edit-unit">
