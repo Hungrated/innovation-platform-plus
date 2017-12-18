@@ -18,12 +18,12 @@
           </router-link>
         </MenuItem>
         <Submenu name="3">
-          <template slot="title">
+          <span slot="title">
             <router-link tag="span" to="/articles">
               <Icon type="document-text"></Icon>
               <strong>文 章</strong>
             </router-link>
-          </template>
+          </span>
           <MenuGroup title="类 别">
             <MenuItem name="3-1"><span @click="changeRoute('/articles?label=0')">所有文章</span></MenuItem>
             <MenuItem name="3-2"><span @click="changeRoute('/articles?label=1')">项目成果</span></MenuItem>

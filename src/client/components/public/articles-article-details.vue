@@ -111,6 +111,7 @@
           blog_id: this.index,
           content: this.comment
         };
+        this.comment = '';
         this.$ajax.post('/api/comment/submit', commentData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);

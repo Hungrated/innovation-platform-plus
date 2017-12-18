@@ -139,7 +139,7 @@
                       this.show(params.index);
                     }
                   }
-                }, 'View')
+                }, '编 辑')
               ]);
             }
           }

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const sequelize = require('sequelize');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const pathLib = require('path');
@@ -11,6 +12,7 @@ const multer = require('multer');
 const fs = require('fs');
 
 const File = db.File;
+const Profile = db.Profile;
 
 let objMulter = multer({
   dest: path.sources // file upload destination
@@ -67,7 +69,14 @@ router.post('/query', function (req, res) { // fetch file list
   const where = (request === 'all') ? {} : {uploader_id: request};
 
   File.findAll({
-    where: where
+    where: where,
+    include: [{
+      model: Profile,
+      where: {
+        school_id: sequelize.col('file.uploader_id')
+      },
+      attributes: ['name']
+    }]
   })
     .then(function (files) {
       // convert to absolute dir
