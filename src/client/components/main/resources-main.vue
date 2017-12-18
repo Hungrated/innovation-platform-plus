@@ -28,8 +28,11 @@
             <div class="file-edit-header">
               <span>
                 <strong>上传文件</strong>&emsp;
+                <transition>
+                  <span v-if="uploadData.file === null">&emsp;未选择文件</span>
+                </transition>
                 <transition name="fade">
-                    <span v-if="uploadData.file !== null">&emsp;文件名 : {{ uploadData.file.name }}</span>
+                  <span v-if="uploadData.file !== null">&emsp;文件名 : {{ uploadData.file.name }}</span>
                 </transition>
               </span>
               <span>
@@ -174,6 +177,7 @@
             _this.$Message.success(res.data.msg);
             _this.uploadData.desc = '';
             _this.uploadData.file = null;
+            _this.uploadPanel = false;
             _this.refreshFileList();
           })
           .catch(function (e) {
