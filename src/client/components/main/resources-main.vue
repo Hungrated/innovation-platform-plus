@@ -25,7 +25,39 @@
       <div class="resource-body">
         <transition name="fade">
           <div v-if="uploadPanel" class="resource-upload">
-            upload
+            <div class="plan-edit-header">
+              <span><strong>编辑计划</strong></span>
+              <span>
+            <Button type="text" size="small" @click="editPlanCancel()">取 消</Button>
+            <Button type="primary" size="small" @click="submitPlan()">保 存</Button>
+          </span>
+            </div>
+            <div class="plan-edit-body">
+              <div class="plan-edit-left">
+                <p class="plan-edit-unit">
+                  <Select placeholder="学 期" size="large" v-model="planUnit.term">
+                    <Option v-for="term in terms" :value="term.label" :key="term.index">
+                      {{ term.label }}
+                    </Option>
+                  </Select>
+                </p>
+                <p class="plan-edit-unit">
+                  <DatePicker v-model="planUnit.range"
+                              size="large"
+                              format="yyyy-MM-dd"
+                              type="daterange"
+                              placeholder="计划起止日期"
+                              style="width: 100%">
+                  </DatePicker>
+                </p>
+              </div>
+              <div class="plan-edit-right">
+                <div class="plan-edit-unit">
+                  <i-input class="plan-edit-textarea" type="textarea" v-model="planUnit.content"
+                           placeholder="计划内容..."></i-input>
+                </div>
+              </div>
+            </div>
           </div>
         </transition>
         <Table stripe :columns="resourceTableColumns" :data="resourceList"></Table>
@@ -114,7 +146,10 @@
         this.uploadPanel = true;
       },
       fileSizeFormat (size) {
-        return (size / 1048576).toFixed(2) + ' MB';
+        return (size / 1048576).toFixed(1) + ' MB';
+      },
+      downloadFile () {
+
       },
       refreshFileList () {
         let _this = this;

@@ -1,11 +1,5 @@
 <template>
   <div id="plan-container" class="plan-container">
-    <div class="plan-list">
-      <Table :columns="planCols" :data="planData" style="min-width: 850px" stripe></Table>
-    </div>
-    <div class="plan-empty" v-if="planEmpty">
-      <span><strong>当前暂无计划</strong>&emsp;<Button type="primary" size="large" @click="editPlan()">制定一个新计划</Button></span>
-    </div>
     <transition name="fade">
       <div class="plan-edit-container" v-if="planEdit">
         <div class="plan-edit-header">
@@ -43,6 +37,12 @@
         </div>
       </div>
     </transition>
+    <div class="plan-list">
+      <Table :columns="planCols" :data="planData" style="min-width: 850px" stripe></Table>
+    </div>
+    <div class="plan-empty" v-if="planEmpty">
+      <span><strong>当前暂无计划</strong>&emsp;<Button type="primary" size="large" @click="editPlan()">制定一个新计划</Button></span>
+    </div>
   </div>
 </template>
 
@@ -53,6 +53,7 @@
         planEmpty: true,
         planEdit: false,
         planUnit: {
+          id: '',
           term: '',
           range: ['', ''],
           content: ''
