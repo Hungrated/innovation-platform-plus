@@ -31,7 +31,7 @@
         </div>
       </div>
     </Card>
-    <Card disHover>
+    <Card disHover v-if="details.comments.length > 0">
       <span slot="title">
         <strong>评 论</strong>
       </span>
@@ -39,7 +39,10 @@
         <div class="comment-container">
           <div class="comment-unit" v-for="commentUnit in details.comments" :key="commentUnit.id">
             <span class="comment-unit-header">
-              <span><strong>{{commentUnit.student_id}}</strong>&emsp;&emsp;</span>
+              <span>
+                <strong>{{commentUnit.profile.name}}</strong>&emsp;&emsp;
+                <em><Icon type="card"></Icon>&emsp;{{commentUnit.student_id}}</em>&emsp;
+              </span>
               <span style="color: #999999"><Icon type="ios-clock-outline"></Icon>&emsp;{{commentUnit.submitTime}}</span>
             </span>
             <span class="comment-unit-body">

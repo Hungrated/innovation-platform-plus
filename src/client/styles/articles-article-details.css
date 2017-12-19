@@ -73,6 +73,10 @@
   border-bottom: 1px solid #EEEEEE;
 }
 
+.comment-unit-header em {
+  color: #999999;
+}
+
 .comment-edit,
 .comment-edit span {
   display: flex;
