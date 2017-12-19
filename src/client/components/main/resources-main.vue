@@ -64,6 +64,7 @@
       </div>
 
     </Card>
+    <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
   </div>
 </template>
 
@@ -128,12 +129,9 @@
                     type: 'primary',
                     size: 'small'
                   },
-                  style: {
-                    marginRight: '5px'
-                  },
                   on: {
                     click: () => {
-                      this.show(params.index);
+                      this.downloadFile(params.row.url);
                     }
                   }
                 }, '下 载')
@@ -183,12 +181,12 @@
           .catch(function (e) {
             console.log(e);
           });
-
-        console.log(this.uploadData);
       },
-      // downloadFile () {
-      //
-      // },
+      downloadFile (url) {
+        let a = document.getElementById('fileDownloadTmpFrame');
+        a.src = url;
+        this.$Message.success('文件下载成功');
+      },
       refreshFileList () {
         let _this = this;
         this.$ajax.post('/api/file/query', {
