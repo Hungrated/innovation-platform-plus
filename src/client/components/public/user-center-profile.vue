@@ -83,9 +83,10 @@
         </div>
       </div>
     </Modal>
-    <Modal v-model="avatarMng" title="修改头像" @on-ok="uploadCroppedImage()" @on-cancel="refreshData()">
+    <Modal v-model="avatarMng" title="修改头像" @on-ok="avatarSubmit()" @on-cancel="refreshData()">
       <div class="avatar-edit">
         <croppa v-model="myCroppa"
+                accept="image/*"
                 placeholder="单击以选择图片"
                 :placeholder-font-size="16"
                 :width="250"
@@ -139,6 +140,8 @@
             _this.profile = res.data[0];
             if (!res.data[0].avatar) {
               _this.profile.avatar = require('../../assets/avatar.jpg');
+            } else {
+              _this.profile.avatar = _this.profile.avatar + '&t=' + Math.random();
             }
           })
           .catch(function (e) {
@@ -171,25 +174,11 @@
           });
       },
       avatarSubmit () {
-
-        // let _this = this;
-        // let profileData = {
-        //   school_id: this.profile.school_id,
-        //   sex: this.profile.sex,
-        //   birth_date: this.profile.birth_date,
-        //   phone_num: this.profile.phone_num,
-        //   description: this.profile.description
-        // };
-        // this.$ajax.post('/api/profile/modify', profileData)
-        //   .then(function (res) {
-        //     _this.$Message.success(res.data.msg);
-        //   })
-        //   .catch(function (e) {
-        //     console.log(e);
-        //   });
-      },
-      uploadCroppedImage () {
         this.myCroppa.generateBlob((blob) => {
+          if (blob === null) {
+            this.$Message.info('请选择需要上传的头像图片');
+            return;
+          }
           let _this = this;
           let formData = new FormData();
           formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
@@ -197,7 +186,8 @@
           this.$ajax.post('/api/profile/avatar', formData)
             .then(function (res) {
               _this.$Message.success(res.data.msg);
-              _this.profile.avatar = _this.profile.avatar + '&t=' + Math.random();
+              _this.profile.avatar = '/api/download?avatar=' + _this.profile.school_id + '.jpg&t=' + Math.random();
+              _this.myCroppa.remove();
             })
             .catch(function (e) {
               console.log(e);
