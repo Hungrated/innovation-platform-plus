@@ -11,7 +11,7 @@
     <Modal
       v-model="userMng"
       title="用户登录"
-      @on-ok="handleSubmit('signInData')">
+      @on-ok="handleSubmit()">
       <!--用户输入框-->
       <div class="layout-login">
         <i-input class="layout-login-input" type="text" v-model="signInData.username" placeholder="用户名">
