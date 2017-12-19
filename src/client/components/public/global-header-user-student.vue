@@ -75,7 +75,7 @@
             _this.$Message.success(res.data.msg);
             delete window.localStorage.user;
             _this.$emit('updateUserStatus');
-            _this.$router.push({path: '/index'});
+            _this.$router.push('/index');
           })
           .catch(function (e) {
             console.log(e);

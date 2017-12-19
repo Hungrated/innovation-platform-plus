@@ -5,13 +5,30 @@
         <Icon type="person"></Icon>&nbsp;{{name}}
       </template>
       <MenuGroup title="管 理">
-        <MenuItem name="9-1"><span class="login-btn" @click="userMng = true">学生管理</span></MenuItem>
-        <MenuItem name="9-2"><span class="login-btn" @click="userMng = true">修改密码</span></MenuItem>
+        <MenuItem name="9-1"><span class="login-btn" @click="changeRoute('/teacher-center')">管理中心</span></MenuItem>
+        <MenuItem name="9-2"><span class="login-btn" @click="pwdMod = true">修改密码</span></MenuItem>
       </MenuGroup>
       <MenuGroup title="用 户">
         <MenuItem name="9-3"><span class="login-btn" @click="logout()">退出登录</span></MenuItem>
       </MenuGroup>
     </Submenu>
+    <Modal
+      v-model="pwdMod"
+      title="修改密码"
+      @on-ok="userPwdMod()">
+      <!--用户输入框-->
+      <div class="layout-login">
+        <i-input class="layout-login-input" type="password" v-model="password.currentPwd" placeholder="当前密码">
+          <Icon type="ios-locked-outline" slot="prepend"></Icon>
+        </i-input>
+        <i-input class="layout-login-input" type="password" v-model="password.newPwd" placeholder="新密码">
+          <Icon type="ios-locked" slot="prepend"></Icon>
+        </i-input>
+        <i-input class="layout-login-input" type="password" v-model="password.newPwdChk" placeholder="重复新密码">
+          <Icon type="ios-locked" slot="prepend"></Icon>
+        </i-input>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -21,17 +38,44 @@
     props: ['name'],
     data () {
       return {
-        userMng: false
+        pwdMod: false,
+        password: {
+          currentPwd: '',
+          newPwd: '',
+          newPwdChk: ''
+        }
       };
     },
     methods: {
-      logout () {
+      changeRoute: function (path) {
+        this.$router.push(path);
+      },
+      userPwdMod () {
+        if (this.password.newPwd !== this.password.newPwdChk) {
+          this.$Message.error('密码修改失败：新密码两次输入不一致');
+          return;
+        }
+        let _this = this;
+        this.$ajax.post('/api/user/pwdmod', {
+          username: JSON.parse(window.localStorage.user).school_id,
+          password: _this.password.currentPwd,
+          new_password: _this.password.newPwd
+        })
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      }, logout () {
         let _this = this;
         this.$ajax.post('/api/user/logout', {})
           .then(function (res) {
             _this.$Message.success(res.data.msg);
             delete window.localStorage.user;
             _this.$emit('updateUserStatus');
+            _this.$router.push('/index');
+
           })
           .catch(function (e) {
             console.log(e);
