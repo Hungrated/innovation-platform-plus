@@ -31,8 +31,8 @@ router.post('/publish', function (req, res) { // publish a blog(project or event
     author_id
   })
     .then(function () {
-      res.json(statusLib.BLOG_PUB_SUCCEEDED);
-      console.log('publish succeeded');
+      res.json(statusLib.BLOG_PUB_SUCCESSFUL);
+      console.log('publish successful');
     })
     .catch(function (e) {
       console.error(e);
@@ -62,7 +62,7 @@ router.post('/query', function (req, res) { // fetch blog list for brief browsin
         data[i].dataValues.publishTime = timeFormat(data[i].dataValues.created_at);
       }
       res.json(data);
-      console.log('query succeeded');
+      console.log('query successful');
     })
     .catch(function (e) {
       console.error(e);
@@ -105,7 +105,7 @@ router.get('/details', function (req, res) { // fetch blog details
             blog: data,
             comments: comments
           });
-          console.log('fetch detail succeeded');
+          console.log('fetch detail successful');
         })
         .catch(function (e) {
           console.error(e);

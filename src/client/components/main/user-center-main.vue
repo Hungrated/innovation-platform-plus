@@ -1,63 +1,64 @@
 <template>
-    <div id="user-center-container" class="user-center-main">
-      <div class="user-center-left">
-        <Card class="user-center-card" disHover>
+  <div id="user-center-container" class="user-center-main">
+    <div class="user-center-left">
+      <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的计划 & 任务</strong>
               <Button @click="editPlans()" type="text" size="small">管 理</Button>
             </span>
           </span>
-          <div class="user-center-unit-container">
-            <user-center-plans ref="plans"></user-center-plans>
-          </div>
-        </Card>
-        <Card class="user-center-card" disHover>
+        <div class="user-center-unit-container">
+          <user-center-plans ref="plans"></user-center-plans>
+        </div>
+      </Card>
+      <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的课堂记录</strong>
               <Button @click="" type="text" size="small">>> 详 情</Button>
             </span>
           </span>
-          <div class="user-center-unit-container">
-            <div>我的课堂记录</div>
-          </div>
-        </Card>
-        <Card class="user-center-card" disHover>
+        <div class="user-center-unit-container">
+          <div>我的课堂记录</div>
+        </div>
+      </Card>
+      <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的动态</strong>
               <Button @click="" type="text" size="small">>> 所有动态</Button>
             </span>
           </span>
-          <div class="user-center-unit-container">
-            <div>我的动态</div>
-          </div>
-        </Card>
-      </div>
-      <div class="user-center-right">
-        <Card class="user-center-card" disHover>
+        <div class="user-center-unit-container">
+          <div>我的动态</div>
+        </div>
+      </Card>
+    </div>
+    <div class="user-center-right">
+      <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的资料</strong>
               <Button @click="editProfile()" type="text" size="small">编 辑</Button>
             </span>
           </span>
-          <div class="user-center-unit-container">
-            <user-center-profile ref="profile"></user-center-profile>
-          </div>
-        </Card>
-        <Card class="user-center-card" disHover>
+        <div class="user-center-unit-container">
+          <user-center-profile ref="profile"></user-center-profile>
+        </div>
+      </Card>
+      <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
               <strong>公告栏</strong>
               <Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>
             </span>
           </span>
-          <div class="user-center-unit-container">
-            <user-center-articles></user-center-articles>
-          </div>
-        </Card><Card class="user-center-card" disHover>
+        <div class="user-center-unit-container">
+          <user-center-articles></user-center-articles>
+        </div>
+      </Card>
+      <Card class="user-center-card" disHover>
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的文章</strong>
@@ -68,8 +69,8 @@
           <user-center-articles></user-center-articles>
         </div>
       </Card>
-      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -79,11 +80,6 @@
 
   export default {
     name: 'user-center-main',
-    data () {
-      return {
-        msg: '个人中心'
-      };
-    },
     methods: {
       editPlans () {
         this.$refs.plans.editPlan();

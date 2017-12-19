@@ -67,7 +67,8 @@
           .catch(function (e) {
             console.log(e);
           });
-      }, logout () {
+      },
+      logout () {
         let _this = this;
         this.$ajax.post('/api/user/logout', {})
           .then(function (res) {
@@ -75,7 +76,6 @@
             delete window.localStorage.user;
             _this.$emit('updateUserStatus');
             _this.$router.push('/index');
-
           })
           .catch(function (e) {
             console.log(e);

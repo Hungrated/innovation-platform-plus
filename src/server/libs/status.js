@@ -1,6 +1,6 @@
 module.exports = {
 
-  REG_SUCCEEDED: {
+  REG_SUCCESSFUL: {
     'status': 1000,
     'msg': '注册成功'
   },
@@ -10,7 +10,7 @@ module.exports = {
     'msg': '注册失败'
   },
 
-  LOGIN_SUCCEEDED: {
+  LOGIN_SUCCESSFUL: {
     'status': 1100,
     'msg': '登录成功'
   },
@@ -45,7 +45,7 @@ module.exports = {
     'msg': '退出异常'
   },
 
-  USERINFO_IMPORT_SUCCEEDED: {
+  USERINFO_IMPORT_SUCCESSFUL: {
     'status': 1300,
     'msg': '学生信息导入成功'
   },
@@ -55,7 +55,7 @@ module.exports = {
     'msg': '学生信息导入失败'
   },
 
-  USER_PWD_MOD_SUCCEEDED: {
+  USER_PWD_MOD_SUCCESSFUL: {
     'status': 1400,
     'msg': '密码修改成功'
   },
@@ -65,7 +65,7 @@ module.exports = {
     'msg': '密码修改失败'
   },
 
-  PROFILE_MOD_SUCCEEDED: {
+  PROFILE_MOD_SUCCESSFUL: {
     'status': 2000,
     'msg': '档案更新成功'
   },
@@ -80,7 +80,7 @@ module.exports = {
     'msg': '档案获取失败'
   },
 
-  BLOG_PUB_SUCCEEDED: {
+  BLOG_PUB_SUCCESSFUL: {
     'status': 3000,
     'msg': '博文发布成功'
   },
@@ -100,7 +100,7 @@ module.exports = {
     'msg': '获取博文详情失败'
   },
 
-  COMMENT_SUCCEEDED: {
+  COMMENT_SUCCESSFUL: {
     'status': 3200,
     'msg': '评论成功'
   },
@@ -110,7 +110,7 @@ module.exports = {
     'msg': '评论失败'
   },
 
-  FILE_UPLOAD_SUCCEEDED: {
+  FILE_UPLOAD_SUCCESSFUL: {
     'status': 4000,
     'msg': '资源文件上传成功'
   },
@@ -135,7 +135,7 @@ module.exports = {
     'msg': '资源文件下载失败'
   },
 
-  PLAN_SUBMIT_SUCCEEDED: {
+  PLAN_SUBMIT_SUCCESSFUL: {
     'status': 5000,
     'msg': '计划提交成功'
   },
@@ -145,7 +145,7 @@ module.exports = {
     'msg': '计划提交失败'
   },
 
-  PLAN_MOD_SUCCEEDED: {
+  PLAN_MOD_SUCCESSFUL: {
     'status': 5100,
     'msg': '计划修改成功'
   },
@@ -155,7 +155,7 @@ module.exports = {
     'msg': '计划修改失败'
   },
 
-  PLAN_VERIFY_SUCCEEDED: {
+  PLAN_VERIFY_SUCCESSFUL: {
     'status': 5200,
     'msg': '计划审核成功'
   },
@@ -165,7 +165,7 @@ module.exports = {
     'msg': '计划审核失败'
   },
 
-  PLAN_RATE_SUCCEEDED: {
+  PLAN_RATE_SUCCESSFUL: {
     'status': 5300,
     'msg': '计划评价成功'
   },
@@ -175,7 +175,7 @@ module.exports = {
     'msg': '计划评价失败'
   },
 
-  PLAN_QUERY_SUCCEEDED: {
+  PLAN_QUERY_SUCCESSFUL: {
     'status': 5400,
     'msg': '计划查询成功'
   },
@@ -185,7 +185,7 @@ module.exports = {
     'msg': '计划查询失败'
   },
 
-  PLAN_EXPORT_SUCCEEDED: {
+  PLAN_EXPORT_SUCCESSFUL: {
     'status': 5500,
     'msg': '计划导出成功'
   },

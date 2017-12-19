@@ -41,11 +41,11 @@ router.post('/submit', function (req, res) { // a student create a plan
   })
     .then(function (plan) {
       res.json({
-        'status': statusLib.PLAN_SUBMIT_SUCCEEDED.status,
-        'msg': statusLib.PLAN_SUBMIT_SUCCEEDED.msg,
+        'status': statusLib.PLAN_SUBMIT_SUCCESSFUL.status,
+        'msg': statusLib.PLAN_SUBMIT_SUCCESSFUL.msg,
         'plan_id': plan.plan_id
       });
-      console.log('plan submit succeeded');
+      console.log('plan submit successful');
     })
     .catch(function (e) {
       console.error(e);
@@ -105,8 +105,8 @@ router.post('/modify', function (req, res) { // a student modifies a plan
     }
   })
     .then(function () {
-      res.json(statusLib.PLAN_MOD_SUCCEEDED);
-      console.log('plan modify succeeded');
+      res.json(statusLib.PLAN_MOD_SUCCESSFUL);
+      console.log('plan modify successful');
     })
     .catch(function (e) {
       console.error(e);
@@ -148,7 +148,7 @@ router.post('/op', function (req, res) { // teacher changes plan status
     }
   })
     .then(function () {
-      res.json(statusLib.PLAN_VERIFY_SUCCEEDED);
+      res.json(statusLib.PLAN_VERIFY_SUCCESSFUL);
       console.log('plan verified');
     })
     .catch(function (e) {
@@ -176,8 +176,8 @@ router.post('/rate', function (req, res) { // a teacher rates a plan
     }
   })
     .then(function () {
-      res.json(statusLib.PLAN_RATE_SUCCEEDED);
-      console.log('plan rate succeeded');
+      res.json(statusLib.PLAN_RATE_SUCCESSFUL);
+      console.log('plan rate successful');
     })
     .catch(function (e) {
       console.error(e);
@@ -200,7 +200,7 @@ router.post('/query', function (req, res) { // get list of all (or personal) pla
         plans[i].dataValues.submitTime = timeFormat(plans[i].dataValues.created_at);
       }
       res.json(plans);
-      console.log('plan query succeeded');
+      console.log('plan query successful');
 
     })
     .catch(function (e) {
@@ -552,10 +552,10 @@ router.post('/export', function (req, res) { // export plan archive
   async.parallel([
     function (done) {
       out.on('close', function () {
-        console.log('plan export succeeded');
+        console.log('plan export successful');
         res.json({
-          status: statusLib.PLAN_EXPORT_SUCCEEDED.status,
-          msg: statusLib.PLAN_EXPORT_SUCCEEDED.msg,
+          status: statusLib.PLAN_EXPORT_SUCCESSFUL.status,
+          msg: statusLib.PLAN_EXPORT_SUCCESSFUL.msg,
           path: filePath
         });
         // res.download(filePath);

@@ -42,6 +42,7 @@
       <div class="profile-edit">
         <div class="profile-edit-left">
           <img style="width: 100%; border-radius: 5px;" :src="profile.avatar">
+          <Button size="small" type="dashed" @click="editAvatar()">修改头像</Button>
         </div>
         <div class="profile-edit-right">
           <p class="profile-info-unit profile-info-name">
@@ -82,6 +83,22 @@
         </div>
       </div>
     </Modal>
+    <Modal v-model="avatarMng" title="修改头像" @on-ok="uploadCroppedImage()" @on-cancel="refreshData()">
+      <div class="avatar-edit">
+        <croppa v-model="myCroppa"
+                placeholder="单击以选择图片"
+                :placeholder-font-size="16"
+                :width="250"
+                :height="250"
+                :quality="2">
+        </croppa>
+        <span>
+          <p>点击并拖动鼠标以定位</p>
+          <br>
+          <p>滚动鼠标滚轮以缩放</p>
+        </span>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -91,6 +108,8 @@
     data () {
       return {
         profileMng: false,
+        avatarMng: false,
+        myCroppa: {},
         profile: {
 //          school_id: null,
 //          avatar: null,
@@ -120,7 +139,6 @@
             _this.profile = res.data[0];
             if (!res.data[0].avatar) {
               _this.profile.avatar = require('../../assets/avatar.jpg');
-              _this.profile.sex = '男';
             }
           })
           .catch(function (e) {
@@ -129,6 +147,10 @@
       },
       edit () {
         this.profileMng = true;
+      },
+      editAvatar () {
+        this.profileMng = false;
+        this.avatarMng = true;
       },
       profileSubmit () {
         let _this = this;
@@ -142,10 +164,45 @@
         this.$ajax.post('/api/profile/modify', profileData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
+            window.reload();
           })
           .catch(function (e) {
             console.log(e);
           });
+      },
+      avatarSubmit () {
+
+        // let _this = this;
+        // let profileData = {
+        //   school_id: this.profile.school_id,
+        //   sex: this.profile.sex,
+        //   birth_date: this.profile.birth_date,
+        //   phone_num: this.profile.phone_num,
+        //   description: this.profile.description
+        // };
+        // this.$ajax.post('/api/profile/modify', profileData)
+        //   .then(function (res) {
+        //     _this.$Message.success(res.data.msg);
+        //   })
+        //   .catch(function (e) {
+        //     console.log(e);
+        //   });
+      },
+      uploadCroppedImage () {
+        this.myCroppa.generateBlob((blob) => {
+          let _this = this;
+          let formData = new FormData();
+          formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
+          formData.append('avatar', blob);
+          this.$ajax.post('/api/profile/avatar', formData)
+            .then(function (res) {
+              _this.$Message.success(res.data.msg);
+              _this.profile.avatar = _this.profile.avatar + '&t=' + Math.random();
+            })
+            .catch(function (e) {
+              console.log(e);
+            });
+        }, 'image/jpeg', 0.8);
       }
     },
     mounted () {

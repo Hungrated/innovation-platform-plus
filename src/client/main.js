@@ -9,10 +9,13 @@ import App from './App';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import mavonEditor from 'mavon-editor';
+import vueCroppa from 'vue-croppa';
+import 'vue-croppa/dist/vue-croppa.css';
 
 Vue.use(iView);
 Vue.use(VueRouter);
 Vue.use(mavonEditor);
+Vue.use(vueCroppa);
 
 axios.defaults.withCredentials = true;
 Vue.prototype.$ajax = axios;

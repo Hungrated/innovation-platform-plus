@@ -7,8 +7,16 @@ const statusLib = require('../libs/status');
 
 router.get('/', function (req, res) { // download a file
 
-  const filename = urlLib.parse(req.url, true).query.resource;
-  const realPath = path.sources;
+  const raw = urlLib.parse(req.url, true).query;
+  let filename = null;
+  let realPath = null;
+  if (raw.resource) {
+    filename = raw.resource;
+    realPath = path.sources;
+  } else if (raw.avatar) {
+    filename = raw.avatar;
+    realPath = path.avatars;
+  }
   const realDir = pathLib.join(realPath, filename);
 
   res.download(realDir, function (err) {

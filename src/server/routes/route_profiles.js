@@ -35,8 +35,8 @@ router.post('/modify', function (req, res) { // modify a profile
     }
   })
     .then(function () {
-      res.json(statusLib.PROFILE_MOD_SUCCEEDED);
-      console.log('modify succeeded');
+      res.json(statusLib.PROFILE_MOD_SUCCESSFUL);
+      console.log('modify successful');
     })
     .catch(function (e) {
       console.error(e);
@@ -48,12 +48,12 @@ router.post('/avatar', objMulter.any(), function (req, res, next) { // upload an
   const school_id = req.body.school_id; // id is school_id
   const url = pathLib.join(path.avatars, school_id + '.jpg');
   req.avatarURL = url;
-  console.log('avatar upload succeeded');
+  console.log('avatar upload successful');
 
   // check existance of previous avatar file
   Profile.findOne({
     where: {
-      avatar: pathLib.resolve(__dirname, url)
+      avatar: '/api/download?avatar=' + school_id + '.jpg'
     }
   })
     .then(function (user) {
@@ -88,15 +88,15 @@ router.post('/avatar', function (req, res, next) { // rename avatar file
 router.post('/avatar', function (req, res) { // update database record
 
   Profile.update({
-    avatar: req.avatarURL
+    avatar: '/api/download?avatar=' + req.body.school_id + '.jpg'
   }, {
     where: {
       school_id: req.body.school_id
     }
   })
     .then(function () {
-      console.log('avatar modify succeeded');
-      res.json(statusLib.PROFILE_MOD_SUCCEEDED);
+      console.log('avatar modify successful');
+      res.json(statusLib.PROFILE_MOD_SUCCESSFUL);
     })
     .catch(function (e) {
       console.error(e);
@@ -117,37 +117,37 @@ router.post('/getinfo', function (req, res) { // fetch profile information
       console.log('profile does not exist');
     } else {
       res.json(profile);
-      console.log('profile fetch succeeded');
+      console.log('profile fetch successful');
     }
   });
 });
 
-router.post('/getavatar', function (req, res) { // fetch an avatar
-  const school_id = req.body.school_id;
-  Profile.findOne({
-    where: {
-      school_id: school_id
-    }
-  }).then(function (profile) {
-    if (profile === null) {
-      res.json(statusLib.PROFILE_FETCH_FAILED);
-      console.log('profile does not exist');
-    } else {
-      console.log(profile.avatar);
-      fs.readFile(profile.avatar, 'binary', function (err, data) {
-        if (err) {
-          console.log(err);
-          res.json(statusLib.PROFILE_FETCH_FAILED);
-          console.log('avatar fetch failed');
-        }
-        else {
-          res.write(data, 'binary');
-          res.end();
-          console.log('avatar fetch succeeded');
-        }
-      });
-    }
-  });
-});
+// router.post('/getavatar', function (req, res) { // fetch an avatar
+//   const school_id = req.body.school_id;
+//   Profile.findOne({
+//     where: {
+//       school_id: school_id
+//     }
+//   }).then(function (profile) {
+//     if (profile === null) {
+//       res.json(statusLib.PROFILE_FETCH_FAILED);
+//       console.log('profile does not exist');
+//     } else {
+//       console.log(profile.avatar);
+//       fs.readFile(profile.avatar, 'binary', function (err, data) {
+//         if (err) {
+//           console.log(err);
+//           res.json(statusLib.PROFILE_FETCH_FAILED);
+//           console.log('avatar fetch failed');
+//         }
+//         else {
+//           res.write(data, 'binary');
+//           res.end();
+//           console.log('avatar fetch successful');
+//         }
+//       });
+//     }
+//   });
+// });
 
 module.exports = router;

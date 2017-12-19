@@ -60,6 +60,12 @@
 
 .profile-edit-left {
   flex: 0 0 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-edit-left img {
+  margin-bottom: 10px;
 }
 
 .profile-edit-right {
@@ -69,6 +75,20 @@
 
 .profile-edit-input {
   margin: 10px 0;
+}
+
+.avatar-edit {
+  display: flex;
+  padding: 20px;
+}
+
+.avatar-edit span {
+  padding: 100px 30px;
+  color: #777777;
+}
+
+.croppa-container {
+  border-radius: 5px;
 }
 
 /* plan */

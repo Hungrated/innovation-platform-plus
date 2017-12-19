@@ -45,8 +45,8 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
           user_id: user.dataValues.id
         })
           .then(function () {
-            res.json(statusLib.REG_SUCCEEDED);
-            console.log('teacher reg succeeded');
+            res.json(statusLib.REG_SUCCESSFUL);
+            console.log('teacher reg successful');
           })
           .catch(function (e) {
             console.error(e);
@@ -151,7 +151,7 @@ router.post('/import', function (req, res) { // create database record
                       flag++;
                       if (flag === users.length) {
                         console.log('all users imported');
-                        res.json(statusLib.USERINFO_IMPORT_SUCCEEDED);
+                        res.json(statusLib.USERINFO_IMPORT_SUCCESSFUL);
                       }
                     }).catch(function (e) {
                       console.error(e);
@@ -206,14 +206,14 @@ router.post('/login', function (req, res) {
           res.cookie('username', user.username);
           res.cookie('identity', user.identity);
           res.json({
-            status: statusLib.LOGIN_SUCCEEDED.status,
-            msg: statusLib.LOGIN_SUCCEEDED.msg,
+            status: statusLib.LOGIN_SUCCESSFUL.status,
+            msg: statusLib.LOGIN_SUCCESSFUL.msg,
             id: user.id,
             username: user.username,
             school_id: user.profile.school_id,
             name: user.profile.name
           });
-          console.log('log in succeeded');
+          console.log('log in successful');
         } else {
           res.json(statusLib.PASSWORD_CHECK_FAILED);
           console.log('password wrong');
@@ -281,8 +281,8 @@ router.post('/pwdmod', function (req, res) { // password checked
     }
   })
     .then(function () {
-      console.log('password mod succeeded');
-      res.json(statusLib.USER_PWD_MOD_SUCCEEDED);
+      console.log('password mod successful');
+      res.json(statusLib.USER_PWD_MOD_SUCCESSFUL);
     })
     .catch(function (e) {
       console.error(e);

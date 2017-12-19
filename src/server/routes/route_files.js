@@ -52,8 +52,8 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
       .then(function () {
         flag++;
         if (flag === req.files.length) {
-          res.json(statusLib.FILE_UPLOAD_SUCCEEDED);
-          console.log('file upload succeeded');
+          res.json(statusLib.FILE_UPLOAD_SUCCESSFUL);
+          console.log('file upload successful');
         }
       })
       .catch(function (e) {
@@ -85,7 +85,7 @@ router.post('/query', function (req, res) { // fetch file list
         files[i].dataValues.uploadTime = timeFormat(files[i].dataValues.created_at);
       }
       res.json(files);
-      console.log('file list fetch succeeded');
+      console.log('file list fetch successful');
 
     })
     .catch(function (e) {
