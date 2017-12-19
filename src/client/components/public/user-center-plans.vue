@@ -1,12 +1,13 @@
 <template>
   <div id="plan-container" class="plan-container">
     <transition name="fade">
-      <div class="plan-edit-container" v-if="planEdit">
+      <div class="plan-edit-container" v-if="planEdit || planModify">
         <div class="plan-edit-header">
           <span><strong>编辑计划</strong></span>
           <span>
             <Button type="text" size="small" @click="editPlanCancel()">取 消</Button>
-            <Button type="primary" size="small" @click="submitPlan()">保 存</Button>
+            <Button v-if="planEdit === true" type="primary" size="small" @click="submitPlan()">保 存</Button>
+            <Button v-if="planModify === true" type="primary" size="small" @click="submitPlan('modify')">修 改</Button>
           </span>
         </div>
         <div class="plan-edit-body">
@@ -52,6 +53,7 @@
       return {
         planEmpty: true,
         planEdit: false,
+        planModify: false,
         planUnit: {
           id: '',
           term: '',
@@ -87,17 +89,6 @@
             title: '学 期',
             key: 'term',
             width: 70
-
-//            render: (h, params) => {
-//              return h('div', [
-//                h('Icon', {
-//                  props: {
-//                    type: 'person'
-//                  }
-//                }),
-//                h('strong', params.row.term)
-//              ]);
-//            }
           },
           {
             title: '实行日期',
@@ -118,7 +109,16 @@
           {
             title: '状 态',
             key: 'status',
-            width: 75
+            width: 75,
+            render: (h, params) => {
+              return h('div', [
+                h('strong', {
+                  style: {
+                    color: '#999999'
+                  }
+                }, params.row.status)
+              ]);
+            }
           },
           {
             title: '操 作',
@@ -137,7 +137,7 @@
                   },
                   on: {
                     click: () => {
-                      this.show(params.index);
+                      this.modifyPlan(params.row);
                     }
                   }
                 }, '编 辑')
@@ -168,12 +168,23 @@
         this.$Message.info('编辑计划取消');
         this.planEdit = false;
       },
-      submitPlan () {
+      modifyPlan (plan) {
+        this.planModify = true;
+        this.planUnit = {
+          plan_id: plan.plan_id,
+          term: plan.year + '-' + plan.term,
+          range: [plan.start, plan.deadline],
+          content: plan.content
+        };
+        console.log(plan, this.planUnit);
+      },
+      submitPlan (op) {
         if (!this.planUnit.term || !this.planUnit.range || !this.planUnit.content) {
           this.$Message.info('请将计划内容填写完整');
           return;
         }
         let _this = this;
+        let url = '/api/plan/submit';
         let planData = {
           student_id: JSON.parse(window.localStorage.user).school_id,
           year: this.planUnit.term.split('-')[0] + '-' + this.planUnit.term.split('-')[1],
@@ -182,15 +193,24 @@
           start: this.date(this.planUnit.range[0]),
           deadline: this.date(this.planUnit.range[1])
         };
-        this.$ajax.post('/api/plan/submit', planData)
+        if (op === 'modify') {
+          url = '/api/plan/modify';
+          planData.plan_id = this.planUnit.plan_id;
+        }
+        this.$ajax.post(url, planData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
             _this.planUnit = {
+              plan_id: '',
               term: '',
               range: ['', ''],
               content: ''
             };
-            _this.planEdit = false;
+            if (op === 'modify') {
+              _this.planModify = false;
+            } else {
+              _this.planEdit = false;
+            }
             _this.refreshPlanList();
           })
           .catch(function (e) {
@@ -211,13 +231,14 @@
           .catch(function (e) {
             console.log(e);
           });
-      },
-      show (index) {
-        this.$Modal.info({
-          title: 'User Info',
-          content: `Name：${this.planData[index].name}<br>Age：${this.planData[index].age}<br>Address：${this.planData[index].address}`
-        });
       }
+
+      // show (index) {
+      //   this.$Modal.info({
+      //     title: 'User Info',
+      //     content: `Name：${this.planData[index].name}<br>Age：${this.planData[index].age}<br>Address：${this.planData[index].address}`
+      //   });
+      // }
     },
     mounted () {
       this.refreshPlanList();
