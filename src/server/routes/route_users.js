@@ -59,7 +59,7 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
 });
 
 router.post('/parse', objMulter.any(), function (req, res, next) { // XLS file upload
-                                                                   // rename a file
+  // rename a file
   let newName = req.files[0].path + pathLib.parse(req.files[0].originalname).ext;
   fs.rename(req.files[0].path, newName, function (err) {
     if (err) {
@@ -125,7 +125,29 @@ router.post('/parse', function (req, res, next) { // extract user data & convert
   });
 });
 
-router.post('/import', function (req, res, next) {
+router.post('/import', function (req, res, next) { // validate teacher identity
+  Profile.findOne({
+    where: {
+      school_id: req.body.teacher_id
+    }
+  })
+    .then(function (profile) {
+      if(profile !== null) {
+        next();
+      } else {
+        console.log('validation error not teacher');
+        return res.json(statusLib.USERINFO_IMPORT_FAILED);
+      }
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.USERINFO_IMPORT_FAILED);
+      console.log('validate failed');
+    });
+});
+
+router.post('/import', function (req, res, next) { // import data
+  console.log(req.body);
   const classData = req.body.classData;
   Class.create(classData)
     .then(function () {
@@ -154,6 +176,24 @@ router.post('/import', function (req, res) { // create record in table `user` & 
       .then(function (user) {
         if (user !== null) { // exists duplication
           console.log('user already exists');
+          Profile.update({
+            cur_class: users[userIdx].cur_class
+          }, {
+            where: {
+              school_id: users[userIdx].school_id
+            }
+          })
+            .then(function () {
+              flag++;
+              if (flag === users.length) {
+                console.log('all users modified');
+                res.json(statusLib.USERINFO_IMPORT_SUCCESSFUL);
+              }
+            })
+            .catch(function (e) {
+              console.error(e);
+              return res.json(statusLib.USERINFO_IMPORT_FAILED);
+            });
         } else {
           User.create({ // first: create a User record
             username: users[userIdx].username,

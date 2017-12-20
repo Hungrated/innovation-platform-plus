@@ -56,7 +56,7 @@
               <div class="class-import-validate-info">
                 <p>
                   <Icon type="information-circled"></Icon>&emsp;
-                  请确认班级与学生信息，确认无误后点击确定按钮来导入或更新信息
+                  请确认班级与学生信息，确认无误后点击确定按钮来导入或更新信息 (若学生用户已存在，则将会更新当前选课课号)
                 </p>
               </div>
               <div class="validate-class-data">
@@ -287,18 +287,22 @@
           });
       },
       importClassData () {
-        // let _this = this;
-        //
-        // this.$ajax.post('/api/user/parse', {})
-        //   .then(function (res) {
-        //     _this.$Message.success(res.data.msg);
-        //     _this.uploadData.file = null;
-        //     _this.classImoort = false;
-        //     console.log(res.data);
-        //   })
-        //   .catch(function (e) {
-        //     console.log(e);
-        //   });
+        let _this = this;
+        this.$ajax.post('/api/user/import', {
+          teacher_id: JSON.parse(window.localStorage.user).school_id,
+          classData: this.classParseData.classData.data[0],
+          userArr: this.classParseData.students.data
+        })
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            _this.classParseData.classData.data = [];
+            _this.classParseData.students.data = [];
+            _this.classImport = false;
+            _this.refreshData();
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       },
       refreshData () {
         this.teacherProfile = JSON.parse(window.localStorage.user);

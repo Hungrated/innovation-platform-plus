@@ -39,7 +39,7 @@ router.post('/query', function (req, res) { // class query
         'msg': statusLib.CLASS_QUERY_SUCCESSFUL.msg,
         'classArr': classArr
       });
-      console.log('plan submit successful');
+      console.log('class query successful');
     })
     .catch(function (e) {
       console.error(e);
