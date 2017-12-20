@@ -86,6 +86,9 @@
         </Card>
       </div>
     </div>
+    <div class="main-panel-body">
+      学生动态（计划）
+    </div>
   </div>
 </template>
 
@@ -312,7 +315,6 @@
         })
           .then(function (res) {
             if (res.data.status === 6000) {
-              _this.$Message.success(res.data.msg);
               _this.classData = res.data.classArr;
             }
           })
