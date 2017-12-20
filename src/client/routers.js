@@ -7,11 +7,6 @@ import bulletinMain from './components/main/bulletin-main.vue';
 import resourcesMain from './components/main/resources-main.vue';
 import userCenterMain from './components/main/user-center-main.vue';
 import teacherCenterMain from './components/main/teacher-center-main.vue';
-import teacherCenterMainPanel from './components/public/teacher-center-main-panel.vue';
-import teacherCenterPlans from './components/public/teacher-center-plans.vue';
-import teacherCenterClasses from './components/public/teacher-center-classes.vue';
-import teacherCenterRates from './components/public/teacher-center-rates.vue';
-import teacherCenterInfoManage from './components/public/teacher-center-info-manage.vue';
 import momentsMain from './components/main/moments-main.vue';
 
 const routers = [
@@ -32,29 +27,7 @@ const routers = [
   {
     path: '/teacher-center',
     name: 'teacher-center',
-    component: teacherCenterMain,
-    children: [
-      {
-        path: '/',
-        component: teacherCenterMainPanel
-      },
-      {
-        path: '/plans',
-        component: teacherCenterPlans
-      },
-      {
-        path: '/classes',
-        component: teacherCenterClasses
-      },
-      {
-        path: '/rates',
-        component: teacherCenterRates
-      },
-      {
-        path: '/info-manage',
-        component: teacherCenterInfoManage
-      }
-    ]
+    component: teacherCenterMain
   },
   {
     path: '/moments',

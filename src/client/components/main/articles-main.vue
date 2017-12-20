@@ -23,13 +23,6 @@
     <div class="articles-main-body">
       <article-list :articleList="articleList"></article-list>
     </div>
-    <div class="articles-main-footer">
-      <Card class="articles-main-footer-card" disHover>
-        <div class="articles-main-footer-container">
-
-        </div>
-      </Card>
-    </div>
   </div>
 
 </template>
