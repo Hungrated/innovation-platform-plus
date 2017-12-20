@@ -9,7 +9,7 @@
 }
 
 .main-panel-right {
-  flex: 0 0 350px;
+  flex: 0 0 300px;
   margin-left: 20px;
 }
 
@@ -17,4 +17,85 @@
   display: flex;
   justify-content: space-between;
   line-height: 24px;
+}
+
+/* class */
+
+.class-list {
+  width: calc(100vw - 469px);
+  min-width: 446px;
+  overflow: auto;
+}
+
+@media only screen and (min-width: 1600px) {
+  .class-list {
+    width: 1131px;
+  }
+}
+
+.class-import-container {
+  /*border-top: 1px solid #EEEEEE;*/
+  background: #F9F9F9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.class-import-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.class-import-body {
+  padding: 10px 0;
+  display: flex;
+}
+
+.class-import-left {
+  width: 150px;
+}
+
+.class-import-right {
+  margin-left: 25px;
+  flex: 1 0 auto;
+  line-height: 36px;
+  color: #999999;
+}
+
+.class-import-validate-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+}
+
+.class-import-validate-info {
+  text-align: center;
+  font-size: 16px;
+  color: #999999;
+  padding-bottom: 25px;
+}
+
+.validate-class-data {
+  margin-bottom: 20px;
+}
+
+.validate-students {
+  margin-bottom: 20px;
+}
+
+/* profile */
+
+.teacher-profile span {
+  margin-bottom: 10px;
+}
+
+.teacher-profile strong {
+  font-size: 24px;
+}
+
+.teacher-profile em {
+  color: #999999;
 }

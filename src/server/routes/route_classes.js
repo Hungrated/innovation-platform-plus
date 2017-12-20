@@ -30,7 +30,7 @@ router.post('/query', function (req, res) { // class query
     where: where
   })
     .then(function (classArr) {
-      if (classArr === []) {
+      if (!classArr.length) {
         console.log('classArr does not exist');
         return res.json(statusLib.CLASS_QUERY_NULL);
       }
