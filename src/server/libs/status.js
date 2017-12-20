@@ -205,6 +205,21 @@ module.exports = {
     'msg': '计划导出失败'
   },
 
+  CLASS_QUERY_SUCCESSFUL: {
+    'status': 6000,
+    'msg': '班级获取成功'
+  },
+
+  CLASS_QUERY_FAILED: {
+    'status': 6001,
+    'msg': '班级获取失败'
+  },
+
+  CLASS_QUERY_NULL: {
+    'status': 6002,
+    'msg': '班级获取为空'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'

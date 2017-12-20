@@ -1,0 +1,20 @@
+.main-panel-header {
+  margin: 20px 0;
+  display: flex;
+  width: 100%;
+}
+
+.main-panel-left {
+  flex: 1 0 auto;
+}
+
+.main-panel-right {
+  flex: 0 0 350px;
+  margin-left: 20px;
+}
+
+.main-panel-card-header {
+  display: flex;
+  justify-content: space-between;
+  line-height: 24px;
+}
