@@ -24,24 +24,19 @@ const schema = {
     values: ['未知', '男', '女']
   },
   academy: {
-    type: Sequelize.STRING(16),
-    allowNull: false
+    type: Sequelize.STRING(16)
   },
   class_id: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false
+    type: Sequelize.INTEGER(11)
   },
   grade: {
-    type: Sequelize.STRING(16),
-    allowNull: false
+    type: Sequelize.STRING(16)
   },
   cur_class: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   supervisor: {
-    type: Sequelize.STRING(16),
-    allowNull: false
+    type: Sequelize.STRING(16)
   },
   birth_date: {
     type: Sequelize.STRING(16)

@@ -37,8 +37,6 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
       identity: identity
     })
       .then(function (user) {
-        console.log(user);
-        console.log(user.dataValues);
         Profile.create({
           school_id: school_id,
           name: name,
