@@ -13,8 +13,13 @@ User.hasOne(Profile, {
   foreignKey: 'user_id'
 });
 
-User.sync().then();
 Profile.sync().then();
+User.sync().then();
+
+Class.belongsTo(Profile, {
+  foreignKey: 'teacher_id'
+});
+Class.sync().then();
 
 Blog.belongsTo(Profile, {
   foreignKey: 'author_id'
@@ -48,12 +53,6 @@ Banner.belongsTo(Profile, {
 });
 
 Banner.sync().then();
-
-Class.belongsTo(Profile, {
-  foreignKey: 'teacher_id'
-});
-
-Class.sync().then();
 
 Meeting.belongsTo(Profile, {
   foreignKey: 'student_id'

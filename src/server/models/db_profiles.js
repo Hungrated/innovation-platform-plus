@@ -16,23 +16,32 @@ const schema = {
     }
   },
   name: {
-    type: Sequelize.STRING(16)
+    type: Sequelize.STRING(16),
+    allowNull: false
   },
   sex: {
     type: Sequelize.ENUM,
     values: ['未知', '男', '女']
   },
   academy: {
-    type: Sequelize.STRING(16)
+    type: Sequelize.STRING(16),
+    allowNull: false
   },
   class_id: {
-    type: Sequelize.INTEGER(11)
+    type: Sequelize.INTEGER(11),
+    allowNull: false
   },
   grade: {
-    type: Sequelize.STRING(16)
+    type: Sequelize.STRING(16),
+    allowNull: false
+  },
+  cur_class: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   supervisor: {
-    type: Sequelize.STRING(16)
+    type: Sequelize.STRING(16),
+    allowNull: false
   },
   birth_date: {
     type: Sequelize.STRING(16)

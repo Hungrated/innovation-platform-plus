@@ -110,6 +110,7 @@ router.post('/parse', function (req, res, next) { // extract user data & convert
             school_id: parseInt(sheet.cell(rIdx, 0)),
             class_id: parseInt(sheet.cell(rIdx, 4)),
             grade: 20 + sheet.cell(rIdx, 0)[0] + sheet.cell(rIdx, 0)[1],
+            cur_class: sheet.cell(1, 6),
             supervisor: sheet.cell(2, 1)
           });
         } catch (e) {
