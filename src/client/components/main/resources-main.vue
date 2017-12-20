@@ -5,23 +5,6 @@
         <span><strong>资源共享</strong></span>
         <span><Button type="primary" size="small" @click="editFile()">上 传</Button></span>
       </span>
-      <!--<div class="resource-unit" v-for="resource in resourceList" :key="resource.id">-->
-      <!--<span class="resource-title">-->
-      <!--<Button type="text" size="large" @click="revealDetails(resource.id)">-->
-      <!--<strong>{{resource.title}}</strong>-->
-      <!--</Button>-->
-      <!--</span>-->
-      <!--<span class="resource-details">-->
-      <!--<span class="resource-info">-->
-      <!--<Icon type="ios-person-outline"></Icon>&nbsp;{{resource.profile.name}}&emsp;-->
-      <!--<Icon type="ios-clock-outline"></Icon>&nbsp;{{resource.publishTime}}&emsp;-->
-      <!--</span>-->
-      <!--<span class="resource-desc">-->
-      <!--<Icon type="ios-star-outline"></Icon>&nbsp;-->
-      <!--<p>{{resource.description}}</p>-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</div>-->
       <div class="resource-body">
         <transition name="fade">
           <div v-if="uploadPanel" class="resource-upload">
@@ -88,7 +71,7 @@
           {
             title: '文件名',
             key: 'filename',
-            width: 150
+            width: 200
           },
           {
             title: '上传者',
@@ -112,7 +95,7 @@
             title: '上传时间',
             key: 'uploadTime',
             sortable: true,
-            width: 180
+            width: 200
           },
           {
             title: '文件描述',
@@ -147,7 +130,7 @@
         this.uploadPanel = true;
       },
       editFileCancel () {
-        this.$Message.info('文件上传取消');
+        // this.$Message.info('文件上传取消');
         this.uploadPanel = false;
         this.uploadData.desc = '';
         this.uploadData.file = null;

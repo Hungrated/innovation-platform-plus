@@ -1,6 +1,6 @@
 <template>
   <header id="global-header">
-    <Menu mode="horizontal" class="layout-header" :theme="theme">
+    <Menu mode="horizontal" class="layout-header" theme="dark">
       <div class="layout-brand">
         <router-link tag="span" to="/index"><img :src="brand.src"></router-link>
       </div>
@@ -79,7 +79,6 @@
         brand: {
           src: require('../../assets/innovation_practice_brand.png')
         },
-        theme: 'dark',
         userIdentity: 'none',
         username: '',
         name: ''

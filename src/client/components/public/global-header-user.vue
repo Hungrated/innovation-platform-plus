@@ -39,12 +39,12 @@
       };
     },
     methods: {
-      checkLogin () {
-        const cookie = this.getCookie();
-        if (!cookie.isLogin) {
-          this.userMng = true;
-        }
-      },
+      // checkLogin () {
+      //   const cookie = this.getCookie();
+      //   if (!cookie.isLogin) {
+      //     this.userMng = true;
+      //   }
+      // },
       handleSubmit () {
         let _this = this;
         this.$ajax.post('/api/user/login', this.signInData)

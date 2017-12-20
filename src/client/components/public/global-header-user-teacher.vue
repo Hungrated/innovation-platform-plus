@@ -51,7 +51,10 @@
         this.$router.push(path);
       },
       userPwdMod () {
-        if (this.password.newPwd !== this.password.newPwdChk) {
+        if (this.password.currentPwd === '' || this.password.newPwd === '' || this.password.newPwdChk === '') {
+          this.$Message.info('请完善相关信息再试');
+          return;
+        } else if (this.password.newPwd !== this.password.newPwdChk) {
           this.$Message.error('密码修改失败：新密码两次输入不一致');
           return;
         }

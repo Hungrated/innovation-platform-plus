@@ -1,5 +1,28 @@
 .teacher-center-main {
+  padding: 10px 50px 20px 50px;
+}
+
+.teacher-center-nav-container {
+  box-shadow: 0 2px 3px #DDDDDD;
+  z-index: 20;
+}
+
+.teacher-center-nav {
+  margin-left: 165px;
+  width: 528px;
+}
+
+.main-panel-header {
+  margin: 20px 0;
   display: flex;
-  padding: 20px 50px;
-  background: #2baee9;
+  width: 100%;
+}
+
+.main-panel-left {
+  flex: 1 0 auto;
+}
+
+.main-panel-right {
+  flex: 0 0 350px;
+  margin-left: 20px;
 }

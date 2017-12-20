@@ -165,7 +165,7 @@
         this.planEmpty = false;
       },
       editPlanCancel () {
-        this.$Message.info('编辑计划取消');
+        // this.$Message.info('编辑计划取消');
         this.planEdit = false;
       },
       modifyPlan (plan) {
