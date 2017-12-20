@@ -45,23 +45,33 @@ module.exports = {
     'msg': '退出异常'
   },
 
-  USERINFO_IMPORT_SUCCESSFUL: {
+  USERINFO_PARSE_SUCCESSFUL: {
     'status': 1300,
+    'msg': '学生信息解析成功'
+  },
+
+  USERINFO_PARSE_FAILED: {
+    'status': 1301,
+    'msg': '学生信息解析失败：表格文件格式不匹配'
+  },
+
+  USERINFO_IMPORT_SUCCESSFUL: {
+    'status': 1400,
     'msg': '学生信息导入成功'
   },
 
   USERINFO_IMPORT_FAILED: {
-    'status': 1301,
+    'status': 1401,
     'msg': '学生信息导入失败'
   },
 
   USER_PWD_MOD_SUCCESSFUL: {
-    'status': 1400,
+    'status': 1500,
     'msg': '密码修改成功'
   },
 
   USER_PWD_MOD_FAILED: {
-    'status': 1401,
+    'status': 1501,
     'msg': '密码修改失败'
   },
 

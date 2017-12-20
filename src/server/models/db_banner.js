@@ -6,7 +6,6 @@ const schema = {
   img_id: {
     type: Sequelize.INTEGER(11),
     autoIncrement: true,
-    initialAutoIncrement: 1000,
     primaryKey: true,
     unique: true
   },

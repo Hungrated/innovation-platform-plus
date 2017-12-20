@@ -13,6 +13,7 @@ const sequelize = require('sequelize');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
+const Class = db.Class;
 const User = db.User;
 const Profile = db.Profile;
 
@@ -24,8 +25,7 @@ let objMulter = multer({
 
 router.post('/reg', function (req, res) { // only for teachers, only in backend
   const {school_id, name, password, identity} = req.body;
-  if (!(school_id || name || password || identity))
-    return res.json(statusLib.REG_FAILED);
+  if (!(school_id || name || password || identity)) { return res.json(statusLib.REG_FAILED); }
 
   if (identity !== 'teacher') {
     res.json(statusLib.REG_FAILED);
@@ -60,9 +60,8 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
   }
 });
 
-router.post('/import', objMulter.any(), function (req, res, next) { // XLS file upload
-
-  //rename a file
+router.post('/parse', objMulter.any(), function (req, res, next) { // XLS file upload
+                                                                   // rename a file
   let newName = req.files[0].path + pathLib.parse(req.files[0].originalname).ext;
   fs.rename(req.files[0].path, newName, function (err) {
     if (err) {
@@ -75,15 +74,33 @@ router.post('/import', objMulter.any(), function (req, res, next) { // XLS file 
   });
 });
 
-router.post('/import', function (req, res, next) { // extract user data & convert to JSON
-
+router.post('/parse', function (req, res, next) { // extract user data & convert to JS object
   xl.open(req.fileURL, function (err, data) {
     if (err) {
       console.log(err.name, err.message);
       res.json(statusLib.USERINFO_IMPORT_FAILED);
     } else {
-      let userArr = [];
       let sheet = data.sheets[0];
+      // check if xls is suitable for parsing
+      if (sheet.cell(0, 0) !== '教学班点名册') {
+        console.log('xls data not suitable for parsing');
+        return res.json(statusLib.USERINFO_PARSE_FAILED);
+      }
+
+      // parse class info
+      let classData = {
+        year: sheet.cell(1, 1),
+        term: sheet.cell(1, 4),
+        class_id: sheet.cell(1, 6),
+        cname: sheet.cell(1, 13),
+        time: sheet.cell(2, 9),
+        loc: sheet.cell(2, 13),
+        status: 'active',
+        teacher_id: Number(sheet.cell(1, 6).split('-')[4])
+      };
+
+      // parse student info
+      let userArr = [];
       for (let rIdx = 4; rIdx < sheet.row.count; rIdx++) {
         try {
           userArr.push({
@@ -92,25 +109,40 @@ router.post('/import', function (req, res, next) { // extract user data & conver
             name: sheet.cell(rIdx, 2),
             school_id: parseInt(sheet.cell(rIdx, 0)),
             class_id: parseInt(sheet.cell(rIdx, 4)),
-            grade: 20 + sheet.cell(rIdx, 0)[0] + sheet.cell(rIdx, 0)[1]
+            grade: 20 + sheet.cell(rIdx, 0)[0] + sheet.cell(rIdx, 0)[1],
+            supervisor: sheet.cell(2, 1)
           });
         } catch (e) {
           console.log(e.message);
         }
       }
-      req.body.supervisor = sheet.cell(2, 1);
-      req.body.users = userArr;
-      next();
+      res.json({
+        status: statusLib.USERINFO_PARSE_SUCCESSFUL.status,
+        msg: statusLib.USERINFO_PARSE_SUCCESSFUL.msg,
+        classData: classData,
+        userArr: userArr
+      });
     }
   });
 });
 
-router.post('/import', function (req, res) { // create database record
+router.post('/import', function (req, res, next) {
+  const classData = req.body.classData;
+  Class.create(classData)
+    .then(function () {
+      next();
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.USERINFO_IMPORT_FAILED);
+      console.log('class import failed');
+    });
+});
 
-  const users = req.body.users;
+router.post('/import', function (req, res) { // create record in table `user` & `profile`
+  const users = req.body.userArr;
   const identity = 'student';
   const academy = '计算机学院';
-  const supervisor = req.body.supervisor;
 
   let flag = 0; // flag of all users imported
 
@@ -123,7 +155,7 @@ router.post('/import', function (req, res) { // create database record
       .then(function (user) {
         if (user !== null) { // exists duplication
           console.log('user already exists');
-        } else
+        } else {
           User.create({ // first: create a User record
             username: users[userIdx].username,
             password: users[userIdx].password,
@@ -138,14 +170,14 @@ router.post('/import', function (req, res) { // create database record
                 .then(function (profile) { // create a profile record for a student
                   if (profile !== null) { // exists duplication
                     console.log('user already exists');
-                  } else
+                  } else {
                     Profile.create({
                       school_id: users[userIdx].school_id,
                       name: users[userIdx].name,
                       academy: academy,
                       class_id: users[userIdx].class_id,
                       grade: users[userIdx].grade,
-                      supervisor: supervisor,
+                      supervisor: users[userIdx].supervisor,
                       user_id: user.id
                     }).then(function () {
                       flag++;
@@ -153,19 +185,24 @@ router.post('/import', function (req, res) { // create database record
                         console.log('all users imported');
                         res.json(statusLib.USERINFO_IMPORT_SUCCESSFUL);
                       }
-                    }).catch(function (e) {
-                      console.error(e);
-                      return res.json(statusLib.USERINFO_IMPORT_FAILED);
-                    });
+                    })
+                      .catch(function (e) {
+                        console.error(e);
+                        return res.json(statusLib.USERINFO_IMPORT_FAILED);
+                      });
+                  }
                 });
-            }).catch(function (e) {
-            console.error(e);
-            return res.json(statusLib.USERINFO_IMPORT_FAILED);
-          });
-      }).catch(function (e) {
-      console.error(e);
-      return res.json(statusLib.USERINFO_IMPORT_FAILED);
-    });
+            })
+            .catch(function (e) {
+              console.error(e);
+              return res.json(statusLib.USERINFO_IMPORT_FAILED);
+            });
+        }
+      })
+      .catch(function (e) {
+        console.error(e);
+        return res.json(statusLib.USERINFO_IMPORT_FAILED);
+      });
   }
 
   for (let userIdx = 0; userIdx < users.length; userIdx++) {
@@ -192,14 +229,13 @@ router.post('/login', function (req, res) {
       }]
     })
       .then(function (user) { // do further check
-        if (user.dataValues === null) { //username does not exist
+        if (user.dataValues === null) { // username does not exist
           res.json(statusLib.INVALID_USERNAME);
           console.log('does not exist');
         } else if (user.dataValues.password ===
           crypto.createHash('sha256')
             .update(config.salt + password)
             .digest('hex').slice(0, 255)) { // password checked
-
           req.session.isLogin = true;
           req.session.username = user.username;
           res.cookie('isLogin', true);

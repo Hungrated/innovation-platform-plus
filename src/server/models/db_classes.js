@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 const mysql = require('../middlewares/sequelize');
 
 const schema = {
-  plan_id: {
-    type: Sequelize.STRING(32),
+  class_id: {
+    type: Sequelize.STRING,
     primaryKey: true,
     unique: true
   },
@@ -16,27 +16,22 @@ const schema = {
     type: Sequelize.STRING(8),
     allowNull: false
   },
-  content: {
-    type: Sequelize.TEXT,
+  cname: {
+    type: Sequelize.STRING(32),
     allowNull: false
   },
-  start: {
-    type: Sequelize.STRING(16),
+  time: {
+    type: Sequelize.STRING(64),
     allowNull: false
   },
-  deadline: {
-    type: Sequelize.STRING(16),
+  loc: {
+    type: Sequelize.STRING(64),
     allowNull: false
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['已通过', '未通过', '未审核'],
-  },
-  rate: {
-    type: Sequelize.STRING(8)
-  },
-  remark: {
-    type: Sequelize.STRING(128)
+    values: ['active', 'archived'],
+    allowNull: false
   }
 };
 
@@ -44,6 +39,6 @@ const options = {
   underscored: true
 };
 
-const Plan = mysql.define('plan', schema, options);
+const Class = mysql.define('class', schema, options);
 
-module.exports = Plan;
+module.exports = Class;
