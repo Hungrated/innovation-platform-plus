@@ -6,6 +6,7 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const pathLib = require('path');
 const timeFormat = require('../middlewares/time_format');
+const uid = require('../middlewares/id_gen');
 const path = require('../app_paths');
 
 const multer = require('multer');
@@ -41,6 +42,7 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
     });
 
     let fileInfo = {
+      file_id: 'fil' + uid.generate(),
       filename: req.files[i].originalname,
       size: req.files[i].size,
       url: downloadUrl,

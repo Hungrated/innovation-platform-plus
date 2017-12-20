@@ -3,6 +3,11 @@ const Sequelize = require('sequelize');
 const mysql = require('../middlewares/sequelize');
 
 const schema = {
+  blog_id: {
+    type: Sequelize.STRING(32),
+    primaryKey: true,
+    unique: true
+  },
   type: {
     type: Sequelize.ENUM,
     values: ['project', 'event'],

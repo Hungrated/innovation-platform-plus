@@ -2,7 +2,7 @@
   <Card disHover>
     <div class="article-unit" v-for="article in articleList" :key="article.id">
       <span class="article-title">
-        <Button type="text" size="large" @click="revealDetails(article.id)">
+        <Button type="text" size="large" @click="revealDetails(article.blog_id)">
           <strong>{{article.title}}</strong>
         </Button>
       </span>

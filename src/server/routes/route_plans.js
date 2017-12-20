@@ -4,7 +4,7 @@ const pathLib = require('path');
 const path = require('../app_paths');
 
 const timeFormat = require('../middlewares/time_format');
-const planIdGen = require('../middlewares/plan_id');
+const uid = require('../middlewares/id_gen');
 
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
@@ -27,7 +27,7 @@ router.post('/submit', function (req, res) { // a student create a plan
   } = req.body;
 
   const status = '未审核';
-  const plan_id = planIdGen(student_id);
+  const plan_id = 'pln' + uid.generate();
 
   Plan.create({
     plan_id: plan_id,

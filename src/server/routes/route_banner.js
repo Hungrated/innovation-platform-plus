@@ -6,17 +6,30 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const urlLib = require('url');
 const timeFormat = require('../middlewares/time_format');
-const uid = require('../middlewares/id_gen');
 
 const Blog = db.Blog;
 const Profile = db.Profile;
 const Comment = db.Comment;
 
 router.post('/publish', function (req, res) { // publish a blog(project or event)
-  let publishData = req.body;
-  publishData.blog_id = 'blg' + uid.generate();
-
-  Blog.create(publishData)
+  const {
+    type,
+    title,
+    description,
+    content,
+    cover_url,
+    photo_url,
+    author_id
+  } = req.body;
+  Blog.create({
+    type,
+    title,
+    description,
+    content,
+    cover_url,
+    photo_url,
+    author_id
+  })
     .then(function () {
       res.json(statusLib.BLOG_PUB_SUCCESSFUL);
       console.log('publish successful');

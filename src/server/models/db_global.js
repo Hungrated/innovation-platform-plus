@@ -4,6 +4,7 @@ const Blog = require('./db_blogs');
 const Comment = require('./db_comments');
 const Plan = require('./db_plans');
 const File = require('./db_files');
+const Banner = require('./db_banner');
 
 User.hasOne(Profile, {
   foreignKey: 'user_id'
@@ -39,28 +40,11 @@ File.belongsTo(Profile, {
 
 File.sync().then();
 
+Banner.belongsTo(Profile, {
+  foreignKey: 'uploader_id'
+});
+Banner.sync().then();
+
 module.exports = {
-  User, Profile, Blog, Comment, Plan, File
+  User, Profile, Blog, Comment, Plan, File, Banner
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

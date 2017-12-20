@@ -5,6 +5,7 @@ const mysql = require('../middlewares/sequelize');
 const schema = {
   plan_id: {
     type: Sequelize.STRING(32),
+    primaryKey: true,
     unique: true
   },
   year: {

@@ -3,7 +3,14 @@ const pathLib = require('path');
 
 const mysql = require('../middlewares/sequelize');
 
+const uid = require('../middlewares/id_gen');
+
 const schema = {
+  file_id: {
+    type: Sequelize.STRING(32),
+    primaryKey: true,
+    unique: true
+  },
   filename: {
     type: Sequelize.STRING(32),
     allowNull: false
