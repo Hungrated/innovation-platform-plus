@@ -10,7 +10,7 @@
           </MenuItem>
           <MenuItem name="2">
             <span @click="changePanel('plans')">
-              <Icon type="ios-bookmarks"></Icon>&emsp;学生计划
+              <Icon type="ios-bookmarks"></Icon>&emsp;学 生
             </span>
           </MenuItem>
           <MenuItem name="3">

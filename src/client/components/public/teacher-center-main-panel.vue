@@ -38,7 +38,7 @@
                 <div class="class-import-right">
                   <p>
                     <Icon type="information-circled"></Icon>&emsp;
-                    将教务系统里下载的教学班点名册上传以导入班级与学生信息
+                    上传教务系统里下载的教学班点名册以导入班级与学生信息
                   </p>
                 </div>
               </div>

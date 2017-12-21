@@ -104,10 +104,15 @@ router.post('/avatar', function (req, res) { // update database record
     });
 });
 
-router.post('/getinfo', function (req, res) { // fetch profile information
+router.post('/query', function (req, res) { // fetch profile information
 
   const request = req.body.request;
-  const where = (request === 'all') ? {} : {school_id: request};
+  let where = (request === 'all') ? {} : {school_id: request};
+  if (request.cur_class !== null) {
+    where = {
+      cur_class: request.cur_class
+    };
+  }
 
   Profile.findAll({
     where: where

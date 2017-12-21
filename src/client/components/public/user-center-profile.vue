@@ -133,7 +133,7 @@
       refreshData () {
         let _this = this;
         const schoolId = JSON.parse(window.localStorage.user).school_id;
-        this.$ajax.post('/api/profile/getinfo', {
+        this.$ajax.post('/api/profile/query', {
           request: schoolId
         })
           .then(function (res) {

@@ -1,12 +1,12 @@
 <template>
   <div class="teacher-center-plans">
     <Card disHover>
-      <span slot="title">
-        <span class="plans-card-header">
-          <strong>学生计划</strong>
-          <Button @click="" type="text" size="small">导 出</Button>
-        </span>
-      </span>
+      <!--<span slot="title">-->
+      <!--<span class="plans-card-header">-->
+      <!--<strong>学 生</strong>-->
+      <!--<Button @click="" type="text" size="small">导 出</Button>-->
+      <!--</span>-->
+      <!--</span>-->
       <div class="plans-card-body">
         <div class="plans-card-body-left" v-model="classArr">
           <span class="unit-title">
@@ -15,15 +15,13 @@
           <span class="plans-class-list">
             <span class="plans-class-unit" v-for="unit in classArr" :key="unit.class_id">
               <strong style="margin-left: 15px;">{{unit.cname}}</strong>
-              <Button size="large" type="text">{{unit.class_id}}</Button>
+              <Button size="large" type="text" @click="changeClass(unit)">{{unit.class_id}}</Button>
             </span>
-
           </span>
-
         </div>
         <div class="plans-card-body-right" v-model="cur_class">
           <span class="unit-title">
-            <span>学生管理 - <em>{{cur_class.class_id}}</em></span>
+            <span>学生信息 - <em>{{cur_class.class_id}}</em></span>
           </span>
           <span class="plans-students-list">
             <Table :columns="studentCols" :data="studentArr" stripe></Table>
@@ -45,24 +43,24 @@
           {
             title: '学 号',
             key: 'school_id',
-            width: 120,
+            width: 100,
             sortable: true
           },
           {
             title: '姓 名',
             key: 'name',
-            width: 120
+            width: 100
           },
           {
-            title: '每周记录',
+            title: '最新计划',
             key: 'school_id'
           },
           {
-            title: '计划清单',
+            title: '最新记录',
             key: 'school_id'
           },
           {
-            title: '课堂记录',
+            title: '总 评',
             key: 'school_id'
           }
         ],
@@ -79,11 +77,30 @@
             if (res.data.status === 6000) {
               _this.classArr = res.data.classArr;
               _this.cur_class = _this.classArr[0];
+              _this.refreshStudentList(_this.cur_class.class_id);
             }
           })
           .catch(function (e) {
             console.log(e);
           });
+      },
+      refreshStudentList (id) {
+        let _this = this;
+        this.$ajax.post('/api/profile/query', {
+          request: {
+            cur_class: id
+          }
+        })
+          .then(function (res) {
+            _this.studentArr = res.data;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      changeClass (unit) {
+        this.cur_class = unit;
+        this.refreshStudentList(unit.class_id);
       }
     },
     mounted () {
