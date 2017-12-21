@@ -102,7 +102,7 @@
 </script>
 
 <style>
-  @import '../../styles/articles-compose.less';
+  @import '../../styles/articles-compose.css';
 </style>
 
 

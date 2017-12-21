@@ -16,6 +16,6 @@
 </script>
 
 <style>
-  @import '../../styles/index.less';
+  @import '../../styles/index.css';
 
 </style>

@@ -20,9 +20,6 @@
 </script>
 
 <style>
-  @import 'styles/global.less';
-  @import 'styles/iview-overwrite-global.less';
-  @import 'styles/transition.less';
 
   #app {
     background: url('./assets/bg.png') repeat-y;

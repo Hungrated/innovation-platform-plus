@@ -95,5 +95,5 @@
 </script>
 
 <style>
-  @import '../../styles/articles.less';
+  @import '../../styles/articles.css';
 </style>

@@ -18,5 +18,5 @@
 </script>
 
 <style>
-  @import '../../styles/teacher-center-classes.less';
+  @import '../../styles/teacher-center-classes.css';
 </style>
