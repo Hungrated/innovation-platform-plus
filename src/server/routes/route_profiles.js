@@ -108,7 +108,7 @@ router.post('/query', function (req, res) { // fetch profile information
 
   const request = req.body.request;
   let where = (request === 'all') ? {} : {school_id: request};
-  if (request.cur_class !== null) {
+  if (request.cur_class !== undefined) {
     where = {
       cur_class: request.cur_class
     };
