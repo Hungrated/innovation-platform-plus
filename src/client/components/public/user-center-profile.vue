@@ -152,6 +152,7 @@
         this.profileMng = true;
       },
       editAvatar () {
+        this.profileSubmit();
         this.profileMng = false;
         this.avatarMng = true;
       },
@@ -167,7 +168,6 @@
         this.$ajax.post('/api/profile/modify', profileData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
-            window.reload();
           })
           .catch(function (e) {
             console.log(e);

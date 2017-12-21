@@ -38,7 +38,7 @@
         </div>
       </div>
     </transition>
-    <div class="plan-list">
+    <div class="plan-list" v-if="!planEmpty">
       <Table :columns="planCols" :data="planData" style="min-width: 850px" stripe></Table>
     </div>
     <div class="plan-empty" v-if="planEmpty">

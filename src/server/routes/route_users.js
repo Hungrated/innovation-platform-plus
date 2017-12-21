@@ -59,7 +59,7 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
 });
 
 router.post('/parse', objMulter.any(), function (req, res, next) { // XLS file upload
-                                                                   // rename a file
+  // rename a file
   let newName = req.files[0].path + pathLib.parse(req.files[0].originalname).ext;
   fs.rename(req.files[0].path, newName, function (err) {
     if (err) {
