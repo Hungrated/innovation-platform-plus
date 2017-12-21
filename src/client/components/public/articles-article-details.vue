@@ -129,5 +129,5 @@
 </script>
 
 <style>
-  @import '../../styles/articles-article-details.css';
+  @import '../../styles/articles-article-details.less';
 </style>

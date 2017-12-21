@@ -110,5 +110,5 @@
 </script>
 
 <style>
-  @import '../../styles/teacher-center-plans.css';
+  @import '../../styles/teacher-center-plans.less';
 </style>

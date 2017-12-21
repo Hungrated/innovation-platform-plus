@@ -98,5 +98,5 @@
 </script>
 
 <style>
-  @import '../../styles/user-center.css';
+  @import '../../styles/user-center.less';
 </style>

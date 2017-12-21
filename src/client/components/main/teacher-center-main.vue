@@ -71,5 +71,5 @@
 </script>
 
 <style>
-  @import '../../styles/teacher-center.css';
+  @import '../../styles/teacher-center.less';
 </style>

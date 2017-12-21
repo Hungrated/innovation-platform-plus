@@ -190,5 +190,5 @@
 </script>
 
 <style>
-  @import '../../styles/resources.css';
+  @import '../../styles/resources.less';
 </style>

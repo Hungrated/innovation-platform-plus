@@ -336,5 +336,5 @@
 </script>
 
 <style>
-  @import '../../styles/teacher-center-main-panel.css';
+  @import '../../styles/teacher-center-main-panel.less';
 </style>
