@@ -152,7 +152,17 @@
         this.profileMng = true;
       },
       editAvatar () {
-        this.profileSubmit();
+        let profileData = {
+          school_id: this.profile.school_id,
+          sex: this.profile.sex,
+          birth_date: this.profile.birth_date,
+          phone_num: this.profile.phone_num,
+          description: this.profile.description
+        };
+        this.$ajax.post('/api/profile/modify', profileData)
+          .catch(function (e) {
+            console.log(e);
+          });
         this.profileMng = false;
         this.avatarMng = true;
       },

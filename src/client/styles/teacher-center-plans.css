@@ -35,15 +35,27 @@
 }
 
 .unit-title {
-  margin-bottom: 20px;
+  height: 48px;
+  line-height: 36px;
 }
 
-.unit-title em {
-  color: #999999;
+.unit-title span {
+  padding: 8px;
+  background: #2b85e4;
+  border-radius: 5px;
+  color: #FFFFFF;
 }
 
 .plans-class-list {
+  display: flex;
+  flex-direction: column;
+}
 
+.plans-class-unit {
+  box-shadow: 0 0 2px #DDDDDD;
+  padding: 8px 0 0 0;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }
 
 .plans-students-list {

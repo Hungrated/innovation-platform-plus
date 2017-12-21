@@ -13,6 +13,10 @@
             <span>班级信息</span>
           </span>
           <span class="plans-class-list">
+            <span class="plans-class-unit" v-for="unit in classArr" :key="unit.class_id">
+              <strong style="margin-left: 15px;">{{unit.cname}}</strong>
+              <Button size="large" type="text">{{unit.class_id}}</Button>
+            </span>
 
           </span>
 
@@ -22,9 +26,8 @@
             <span>学生管理 - <em>{{cur_class.class_id}}</em></span>
           </span>
           <span class="plans-students-list">
-                <Table :columns="studentCols" :data="studentArr" stripe></Table>
+            <Table :columns="studentCols" :data="studentArr" stripe></Table>
           </span>
-
         </div>
       </div>
     </Card>
@@ -40,7 +43,26 @@
         cur_class: {},
         studentCols: [
           {
-            title: 'school_id',
+            title: '学 号',
+            key: 'school_id',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '姓 名',
+            key: 'name',
+            width: 120
+          },
+          {
+            title: '每周记录',
+            key: 'school_id'
+          },
+          {
+            title: '计划清单',
+            key: 'school_id'
+          },
+          {
+            title: '课堂记录',
             key: 'school_id'
           }
         ],
