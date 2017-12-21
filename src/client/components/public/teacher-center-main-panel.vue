@@ -29,6 +29,7 @@
               <div class="class-import-body">
                 <div class="class-import-left">
                   <Upload action="#"
+                          :accept="'application/vnd.ms-excel'"
                           :data="uploadData"
                           :before-upload="handleUpload">
                     <Button type="primary" size="large" icon="ios-cloud-upload-outline">&emsp;选择文件&emsp;</Button>
@@ -275,6 +276,7 @@
         let _this = this;
         let formData = new FormData();
         formData.append('file', this.uploadData.file);
+        console.log(this.uploadData.file);
 
         this.$ajax.post('/api/user/parse', formData, this.uploadConfig)
           .then(function (res) {

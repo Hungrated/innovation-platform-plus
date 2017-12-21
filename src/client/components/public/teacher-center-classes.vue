@@ -1,21 +1,13 @@
 <template>
-  <div class="teacher-center-main-panel">
-    <div class="main-panel-header">
-      <div class="main-panel-left">
-        <Card disHover>
+  <div class="teacher-center-classes">
+    <Card disHover>
           <span slot="title">
-            <strong>我的班级</strong>
+            <span class="plans-card-header">
+              <strong>课堂记录</strong>
+              <Button @click="" type="text" size="small">导 出</Button>
+            </span>
           </span>
-        </Card>
-      </div>
-      <div class="main-panel-right">
-        <Card disHover>
-          <span slot="title">
-            <strong>我的资料</strong>
-          </span>
-        </Card>
-      </div>
-    </div>
+    </Card>
   </div>
 </template>
 
@@ -25,6 +17,6 @@
   };
 </script>
 
-<style scoped>
-
+<style>
+  @import '../../styles/teacher-center-classes.css';
 </style>
