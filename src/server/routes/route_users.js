@@ -82,46 +82,68 @@ router.post('/parse', function (req, res, next) { // extract user data & convert
       // check if xls is suitable for parsing
       if (sheet.cell(0, 0) !== '教学班点名册') {
         console.log('xls data not suitable for parsing');
-        return res.json(statusLib.USERINFO_PARSE_FAILED);
-      }
-
-      // parse class info
-      let classData = {
-        year: sheet.cell(1, 1),
-        term: sheet.cell(1, 4),
-        class_id: sheet.cell(1, 6),
-        cname: sheet.cell(1, 13),
-        time: sheet.cell(2, 9),
-        loc: sheet.cell(2, 13),
-        status: 'active',
-        teacher_id: Number(sheet.cell(1, 6).split('-')[4])
-      };
-
-      // parse student info
-      let userArr = [];
-      for (let rIdx = 4; rIdx < sheet.row.count; rIdx++) {
-        try {
-          userArr.push({
-            username: sheet.cell(rIdx, 0),
-            password: sheet.cell(rIdx, 0),
-            name: sheet.cell(rIdx, 2),
-            school_id: parseInt(sheet.cell(rIdx, 0)),
-            class_id: parseInt(sheet.cell(rIdx, 4)),
-            grade: 20 + sheet.cell(rIdx, 0)[0] + sheet.cell(rIdx, 0)[1],
-            cur_class: sheet.cell(1, 6),
-            supervisor: sheet.cell(2, 1)
+        return res.json(statusLib.USERINFO_PARSE_FAILED_NOT_SUITABLE);
+      } else {
+        Class.findOne({
+          class_id: sheet.cell(1, 6)
+        })
+          .then(function (classData) {
+            if (classData === null) {
+              req.body.sheet = sheet;
+              next();
+            } else {
+              console.log('duplicated class info');
+              return res.json(statusLib.USERINFO_PARSE_FAILED_DUP_CLASS_INFO);
+            }
+          })
+          .catch(function (e) {
+            console.error(e);
+            res.json(statusLib.USERINFO_IMPORT_FAILED);
+            console.log('validate failed');
           });
-        } catch (e) {
-          console.log(e.message);
-        }
       }
-      res.json({
-        status: statusLib.USERINFO_PARSE_SUCCESSFUL.status,
-        msg: statusLib.USERINFO_PARSE_SUCCESSFUL.msg,
-        classData: classData,
-        userArr: userArr
-      });
     }
+  });
+});
+
+router.post('/parse', function (req, res) {
+  const sheet = req.body.sheet;
+
+  // parse class info
+  let classData = {
+    year: sheet.cell(1, 1),
+    term: sheet.cell(1, 4),
+    class_id: sheet.cell(1, 6),
+    cname: sheet.cell(1, 13),
+    time: sheet.cell(2, 9),
+    loc: sheet.cell(2, 13),
+    status: 'active',
+    teacher_id: Number(sheet.cell(1, 6).split('-')[4])
+  };
+
+  // parse student info
+  let userArr = [];
+  for (let rIdx = 4; rIdx < sheet.row.count; rIdx++) {
+    try {
+      userArr.push({
+        username: sheet.cell(rIdx, 0),
+        password: sheet.cell(rIdx, 0),
+        name: sheet.cell(rIdx, 2),
+        school_id: parseInt(sheet.cell(rIdx, 0)),
+        class_id: parseInt(sheet.cell(rIdx, 4)),
+        grade: 20 + sheet.cell(rIdx, 0)[0] + sheet.cell(rIdx, 0)[1],
+        cur_class: sheet.cell(1, 6),
+        supervisor: sheet.cell(2, 1)
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+  res.json({
+    status: statusLib.USERINFO_PARSE_SUCCESSFUL.status,
+    msg: statusLib.USERINFO_PARSE_SUCCESSFUL.msg,
+    classData: classData,
+    userArr: userArr
   });
 });
 

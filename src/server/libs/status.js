@@ -50,9 +50,14 @@ module.exports = {
     'msg': '学生信息解析成功'
   },
 
-  USERINFO_PARSE_FAILED: {
+  USERINFO_PARSE_FAILED_NOT_SUITABLE: {
     'status': 1301,
     'msg': '学生信息解析失败：表格文件格式不匹配'
+  },
+
+  USERINFO_PARSE_FAILED_DUP_CLASS_INFO: {
+    'status': 1302,
+    'msg': '学生信息解析失败：班级信息已存在，无需重复添加'
   },
 
   USERINFO_IMPORT_SUCCESSFUL: {

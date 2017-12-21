@@ -278,12 +278,16 @@
 
         this.$ajax.post('/api/user/parse', formData, this.uploadConfig)
           .then(function (res) {
-            _this.$Message.success(res.data.msg);
-            _this.uploadData.file = null;
-            _this.classParseData.classData.data.push(res.data.classData);
-            _this.classParseData.students.data = res.data.userArr;
+            if (res.data.status === 1300) {
+              _this.$Message.success(res.data.msg);
+              _this.uploadData.file = null;
+              _this.classParseData.classData.data.push(res.data.classData);
+              _this.classParseData.students.data = res.data.userArr;
+              _this.classImport = true;
+            } else {
+              _this.$Message.error(res.data.msg);
+            }
             _this.classParse = false;
-            _this.classImport = true;
           })
           .catch(function (e) {
             console.log(e);
