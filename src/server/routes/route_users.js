@@ -238,6 +238,7 @@ router.post('/import', function (req, res) { // create record in table `user` & 
                       academy: academy,
                       class_id: users[userIdx].class_id,
                       grade: users[userIdx].grade,
+                      cur_class: users[userIdx].cur_class,
                       supervisor: users[userIdx].supervisor,
                       user_id: user.id
                     }).then(function () {
