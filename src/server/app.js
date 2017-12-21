@@ -34,9 +34,9 @@ app.use(bodyParser.urlencoded({
 })();
 
 // static resources handler
-app.use(express.static(pathLib.join(__dirname, 'public', 'static')));
+app.use(express.static(pathLib.join(__dirname, 'public')));
 
-// routes handler
+// backend routes handler
 const api = require('./middlewares/route_api');
 app.use('/api', api);
 

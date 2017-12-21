@@ -24,7 +24,7 @@ axios.defaults.withCredentials = true;
 Vue.prototype.$ajax = axios;
 
 const router = new VueRouter({
-  mode: 'history',
+  history: true,
   routes: Routers
 });
 
