@@ -24,7 +24,7 @@
             <span>学生信息 - <em>{{cur_class.class_id}}</em></span>
           </span>
           <span class="plans-students-list">
-            <Table :columns="studentCols" :data="studentArr" stripe></Table>
+            <Table :columns="studentCols" :data="studentArr" style="min-width: 800px" stripe></Table>
           </span>
         </div>
       </div>
@@ -43,13 +43,13 @@
           {
             title: '学 号',
             key: 'school_id',
-            width: 100,
+            width: 140,
             sortable: true
           },
           {
             title: '姓 名',
             key: 'name',
-            width: 100
+            width: 130
           },
           {
             title: '最新计划',
@@ -60,11 +60,29 @@
             key: 'school_id'
           },
           {
-            title: '总 评',
-            key: 'school_id'
+            title: '详 情',
+            width: 120,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                    }
+                  }
+                }, '查看与管理')
+              ]);
+            }
           }
         ],
-        studentArr: []
+        studentArr: [],
+        curStudentDetail: {}
       };
     },
     methods: {

@@ -45,7 +45,7 @@
             </div>
           </transition>
           <div class="class-list">
-            <Table :columns="classCols" :data="classData" style="min-width: 850px" stripe></Table>
+            <Table :columns="classCols" :data="classData" style="min-width: 800px" stripe></Table>
           </div>
           <Modal
             v-model="classImport"
@@ -61,10 +61,12 @@
                 </p>
               </div>
               <div class="validate-class-data">
-                <Table :columns="classParseData.classData.cols" :data="classParseData.classData.data" stripe></Table>
+                <Table :columns="classParseData.classData.cols" :data="classParseData.classData.data"
+                       style="min-width: 800px" stripe></Table>
               </div>
               <div class="validate-students">
-                <Table :columns="classParseData.students.cols" :data="classParseData.students.data" stripe></Table>
+                <Table :columns="classParseData.students.cols" :data="classParseData.students.data" style="min-width:
+                 800px" stripe></Table>
               </div>
             </div>
           </Modal>

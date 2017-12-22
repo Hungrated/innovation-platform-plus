@@ -39,7 +39,7 @@
       </div>
     </transition>
     <div class="plan-list" v-if="!planEmpty">
-      <Table :columns="planCols" :data="planData" style="min-width: 850px" stripe></Table>
+      <Table :columns="planCols" :data="planData" style="min-width: 800px" stripe></Table>
     </div>
     <div class="plan-empty" v-if="planEmpty">
       <span><strong>当前暂无计划</strong>&emsp;<Button type="primary" size="large" @click="editPlan()">制定一个新计划</Button></span>
