@@ -278,7 +278,6 @@
         let _this = this;
         let formData = new FormData();
         formData.append('file', this.uploadData.file);
-        console.log(this.uploadData.file);
 
         this.$ajax.post('/api/user/parse', formData, this.uploadConfig)
           .then(function (res) {

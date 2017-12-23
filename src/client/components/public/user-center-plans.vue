@@ -6,7 +6,7 @@
           <span><strong>编辑计划</strong></span>
           <span>
             <Button type="text" size="small" @click="editPlanCancel()">取 消</Button>
-            <Button v-if="planEdit === true" type="primary" size="small" @click="submitPlan()">保 存</Button>
+            <Button v-if="planEdit === true" type="primary" size="small" @click="submitPlan(null)">保 存</Button>
             <Button v-if="planModify === true" type="primary" size="small" @click="submitPlan('modify')">修 改</Button>
           </span>
         </div>
@@ -176,7 +176,6 @@
           range: [plan.start, plan.deadline],
           content: plan.content
         };
-        console.log(plan, this.planUnit);
       },
       submitPlan (op) {
         if (!this.planUnit.term || !this.planUnit.range || !this.planUnit.content) {
