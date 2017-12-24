@@ -4,14 +4,20 @@
       <div class="main-panel-left">
         <Card disHover>
           <span slot="title">
-            <strong>我的班级</strong>
+            <span class="rates-card-header">
+              <strong>评 级</strong>
+              <Button @click="" type="text" size="small">导 出</Button>
+            </span>
           </span>
         </Card>
       </div>
       <div class="main-panel-right">
         <Card disHover>
           <span slot="title">
-            <strong>我的资料</strong>
+            <span class="plans-card-header">
+              <strong>评 级</strong>
+              <Button @click="" type="text" size="small">导 出</Button>
+            </span>
           </span>
         </Card>
       </div>
