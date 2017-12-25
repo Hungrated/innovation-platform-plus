@@ -231,13 +231,6 @@
             console.log(e);
           });
       }
-
-      // show (index) {
-      //   this.$Modal.info({
-      //     title: 'User Info',
-      //     content: `Name：${this.planData[index].name}<br>Age：${this.planData[index].age}<br>Address：${this.planData[index].address}`
-      //   });
-      // }
     },
     mounted () {
       this.refreshPlanList();

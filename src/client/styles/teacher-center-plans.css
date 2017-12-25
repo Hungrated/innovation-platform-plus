@@ -70,7 +70,7 @@
   }
 }
 
-.student-details-header {
+.student-details-subtitle {
   display: flex;
   justify-content: space-between;
   padding: 16px 0;
@@ -79,7 +79,7 @@
   margin-bottom: 20px;
 }
 
-.student-details-header p {
+.student-details-subtitle p {
   margin-left: 20px;
   font-size: 14px;
   color: #999999;
@@ -88,5 +88,43 @@
 .student-details-profile,
 .student-details-plans,
 .student-details-meetings {
-  margin: 20px 0;
+  margin: 5px 0;
+  padding: 15px;
+}
+
+.student-details-profile {
+  display: flex;
+}
+
+.details-profile-avatar {
+  margin-bottom: 20px;
+  flex: 0 0 300px;
+}
+
+.details-profile-info {
+  flex: 1 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background: #F7F7F7;
+}
+
+.details-profile-info-unit {
+  font-size: 15px;
+  margin-bottom: 7px;
+  padding-top: 3px;
+}
+
+.details-profile-info-name {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.details-profile-info-sub {
+  color: #777777;
+}
+
+.details-profile-info-divided {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #DDDDDD;
+  margin-bottom: 10px;
 }

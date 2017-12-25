@@ -1,12 +1,6 @@
 <template>
   <div class="teacher-center-plans">
     <Card disHover>
-      <!--<span slot="title">-->
-      <!--<span class="plans-card-header">-->
-      <!--<strong>学 生</strong>-->
-      <!--<Button @click="" type="text" size="small">导 出</Button>-->
-      <!--</span>-->
-      <!--</span>-->
       <div class="plans-card-body">
         <div class="plans-card-body-left" v-model="classArr">
           <span class="unit-title">
@@ -32,25 +26,68 @@
             width="90"
             @on-ok="closeStudentDetails()"
             cancel-text="">
-            <div class="plans-student-details-container" v-model="curStudentDetail">
-              <div class="student-details-header">
+            <div class="plans-student-details-container" v-model="curStudentDetails">
+              <div class="student-details-subtitle">
                 <p>
-                  <Icon type="information-circled"></Icon>&nbsp;
-                  基本信息
+                  <Icon type="information-circled"></Icon>&nbsp;&nbsp;基本信息
                 </p>
                 <Button type="primary" @click="">导出所有信息为Word</Button>
               </div>
-              <div class="student-details-body">
-                <div class="student-details-profile">
 
+              <div class="student-details-profile">
+                <div class="details-profile-avatar">
+                  <img style="width: 100%; border-radius: 5px;" :src="curStudentDetails.profile.avatar">
                 </div>
-                <div class="student-details-plans">
-                  <Table :columns="curStudentDetail.plans.cols" :data="curStudentDetail.plans.data" stripe></Table>
+                <div class="details-profile-info">
+                  <p class="details-profile-info-unit details-profile-info-name">
+                    <strong>{{curStudentDetails.profile.name}}</strong>
+                    <Icon v-if="curStudentDetails.profile.sex && curStudentDetails.profile.sex === '男'"
+                          style="font-size: 20px;color: #999999"
+                          type="male"></Icon>
+                    <Icon v-if="curStudentDetails.profile.sex && curStudentDetails.profile.sex === '女'"
+                          style="font-size: 20px;color: #999999"
+                          type="female"></Icon>
+                  </p>
+                  <p class="details-profile-info-unit">
+                    <Icon type="university"></Icon>&emsp;{{curStudentDetails.profile.academy}}
+                    {{curStudentDetails.profile.grade}}级 {{curStudentDetails.profile.class_id}}班
+                  </p>
+                  <p class="details-profile-info-unit details-profile-info-sub">
+                    <Icon type="card"></Icon>&emsp;学 号：
+                    {{curStudentDetails.profile.school_id}}
+                  </p>
+                  <p class="details-profile-info-unit details-profile-info-sub details-profile-info-divided">
+                    <Icon type="person-stalker"></Icon>&emsp;导 师：
+                    {{curStudentDetails.profile.supervisor}}
+                  </p>
+                  <p class="details-profile-info-unit details-profile-info-sub">
+                    <Icon type="ios-body"></Icon>&emsp;生 日：
+                    <em v-if="!curStudentDetails.profile.description">未填写</em>
+                    {{curStudentDetails.profile.birth_date}}
+                  </p>
+                  <p class="details-profile-info-unit details-profile-info-sub">
+                    <Icon type="ios-telephone"></Icon>&emsp;电 话：
+                    <em v-if="!curStudentDetails.profile.description">未填写</em>
+                    {{curStudentDetails.profile.phone_num}}
+                  </p>
+                  <p class="details-profile-info-unit details-profile-info-sub">
+                    <Icon type="ios-lightbulb"></Icon>&emsp;简 介：
+                    <em v-if="!curStudentDetails.profile.description">未填写</em>
+                    {{curStudentDetails.profile.description}}
+                  </p>
                 </div>
-                <div class="student-details-meetings">
-                  <Table :columns="curStudentDetail.meetings.cols" :data="curStudentDetail.meetings.data"
-                         stripe></Table>
-                </div>
+              </div>
+              <div class="student-details-subtitle">
+                <p>
+                  <Icon type="navicon-round"></Icon>&nbsp;&nbsp;计划 & 课堂记录
+                </p>
+              </div>
+              <div class="student-details-plans">
+                <Table :columns="curStudentDetails.plans.cols" :data="curStudentDetails.plans.data" stripe></Table>
+              </div>
+              <div class="student-details-meetings">
+                <Table :columns="curStudentDetails.meetings.cols" :data="curStudentDetails.meetings.data"
+                       stripe></Table>
               </div>
             </div>
           </Modal>
@@ -112,8 +149,10 @@
         ],
         studentArr: [],
         studentDetails: false,
-        curStudentDetail: {
-          profile: {},
+        curStudentDetails: {
+          profile: {
+            avatar: null
+          },
           plans: {
             cols: [
               {
@@ -291,7 +330,7 @@
         this.refreshStudentList(unit.class_id);
       },
       revealStudentDetails (id) {
-        // let _this = this;
+        let _this = this;
         this.studentDetails = true;
         this.$ajax.post('/api/profile/query', {
           request: {
@@ -300,7 +339,9 @@
           }
         })
           .then(function (res) {
-            console.log(res.data);
+            _this.curStudentDetails.profile = res.data.profile;
+            _this.curStudentDetails.plans.data = res.data.plans;
+            _this.curStudentDetails.meetings.data = res.meetings.plans;
           })
           .catch(function (e) {
             console.log(e);
