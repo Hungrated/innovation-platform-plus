@@ -16,9 +16,7 @@ User.hasOne(Profile, {
 Profile.hasMany(Plan, {
   foreignKey: 'student_id'
 });
-Profile.hasMany(Blog, {
-  foreignKey: 'author_id'
-});
+
 Profile.hasMany(Meeting, {
   foreignKey: 'student_id'
 });
@@ -33,6 +31,10 @@ Class.belongsTo(Profile, {
   foreignKey: 'teacher_id'
 });
 Class.sync().then();
+
+Blog.belongsTo(Profile, {
+  foreignKey: 'author_id'
+});
 
 Blog.hasMany(Comment, {
   foreignKey: 'blog_id'

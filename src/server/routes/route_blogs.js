@@ -38,9 +38,6 @@ router.post('/query', function (req, res) { // fetch blog list for brief browsin
     where: where,
     include: [{
       model: Profile,
-      where: {
-        school_id: sequelize.col('blog.author_id')
-      },
       attributes: ['name']
     }]
   })
