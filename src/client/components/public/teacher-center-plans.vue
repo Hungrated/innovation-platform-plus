@@ -277,8 +277,7 @@
                         })
                       ])
                     ]);
-                  }
-                  else {
+                  } else {
                     return h('div', [
                       h('em', {
                         style: {
