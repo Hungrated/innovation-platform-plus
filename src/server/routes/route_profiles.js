@@ -107,9 +107,21 @@ router.post('/avatar', function (req, res) { // update database record
 
 router.post('/query', function (req, res, next) { // fetch profile info
   if (typeof req.body.request === 'object') {
+    if (req.body.request.cur_class !== undefined) {
+      req.body.where = {
+        cur_class: req.body.request.cur_class,
+        school_id: {
+          $gt: 9999999 // student
+        }
+      };
+    }
     next();
   } else if (req.body.request === 'all') {
-    req.body.where = {};
+    req.body.where = {
+      school_id: {
+        $gt: 9999999 // student
+      }
+    };
     next();
   } else {
     req.body.where = {

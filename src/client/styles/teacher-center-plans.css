@@ -76,6 +76,7 @@
   padding: 16px 0;
   border-bottom: 1px solid #EEEEEE;
   line-height: 36px;
+  margin-bottom: 20px;
 }
 
 .student-details-header p {
@@ -84,6 +85,8 @@
   color: #999999;
 }
 
-.plans-student-body {
-
+.student-details-profile,
+.student-details-plans,
+.student-details-meetings {
+  margin: 20px 0;
 }
