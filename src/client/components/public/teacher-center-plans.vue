@@ -225,68 +225,14 @@
           meetings: {
             cols: [
               {
-                title: '学 年',
-                key: 'year',
-                width: 120,
-                sortable: true
-              },
-              {
-                title: '学 期',
-                key: 'term',
-                width: 70
-              },
-              {
-                title: '实行日期',
-                key: 'start',
-                width: 120,
-                sortable: true
-              },
-              {
-                title: '截止日期',
-                key: 'deadline',
-                width: 120,
+                title: '日 期',
+                key: 'date',
+                width: 240,
                 sortable: true
               },
               {
                 title: '内 容',
                 key: 'content'
-              },
-              {
-                title: '状 态',
-                key: 'status',
-                width: 75,
-                render: (h, params) => {
-                  return h('div', [
-                    h('strong', {
-                      style: {
-                        color: '#999999'
-                      }
-                    }, params.row.status)
-                  ]);
-                }
-              },
-              {
-                title: '操 作',
-                key: 'action',
-                width: 150,
-                align: 'center',
-                render: (h, params) => {
-                  return h('div', [
-                    h('Button', {
-                      props: {
-                        type: 'primary',
-                        size: 'small'
-                      },
-                      style: {
-                        marginRight: '5px'
-                      },
-                      on: {
-                        click: () => {
-                        }
-                      }
-                    }, '编 辑')
-                  ]);
-                }
               }
             ],
             data: []
@@ -341,7 +287,10 @@
           .then(function (res) {
             _this.curStudentDetails.profile = res.data.profile;
             _this.curStudentDetails.plans.data = res.data.plans;
-            _this.curStudentDetails.meetings.data = res.meetings.plans;
+            _this.curStudentDetails.meetings.data = res.data.meetings;
+            if (_this.curStudentDetails.profile.avatar === null) {
+              _this.curStudentDetails.profile.avatar = require('../../assets/avatar.jpg');
+            }
           })
           .catch(function (e) {
             console.log(e);

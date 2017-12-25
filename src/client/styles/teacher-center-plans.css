@@ -97,21 +97,20 @@
 }
 
 .details-profile-avatar {
-  margin-bottom: 20px;
-  flex: 0 0 300px;
+  flex: 0 0 180px;
+  margin-right: 20px;
 }
 
 .details-profile-info {
   flex: 1 0 auto;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 25px;
+  border-radius: 5px;
   background: #F7F7F7;
 }
 
 .details-profile-info-unit {
   font-size: 15px;
   margin-bottom: 7px;
-  padding-top: 3px;
 }
 
 .details-profile-info-name {
@@ -124,7 +123,7 @@
 }
 
 .details-profile-info-divided {
-  padding-bottom: 16px;
+  padding-bottom: 18px;
   border-bottom: 1px solid #DDDDDD;
   margin-bottom: 10px;
 }
