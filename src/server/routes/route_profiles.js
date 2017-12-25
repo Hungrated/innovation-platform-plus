@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
 const path = require('../app_paths');
 const pathLib = require('path');
@@ -119,16 +119,16 @@ router.post('/query', function (req, res, next) { // parse req data
       req.body.include = [
         {
           model: Plan,
-          where: {
-            student_id: sequelize.col('profile.school_id')
-          },
+          // where: {
+          //   student_id: Sequelize.col('school_id')
+          // },
           attributes: ['content']
         },
         {
           model: Meeting,
-          where: {
-            student_id: sequelize.col('profile.school_id')
-          },
+          // where: {
+          //   student_id: Sequelize.col('school_id')
+          // },
           attributes: ['content']
         }
       ];
@@ -180,7 +180,7 @@ router.post('/query', function (req, res, next) { // class-based query
         console.log('profile does not exist');
       } else {
         res.json(profile);
-        console.log(req.body.where, req.body.include[0].where, profile);
+        // console.log(req.body.include[0].where.student_id.col, profile);
         console.log('profile fetch successful');
       }
     });

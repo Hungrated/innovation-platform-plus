@@ -7,7 +7,7 @@ const File = require('./db_files');
 const Banner = require('./db_banner');
 const Class = require('./db_classes');
 const Meeting = require('./db_meeting');
-const Moment = require('./db_moment');
+const Moment = require('./db_moments');
 
 User.hasOne(Profile, {
   foreignKey: 'user_id'
