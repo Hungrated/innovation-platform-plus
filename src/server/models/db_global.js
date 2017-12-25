@@ -13,6 +13,19 @@ User.hasOne(Profile, {
   foreignKey: 'user_id'
 });
 
+Profile.hasMany(Plan, {
+  foreignKey: 'student_id'
+});
+Profile.hasMany(Blog, {
+  foreignKey: 'author_id'
+});
+Profile.hasMany(Meeting, {
+  foreignKey: 'student_id'
+});
+Profile.hasMany(Moment, {
+  foreignKey: 'student_id'
+});
+
 Profile.sync().then();
 User.sync().then();
 
@@ -20,10 +33,6 @@ Class.belongsTo(Profile, {
   foreignKey: 'teacher_id'
 });
 Class.sync().then();
-
-Blog.belongsTo(Profile, {
-  foreignKey: 'author_id'
-});
 
 Blog.hasMany(Comment, {
   foreignKey: 'blog_id'
@@ -35,10 +44,6 @@ Comment.belongsTo(Profile, {
 
 Blog.sync().then();
 Comment.sync().then();
-
-Plan.belongsTo(Profile, {
-  foreignKey: 'student_id'
-});
 
 Plan.sync().then();
 
@@ -54,19 +59,11 @@ Banner.belongsTo(Profile, {
 
 Banner.sync().then();
 
-Meeting.belongsTo(Profile, {
-  foreignKey: 'student_id'
-});
-
 Meeting.belongsTo(Class, {
   foreignKey: 'class_id'
 });
 
 Meeting.sync().then();
-
-Moment.belongsTo(Profile, {
-  foreignKey: 'student_id'
-});
 
 Moment.sync().then();
 

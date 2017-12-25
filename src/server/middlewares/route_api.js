@@ -10,6 +10,7 @@ const plan = require('../routes/route_plans');
 const comment = require('../routes/route_comments');
 const download = require('./route_download');
 const banner = require('../routes/route_banner');
+const meeting = require('../routes/route_meeting');
 
 router.use('/user', user);
 router.use('/class', classes);
@@ -20,5 +21,6 @@ router.use('/plan', plan);
 router.use('/comment', comment);
 router.use('/download', download);
 router.use('/banner', banner);
+router.use('/meeting', meeting);
 
 module.exports = router;

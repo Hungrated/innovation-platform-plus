@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const sequelize = require('sequelize');
+
 const path = require('../app_paths');
 const pathLib = require('path');
 
@@ -105,7 +107,7 @@ router.post('/avatar', function (req, res) { // update database record
     });
 });
 
-router.post('/query', function (req, res, next) { // fetch profile info
+router.post('/query', function (req, res, next) { // parse req data
   if (typeof req.body.request === 'object') {
     if (req.body.request.cur_class !== undefined) {
       req.body.where = {
@@ -114,6 +116,22 @@ router.post('/query', function (req, res, next) { // fetch profile info
           $gt: 9999999 // student
         }
       };
+      req.body.include = [
+        {
+          model: Plan,
+          where: {
+            student_id: sequelize.col('profile.school_id')
+          },
+          attributes: ['content']
+        },
+        {
+          model: Meeting,
+          where: {
+            student_id: sequelize.col('profile.school_id')
+          },
+          attributes: ['content']
+        }
+      ];
     }
     next();
   } else if (req.body.request === 'all') {
@@ -132,7 +150,7 @@ router.post('/query', function (req, res, next) { // fetch profile info
 });
 
 router.post('/query', function (req, res, next) { // standard query
-  if (req.body.request.details === true) {
+  if (req.body.include !== undefined || req.body.request.details === true) {
     next();
   } else {
     Profile.findAll({
@@ -143,6 +161,26 @@ router.post('/query', function (req, res, next) { // standard query
         console.log('profile does not exist');
       } else {
         res.json(profile);
+        console.log('profile fetch successful');
+      }
+    });
+  }
+});
+
+router.post('/query', function (req, res, next) { // class-based query
+  if (req.body.request.details === true) {
+    next();
+  } else {
+    Profile.findAll({
+      where: req.body.where,
+      include: req.body.include
+    }).then(function (profile) {
+      if (profile === null) {
+        res.json(statusLib.PROFILE_FETCH_FAILED);
+        console.log('profile does not exist');
+      } else {
+        res.json(profile);
+        console.log(req.body.where, req.body.include[0].where, profile);
         console.log('profile fetch successful');
       }
     });
