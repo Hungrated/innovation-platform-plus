@@ -118,11 +118,19 @@
           },
           {
             title: '最新（未审核）计划',
-            key: 'school_id'
+            render: (h, params) => {
+              return h('div', [
+                h('span', params.row.newest_plan.content)
+              ]);
+            }
           },
           {
             title: '最新课堂记录',
-            key: 'school_id'
+            render: (h, params) => {
+              return h('div', [
+                h('span', params.row.newest_meeting.content)
+              ]);
+            }
           },
           {
             title: '详 情',

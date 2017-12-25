@@ -120,7 +120,7 @@ router.post('/query', function (req, res, next) { // parse req data
         {
           model: Plan,
           // where: {
-          //   student_id: Sequelize.col('school_id')
+          //   status: '未审核'
           // },
           attributes: ['content']
         },
@@ -163,7 +163,11 @@ router.post('/query', function (req, res, next) { // standard query
         res.json(profile);
         console.log('profile fetch successful');
       }
-    });
+    })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
   }
 });
 
@@ -174,16 +178,25 @@ router.post('/query', function (req, res, next) { // class-based query
     Profile.findAll({
       where: req.body.where,
       include: req.body.include
-    }).then(function (profile) {
-      if (profile === null) {
+    }).then(function (profiles) {
+      if (!profiles.length) {
         res.json(statusLib.PROFILE_FETCH_FAILED);
         console.log('profile does not exist');
       } else {
-        res.json(profile);
-        // console.log(req.body.include[0].where.student_id.col, profile);
+        for (let i = 0; i < profiles.length; i++) {
+          profiles[i].dataValues.newest_plan = profiles[i].dataValues.plans[0] ? profiles[i].dataValues.plans[0] : {content: '暂 无'};
+          profiles[i].dataValues.newest_meeting = profiles[i].dataValues.meetings[0] ? profiles[i].dataValues.meetings[0] : {content: '暂 无'};
+          delete profiles[i].dataValues.plans;
+          delete profiles[i].dataValues.meetings;
+        }
+        res.json(profiles);
         console.log('profile fetch successful');
       }
-    });
+    })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
   }
 });
 

@@ -20,6 +20,7 @@ Profile.hasMany(Plan, {
 Profile.hasMany(Meeting, {
   foreignKey: 'student_id'
 });
+
 Profile.hasMany(Moment, {
   foreignKey: 'student_id'
 });
