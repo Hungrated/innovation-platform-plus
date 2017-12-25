@@ -117,11 +117,11 @@
             width: 130
           },
           {
-            title: '最新计划',
+            title: '最新（未审核）计划',
             key: 'school_id'
           },
           {
-            title: '最新记录',
+            title: '最新课堂记录',
             key: 'school_id'
           },
           {
