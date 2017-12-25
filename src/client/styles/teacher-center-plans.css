@@ -69,3 +69,21 @@
     width: 1131px;
   }
 }
+
+.student-details-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid #EEEEEE;
+  line-height: 36px;
+}
+
+.student-details-header p {
+  margin-left: 20px;
+  font-size: 14px;
+  color: #999999;
+}
+
+.plans-student-body {
+
+}

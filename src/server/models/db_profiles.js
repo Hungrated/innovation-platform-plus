@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 const mysql = require('../middlewares/sequelize');
-const pathLib = require('path');
+// const pathLib = require('path');
 
 const schema = {
   school_id: {
@@ -10,10 +10,7 @@ const schema = {
     unique: true
   },
   avatar: {
-    type: Sequelize.STRING,
-    set: function (val) {
-      this.setDataValue('avatar', pathLib.resolve(val));
-    }
+    type: Sequelize.STRING
   },
   name: {
     type: Sequelize.STRING(16),

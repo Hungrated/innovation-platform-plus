@@ -26,6 +26,27 @@
           <span class="plans-students-list">
             <Table :columns="studentCols" :data="studentArr" style="min-width: 800px" stripe></Table>
           </span>
+          <Modal
+            v-model="studentDetails"
+            title="学生详细信息"
+            width="90"
+            @on-ok="closeStudentDetails()"
+            @on-cancel="closeStudentDetails()">
+            <div class="plans-student-details-container" v-model="curStudentDetail">
+              <div class="student-details-header">
+                <p>
+                  <Icon type="information-circled"></Icon>&nbsp;
+                  基本信息
+                </p>
+                <Button type="primary" @click="">导出所有信息为Word</Button>
+              </div>
+              <div class="student-details-body">
+                <div class="student-details-plans">
+                  <Table :columns="curStudentDetail.cols" :data="curStudentDetail.data" stripe></Table>
+                </div>
+              </div>
+            </div>
+          </Modal>
         </div>
       </div>
     </Card>
@@ -74,6 +95,7 @@
                   },
                   on: {
                     click: () => {
+                      this.revealStudentDetails(params.row.school_id);
                     }
                   }
                 }, '查看与管理')
@@ -82,7 +104,32 @@
           }
         ],
         studentArr: [],
-        curStudentDetail: {}
+        studentDetails: false,
+        curStudentDetail: {
+          header: {},
+          cols: [
+            {
+              title: '学 号',
+              key: 'school_id',
+              width: 140,
+              sortable: true
+            },
+            {
+              title: '姓 名',
+              key: 'name',
+              width: 130
+            },
+            {
+              title: '最新计划',
+              key: 'school_id'
+            },
+            {
+              title: '最新记录',
+              key: 'school_id'
+            }
+          ],
+          data: []
+        }
       };
     },
     methods: {
@@ -119,6 +166,23 @@
       changeClass (unit) {
         this.cur_class = unit;
         this.refreshStudentList(unit.class_id);
+      },
+      revealStudentDetails (id) {
+        // let _this = this;
+        this.studentDetails = true;
+        this.$ajax.post('/api/profile/query', {
+          request: id,
+          details: true
+        })
+          .then(function (res) {
+            console.log(res.data);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      closeStudentDetails () {
+        this.studentDetails = false;
       }
     },
     mounted () {
