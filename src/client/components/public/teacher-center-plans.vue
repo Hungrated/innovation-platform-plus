@@ -117,7 +117,7 @@
             width: 130
           },
           {
-            title: '最新（未审核）计划',
+            title: '最新计划',
             render: (h, params) => {
               return h('div', [
                 h('span', params.row.newest_plan.content)
@@ -134,23 +134,24 @@
                 }
               }, [
                 h('span', params.row.newest_meeting.content),
-                h('Button', {
+                h('i-poptip', {
                   props: {
-                    type: 'dashed',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.revealStudentDetails(params.row.school_id);
-                    }
+                    title: '新增课堂记录：' + params.row.name
                   }
                 }, [
-                  h('Icon', {
+                  h('Button', {
                     props: {
-                      type: 'edit'
+                      type: 'dashed',
+                      size: 'small'
                     }
-                  }),
-                  h('span', ' 新 增')
+                  }, [
+                    h('Icon', {
+                      props: {
+                        type: 'edit'
+                      }
+                    }),
+                    h('span', ' 新 增')
+                  ])
                 ])
               ]);
             }
