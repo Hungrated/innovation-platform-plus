@@ -116,52 +116,129 @@
           {
             title: '学 号',
             key: 'school_id',
-            width: 140,
+            width: 100,
             sortable: true
           },
           {
             title: '姓 名',
-            key: 'name',
-            width: 130,
-            sortable: true
+            width: 85,
+            sortable: true,
+            render: (h, params) => {
+              return h('strong', params.row.name);
+            }
           },
           {
             title: '最新计划',
             render: (h, params) => {
-              return h('div', [
-                h('span', params.row.newest_plan.content)
-              ]);
+              if (params.row.newest_plan !== null) {
+                return h('div', [
+                  h('span', {
+                    style: {
+                      padding: '1px 5px',
+                      borderRadius: '3px',
+                      background: '#19be6b',
+                      color: '#FFFFFF',
+                      marginRight: '5px'
+                    }
+                  }, params.row.newest_plan.start + ' - ' + params.row.newest_plan.deadline),
+                  h('strong', params.row.newest_plan.content)
+                ]);
+              } else {
+                return h('div', {
+                  style: {
+                    lineHeight: '24px'
+                  }
+                }, [
+                  h('span', '暂 无')
+                ]);
+              }
             }
           },
           {
             title: '最新课堂记录',
             render: (h, params) => {
-              return h('div', {
-                style: {
-                  display: 'flex',
-                  justifyContent: 'space-between'
-                }
-              }, [
-                h('span', params.row.newest_meeting.content),
-                h('Button', {
-                  props: {
-                    type: 'dashed',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.addClassRec(params.row);
-                    }
+              if (params.row.newest_meeting !== null) {
+                return h('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'space-between'
                   }
                 }, [
-                  h('Icon', {
-                    props: {
-                      type: 'edit'
+                  h('span', [
+                    h('span', {
+                      style: {
+                        padding: '1px 5px',
+                        borderRadius: '3px',
+                        background: '#19be6b',
+                        color: '#FFFFFF',
+                        marginRight: '5px'
+                      }
+                    }, params.row.newest_meeting.date),
+                    h('strong', params.row.newest_meeting.content)
+                  ]),
+                  h('span', {
+                    style: {
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center'
                     }
-                  }),
-                  h('span', ' 新 增')
-                ])
-              ]);
+                  }, [
+                    h('Button', {
+                      props: {
+                        type: 'dashed',
+                        size: 'small'
+                      },
+                      on: {
+                        click: () => {
+                          this.addClassRec(params.row);
+                        }
+                      }
+                    }, [
+                      h('Icon', {
+                        props: {
+                          type: 'edit'
+                        }
+                      }),
+                      h('span', ' 新 增')
+                    ])
+                  ])
+                ]);
+              } else {
+                return h('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }
+                }, [
+                  h('span', '暂 无'),
+                  h('span', {
+                    style: {
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center'
+                    }
+                  }, [
+                    h('Button', {
+                      props: {
+                        type: 'dashed',
+                        size: 'small'
+                      },
+                      on: {
+                        click: () => {
+                          this.addClassRec(params.row);
+                        }
+                      }
+                    }, [
+                      h('Icon', {
+                        props: {
+                          type: 'edit'
+                        }
+                      }),
+                      h('span', ' 新 增')
+                    ])
+                  ])
+                ]);
+              }
             }
           },
           {

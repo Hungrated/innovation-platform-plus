@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const Sequelize = require('sequelize');
-
 const path = require('../app_paths');
 const pathLib = require('path');
 
@@ -119,17 +117,11 @@ router.post('/query', function (req, res, next) { // parse req data
       req.body.include = [
         {
           model: Plan,
-          // where: {
-          //   status: '未审核'
-          // },
-          attributes: ['content']
+          attributes: ['start', 'deadline', 'content']
         },
         {
           model: Meeting,
-          // where: {
-          //   student_id: Sequelize.col('school_id')
-          // },
-          attributes: ['content']
+          attributes: ['date', 'content']
         }
       ];
     }
@@ -184,8 +176,10 @@ router.post('/query', function (req, res, next) { // class-based query
         console.log('profile does not exist');
       } else {
         for (let i = 0; i < profiles.length; i++) {
-          profiles[i].dataValues.newest_plan = profiles[i].dataValues.plans[0] ? profiles[i].dataValues.plans[0] : {content: '暂 无'};
-          profiles[i].dataValues.newest_meeting = profiles[i].dataValues.meetings[0] ? profiles[i].dataValues.meetings[0] : {content: '暂 无'};
+          let plansLength = profiles[i].dataValues.plans.length - 1;
+          let meetingsLength = profiles[i].dataValues.meetings.length - 1;
+          profiles[i].dataValues.newest_plan = profiles[i].dataValues.plans[plansLength] ? profiles[i].dataValues.plans[plansLength] : null;
+          profiles[i].dataValues.newest_meeting = profiles[i].dataValues.meetings[meetingsLength] ? profiles[i].dataValues.meetings[meetingsLength] : null;
           delete profiles[i].dataValues.plans;
           delete profiles[i].dataValues.meetings;
         }
