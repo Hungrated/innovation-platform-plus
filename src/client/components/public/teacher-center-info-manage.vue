@@ -1,19 +1,15 @@
 <template>
-  <div class="teacher-center-main-panel">
-    <div class="main-panel-header">
+  <div class="info-manage-container">
+    <div class="info-manage-header">
       <div class="main-panel-left">
         <Card disHover>
           <span slot="title">
-            <strong>我的班级</strong>
+            <strong>筛选条件</strong>
           </span>
         </Card>
       </div>
-      <div class="main-panel-right">
-        <Card disHover>
-          <span slot="title">
-            <strong>我的资料</strong>
-          </span>
-        </Card>
+      <div class="info-manage-body">
+        <!--不同的component在这里，展示表格-->
       </div>
     </div>
   </div>
@@ -25,6 +21,6 @@
   };
 </script>
 
-<style scoped>
-
+<style>
+  @import '../../styles/teacher-center-info-manage.css';
 </style>
