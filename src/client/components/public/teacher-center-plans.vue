@@ -93,6 +93,14 @@
           </Modal>
         </div>
       </div>
+      <Modal
+        v-model="classRec"
+        width="750px"
+        :closable="false"
+        @on-ok="submitClassRec()"
+        @on-cancel="addClassRecCancel()">
+        <i-input v-model="classRecData.content" :placeholder="curClassRecProfile.name + '的新课堂记录...'"></i-input>
+      </Modal>
     </Card>
   </div>
 </template>
@@ -134,24 +142,23 @@
                 }
               }, [
                 h('span', params.row.newest_meeting.content),
-                h('i-poptip', {
+                h('Button', {
                   props: {
-                    title: '新增课堂记录：' + params.row.name
+                    type: 'dashed',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.addClassRec(params.row);
+                    }
                   }
                 }, [
-                  h('Button', {
+                  h('Icon', {
                     props: {
-                      type: 'dashed',
-                      size: 'small'
+                      type: 'edit'
                     }
-                  }, [
-                    h('Icon', {
-                      props: {
-                        type: 'edit'
-                      }
-                    }),
-                    h('span', ' 新 增')
-                  ])
+                  }),
+                  h('span', ' 新 增')
                 ])
               ]);
             }
@@ -307,7 +314,15 @@
             ],
             data: []
           }
-        }
+        },
+        curClassRecProfile: {},
+        classRecData: {
+          date: '',
+          content: '',
+          school_id: null,
+          class_id: ''
+        },
+        classRec: false
       };
     },
     methods: {
@@ -381,6 +396,33 @@
           .catch(function (e) {
             console.log(e);
           });
+      },
+      now (time) {
+        let curTime = time;
+        let convert = function (digit) {
+          if (digit < 10) return '0' + digit;
+          else return digit.toString();
+        };
+        let year = curTime.getFullYear();
+        let month = convert(curTime.getMonth() + 1);
+        let day = convert(curTime.getDate());
+        return year + '-' + month + '-' + day;
+      },
+      addClassRec (profile) {
+        this.curClassRecProfile = profile;
+        this.classRecData = {
+          date: this.now(new Date()),
+          school_id: profile.school_id,
+          class_id: profile.cur_class
+        };
+        this.classRec = true;
+      },
+      addClassRecCancel () {
+        this.classRec = false;
+      },
+      submitClassRec () {
+        console.log(this.classRecData);
+        this.refreshStudentList(this.cur_class.class_id);
       }
     },
     mounted () {
