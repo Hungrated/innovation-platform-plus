@@ -144,7 +144,9 @@
                       color: '#FFFFFF',
                       marginRight: '5px'
                     }
-                  }, params.row.newest_plan.start + ' - ' + params.row.newest_plan.deadline),
+                  }, params.row.newest_plan.start + ' - ' +
+                    params.row.newest_plan.deadline + '  |  ' +
+                    params.row.newest_plan.status),
                   h('br'),
                   h('strong', params.row.newest_plan.content)
                 ]);
@@ -187,7 +189,8 @@
                     style: {
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      marginLeft: '10px'
                     }
                   }, [
                     h('Button', {
@@ -223,7 +226,8 @@
                     style: {
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      marginLeft: '10px'
                     }
                   }, [
                     h('Button', {

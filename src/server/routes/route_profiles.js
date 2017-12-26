@@ -117,7 +117,7 @@ router.post('/query', function (req, res, next) { // parse req data
       req.body.include = [
         {
           model: Plan,
-          attributes: ['start', 'deadline', 'content']
+          attributes: ['start', 'deadline', 'content', 'status']
         },
         {
           model: Meeting,
