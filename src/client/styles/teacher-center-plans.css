@@ -102,8 +102,9 @@
 }
 
 .details-profile-info {
+  height: 180px;
   flex: 1 0 auto;
-  padding: 25px;
+  padding: 15px 25px;
   border-radius: 5px;
   background: #F7F7F7;
 }
@@ -122,8 +123,18 @@
   color: #777777;
 }
 
-.details-profile-info-divided {
-  padding-bottom: 18px;
-  border-bottom: 1px solid #DDDDDD;
-  margin-bottom: 10px;
+/*.details-profile-info-divided {*/
+/*padding-bottom: 18px;*/
+/*border-bottom: 1px solid #DDDDDD;*/
+/*margin-bottom: 10px;*/
+/*}*/
+
+.details-profile-info-block {
+  display: flex;
+}
+
+.details-profile-info-blockunit-right {
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 1px solid #DDDDDD;
 }

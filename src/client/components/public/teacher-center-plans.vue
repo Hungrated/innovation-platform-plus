@@ -39,7 +39,7 @@
                   <img style="width: 100%; border-radius: 5px;" :src="curStudentDetails.profile.avatar">
                 </div>
                 <div class="details-profile-info">
-                  <p class="details-profile-info-unit details-profile-info-name">
+                  <div class="details-profile-info-unit details-profile-info-name">
                     <strong>{{curStudentDetails.profile.name}}</strong>
                     <Icon v-if="curStudentDetails.profile.sex && curStudentDetails.profile.sex === '男'"
                           style="font-size: 20px;color: #999999"
@@ -47,34 +47,40 @@
                     <Icon v-if="curStudentDetails.profile.sex && curStudentDetails.profile.sex === '女'"
                           style="font-size: 20px;color: #999999"
                           type="female"></Icon>
-                  </p>
-                  <p class="details-profile-info-unit">
-                    <Icon type="university"></Icon>&emsp;{{curStudentDetails.profile.academy}}
-                    {{curStudentDetails.profile.grade}}级 {{curStudentDetails.profile.class_id}}班
-                  </p>
-                  <p class="details-profile-info-unit details-profile-info-sub">
-                    <Icon type="card"></Icon>&emsp;学 号：
-                    {{curStudentDetails.profile.school_id}}
-                  </p>
-                  <p class="details-profile-info-unit details-profile-info-sub details-profile-info-divided">
-                    <Icon type="person-stalker"></Icon>&emsp;导 师：
-                    {{curStudentDetails.profile.supervisor}}
-                  </p>
-                  <p class="details-profile-info-unit details-profile-info-sub">
-                    <Icon type="ios-body"></Icon>&emsp;生 日：
-                    <em v-if="!curStudentDetails.profile.description">未填写</em>
-                    {{curStudentDetails.profile.birth_date}}
-                  </p>
-                  <p class="details-profile-info-unit details-profile-info-sub">
-                    <Icon type="ios-telephone"></Icon>&emsp;电 话：
-                    <em v-if="!curStudentDetails.profile.description">未填写</em>
-                    {{curStudentDetails.profile.phone_num}}
-                  </p>
-                  <p class="details-profile-info-unit details-profile-info-sub">
-                    <Icon type="ios-lightbulb"></Icon>&emsp;简 介：
-                    <em v-if="!curStudentDetails.profile.description">未填写</em>
-                    {{curStudentDetails.profile.description}}
-                  </p>
+                  </div>
+                  <div class="details-profile-info-block">
+                    <span class="details-profile-info-blockunit">
+                      <p class="details-profile-info-unit">
+                        <Icon type="university"></Icon>&emsp;{{curStudentDetails.profile.academy}}
+                        {{curStudentDetails.profile.grade}}级 {{curStudentDetails.profile.class_id}}班
+                      </p>
+                      <p class="details-profile-info-unit details-profile-info-sub">
+                        <Icon type="card"></Icon>&emsp;学 号：
+                        {{curStudentDetails.profile.school_id}}
+                      </p>
+                      <p class="details-profile-info-unit details-profile-info-sub">
+                        <Icon type="person-stalker"></Icon>&emsp;导 师：
+                        {{curStudentDetails.profile.supervisor}}
+                      </p>
+                    </span>
+                    <span class="details-profile-info-blockunit-right">
+                      <p class="details-profile-info-unit details-profile-info-sub">
+                        <Icon type="ios-body"></Icon>&emsp;生 日：
+                        <em v-if="!curStudentDetails.profile.description">未填写</em>
+                        {{curStudentDetails.profile.birth_date}}
+                      </p>
+                      <p class="details-profile-info-unit details-profile-info-sub">
+                        <Icon type="ios-telephone"></Icon>&emsp;电 话：
+                        <em v-if="!curStudentDetails.profile.description">未填写</em>
+                        {{curStudentDetails.profile.phone_num}}
+                      </p>
+                      <p class="details-profile-info-unit details-profile-info-sub">
+                        <Icon type="ios-lightbulb"></Icon>&emsp;简 介：
+                        <em v-if="!curStudentDetails.profile.description">未填写</em>
+                        {{curStudentDetails.profile.description}}
+                      </p>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div class="student-details-subtitle">
