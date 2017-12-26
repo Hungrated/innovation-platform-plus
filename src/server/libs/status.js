@@ -225,6 +225,16 @@ module.exports = {
     'msg': '班级获取为空'
   },
 
+  MEETING_REC_SUBMIT_SUCCESSFUL: {
+    'status': 7000,
+    'msg': '记录提交成功'
+  },
+
+  MEETING_REC_SUBMIT_FAILED: {
+    'status': 7001,
+    'msg': '记录提交失败'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'

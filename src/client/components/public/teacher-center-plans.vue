@@ -122,7 +122,8 @@
           {
             title: '姓 名',
             key: 'name',
-            width: 130
+            width: 130,
+            sortable: true
           },
           {
             title: '最新计划',
@@ -319,7 +320,7 @@
         classRecData: {
           date: '',
           content: '',
-          school_id: null,
+          student_id: null,
           class_id: ''
         },
         classRec: false
@@ -412,7 +413,7 @@
         this.curClassRecProfile = profile;
         this.classRecData = {
           date: this.now(new Date()),
-          school_id: profile.school_id,
+          student_id: profile.school_id,
           class_id: profile.cur_class
         };
         this.classRec = true;
@@ -421,7 +422,14 @@
         this.classRec = false;
       },
       submitClassRec () {
-        console.log(this.classRecData);
+        let _this = this;
+        this.$ajax.post('/api/meeting/submit', this.classRecData)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
         this.refreshStudentList(this.cur_class.class_id);
       }
     },
