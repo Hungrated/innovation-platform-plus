@@ -131,7 +131,11 @@
             title: '最新计划',
             render: (h, params) => {
               if (params.row.newest_plan !== null) {
-                return h('div', [
+                return h('div', {
+                  style: {
+                    padding: '5px'
+                  }
+                }, [
                   h('span', {
                     style: {
                       padding: '1px 5px',
@@ -141,12 +145,13 @@
                       marginRight: '5px'
                     }
                   }, params.row.newest_plan.start + ' - ' + params.row.newest_plan.deadline),
+                  h('br'),
                   h('strong', params.row.newest_plan.content)
                 ]);
               } else {
                 return h('div', {
                   style: {
-                    lineHeight: '24px'
+                    padding: '5px'
                   }
                 }, [
                   h('span', '暂 无')
@@ -161,7 +166,8 @@
                 return h('div', {
                   style: {
                     display: 'flex',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    padding: '5px'
                   }
                 }, [
                   h('span', [
@@ -174,6 +180,7 @@
                         marginRight: '5px'
                       }
                     }, params.row.newest_meeting.date),
+                    h('br'),
                     h('strong', params.row.newest_meeting.content)
                   ]),
                   h('span', {
@@ -207,7 +214,8 @@
                 return h('div', {
                   style: {
                     display: 'flex',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    padding: '5px'
                   }
                 }, [
                   h('span', '暂 无'),
