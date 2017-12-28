@@ -153,7 +153,7 @@
                   }, params.row.newest_plan.start + ' - ' +
                     params.row.newest_plan.deadline + '  |  ' +
                     params.row.newest_plan.status),
-                  h('br'),
+                  // h('br'),
                   h('strong', params.row.newest_plan.content)
                 ]);
               } else {
@@ -188,7 +188,7 @@
                         marginRight: '5px'
                       }
                     }, params.row.newest_meeting.date),
-                    h('br'),
+                    // h('br'),
                     h('strong', params.row.newest_meeting.content)
                   ]),
                   h('span', {
