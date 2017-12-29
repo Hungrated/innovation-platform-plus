@@ -55,7 +55,6 @@
 
 <script>
   import mdEditor from './articles-compose-markDownEditor';
-  import rtEditor from './articles-compose-richTextEditor';
 
   export default {
     name: 'articles-compose',
