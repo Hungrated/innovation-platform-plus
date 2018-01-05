@@ -296,7 +296,7 @@ router.post('/export', function (req, res) { // export plan archive
   },
     {
       type: 'image',
-      path: pathLib.resolve(__dirname, '../public/images/HDU_LOGO.png'),
+      path: pathLib.resolve(__dirname, '../public/assets/HDU_LOGO.png'),
       opt: {cx: 150, cy: 50}
     },
     {
@@ -306,7 +306,7 @@ router.post('/export', function (req, res) { // export plan archive
     },
     {
       type: 'image',
-      path: pathLib.resolve(__dirname, '../public/images/innovation_practice.png'),
+      path: pathLib.resolve(__dirname, '../public/assets/innovation_practice.png'),
       opt: {cx: 150, cy: 50}
     }
   ];
@@ -556,9 +556,8 @@ router.post('/export', function (req, res) { // export plan archive
         res.json({
           status: statusLib.PLAN_EXPORT_SUCCESSFUL.status,
           msg: statusLib.PLAN_EXPORT_SUCCESSFUL.msg,
-          path: filePath
+          path: '/api/download?plans=' + fileName
         });
-        // res.download(filePath);
         done(null);
       });
       docx.generate(out);

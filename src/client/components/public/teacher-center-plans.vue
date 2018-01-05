@@ -31,7 +31,7 @@
                 <p>
                   <Icon type="information-circled"></Icon>&nbsp;&nbsp;基本信息
                 </p>
-                <Button type="primary" @click="">导出所有信息为Word</Button>
+                <Button type="primary" @click="exportPlan(curStudentDetails.profile.school_id)">导出所有信息为Word</Button>
               </div>
 
               <div class="student-details-profile">
@@ -108,6 +108,7 @@
         <i-input v-model="classRecData.content" :placeholder="curClassRecProfile.name + '的新课堂记录...'"></i-input>
       </Modal>
     </Card>
+    <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
   </div>
 </template>
 
@@ -531,11 +532,25 @@
         this.$ajax.post('/api/meeting/submit', this.classRecData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
+            _this.refreshStudentList(_this.cur_class.class_id);
           })
           .catch(function (e) {
             console.log(e);
           });
-        this.refreshStudentList(this.cur_class.class_id);
+      },
+      exportPlan (id) {
+        let _this = this;
+        this.$ajax.post('/api/plan/export', {
+          student_id: id
+        })
+          .then(function (res) {
+            let a = document.getElementById('fileDownloadTmpFrame');
+            a.src = res.data.path;
+            _this.$Message.success('文件下载成功');
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
     mounted () {

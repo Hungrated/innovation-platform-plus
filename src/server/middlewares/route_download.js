@@ -6,17 +6,21 @@ const urlLib = require('url');
 const statusLib = require('../libs/status');
 
 router.get('/', function (req, res) { // download a file
-
   const raw = urlLib.parse(req.url, true).query;
   let filename = null;
   let realPath = null;
+
   if (raw.resource) {
     filename = raw.resource;
     realPath = path.sources;
   } else if (raw.avatar) {
     filename = raw.avatar;
     realPath = path.avatars;
+  } else if (raw.plans) {
+    filename = raw.plans;
+    realPath = path.plans;
   }
+
   const realDir = pathLib.join(realPath, filename);
 
   res.download(realDir, function (err) {
@@ -25,7 +29,6 @@ router.get('/', function (req, res) { // download a file
       res.json(statusLib.FILE_DOWNLOAD_FAILED);
     }
   });
-
 });
 
 module.exports = router;
