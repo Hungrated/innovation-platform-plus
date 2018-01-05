@@ -139,7 +139,10 @@
               if (params.row.newest_plan !== null) {
                 return h('div', {
                   style: {
-                    padding: '5px'
+                    padding: '5px',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
                   }
                 }, [
                   h('span', {
@@ -154,7 +157,7 @@
                     params.row.newest_plan.deadline + '  |  ' +
                     params.row.newest_plan.status),
                   // h('br'),
-                  h('strong', params.row.newest_plan.content)
+                  h('span', params.row.newest_plan.content)
                 ]);
               } else {
                 return h('div', {
@@ -178,7 +181,14 @@
                     padding: '5px'
                   }
                 }, [
-                  h('span', [
+                  h('div', {
+                    style: {
+                      lineHeight: '24px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }
+                  }, [
                     h('span', {
                       style: {
                         padding: '1px 5px',
