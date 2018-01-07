@@ -59,14 +59,14 @@
 }
 
 .plans-students-list {
-  width: calc(100vw - 444px);
+  width: calc(100vw - 434px);
   min-width: 446px;
   overflow: auto;
 }
 
 @media only screen and (min-width: 1600px) {
   .plans-students-list {
-    width: 1181px;
+    width: 1171px;
   }
 }
 
