@@ -13,16 +13,16 @@
               <Icon type="university"></Icon>&emsp;班级与学生
             </span>
           </MenuItem>
-          <!--<MenuItem name="3">-->
-          <!--<span @click="changePanel('classes')">-->
-          <!--<Icon type="android-chat"></Icon>&emsp;课 堂-->
-          <!--</span>-->
-          <!--</MenuItem>-->
-          <!--<MenuItem name="4">-->
-          <!--<span @click="changePanel('rates')">-->
-          <!--<Icon type="trophy"></Icon>&emsp;总 评-->
-          <!--</span>-->
-          <!--</MenuItem>-->
+          <MenuItem name="3">
+          <span @click="changePanel('classes')">
+          <Icon type="android-chat"></Icon>&emsp;课 堂
+          </span>
+          </MenuItem>
+          <MenuItem name="4">
+          <span @click="changePanel('rates')">
+          <Icon type="trophy"></Icon>&emsp;总 评
+          </span>
+          </MenuItem>
           <MenuItem name="5">
             <span @click="changePanel('info-manage')">
               <Icon type="settings"></Icon>&emsp;全站信息管理
@@ -34,8 +34,8 @@
     <div class="teacher-center-main">
       <teacher-center-main-panel v-if="panel === 'main-panel'"></teacher-center-main-panel>
       <teacher-center-plans v-if="panel === 'plans'"></teacher-center-plans>
-      <!--<teacher-center-classes v-if="panel === 'classes'"></teacher-center-classes>-->
-      <!--<teacher-center-rates v-if="panel === 'rates'"></teacher-center-rates>-->
+      <teacher-center-classes v-if="panel === 'classes'"></teacher-center-classes>
+      <teacher-center-rates v-if="panel === 'rates'"></teacher-center-rates>
       <teacher-center-info-manage v-if="panel === 'info-manage'"></teacher-center-info-manage>
     </div>
   </div>
