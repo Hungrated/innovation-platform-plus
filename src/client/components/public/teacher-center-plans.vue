@@ -4,7 +4,7 @@
       <div class="plans-card-body">
         <div class="plans-card-body-left" v-model="classArr">
           <span class="unit-title">
-            <span>班级信息</span>
+            <span class="unit-title-info">班级信息</span>
           </span>
           <span class="plans-class-list">
             <span class="plans-class-unit" v-for="unit in classArr" :key="unit.class_id">
@@ -15,7 +15,12 @@
         </div>
         <div class="plans-card-body-right" v-model="cur_class">
           <span class="unit-title">
-            <span>学生信息 - <em>{{cur_class.class_id}}</em></span>
+            <span class="unit-title-info">学生信息 - <em>{{cur_class.class_id}}</em></span>
+            <span class="unit-title-btn">
+              <Button @click="" type="primary" size="small">计 划</Button>
+              &nbsp;|&nbsp;
+              <Button @click="" type="primary" size="small">总 评</Button>
+            </span>
           </span>
           <span class="plans-students-list">
             <Table :columns="studentCols" :data="studentArr" style="min-width: 800px" stripe></Table>
@@ -345,7 +350,7 @@
               {
                 title: '审 核',
                 key: 'action',
-                width: 100,
+                width: 125,
                 render: (h, params) => {
                   if (params.row.status === '未审核') {
                     return h('div', [
@@ -368,7 +373,8 @@
                           props: {
                             type: 'checkmark'
                           }
-                        })
+                        }),
+                        h('span', '通 过')
                       ]),
                       h('Button', {
                         props: {

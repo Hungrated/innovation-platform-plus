@@ -4,13 +4,14 @@ const mysql = require('../middlewares/sequelize');
 
 const schema = {
   moment_id: {
-    type: Sequelize.STRING(32),
+    type: Sequelize.INTEGER(11),
+    autoIncrement: true,
     primaryKey: true,
     unique: true
   },
   type: {
     type: Sequelize.ENUM,
-    values: ['blog', 'comment', 'plan'],
+    values: ['article', 'resource', 'planmod'],
     allowNull: false
   },
   desc: {

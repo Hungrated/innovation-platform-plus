@@ -9,7 +9,7 @@
 }
 
 .main-panel-right {
-  flex: 0 0 315px;
+  flex: 0 0 300px;
   margin-left: 20px;
 }
 
@@ -98,4 +98,23 @@
 
 .teacher-profile em {
   color: #999999;
+}
+
+/* moment */
+
+.moment-item {
+  font-size: 15px;
+}
+
+.moment-item-container {
+  padding: 20px 35px 0 35px;
+  background: #FAFAFA;
+  border-radius: 5px;
+}
+
+.moment-item-time {
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: #2db7f5;
+  color: #EEEEEE;
 }

@@ -21,10 +21,6 @@ Profile.hasMany(Meeting, {
   foreignKey: 'student_id'
 });
 
-Profile.hasMany(Moment, {
-  foreignKey: 'student_id'
-});
-
 Profile.sync().then();
 User.sync().then();
 
@@ -67,6 +63,10 @@ Meeting.belongsTo(Class, {
 });
 
 Meeting.sync().then();
+
+Moment.belongsTo(Profile, {
+  foreignKey: 'student_id'
+});
 
 Moment.sync().then();
 

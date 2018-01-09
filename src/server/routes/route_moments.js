@@ -14,19 +14,20 @@ router.get('/fetch', function (req, res) {
 
   Moment.findAll({
     where: where,
+    limit: 20,
     include: [{
       model: Profile,
-      attributes: ['name', 'student_id']
+      attributes: ['name']
     }]
   })
-    .then(function () {
-      res.json(statusLib.MOMENT_FETCH_SUCCESSFUL);
-      console.log('comment successful');
+    .then(function (moments) {
+      res.json(moments);
+      console.log('moment fetch successful');
     })
     .catch(function (e) {
       console.error(e);
       res.json(statusLib.MOMENT_FETCH_FAILED);
-      console.log('publish failed');
+      console.log('moment fetch failed');
     });
 });
 

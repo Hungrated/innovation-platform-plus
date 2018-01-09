@@ -42,7 +42,7 @@ router.post('/submit', function (req, res) { // a student create a plan
     status: status
   })
     .then(function (plan) {
-      moment.createMoment('planmod', content, '', student_id);
+      moment.createMoment('planmod', content + ' (' + start + ' - ' + deadline + ')', '', student_id);
       res.json({
         'status': statusLib.PLAN_SUBMIT_SUCCESSFUL.status,
         'msg': statusLib.PLAN_SUBMIT_SUCCESSFUL.msg,
@@ -108,6 +108,7 @@ router.post('/modify', function (req, res) { // a student modifies a plan
     }
   })
     .then(function () {
+      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', '', student_id);
       res.json(statusLib.PLAN_MOD_SUCCESSFUL);
       console.log('plan modify successful');
     })

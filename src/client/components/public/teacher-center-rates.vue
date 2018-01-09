@@ -30,7 +30,3 @@
     name: 'teacher-center-rates'
   };
 </script>
-
-<style scoped>
-
-</style>

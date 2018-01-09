@@ -39,11 +39,15 @@
   line-height: 36px;
 }
 
-.unit-title span {
+.unit-title-info {
   padding: 8px;
   background: #2b85e4;
   border-radius: 5px;
   color: #FFFFFF;
+}
+
+.unit-title-btn{
+  float: right;
 }
 
 .plans-class-list {

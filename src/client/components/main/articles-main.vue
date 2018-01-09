@@ -84,7 +84,7 @@
       })
         .then(function (res) {
           _this.articleList = res.data;
-          console.log(_this.articleList);
+          // console.log(_this.articleList);
           // _this.refreshArticleList();
         })
         .catch(function (e) {
