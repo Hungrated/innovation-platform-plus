@@ -11,6 +11,7 @@ const comment = require('../routes/route_comments');
 const download = require('./route_download');
 const banner = require('../routes/route_banner');
 const meeting = require('../routes/route_meeting');
+const moment = require('../routes/route_moments');
 
 router.use('/user', user);
 router.use('/class', classes);
@@ -22,5 +23,6 @@ router.use('/comment', comment);
 router.use('/download', download);
 router.use('/banner', banner);
 router.use('/meeting', meeting);
+router.use('/moment', moment);
 
 module.exports = router;

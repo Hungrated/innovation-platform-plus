@@ -235,6 +235,16 @@ module.exports = {
     'msg': '记录提交失败'
   },
 
+  MOMENT_FETCH_SUCCESSFUL: {
+    'status': 8000,
+    'msg': '动态获取成功'
+  },
+
+  MOMENT_FETCH_FAILED: {
+    'status': 8001,
+    'msg': '动态获取失败'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'
