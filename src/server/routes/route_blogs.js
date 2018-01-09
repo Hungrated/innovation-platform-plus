@@ -8,6 +8,8 @@ const urlLib = require('url');
 const timeFormat = require('../middlewares/time_format');
 const uid = require('../middlewares/id_gen');
 
+const moment = require('../middlewares/moment');
+
 const Blog = db.Blog;
 const Profile = db.Profile;
 const Comment = db.Comment;
@@ -16,8 +18,11 @@ router.post('/publish', function (req, res) { // publish a blog(project or event
   let publishData = req.body;
   publishData.blog_id = 'blg' + uid.generate();
 
+  let href = '/articles/details?index=' + publishData.blog_id;
+
   Blog.create(publishData)
     .then(function () {
+      moment.createMoment('article', publishData.title, href, publishData.author_id);
       res.json(statusLib.BLOG_PUB_SUCCESSFUL);
       console.log('publish successful');
     })

@@ -12,6 +12,8 @@ const path = require('../app_paths');
 const multer = require('multer');
 const fs = require('fs');
 
+const moment = require('../middlewares/moment');
+
 const File = db.File;
 const Profile = db.Profile;
 
@@ -49,11 +51,13 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
       uploader_id: school_id,
       description: fileDescriptions[i]
     };
+
     // create a record for table `files`
     File.create(fileInfo)
       .then(function () {
         flag++;
         if (flag === req.files.length) {
+          moment.createMoment('resource', fileInfo.description, fileInfo.url, fileInfo.uploader_id);
           res.json(statusLib.FILE_UPLOAD_SUCCESSFUL);
           console.log('file upload successful');
         }

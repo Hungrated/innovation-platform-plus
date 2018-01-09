@@ -9,6 +9,8 @@ const uid = require('../middlewares/id_gen');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
+const moment = require('../middlewares/moment');
+
 const Plan = db.Plan;
 const Profile = db.Profile;
 
@@ -40,6 +42,7 @@ router.post('/submit', function (req, res) { // a student create a plan
     status: status
   })
     .then(function (plan) {
+      moment.createMoment('planmod', content, '', student_id);
       res.json({
         'status': statusLib.PLAN_SUBMIT_SUCCESSFUL.status,
         'msg': statusLib.PLAN_SUBMIT_SUCCESSFUL.msg,
@@ -220,7 +223,7 @@ router.post('/export', function (req, res, next) { // fetch profile records from
     .catch(function (e) {
       console.log(e);
       res.json(statusLib.PLAN_EXPORT_FAILED);
-    })
+    });
 });
 
 router.post('/export', function (req, res, next) { // fetch plan records from database
@@ -242,7 +245,7 @@ router.post('/export', function (req, res, next) { // fetch plan records from da
     .catch(function (e) {
       console.log(e);
       res.json(statusLib.PLAN_EXPORT_FAILED);
-    })
+    });
 });
 
 router.post('/export', function (req, res) { // export plan archive
