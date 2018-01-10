@@ -50,7 +50,6 @@
         this.$ajax.post('/api/user/login', this.signInData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
-            console.log(res.data);
             let user = {};
             user.id = res.data.id;
             user.school_id = res.data.school_id;

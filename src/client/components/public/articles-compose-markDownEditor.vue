@@ -76,7 +76,8 @@
           type: 'project',
           title: this.title,
           description: this.description,
-          content: this.$children[0].d_render,
+          // content: this.$children[0].d_render,
+          content: this.$children[0].d_value,
           cover_url: '',
           photo_url: '',
           author_id: JSON.parse(window.localStorage.user).school_id

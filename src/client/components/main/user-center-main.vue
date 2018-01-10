@@ -26,7 +26,7 @@
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的动态</strong>
-              <Button @click="" type="text" size="small">>> 所有动态</Button>
+              <Button @click="changeRoute('/moments')" type="text" size="small">>> 所有动态</Button>
             </span>
           </span>
         <div class="user-center-unit-container">

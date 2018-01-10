@@ -39,7 +39,16 @@
 }
 
 .article-details-content {
-  padding: 20px;
+  /*padding: 20px;*/
+}
+
+.v-note-wrapper {
+  z-index: 0 !important;
+}
+
+.v-note-panel {
+  box-shadow: none !important;
+  border-radius: 5px;
 }
 
 .article-relative-list,

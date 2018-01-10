@@ -13,7 +13,11 @@
               <Button type="text" size="small" @click="back()">返回文章列表</Button>
             </div>
           </div>
-          <div class="article-details-content" v-html="details.blog.content"></div>
+          <!--<div class="article-details-content" v-html="details.blog.content"></div>-->
+          <div class="article-details-content">
+            <mavon-editor :value="details.blog.content" :editable="false" default_open="preview"
+                          :subfield="false" :toolbarsFlag="false"></mavon-editor>
+          </div>
         </div>
         <div class="article-container-right">
           <div class="article-relative-list">
@@ -65,6 +69,8 @@
 </template>
 
 <script>
+  import 'mavon-editor/dist/css/index.css';
+
   export default {
     name: 'article-details',
     data () {
@@ -72,7 +78,10 @@
         index: null,
         details: {
           blog: {
-            profile: {}
+            content: '',
+            profile: {
+
+            }
           },
           comments: []
         },

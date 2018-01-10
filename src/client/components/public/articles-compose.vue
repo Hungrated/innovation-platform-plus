@@ -33,8 +33,6 @@
       <transition name="fade">
         <md-editor v-if="editType === 'markDown'" ref="editor" :title="editor.title" :label="editor.label"
                    :description="editor.description"></md-editor>
-        <rt-editor v-if="editType === 'richText'" ref="editor" :title="editor.title" :label="editor.label"
-                   :description="editor.description"></rt-editor>
       </transition>
     </div>
     <div class="articles-compose-footer">
