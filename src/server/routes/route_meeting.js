@@ -24,7 +24,10 @@ router.post('/query', function (req, res) { // publish a Meeting(project or even
     where: {
       student_id: req.body.student_id,
       class_id: req.body.cur_class
-    }
+    },
+    order: [
+      ['created_at', 'DESC']
+    ]
   })
     .then(function (meetings) {
       res.json(meetings);

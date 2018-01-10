@@ -27,7 +27,10 @@ router.post('/query', function (req, res) { // class query
   }
 
   Class.findAll({
-    where: where
+    where: where,
+    order: [
+      ['created_at', 'DESC']
+    ]
   })
     .then(function (classArr) {
       if (!classArr.length) {

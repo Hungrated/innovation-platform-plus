@@ -101,10 +101,12 @@
           <div class="moment-item-container" v-else>
             <TimelineItem v-for="moment in moments" key="moment.moment_id">
               <div v-if="moment.type === 'planmod'" class="moment-item">
-                <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
-                &emsp;&emsp;<Icon type="ios-lightbulb"></Icon>&nbsp;
-                <strong>{{moment.profile.name}}</strong>&nbsp;：
-                <span>{{moment.desc}}</span>
+                <div class="moment-item-time">{{ getTime(moment.created_at) }}</div>
+                <div>
+                  <Icon type="ios-lightbulb"></Icon>&nbsp;
+                  <strong>{{moment.profile.name}}</strong>&nbsp;：
+                  <span>{{moment.desc}}</span>
+                </div>
               </div>
             </TimelineItem>
           </div>

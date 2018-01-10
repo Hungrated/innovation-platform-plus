@@ -77,6 +77,9 @@ router.post('/query', function (req, res) { // fetch file list
 
   File.findAll({
     where: where,
+    order: [
+      ['created_at', 'DESC']
+    ],
     include: [{
       model: Profile,
       where: {

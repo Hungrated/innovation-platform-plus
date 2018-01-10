@@ -197,7 +197,10 @@ router.post('/query', function (req, res) { // get list of all (or personal) pla
   const where = (request === 'all') ? {} : {student_id: request};
 
   Plan.findAll({
-    where: where
+    where: where,
+    order: [
+      ['created_at', 'DESC']
+    ]
   })
     .then(function (plans) {
       for (let i = 0; i < plans.length; i++) {

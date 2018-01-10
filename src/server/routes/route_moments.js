@@ -15,6 +15,9 @@ router.get('/fetch', function (req, res) {
   Moment.findAll({
     where: where,
     limit: 20,
+    order: [
+      ['created_at', 'DESC']
+    ],
     include: [{
       model: Profile,
       attributes: ['name']

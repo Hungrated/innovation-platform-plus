@@ -4,7 +4,10 @@
 
 .moment-item {
   font-size: 15px;
-  margin-bottom: 15px;
+}
+
+.moment-item div {
+  padding: 10px 20px;
 }
 
 .moment-item-container {

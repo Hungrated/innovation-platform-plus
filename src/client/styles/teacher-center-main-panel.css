@@ -104,6 +104,11 @@
 
 .moment-item {
   font-size: 15px;
+  display: flex;
+}
+
+.moment-item div {
+  margin-left: 20px;
 }
 
 .moment-item-container {
@@ -113,8 +118,9 @@
 }
 
 .moment-item-time {
+  flex: 0 0 100px;
   border-radius: 5px;
-  padding: 5px 10px;
-  background: #2db7f5;
+  padding: 0 10px;
+  background: #19be6b;
   color: #EEEEEE;
 }

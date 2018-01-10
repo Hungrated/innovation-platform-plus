@@ -41,6 +41,9 @@ router.post('/query', function (req, res) { // fetch blog list for brief browsin
 
   Blog.findAll({
     where: where,
+    order: [
+      ['created_at', 'DESC']
+    ],
     include: [{
       model: Profile,
       attributes: ['name']
@@ -78,6 +81,9 @@ router.get('/details', function (req, res) { // fetch blog details
         where: {
           blog_id: id
         },
+        order: [
+          ['created_at', 'DESC']
+        ],
         include: [{
           model: Profile,
           where: {
