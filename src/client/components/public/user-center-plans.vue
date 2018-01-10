@@ -48,6 +48,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-useless-return */
+
   export default {
     data () {
       return {
@@ -130,7 +132,8 @@
                 h('Button', {
                   props: {
                     type: 'primary',
-                    size: 'small'
+                    size: 'small',
+                    disabled: params.row.status === '已通过'
                   },
                   style: {
                     marginRight: '5px'
@@ -161,12 +164,15 @@
         return year + '-' + month + '-' + day;
       },
       editPlan () {
-        this.planEdit = true;
-        this.planEmpty = false;
+        if (!this.planEdit && !this.planModify) {
+          this.planEdit = true;
+          this.planEmpty = false;
+        }
       },
       editPlanCancel () {
         // this.$Message.info('编辑计划取消');
         this.planEdit = false;
+        this.planModify = false;
       },
       modifyPlan (plan) {
         this.planModify = true;
