@@ -18,7 +18,7 @@
 
 .articles-main-body {
   min-height: calc(100vh - 158px);
-  padding: 0 50px;
+  padding: 0 50px 20px 50px;
 }
 
 .articles-main-footer-container {

@@ -103,12 +103,9 @@
               <div v-if="moment.type === 'planmod'" class="moment-item">
                 <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
                 &emsp;&emsp;<Icon type="ios-lightbulb"></Icon>&nbsp;
-                <strong>{{moment.profile.name}}</strong>&nbsp;更新了计划：
+                <strong>{{moment.profile.name}}</strong>&nbsp;：
                 <span>{{moment.desc}}</span>
               </div>
-            </TimelineItem>
-            <TimelineItem>
-              <Button type="dashed" @click="">查看详细</Button>
             </TimelineItem>
           </div>
 
