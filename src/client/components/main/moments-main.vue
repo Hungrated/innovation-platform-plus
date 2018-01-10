@@ -12,16 +12,23 @@
           <TimelineItem v-for="moment in moments" key="moment.moment_id">
             <div v-if="moment.type === 'planmod'" class="moment-item">
               <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
-              &emsp;&emsp;<Icon type="ios-lightbulb"></Icon>&nbsp;
+              &emsp;&emsp;<Icon type="ios-lightbulb"></Icon>&nbsp;&nbsp;
               <strong>{{moment.profile.name}}</strong>&nbsp;更新了计划：
               <span>{{moment.desc}}</span>
             </div>
             <div v-if="moment.type === 'article'" class="moment-item">
               <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
-              &emsp;&emsp;<Icon type="ios-lightbulb"></Icon>&nbsp;
+              &emsp;&emsp;<Icon type="document-text"></Icon>&nbsp;&nbsp;
               <strong>{{moment.profile.name}}</strong>&nbsp;发布了文章：
               <span>{{moment.desc}}</span>
-              <a :href="moment.href">查 看</a>
+              <a :href="'/#' + moment.href">查 看</a>
+            </div>
+            <div v-if="moment.type === 'resource'" class="moment-item">
+              <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
+              &emsp;&emsp;<Icon type="android-folder-open"></Icon>&nbsp;
+              <strong>{{moment.profile.name}}</strong>&nbsp;上传了资源：
+              <span>{{moment.desc}}</span>
+              <a :href="moment.href">下 载</a>
             </div>
           </TimelineItem>
         </div>

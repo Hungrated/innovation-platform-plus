@@ -16,11 +16,10 @@
           <span slot="title">
             <span class="user-center-card-header">
               <strong>我的课堂记录</strong>
-              <Button @click="" type="text" size="small">>> 详 情</Button>
             </span>
           </span>
         <div class="user-center-unit-container">
-          <div>我的课堂记录</div>
+          <user-center-meetings ref="meetings"></user-center-meetings>
         </div>
       </Card>
       <Card class="user-center-card" disHover>
@@ -76,6 +75,7 @@
 <script>
   import userCenterProfile from '../public/user-center-profile';
   import userCenterPlans from '../public/user-center-plans';
+  import userCenterMeetings from '../public/user-center-meetings';
   import userCenterArticles from '../public/user-center-articles';
 
   export default {
@@ -92,7 +92,10 @@
       }
     },
     components: {
-      userCenterProfile, userCenterPlans, userCenterArticles
+      userCenterProfile,
+      userCenterPlans,
+      userCenterMeetings,
+      userCenterArticles
     }
   };
 </script>

@@ -235,6 +235,11 @@ module.exports = {
     'msg': '记录提交失败'
   },
 
+  MEETING_QUERY_FAILED: {
+    'status': 7101,
+    'msg': '记录查询失败'
+  },
+
   MOMENT_FETCH_SUCCESSFUL: {
     'status': 8000,
     'msg': '动态获取成功'

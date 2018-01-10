@@ -17,5 +17,4 @@
 
 <style>
   @import '../../styles/index.css';
-
 </style>

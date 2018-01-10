@@ -287,7 +287,7 @@ router.post('/login', function (req, res) {
         where: {
           user_id: sequelize.col('user.id')
         },
-        attributes: ['school_id', 'name']
+        attributes: ['school_id', 'name', 'cur_class']
       }]
     })
       .then(function (user) { // do further check
@@ -300,16 +300,19 @@ router.post('/login', function (req, res) {
             .digest('hex').slice(0, 255)) { // password checked
           req.session.isLogin = true;
           req.session.username = user.username;
+          // req.session.cur_class = user.profile.cur_class;
           res.cookie('isLogin', true);
           res.cookie('username', user.username);
           res.cookie('identity', user.identity);
+          // res.cookie('cur_class', user.profile.cur_class);
           res.json({
             status: statusLib.LOGIN_SUCCESSFUL.status,
             msg: statusLib.LOGIN_SUCCESSFUL.msg,
             id: user.id,
             username: user.username,
             school_id: user.profile.school_id,
-            name: user.profile.name
+            name: user.profile.name,
+            cur_class: user.profile.cur_class
           });
           console.log('log in successful');
         } else {

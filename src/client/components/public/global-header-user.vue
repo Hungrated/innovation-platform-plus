@@ -50,10 +50,12 @@
         this.$ajax.post('/api/user/login', this.signInData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
+            console.log(res.data);
             let user = {};
             user.id = res.data.id;
             user.school_id = res.data.school_id;
             user.name = res.data.name;
+            user.cur_class = res.data.cur_class;
             window.localStorage.user = JSON.stringify(user);
             _this.$emit('updateUserStatus');
           })

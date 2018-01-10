@@ -44,17 +44,17 @@
           </router-link>
         </MenuItem>
         <!--<MenuItem name="5">-->
-          <!--<router-link tag="span" to="/bulletin">-->
-            <!--<Icon type="information-circled"></Icon>-->
-            <!--&nbsp;<strong>公告栏</strong>-->
-          <!--</router-link>-->
+        <!--<router-link tag="span" to="/bulletin">-->
+        <!--<Icon type="information-circled"></Icon>-->
+        <!--&nbsp;<strong>公告栏</strong>-->
+        <!--</router-link>-->
         <!--</MenuItem>-->
-        <MenuItem name="6">
-          <router-link tag="span" to="/discussion">
-            <Icon type="chatboxes"></Icon>
-            &nbsp;<strong>讨论区</strong>
-          </router-link>
-        </MenuItem>
+        <!--<MenuItem name="6">-->
+        <!--<router-link tag="span" to="/discussion">-->
+        <!--<Icon type="chatboxes"></Icon>-->
+        <!--&nbsp;<strong>讨论区</strong>-->
+        <!--</router-link>-->
+        <!--</MenuItem>-->
       </ul>
       <div v-model="userIdentity">
         <global-header-user v-if="userIdentity === 'none'" @updateUserStatus="changeUserStatus()"></global-header-user>
