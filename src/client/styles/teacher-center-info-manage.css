@@ -1,0 +1,11 @@
+
+.options-type,
+.options-range,
+.options-sid,
+.options-query {
+  display: inline-block;
+}
+
+.options-query {
+  float: right;
+}
