@@ -22,7 +22,7 @@ router.post('/query', function (req, res, next) {
   console.log('query');
 });
 
-router.post('/query', function (req, res, next) {
+router.post('/query', function (req, res) {
   console.log('query');
 });
 
