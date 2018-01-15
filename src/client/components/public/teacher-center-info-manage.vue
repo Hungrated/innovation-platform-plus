@@ -111,9 +111,8 @@
                   }, '查 看'),
                   h('Button', {
                     props: {
-                      type: 'primary',
-                      size: 'small',
-                      disabled: params.row.status === '已通过'
+                      type: 'delete',
+                      size: 'small'
                     },
                     style: {
                       marginRight: '5px'
@@ -198,6 +197,17 @@
           meeting: []
         }
       };
+    },
+    methods: {
+      infoQuery (type, range, sid) {
+
+      },
+      refreshData () {
+        this.infoQuery();
+      }
+    },
+    mounted () {
+
     }
   };
 </script>

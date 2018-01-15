@@ -10,16 +10,19 @@ const xl = require('node-xlrd');
 const config = require('config-lite')(__dirname).database;
 
 const sequelize = require('sequelize');
+
+const urlLib = require('url');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
 // query by type
-router.post('/query', function (req, res, next) {
+router.get('/query', function (req, res, next) {
+  // const param = urlLib.parse(req.url, true).query.param;
   req.body.where = {};
   next();
 });
 
-router.post('/query', function (req, res, next) {
+router.get('/query', function (req, res, next) {
   let database = null;
   switch (req.body.type) {
     case 'blog':
@@ -36,7 +39,7 @@ router.post('/query', function (req, res, next) {
   next();
 });
 
-router.post('/query', function (req, res, next) {
+router.get('/query', function (req, res, next) {
   const database = req.body.database;
   const where = req.body.where;
 
