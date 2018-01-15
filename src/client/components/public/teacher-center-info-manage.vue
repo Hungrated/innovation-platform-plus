@@ -25,11 +25,11 @@
                 </DatePicker>
               </div>
               <div class="options-sid">
-                <Input size="large" placeholder="学 号（选填）"/>
+                <Input size="large" v-model="infoSid" placeholder="学 号（选填）"/>
               </div>
             </div>
             <div class="options-query">
-              <Button @click="" type="primary" size="large">查 询</Button>
+              <Button @click="refreshData()" type="primary" size="large">查 询</Button>
             </div>
           </div>
         </Card>
@@ -59,18 +59,22 @@
         infoTypeList: [
           {
             index: 0,
-            value: '文 章'
+            value: '文 章',
+            label: 'blog'
           },
           {
             index: 1,
-            value: '计 划'
+            value: '计 划',
+            label: 'plan'
           },
           {
             index: 2,
-            value: '课堂记录'
+            value: '课堂记录',
+            label: 'meeting'
           }
         ],
         infoRange: ['', ''],
+        infoSid: '',
         queryCols: {
           blog: [
             {
@@ -80,18 +84,29 @@
             },
             {
               title: '发表时间',
-              key: 'pubTime',
               width: 200,
-              sortable: true
+              key: 'created_at',
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '作者标识',
+              key: 'author_id'
+            },
+            {
+              title: '标 题',
+              key: 'title'
             },
             {
               title: '描 述',
-              key: 'desc'
+              key: 'description'
             },
             {
               title: '操 作',
               key: 'action',
-              width: 250,
+              width: 200,
               align: 'center',
               render: (h, params) => {
                 return h('div', [
@@ -110,7 +125,7 @@
                   }, '查 看'),
                   h('Button', {
                     props: {
-                      type: 'delete',
+                      type: 'error',
                       size: 'small'
                     },
                     style: {
@@ -177,8 +192,7 @@
                   h('Button', {
                     props: {
                       type: 'primary',
-                      size: 'small',
-                      disabled: params.row.status === '已通过'
+                      size: 'small'
                     },
                     style: {
                       marginRight: '5px'
@@ -197,15 +211,40 @@
       };
     },
     methods: {
-      infoQuery (type, range, sid) {
-
+      getTime (createdAt) {
+        let curTime = new Date(createdAt);
+        let convert = function (digit) {
+          if (digit < 10) return '0' + digit;
+          else return digit.toString();
+        };
+        let year = curTime.getFullYear();
+        let month = convert(curTime.getMonth() + 1);
+        let day = convert(curTime.getDate());
+        return year + '-' + month + '-' + day;
+      },
+      infoQuery (type, start, end, sid) {
+        let _this = this;
+        let queryString = '/api/teacher/query?type=' + type;
+        if (sid) {
+          queryString = queryString + '&sid=' + sid;
+        } else if (start !== '' && end !== '') {
+          queryString = queryString + '&start=' + start + '&end=' + end;
+        }
+        this.$ajax.get(queryString)
+          .then(function (res) {
+            _this.infoData = res.data;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       },
       refreshData () {
-        this.infoQuery('blog', null, null);
+        this.infoQuery('blog', '', '', this.infoSid);
       }
     },
     mounted () {
       this.infoCols = this.queryCols.blog;
+      this.refreshData();
     }
   };
 </script>
