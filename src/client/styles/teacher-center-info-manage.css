@@ -28,4 +28,15 @@
   flex: 1 1 auto;
 }
 
+.info-manage-body {
+  margin-top: 20px;
+}
 
+.query-table {
+  margin-bottom: 20px;
+}
+
+.query-pages {
+  padding: 10px;
+  text-align: center;
+}

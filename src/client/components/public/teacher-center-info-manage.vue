@@ -35,7 +35,14 @@
         </Card>
       </div>
       <div class="info-manage-body">
-        <!--不同的component在这里，展示表格-->
+        <Card disHover>
+          <div class="query-table">
+            <Table stripe :columns="infoCols" :data="infoData"></Table>
+          </div>
+          <div class="query-pages">
+            <Page size="small"></Page>
+          </div>
+        </Card>
       </div>
     </div>
   </div>
@@ -47,6 +54,8 @@
     data () {
       return {
         infoType: '文 章',
+        infoCols: this.queryCols.blog,
+        infoData: [],
         infoTypeList: [
           {
             index: 0,
@@ -62,7 +71,132 @@
           }
         ],
         infoRange: ['', ''],
-        dataList: []
+        queryCols: {
+          blog: [
+            {
+              title: '标 识',
+              key: 'blog_id',
+              width: 120
+            },
+            {
+              title: '发表时间',
+              key: 'pubTime',
+              width: 70,
+              sortable: true
+            },
+            {
+              title: '描 述',
+              key: 'desc',
+              width: 120
+            },
+            {
+              title: '操 作',
+              key: 'action',
+              width: 150,
+              align: 'center',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'primary',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                      }
+                    }
+                  }, '查 看'),
+                  h('Button', {
+                    props: {
+                      type: 'primary',
+                      size: 'small',
+                      disabled: params.row.status === '已通过'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                      }
+                    }
+                  }, '删 除')
+                ]);
+              }
+            }
+          ],
+          plan: [
+            {
+              title: '学 年',
+              key: 'year',
+              width: 120,
+              sortable: true
+            },
+            {
+              title: '学 期',
+              key: 'term',
+              width: 70
+            },
+            {
+              title: '实行日期',
+              key: 'start',
+              width: 120,
+              sortable: true
+            },
+            {
+              title: '截止日期',
+              key: 'deadline',
+              width: 120,
+              sortable: true
+            },
+            {
+              title: '内 容',
+              key: 'content'
+            },
+            {
+              title: '状 态',
+              key: 'status',
+              width: 75,
+              render: (h, params) => {
+                return h('div', [
+                  h('strong', {
+                    style: {
+                      color: '#999999'
+                    }
+                  }, params.row.status)
+                ]);
+              }
+            },
+            {
+              title: '操 作',
+              key: 'action',
+              width: 150,
+              align: 'center',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'primary',
+                      size: 'small',
+                      disabled: params.row.status === '已通过'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.modifyPlan(params.row);
+                      }
+                    }
+                  }, '编 辑')
+                ]);
+              }
+            }
+          ],
+          meeting: []
+        }
       };
     }
   };
