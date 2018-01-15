@@ -13,17 +13,44 @@ const sequelize = require('sequelize');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
-const Class = db.Class;
-const User = db.User;
-const Profile = db.Profile;
-
 // query by type
 router.post('/query', function (req, res, next) {
-  console.log('query');
+  req.body.where = {};
+  next();
 });
 
 router.post('/query', function (req, res, next) {
-  console.log('query');
+  let database = null;
+  switch (req.body.type) {
+    case 'blog':
+      database = db.Blog;
+      break;
+    case 'plan':
+      database = db.Plan;
+      break;
+    case 'meeting':
+      database = db.Meeting;
+      break;
+  }
+  req.body.database = database;
+  next();
+});
+
+router.post('/query', function (req, res, next) {
+  const database = req.body.database;
+  const where = req.body.where;
+
+  database.findAll({
+    where: where
+  })
+    .then(function (dataList) {
+      res.json(dataList);
+      console.log('teacher query successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
 });
 
 module.exports = router;

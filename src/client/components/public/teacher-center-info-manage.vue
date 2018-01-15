@@ -20,12 +20,12 @@
                             size="large"
                             format="yyyy-MM-dd"
                             type="daterange"
-                            placeholder="时间范围"
+                            placeholder="时间范围（选填）"
                             style="width: 100%">
                 </DatePicker>
               </div>
               <div class="options-sid">
-                <Input size="large" placeholder="学 号"/>
+                <Input size="large" placeholder="学 号（选填）"/>
               </div>
             </div>
             <div class="options-query">
@@ -53,15 +53,16 @@
             value: '文 章'
           },
           {
-            index: 0,
+            index: 1,
             value: '计 划'
           },
           {
-            index: 0,
+            index: 2,
             value: '课堂记录'
           }
         ],
-        infoRange: ['', '']
+        infoRange: ['', ''],
+        dataList: []
       };
     }
   };
