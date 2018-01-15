@@ -7,17 +7,29 @@
             <strong>筛选条件</strong>
           </span>
           <div class="info-manage-options-body">
-            <div class="options-type">
-              <Input size="default" placeholder="类 别"/>
-            </div>
-            <div class="options-range">
-              <Input size="default" placeholder="时间范围"/>
-            </div>
-            <div class="options-sid">
-              <Input size="default" placeholder="学 号"/>
+            <div class="options-list">
+              <div class="options-type">
+                <Select placeholder="类 别" size="large" v-model="infoType">
+                  <Option v-for="type in infoTypeList" :value="type.value" :key="type.index">
+                    {{ type.value }}
+                  </Option>
+                </Select>
+              </div>
+              <div class="options-range">
+                <DatePicker v-model="infoRange"
+                            size="large"
+                            format="yyyy-MM-dd"
+                            type="daterange"
+                            placeholder="时间范围"
+                            style="width: 100%">
+                </DatePicker>
+              </div>
+              <div class="options-sid">
+                <Input size="large" placeholder="学 号"/>
+              </div>
             </div>
             <div class="options-query">
-              <Button @click="" type="primary" size="default">查 询</Button>
+              <Button @click="" type="primary" size="large">查 询</Button>
             </div>
           </div>
         </Card>
@@ -31,7 +43,27 @@
 
 <script>
   export default {
-    name: 'teacher-center-info-manage'
+    name: 'teacher-center-info-manage',
+    data () {
+      return {
+        infoType: '文 章',
+        infoTypeList: [
+          {
+            index: 0,
+            value: '文 章'
+          },
+          {
+            index: 0,
+            value: '计 划'
+          },
+          {
+            index: 0,
+            value: '课堂记录'
+          }
+        ],
+        infoRange: ['', '']
+      };
+    }
   };
 </script>
 

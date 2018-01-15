@@ -1,11 +1,31 @@
+.info-manage-options-body {
+  display: flex;
+  line-height: 36px;
+  justify-content: space-between;
+}
+
+.options-list {
+  display: flex;
+  flex: auto;
+  max-width: 700px;
+}
 
 .options-type,
 .options-range,
-.options-sid,
-.options-query {
-  display: inline-block;
+.options-sid {
+  margin-right: 10px;
 }
 
-.options-query {
-  float: right;
+.options-type {
+  flex: 0 0 200px;
 }
+
+.options-range {
+  flex: 1 0 300px;
+}
+
+.options-sid {
+  flex: 1 1 auto;
+}
+
+
