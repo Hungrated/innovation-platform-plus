@@ -54,7 +54,7 @@
     data () {
       return {
         infoType: '文 章',
-        infoCols: this.queryCols.blog,
+        infoCols: [],
         infoData: [],
         infoTypeList: [
           {
@@ -76,23 +76,22 @@
             {
               title: '标 识',
               key: 'blog_id',
-              width: 120
+              width: 150
             },
             {
               title: '发表时间',
               key: 'pubTime',
-              width: 70,
+              width: 200,
               sortable: true
             },
             {
               title: '描 述',
-              key: 'desc',
-              width: 120
+              key: 'desc'
             },
             {
               title: '操 作',
               key: 'action',
-              width: 150,
+              width: 250,
               align: 'center',
               render: (h, params) => {
                 return h('div', [
@@ -186,7 +185,6 @@
                     },
                     on: {
                       click: () => {
-                        this.modifyPlan(params.row);
                       }
                     }
                   }, '编 辑')
@@ -203,11 +201,11 @@
 
       },
       refreshData () {
-        this.infoQuery();
+        this.infoQuery('blog', null, null);
       }
     },
     mounted () {
-
+      this.infoCols = this.queryCols.blog;
     }
   };
 </script>
