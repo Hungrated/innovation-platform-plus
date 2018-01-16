@@ -20,6 +20,25 @@ let objMulter = multer({
   dest: path.banner // file upload destination
 });
 
+router.get('/', function (req, res) {
+  Banner.findAll({
+    where: {
+      status: 'active'
+    },
+    order: [
+      ['created_at', 'DESC']
+    ]
+  })
+    .then(function (imgList) {
+      console.log('banner fetch successful');
+      res.json(imgList);
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
+});
+
 router.post('/upload', objMulter.any(), function (req, res, next) { // upload a banner img
   const id = 'bnr' + uid.generate();
   req.body.img_id = id;
