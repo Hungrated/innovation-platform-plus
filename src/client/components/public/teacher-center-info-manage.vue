@@ -229,26 +229,65 @@
               }
             },
             {
-              title: '操 作',
+              title: '审 核',
               key: 'action',
-              width: 150,
-              align: 'center',
+              width: 125,
               render: (h, params) => {
-                return h('div', [
-                  h('Button', {
-                    props: {
-                      type: 'primary',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
+                if (params.row.status === '未审核') {
+                  return h('div', [
+                    h('Button', {
+                      props: {
+                        type: 'success',
+                        size: 'small'
+                      },
+                      style: {
+                        marginRight: '5px'
+                      },
+                      on: {
+                        click: () => {
+                          this.verifyPlan(params.row.plan_id, 1);
+                          params.row.status = '已通过';
+                        }
                       }
-                    }
-                  }, '编 辑')
-                ]);
+                    }, [
+                      h('Icon', {
+                        props: {
+                          type: 'checkmark'
+                        }
+                      }),
+                      h('span', '通 过')
+                    ]),
+                    h('Button', {
+                      props: {
+                        type: 'error',
+                        size: 'small'
+                      },
+                      style: {
+                        marginRight: '5px'
+                      },
+                      on: {
+                        click: () => {
+                          this.verifyPlan(params.row.plan_id, 0);
+                          params.row.status = '未通过';
+                        }
+                      }
+                    }, [
+                      h('Icon', {
+                        props: {
+                          type: 'close'
+                        }
+                      })
+                    ])
+                  ]);
+                } else {
+                  return h('div', [
+                    h('em', {
+                      style: {
+                        color: '#999999'
+                      }
+                    }, '已审核')
+                  ]);
+                }
               }
             }
           ],
@@ -338,16 +377,18 @@
       },
       showDetails (content) {
         this.$Modal.info({
+          width: 80,
           render: (h) => {
-            return h('div', [
+            return h('div', {
+              style: {
+                wordWrap: 'break-word'
+              }
+            }, [
               h('div', '内 容：'),
               h('div', content)
             ]);
           }
         });
-      },
-      changeType (label) {
-        this.infoLabel = label;
       },
       infoQuery (type, start, end, sid/* , limit, page */) {
         let _this = this;
@@ -392,6 +433,20 @@
       },
       refreshData () {
         this.infoQuery(this.infoLabel, '', '', this.infoSid/* , this.pageLimit, this.curPage */);
+      },
+      verifyPlan (id, op) {
+        let _this = this;
+        this.$ajax.post('/api/plan/op', {
+          plan_id: id,
+          op: op
+        })
+          .then(function (res) {
+            _this.refreshData();
+            _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
     mounted () {

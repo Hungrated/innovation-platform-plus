@@ -17,7 +17,7 @@
   border-left: 1px solid #EEEEEE;
   display: flex;
   flex-direction: column;
-  flex: 0 1 25%;
+  width: 300px;
   margin-left: 20px;
 }
 
@@ -40,6 +40,17 @@
 
 .article-details-content {
   /*padding: 20px;*/
+  word-wrap: break-word;
+  width: calc(100vw - 469px);
+  min-width: 446px;
+}
+
+@media only screen and (min-width: 1600px) {
+  .article-details-content {
+    /*padding: 20px;*/
+    word-wrap: break-word;
+    width: 1131px;
+  }
 }
 
 .v-note-wrapper {
