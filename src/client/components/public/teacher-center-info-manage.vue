@@ -511,17 +511,17 @@
           }
         });
       },
-      infoQuery (type, start, end, sid/* , limit, page */) {
+      infoQuery (params) {
         let _this = this;
-        let queryString = '/api/teacher/query?type=' + type/* + '&limit=' + limit + '&page=' + page */;
-        if (sid) {
-          queryString = queryString + '&sid=' + sid;
-        } else if (start !== '' && end !== '') {
-          queryString = queryString + '&start=' + start + '&end=' + end;
+        let queryString = '/api/teacher/query?type=' + params.type/* + '&limit=' + limit + '&page=' + page */;
+        if (params.sid) {
+          queryString = queryString + '&sid=' + params.sid;
+        } else if (params.start !== '' && params.end !== '') {
+          queryString = queryString + '&start=' + params.start + '&end=' + params.end;
         }
         this.$ajax.get(queryString)
           .then(function (res) {
-            switch (type) {
+            switch (params.type) {
               case 'blog':
                 _this.infoCols = _this.queryCols.blog;
                 break;
@@ -562,7 +562,12 @@
           });
       },
       refreshData () {
-        this.infoQuery(this.infoLabel, '', '', this.infoSid/* , this.pageLimit, this.curPage */);
+        this.infoQuery({
+          type: this.infoLabel,
+          start: '',
+          end: '',
+          sid: this.infoSid
+        });
       },
       verifyPlan (id, op) {
         let _this = this;
