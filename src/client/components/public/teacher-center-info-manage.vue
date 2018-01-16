@@ -15,15 +15,15 @@
                   </Option>
                 </Select>
               </div>
-              <div class="options-range">
-                <DatePicker v-model="infoRange"
-                            size="large"
-                            format="yyyy-MM-dd"
-                            type="daterange"
-                            placeholder="时间范围（选填）"
-                            style="width: 100%">
-                </DatePicker>
-              </div>
+              <!--<div class="options-range">-->
+              <!--<DatePicker v-model="infoRange"-->
+              <!--size="large"-->
+              <!--format="yyyy-MM-dd"-->
+              <!--type="daterange"-->
+              <!--placeholder="时间范围（选填）"-->
+              <!--style="width: 100%">-->
+              <!--</DatePicker>-->
+              <!--</div>-->
               <div class="options-sid">
                 <Input size="large" v-model="infoSid" placeholder="学 号（选填）"/>
               </div>
@@ -71,6 +71,16 @@
             index: 2,
             value: '课堂记录',
             label: 'meeting'
+          },
+          {
+            index: 3,
+            value: '资源文件',
+            label: 'resource'
+          },
+          {
+            index: 4,
+            value: '评 论',
+            label: 'comment'
           }
         ],
         infoRange: ['', ''],
@@ -78,13 +88,11 @@
         queryCols: {
           blog: [
             {
-              title: '标 识',
-              key: 'blog_id',
-              width: 150
+              title: '文章ID',
+              key: 'blog_id'
             },
             {
               title: '发表时间',
-              width: 200,
               key: 'created_at',
               sortable: true,
               render: (h, params) => {
@@ -92,8 +100,9 @@
               }
             },
             {
-              title: '作者标识',
-              key: 'author_id'
+              title: '作者ID',
+              key: 'author_id',
+              sortable: true
             },
             {
               title: '标 题',
@@ -120,6 +129,7 @@
                     },
                     on: {
                       click: () => {
+                        this.showDetails(params.row.content);
                       }
                     }
                   }, '查 看'),
@@ -133,6 +143,15 @@
                     },
                     on: {
                       click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除此内容？',
+                          onOk () {
+                            _this.infoDelete('blog', params.row.blog_id);
+                            _this.refreshData();
+                          }
+                        });
                       }
                     }
                   }, '删 除')
@@ -222,6 +241,16 @@
         let day = convert(curTime.getDate());
         return year + '-' + month + '-' + day;
       },
+      showDetails (content) {
+        this.$Modal.info({
+          render: (h) => {
+            return h('div', [
+              h('div', '内 容：'),
+              h('div', content)
+            ]);
+          }
+        });
+      },
       infoQuery (type, start, end, sid) {
         let _this = this;
         let queryString = '/api/teacher/query?type=' + type;
@@ -233,6 +262,19 @@
         this.$ajax.get(queryString)
           .then(function (res) {
             _this.infoData = res.data;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      infoDelete (type, id) {
+        let _this = this;
+        this.$ajax.post('/api/teacher/delete', {
+          type: type,
+          id: id
+        })
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
           })
           .catch(function (e) {
             console.log(e);

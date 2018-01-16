@@ -250,6 +250,16 @@ module.exports = {
     'msg': '动态获取失败'
   },
 
+  INFO_DELETE_SUCCESSFUL: {
+    'status': 8000,
+    'msg': '信息删除成功'
+  },
+
+  INFO_DELETE_FAILED: {
+    'status': 8001,
+    'msg': '信息删除失败'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'

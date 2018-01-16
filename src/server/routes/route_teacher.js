@@ -41,15 +41,44 @@ router.get('/query', function (req, res) {
       break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
-
   }
-  console.log(query);
   database.findAll({
     where: where
   })
     .then(function (dataList) {
       res.json(dataList);
-      console.log(dataList);
+      console.log('teacher query successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
+});
+
+router.post('/delete', function (req, res) {
+  let database = null;
+  let where = {};
+  switch (req.body.type) {
+    case 'blog':
+      database = db.Blog;
+      where.blog_id = req.body.id;
+      break;
+    case 'plan':
+      database = db.Plan;
+      where.plan_id = req.body.id;
+      break;
+    case 'meeting':
+      database = db.Meeting;
+      where.rec_id = req.body.id;
+      break;
+    default:
+      res.json(statusLib.CONNECTION_ERROR);
+  }
+  database.destroy({
+    where: where
+  })
+    .then(function () {
+      res.json(statusLib.INFO_DELETE_SUCCESSFUL);
       console.log('teacher query successful');
     })
     .catch(function (e) {
