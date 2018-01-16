@@ -160,8 +160,7 @@
                       marginRight: '5px'
                     }
                   }, params.row.newest_plan.start + ' - ' +
-                    params.row.newest_plan.deadline + '  |  ' +
-                    params.row.newest_plan.status),
+                    params.row.newest_plan.deadline),
                   // h('br'),
                   h('span', params.row.newest_plan.content)
                 ]);

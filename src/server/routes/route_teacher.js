@@ -43,7 +43,10 @@ router.get('/query', function (req, res) {
       res.json(statusLib.CONNECTION_ERROR);
   }
   database.findAll({
-    where: where
+    where: where,
+    order: [
+      ['created_at', 'DESC']
+    ]
   })
     .then(function (dataList) {
       res.json(dataList);
@@ -79,7 +82,7 @@ router.post('/delete', function (req, res) {
   })
     .then(function () {
       res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-      console.log('teacher query successful');
+      console.log('info delete successful');
     })
     .catch(function (e) {
       console.error(e);

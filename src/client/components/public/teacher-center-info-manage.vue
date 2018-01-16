@@ -266,8 +266,59 @@
               width: 120
             },
             {
+              title: '选课课号',
+              key: 'class_id',
+              sortable: true
+            },
+            {
               title: '内 容',
               key: 'content'
+            },
+            {
+              title: '操 作',
+              key: 'action',
+              width: 200,
+              align: 'center',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'ghost',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.showDetails(params.row.content);
+                      }
+                    }
+                  }, '查 看'),
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除此内容？',
+                          onOk () {
+                            _this.infoDelete('meeting', params.row.rec_id);
+                            _this.refreshData();
+                          }
+                        });
+                      }
+                    }
+                  }, '删 除')
+                ]);
+              }
             }
           ]
         }

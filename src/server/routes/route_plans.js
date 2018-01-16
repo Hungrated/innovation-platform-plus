@@ -41,12 +41,13 @@ router.post('/submit', function (req, res) { // a student create a plan
     student_id: student_id,
     status: status
   })
-    .then(function (plan) {
-      moment.createMoment('planmod', content + ' (' + start + ' - ' + deadline + ')', '', student_id);
+    .then(function () {
+      // if plan is not validated, params[2] should be plan_id, otherwise it should be ''.
+      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', plan_id, student_id);
       res.json({
         'status': statusLib.PLAN_SUBMIT_SUCCESSFUL.status,
         'msg': statusLib.PLAN_SUBMIT_SUCCESSFUL.msg,
-        'plan_id': plan.plan_id
+        'plan_id': plan_id
       });
       console.log('plan submit successful');
     })
@@ -58,7 +59,6 @@ router.post('/submit', function (req, res) { // a student create a plan
 });
 
 router.post('/modify', function (req, res, next) { // check plan status before modification
-
   Plan.findOne({
     where: {
       plan_id: req.body.plan_id
@@ -108,7 +108,7 @@ router.post('/modify', function (req, res) { // a student modifies a plan
     }
   })
     .then(function () {
-      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', '', student_id);
+      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', req.body.plan_id, student_id);
       res.json(statusLib.PLAN_MOD_SUCCESSFUL);
       console.log('plan modify successful');
     })
@@ -152,6 +152,7 @@ router.post('/op', function (req, res) { // teacher changes plan status
     }
   })
     .then(function () {
+      moment.validatePlanMoment(req.body.plan_id, status);
       res.json(statusLib.PLAN_VERIFY_SUCCESSFUL);
       console.log('plan verified');
     })

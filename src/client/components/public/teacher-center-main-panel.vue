@@ -105,7 +105,21 @@
                 <div>
                   <Icon type="ios-lightbulb"></Icon>&nbsp;
                   <strong>{{moment.profile.name}}</strong>&nbsp;：
-                  <span>{{moment.desc}}</span>
+                  <span>{{moment.desc}}&emsp;
+                    <span v-if="moment.href !== ''">
+                      <strong v-if="moment.href === '已通过' || moment.href === '未通过'" class="moment-item-status">{{
+                        moment.href }}</strong>
+                      <span v-else>
+                        <strong class="moment-item-status">未审核</strong>
+                        <Button @click="verifyPlan(moment.href, 1)" type="success" size="small"><Icon
+                          type="checkmark"></Icon> 通 过
+                      </Button>
+                      <Button @click="verifyPlan(moment.href, 0)" type="error" size="small"><Icon
+                        type="close"></Icon></Button>
+                      </span>
+                    </span>
+                  </span>
+
                 </div>
               </div>
             </TimelineItem>
@@ -372,6 +386,20 @@
         let month = convert(curTime.getMonth() + 1);
         let day = convert(curTime.getDate());
         return year + '-' + month + '-' + day;
+      },
+      verifyPlan (id, op) {
+        let _this = this;
+        this.$ajax.post('/api/plan/op', {
+          plan_id: id,
+          op: op
+        })
+          .then(function (res) {
+            _this.fetchMoments();
+            _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
     mounted () {

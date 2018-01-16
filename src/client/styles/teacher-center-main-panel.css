@@ -104,6 +104,7 @@
 
 .moment-item {
   font-size: 15px;
+  line-height: 24px;
   display: flex;
 }
 
@@ -123,4 +124,12 @@
   padding: 0 10px;
   background: #19be6b;
   color: #EEEEEE;
+}
+
+.moment-item-status {
+  border-radius: 5px;
+  border: 1px dashed #999999;
+  font-size: 12px;
+  padding: 3px;
+  margin-right: 10px;
 }
