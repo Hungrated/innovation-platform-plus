@@ -18,7 +18,7 @@
       </span>
     </div>
     <div class="article-page">
-      <Page size="small"></Page>
+      <Page size="small" :total="count"></Page>
     </div>
 
   </Card>
@@ -27,10 +27,7 @@
 <script>
   export default {
     name: 'article-list',
-    props: ['articleList'],
-    data () {
-      return {};
-    },
+    props: ['articleList', 'count'],
     methods: {
       revealDetails (index) {
         this.$router.push('/articles/details?index=' + index);

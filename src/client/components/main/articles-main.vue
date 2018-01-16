@@ -21,7 +21,7 @@
       </Card>
     </div>
     <div class="articles-main-body">
-      <article-list :articleList="articleList"></article-list>
+      <article-list :articleList="articleList" :count="articleCount"></article-list>
     </div>
   </div>
 
@@ -34,6 +34,7 @@
     name: 'articles-main',
     data () {
       return {
+        articleCount: 0,
         articleListLabel: '所有文章',
         labelList: [
           {
@@ -84,6 +85,7 @@
       })
         .then(function (res) {
           _this.articleList = res.data;
+          _this.articleCount = res.data.length;
           // console.log(_this.articleList);
           // _this.refreshArticleList();
         })

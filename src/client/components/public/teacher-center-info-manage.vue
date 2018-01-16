@@ -9,8 +9,8 @@
           <div class="info-manage-options-body">
             <div class="options-list">
               <div class="options-type">
-                <Select placeholder="类 别" size="large" v-model="infoType">
-                  <Option v-for="type in infoTypeList" :value="type.value" :key="type.index">
+                <Select placeholder="类 别" size="large" v-model="infoLabel">
+                  <Option v-for="type in infoTypeList" :value="type.label" :key="type.index">
                     {{ type.value }}
                   </Option>
                 </Select>
@@ -53,7 +53,11 @@
     name: 'teacher-center-info-manage',
     data () {
       return {
+        // pageLimit: 15,
+        // curPage: 1,
+        dataCount: 0,
         infoType: '文 章',
+        infoLabel: 'blog',
         infoCols: [],
         infoData: [],
         infoTypeList: [
@@ -174,6 +178,16 @@
           ],
           plan: [
             {
+              title: '计划ID',
+              key: 'plan_id',
+              width: 120
+            },
+            {
+              title: '学生ID',
+              key: 'student_id',
+              width: 120
+            },
+            {
               title: '学 年',
               key: 'year',
               width: 120,
@@ -238,7 +252,24 @@
               }
             }
           ],
-          meeting: []
+          meeting: [
+            {
+              title: '记录日期',
+              key: 'date',
+              sortable: true,
+              width: 120
+            },
+            {
+              title: '学生ID',
+              key: 'student_id',
+              sortable: true,
+              width: 120
+            },
+            {
+              title: '内 容',
+              key: 'content'
+            }
+          ]
         }
       };
     },
@@ -264,9 +295,12 @@
           }
         });
       },
-      infoQuery (type, start, end, sid) {
+      changeType (label) {
+        this.infoLabel = label;
+      },
+      infoQuery (type, start, end, sid/* , limit, page */) {
         let _this = this;
-        let queryString = '/api/teacher/query?type=' + type;
+        let queryString = '/api/teacher/query?type=' + type/* + '&limit=' + limit + '&page=' + page */;
         if (sid) {
           queryString = queryString + '&sid=' + sid;
         } else if (start !== '' && end !== '') {
@@ -274,7 +308,19 @@
         }
         this.$ajax.get(queryString)
           .then(function (res) {
+            switch (type) {
+              case 'blog':
+                _this.infoCols = _this.queryCols.blog;
+                break;
+              case 'plan':
+                _this.infoCols = _this.queryCols.plan;
+                break;
+              case 'meeting':
+                _this.infoCols = _this.queryCols.meeting;
+                break;
+            }
             _this.infoData = res.data;
+            _this.dataCount = res.data.length;
           })
           .catch(function (e) {
             console.log(e);
@@ -294,11 +340,10 @@
           });
       },
       refreshData () {
-        this.infoQuery('blog', '', '', this.infoSid);
+        this.infoQuery(this.infoLabel, '', '', this.infoSid/* , this.pageLimit, this.curPage */);
       }
     },
     mounted () {
-      this.infoCols = this.queryCols.blog;
       this.refreshData();
     }
   };

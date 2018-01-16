@@ -43,7 +43,7 @@
         <Table stripe :columns="resourceTableColumns" :data="resourceList"></Table>
       </div>
       <div class="resource-page">
-        <Page size="small"></Page>
+        <Page size="small" :total="count"></Page>
       </div>
 
     </Card>
@@ -56,6 +56,7 @@
     name: 'resources-main',
     data () {
       return {
+        count: 0,
         uploadPanel: false,
         uploadConfig: {
           headers: {
@@ -177,6 +178,7 @@
         })
           .then(function (res) {
             _this.resourceList = res.data;
+            _this.count = res.data.length;
           })
           .catch(function (e) {
             console.log(e);
