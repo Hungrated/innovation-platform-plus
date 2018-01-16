@@ -51,6 +51,9 @@ router.get('/query', function (req, res) {
         where.student_id = query.sid;
       }
       break;
+    case 'class':
+      database = db.Class;
+      break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
   }

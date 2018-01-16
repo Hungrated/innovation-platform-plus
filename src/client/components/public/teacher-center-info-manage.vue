@@ -480,6 +480,72 @@
                 ]);
               }
             }
+          ],
+          classes: [
+            {
+              title: '课程ID',
+              key: 'class_id'
+            },
+            {
+              title: '课程名称',
+              key: 'cname',
+              width: 120,
+              sortable: true
+            },
+            {
+              title: '学 年',
+              key: 'year',
+              width: 120,
+              sortable: true
+            },
+            {
+              title: '学 期',
+              key: 'term',
+              width: 70
+            },
+            {
+              title: '上课时间',
+              key: 'time'
+            },
+            {
+              title: '上课地点',
+              key: 'loc'
+            },
+            {
+              title: '状 态',
+              key: 'status',
+              width: 70
+            },
+            {
+              title: '操 作',
+              width: 100,
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: params.row.status === 'active' ? 'error' : 'disabled',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定将此课程标为 archived 状态？',
+                          onOk () {
+                            // _this.infoDelete('blog', params.row.blog_id);
+                            _this.refreshData();
+                          }
+                        });
+                      }
+                    }
+                  }, '结束课程')
+                ]);
+              }
+            }
           ]
         }
       };
@@ -538,7 +604,7 @@
                 _this.infoCols = _this.queryCols.comment;
                 break;
               case 'class':
-                _this.infoCols = _this.queryCols.comment;
+                _this.infoCols = _this.queryCols.classes;
                 break;
             }
             _this.infoData = res.data;
