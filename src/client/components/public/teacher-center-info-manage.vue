@@ -25,7 +25,7 @@
                 </DatePicker>
               </div>
               <div class="options-sid">
-                <Input size="large" v-model="infoSid" placeholder="学 号（选填）"/>
+                <Input size="large" v-model="infoSid" placeholder="学生学号（选填）"/>
               </div>
             </div>
             <div class="options-query">
@@ -56,8 +56,7 @@
         // pageLimit: 15,
         // curPage: 1,
         dataCount: 0,
-        infoType: '文 章',
-        infoLabel: 'blog',
+        infoLabel: 'banner',
         infoCols: [],
         infoData: [],
         infoTypeList: [
@@ -546,6 +545,84 @@
                 ]);
               }
             }
+          ],
+          banner: [
+            {
+              title: '轮播图ID',
+              key: 'img_id',
+              width: 120
+            },
+            {
+              title: '图片预览',
+              key: 'cname',
+              sortable: true
+            },
+            {
+              title: '上传时间',
+              key: 'created_at',
+              width: 120,
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '状 态',
+              key: 'status',
+              width: 70
+            },
+            {
+              title: '操 作',
+              width: 200,
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'dashed',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定将此课程标为 archived 状态？',
+                          onOk () {
+                            // _this.infoDelete('blog', params.row.blog_id);
+                            _this.refreshData();
+                          }
+                        });
+                      }
+                    }
+                  }, '变更图片'),
+                  h('Button', {
+                    props: {
+                      type: params.row.status === 'active' ? 'error' : 'success',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定将此课程标为 archived 状态？',
+                          onOk () {
+                            // _this.infoDelete('blog', params.row.blog_id);
+                            _this.refreshData();
+                          }
+                        });
+                      }
+                    }
+                  }, '变更标记')
+                ]);
+              }
+            }
           ]
         }
       };
@@ -605,6 +682,9 @@
                 break;
               case 'class':
                 _this.infoCols = _this.queryCols.classes;
+                break;
+              case 'banner':
+                _this.infoCols = _this.queryCols.banner;
                 break;
             }
             _this.infoData = res.data;

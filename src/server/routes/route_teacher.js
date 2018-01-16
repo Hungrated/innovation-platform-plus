@@ -54,6 +54,9 @@ router.get('/query', function (req, res) {
     case 'class':
       database = db.Class;
       break;
+    case 'banner':
+      database = db.Banner;
+      break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
   }
