@@ -15,15 +15,15 @@
                   </Option>
                 </Select>
               </div>
-              <!--<div class="options-range">-->
-              <!--<DatePicker v-model="infoRange"-->
-              <!--size="large"-->
-              <!--format="yyyy-MM-dd"-->
-              <!--type="daterange"-->
-              <!--placeholder="时间范围（选填）"-->
-              <!--style="width: 100%">-->
-              <!--</DatePicker>-->
-              <!--</div>-->
+              <div class="options-range">
+                <DatePicker v-model="infoRange"
+                            size="large"
+                            format="yyyy-MM-dd"
+                            type="daterange"
+                            placeholder="时间范围（选填）"
+                            style="width: 100%">
+                </DatePicker>
+              </div>
               <div class="options-sid">
                 <Input size="large" v-model="infoSid" placeholder="学 号（选填）"/>
               </div>
@@ -85,6 +85,16 @@
             index: 4,
             value: '评 论',
             label: 'comment'
+          },
+          {
+            index: 5,
+            value: '班 级',
+            label: 'class'
+          },
+          {
+            index: 6,
+            value: '首页轮播图',
+            label: 'banner'
           }
         ],
         infoRange: ['', ''],
@@ -119,8 +129,7 @@
             {
               title: '操 作',
               key: 'action',
-              width: 200,
-              align: 'center',
+              width: 135,
               render: (h, params) => {
                 return h('div', [
                   h('Button', {
@@ -137,19 +146,6 @@
                       }
                     }
                   }, '查 看'),
-                  h('Button', {
-                    props: {
-                      type: 'dashed',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                      }
-                    }
-                  }, '隐 藏'),
                   h('Button', {
                     props: {
                       type: 'error',
@@ -359,6 +355,72 @@
                 ]);
               }
             }
+          ],
+          resource: [
+            {
+              title: '文件ID',
+              key: 'file_id'
+            },
+            {
+              title: '上传者ID',
+              key: 'uploader_id',
+              sortable: true
+            },
+            {
+              title: '上传时间',
+              key: 'created_at',
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '文件名',
+              key: 'filename'
+            },
+            {
+              title: '文件大小',
+              key: 'size',
+              sortable: true,
+              render: (h, params) => {
+                return h('div', params.row.size + ' Bytes');
+              }
+            },
+            {
+              title: '文件描述',
+              key: 'description'
+            },
+            {
+              title: '操 作',
+              key: 'ops',
+              width: 80,
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除此内容？',
+                          onOk () {
+                            // _this.infoDelete('blog', params.row.blog_id);
+                            _this.refreshData();
+                          }
+                        });
+                      }
+                    }
+                  }, '删 除')
+                ]);
+              }
+            }
           ]
         }
       };
@@ -409,6 +471,9 @@
                 break;
               case 'meeting':
                 _this.infoCols = _this.queryCols.meeting;
+                break;
+              case 'resource':
+                _this.infoCols = _this.queryCols.resource;
                 break;
             }
             _this.infoData = res.data;

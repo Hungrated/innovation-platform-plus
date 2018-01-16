@@ -4,7 +4,7 @@
       <div class="plans-card-body">
         <div class="plans-card-body-left" v-model="classArr">
           <span class="unit-title">
-            <span class="unit-title-info">班级信息</span>
+            <span class="unit-title-info">班级课程信息</span>
           </span>
           <span class="plans-class-list">
             <span class="plans-class-unit" v-for="unit in classArr" :key="unit.class_id">
@@ -15,7 +15,7 @@
         </div>
         <div class="plans-card-body-right" v-model="cur_class">
           <span class="unit-title">
-            <span class="unit-title-info">学生信息 - <em>{{cur_class.class_id}}</em></span>
+            <span class="unit-title-info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
             <span class="unit-title-btn">
               <Button @click="" type="primary" size="small">计 划</Button>
               &nbsp;|&nbsp;

@@ -14,7 +14,7 @@ router.get('/fetch', function (req, res) {
 
   Moment.findAll({
     where: where,
-    limit: 20,
+    limit: 40,
     order: [
       ['created_at', 'DESC']
     ],

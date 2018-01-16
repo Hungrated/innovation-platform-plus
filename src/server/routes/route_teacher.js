@@ -39,6 +39,12 @@ router.get('/query', function (req, res) {
         where.student_id = query.sid;
       }
       break;
+    case 'resource':
+      database = db.File;
+      if (query.sid) {
+        where.uploader_id = query.sid;
+      }
+      break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
   }
