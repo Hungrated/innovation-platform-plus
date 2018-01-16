@@ -312,8 +312,7 @@
             {
               title: '操 作',
               key: 'action',
-              width: 200,
-              align: 'center',
+              width: 135,
               render: (h, params) => {
                 return h('div', [
                   h('Button', {
@@ -421,6 +420,66 @@
                 ]);
               }
             }
+          ],
+          comment: [
+            {
+              title: '评论ID',
+              key: 'comment_id',
+              width: 100,
+              sortable: true
+            },
+            {
+              title: '评论者ID',
+              key: 'student_id',
+              sortable: true
+            },
+            {
+              title: '评论时间',
+              key: 'created_at',
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '评论内容',
+              key: 'content'
+            },
+            {
+              title: '文章ID',
+              key: 'blog_id'
+            },
+            {
+              title: '操 作',
+              key: 'ops',
+              width: 80,
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除此内容？',
+                          onOk () {
+                            // _this.infoDelete('blog', params.row.blog_id);
+                            _this.refreshData();
+                          }
+                        });
+                      }
+                    }
+                  }, '删 除')
+                ]);
+              }
+            }
           ]
         }
       };
@@ -474,6 +533,12 @@
                 break;
               case 'resource':
                 _this.infoCols = _this.queryCols.resource;
+                break;
+              case 'comment':
+                _this.infoCols = _this.queryCols.comment;
+                break;
+              case 'class':
+                _this.infoCols = _this.queryCols.comment;
                 break;
             }
             _this.infoData = res.data;

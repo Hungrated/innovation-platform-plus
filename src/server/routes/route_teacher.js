@@ -45,6 +45,12 @@ router.get('/query', function (req, res) {
         where.uploader_id = query.sid;
       }
       break;
+    case 'comment':
+      database = db.Comment;
+      if (query.sid) {
+        where.student_id = query.sid;
+      }
+      break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
   }
