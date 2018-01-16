@@ -260,6 +260,16 @@ module.exports = {
     'msg': '信息删除失败'
   },
 
+  BANNER_IMG_UPLOAD_SUCCESSFUL: {
+    'status': 8100,
+    'msg': '轮播图上传成功'
+  },
+
+  BANNER_IMG_UPLOAD_FAILED: {
+    'status': 8101,
+    'msg': '轮播图上传失败'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'

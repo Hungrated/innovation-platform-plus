@@ -19,6 +19,9 @@ router.get('/', function (req, res) { // download a file
   } else if (raw.plans) {
     filename = raw.plans;
     realPath = path.plans;
+  } else if (raw.banner) {
+    filename = raw.banner;
+    realPath = path.banner;
   }
 
   const realDir = pathLib.join(realPath, filename);

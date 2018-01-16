@@ -39,7 +39,7 @@
                 轮播图用于首页展示，要上传新的轮播图，请点击右边的"新增"按钮
               </span>
               <Button @click="bannerEdit()" type="dashed" size="small">新 增</Button>
-              <Modal v-model="bannerMng" title="编辑首页轮播图" width="712" @on-ok="/*bannerSubmit()*/"
+              <Modal v-model="bannerMng" title="编辑首页轮播图" width="712" @on-ok="bannerSubmit()"
                      @on-cancel="bannerEditCancel()">
                 <div class="banner-edit">
                   <croppa v-model="myCroppa"
@@ -580,13 +580,66 @@
             },
             {
               title: '图片预览',
-              key: 'cname',
-              sortable: true
+              key: 'src',
+              align: 'center',
+              render: (h, params) => {
+                return h('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }
+                }, [
+                  h('img', {
+                    style: {
+                      height: '50px',
+                      margin: '5px'
+                    },
+                    attrs: {
+                      src: params.row.src
+                    }
+                  }),
+                  h('Button', {
+                    props: {
+                      type: 'dashed',
+                      size: 'small'
+                    },
+                    style: {
+                      margin: '18px 10px'
+                    },
+                    on: {
+                      click: () => {
+                        this.$Modal.info({
+                          width: 75,
+                          render: (h) => {
+                            return h('img', {
+                              style: {
+                                width: '100%',
+                                margin: '5px',
+                                borderRadius: '5px'
+                              },
+                              attrs: {
+                                src: params.row.src
+                              }
+                            });
+                          }
+                        });
+                      }
+                    }
+                  }, [h('Icon', {
+                    props: {
+                      type: 'ios-search-strong'
+                    }
+                  })])
+                ]);
+              }
+            },
+            {
+              title: '上传者ID',
+              key: 'uploader_id'
             },
             {
               title: '上传时间',
               key: 'created_at',
-              width: 120,
               sortable: true,
               render: (h, params) => {
                 return h('span', this.getTime(params.row.created_at));
@@ -595,11 +648,11 @@
             {
               title: '状 态',
               key: 'status',
-              width: 70
+              width: 100
             },
             {
               title: '操 作',
-              width: 200,
+              width: 180,
               render: (h, params) => {
                 return h('div', [
                   h('Button', {
@@ -645,7 +698,7 @@
                         });
                       }
                     }
-                  }, '变更标记')
+                  }, '变更状态')
                 ]);
               }
             }
@@ -771,13 +824,14 @@
           }
           let _this = this;
           let formData = new FormData();
-          formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
-          formData.append('avatar', blob);
-          this.$ajax.post('/api/profile/avatar', formData)
+          formData.append('uploader_id', JSON.parse(window.localStorage.user).school_id);
+          formData.append('banner', blob);
+          this.$ajax.post('/api/banner/upload', formData)
             .then(function (res) {
               _this.$Message.success(res.data.msg);
-              _this.profile.avatar = '/api/download?avatar=' + _this.profile.school_id + '.jpg&t=' + Math.random();
+              // _this.profile.avatar = '/api/download?avatar=' + _this.profile.school_id + '.jpg&t=' + Math.random();
               _this.myCroppa.remove();
+              _this.refreshData();
             })
             .catch(function (e) {
               console.log(e);

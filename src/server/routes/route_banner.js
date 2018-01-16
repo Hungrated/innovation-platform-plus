@@ -7,116 +7,74 @@ const statusLib = require('../libs/status');
 const urlLib = require('url');
 const timeFormat = require('../middlewares/time_format');
 
-const Blog = db.Blog;
-const Profile = db.Profile;
-const Comment = db.Comment;
+const uid = require('../middlewares/id_gen');
+const Banner = db.Banner;
 
-router.post('/publish', function (req, res) { // publish a blog(project or event)
-  const {
-    type,
-    title,
-    description,
-    content,
-    cover_url,
-    photo_url,
-    author_id
-  } = req.body;
-  Blog.create({
-    type,
-    title,
-    description,
-    content,
-    cover_url,
-    photo_url,
-    author_id
+const path = require('../app_paths');
+const pathLib = require('path');
+
+const fs = require('fs');
+const multer = require('multer');
+
+let objMulter = multer({
+  dest: path.banner // file upload destination
+});
+
+router.post('/upload', objMulter.any(), function (req, res, next) { // upload a banner img
+  const id = 'bnr' + uid.generate();
+  req.body.img_id = id;
+  req.bannerURL = pathLib.join(path.banner, id + '.jpg');
+  console.log('banner upload successful');
+  next();
+
+  // // check existance of previous banner file
+  // Banner.findOne({
+  //   where: {
+  //     banner: '/api/download?banner=' + school_id + '.jpg'
+  //   }
+  // })
+  //   .then(function (user) {
+  //     if (user !== null) { // exists previous banner file: delete first
+  //       fs.unlink(url, function (err) {
+  //         if (err) throw err;
+  //         else {
+  //           console.log('previous banner file deleted');
+  //           next();
+  //         }
+  //       });
+  //     } else {
+  //       next();
+  //     }
+  //   })
+  //   .catch(function (e) {
+  //     console.error(e);
+  //     res.json(statusLib.CONNECTION_ERROR);
+  //   });
+});
+
+router.post('/upload', function (req, res, next) { // rename banner file
+  fs.rename(req.files[0].path, req.bannerURL, function (err) {
+    if (err) {
+      console.log('banner file rename error');
+      res.json(statusLib.FILE_RENAME_FAILED);
+    } else { next(); }
+  });
+});
+
+router.post('/upload', function (req, res) { // update database record
+  Banner.create({
+    img_id: req.body.img_id,
+    status: 'active',
+    uploader_id: req.body.uploader_id,
+    src: '/api/download?banner=' + req.body.img_id + '.jpg'
   })
     .then(function () {
-      res.json(statusLib.BLOG_PUB_SUCCESSFUL);
-      console.log('publish successful');
+      console.log('banner upload successful');
+      res.json(statusLib.BANNER_IMG_UPLOAD_SUCCESSFUL);
     })
     .catch(function (e) {
       console.error(e);
-      res.json(statusLib.BLOG_PUB_FAILED);
-      console.log('publish failed');
-    });
-});
-
-router.post('/query', function (req, res) { // fetch blog list for brief browsing
-
-  const request = req.body.request;
-  const where = (typeof request === 'string') ? (
-    (request === 'all') ? {} : {type: request}) : {author_id: request};
-
-  Blog.findAll({
-    where: where,
-    include: [{
-      model: Profile,
-      where: {
-        school_id: sequelize.col('blog.author_id')
-      },
-      attributes: ['name']
-    }]
-  })
-    .then(function (data) {
-      for (let i = 0; i < data.length; i++) {
-        data[i].dataValues.publishTime = timeFormat(data[i].dataValues.created_at);
-      }
-      res.json(data);
-      console.log('query successful');
-    })
-    .catch(function (e) {
-      console.error(e);
-      res.json(statusLib.BLOG_LIST_FETCH_FAILED);
-      console.log('query failed');
-    });
-});
-
-router.get('/details', function (req, res) { // fetch blog details
-
-  const id = urlLib.parse(req.url, true).query.index;
-  Blog.findByPrimary(id, {
-    include: [{
-      model: Profile,
-      where: {
-        school_id: sequelize.col('blog.author_id')
-      },
-      attributes: ['name']
-    }]
-  })
-    .then(function (data) {
-      data.dataValues.publishTime = timeFormat(data.dataValues.created_at);
-      Comment.findAll({
-        where: {
-          blog_id: id
-        },
-        include: [{
-          model: Profile,
-          where: {
-            school_id: sequelize.col('comment.student_id'),
-          },
-          attributes: ['name']
-        }]
-      })
-        .then(function (comments) {
-          for (let i = 0; i < comments.length; i++) {
-            comments[i].dataValues.submitTime = timeFormat(comments[i].dataValues.created_at);
-          }
-          res.json({
-            blog: data,
-            comments: comments
-          });
-          console.log('fetch detail successful');
-        })
-        .catch(function (e) {
-          console.error(e);
-          res.json(statusLib.BLOG_DETAILS_FETCH_FAILED);
-          console.log('fetch detail failed');
-        });
-    })
-    .catch(function (e) {
-      console.error(e);
-      res.json(statusLib.BLOG_DETAILS_FETCH_FAILED);
-      console.log('fetch detail failed');
+      res.json(statusLib.CONNECTION_ERROR);
     });
 });
 

@@ -4,8 +4,7 @@ const mysql = require('../middlewares/sequelize');
 
 const schema = {
   img_id: {
-    type: Sequelize.INTEGER(11),
-    autoIncrement: true,
+    type: Sequelize.STRING(32),
     primaryKey: true,
     unique: true
   },
