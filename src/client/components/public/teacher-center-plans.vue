@@ -242,7 +242,11 @@
                     padding: '5px'
                   }
                 }, [
-                  h('span', '暂 无'),
+                  h('span', {
+                    style: {
+                      lineHeight: '24px'
+                    }
+                  }, '暂 无'),
                   h('span', {
                     style: {
                       display: 'flex',
