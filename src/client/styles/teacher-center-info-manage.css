@@ -40,3 +40,33 @@
   padding: 10px;
   text-align: center;
 }
+
+.options-banner {
+  display: flex;
+  justify-content: space-between;
+  background: #FAFAFA;
+  margin-top: 20px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.options-banner span {
+  color: #999999;
+}
+
+.banner-edit {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.banner-edit span {
+  margin-top: 20px;
+  text-align: center;
+  color: #777777;
+}
+
+.croppa-container {
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #999999;
+}

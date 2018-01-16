@@ -32,6 +32,32 @@
               <Button @click="refreshData()" type="primary" size="large">查 询</Button>
             </div>
           </div>
+          <transition name="fade">
+            <div v-if="infoLabel === 'banner'" class="options-banner">
+              <span>
+                &emsp;<Icon type="information-circled"></Icon>&nbsp;
+                轮播图用于首页展示，要上传新的轮播图，请点击右边的"新增"按钮
+              </span>
+              <Button @click="bannerEdit()" type="dashed" size="small">新 增</Button>
+              <Modal v-model="bannerMng" title="编辑首页轮播图" width="712" @on-ok="/*bannerSubmit()*/"
+                     @on-cancel="bannerEditCancel()">
+                <div class="banner-edit">
+                  <croppa v-model="myCroppa"
+                          accept="image/*"
+                          placeholder="单击以选择图片"
+                          :placeholder-font-size="16"
+                          :width="640"
+                          :height="300"
+                          :quality="2">
+                  </croppa>
+                  <span>
+                    &emsp;<Icon type="information-circled"></Icon>&nbsp;
+                    点击并拖动鼠标以定位，滚动鼠标滚轮以缩放
+                  </span>
+                </div>
+              </Modal>
+            </div>
+          </transition>
         </Card>
       </div>
       <div class="info-manage-body">
@@ -624,7 +650,9 @@
               }
             }
           ]
-        }
+        },
+        bannerMng: false,
+        myCroppa: {}
       };
     },
     methods: {
@@ -728,6 +756,33 @@
           .catch(function (e) {
             console.log(e);
           });
+      },
+      bannerEdit () {
+        this.bannerMng = true;
+      },
+      bannerEditCancel () {
+        this.bannerMng = false;
+      },
+      bannerSubmit () {
+        this.myCroppa.generateBlob((blob) => {
+          if (blob === null) {
+            this.$Message.info('请选择需要上传的头像图片');
+            return;
+          }
+          let _this = this;
+          let formData = new FormData();
+          formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
+          formData.append('avatar', blob);
+          this.$ajax.post('/api/profile/avatar', formData)
+            .then(function (res) {
+              _this.$Message.success(res.data.msg);
+              _this.profile.avatar = '/api/download?avatar=' + _this.profile.school_id + '.jpg&t=' + Math.random();
+              _this.myCroppa.remove();
+            })
+            .catch(function (e) {
+              console.log(e);
+            });
+        }, 'image/jpeg', 0.8);
       }
     },
     mounted () {

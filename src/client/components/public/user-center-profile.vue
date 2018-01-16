@@ -94,9 +94,9 @@
                 :quality="2">
         </croppa>
         <span>
-          <p>点击并拖动鼠标以定位</p>
+          <span>点击并拖动鼠标以定位</span>
           <br>
-          <p>滚动鼠标滚轮以缩放</p>
+          <span>滚动鼠标滚轮以缩放</span>
         </span>
       </div>
     </Modal>
