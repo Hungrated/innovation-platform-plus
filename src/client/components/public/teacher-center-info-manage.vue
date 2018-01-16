@@ -121,7 +121,7 @@
                 return h('div', [
                   h('Button', {
                     props: {
-                      type: 'primary',
+                      type: 'ghost',
                       size: 'small'
                     },
                     style: {
@@ -133,6 +133,19 @@
                       }
                     }
                   }, '查 看'),
+                  h('Button', {
+                    props: {
+                      type: 'dashed',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                      }
+                    }
+                  }, '隐 藏'),
                   h('Button', {
                     props: {
                       type: 'error',
