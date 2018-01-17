@@ -265,7 +265,7 @@
                           title: '确认删除',
                           content: '确定删除这张首页轮播图？',
                           onOk () {
-                            // delete banner img
+                            _this.infoDelete('banner', params.row.img_id);
                             _this.refreshData();
                           }
                         });
@@ -880,7 +880,7 @@
       bannerSubmit (isModify, id) {
         this.myCroppa.generateBlob((blob) => {
           if (blob === null) {
-            this.$Message.info('请选择需要上传的头像图片');
+            this.$Message.info('请选择需要上传的图片');
             return;
           }
           let _this = this;

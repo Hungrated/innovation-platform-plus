@@ -78,29 +78,24 @@ router.get('/query', function (req, res) {
 });
 
 router.post('/delete', function (req, res, next) {
-  let flag = 1;
   let database = null;
   let type = req.body.type;
   let where = {};
-  switch (type) {
-    case 'meeting':
-      database = db.Meeting;
-      where.rec_id = req.body.id;
-      break;
-    case 'comment':
-      database = db.Comment;
-      where.comment_id = req.body.id;
-      break;
-    case 'resource':
-    case 'banner':
-    case 'blog':
-      flag = 0;
-      next();
-      break;
-    default:
-      res.json(statusLib.CONNECTION_ERROR);
-  }
-  if (flag) {
+  if (type !== 'meeting' && type !== 'comment') {
+    next();
+  } else {
+    switch (type) {
+      case 'meeting':
+        database = db.Meeting;
+        where.rec_id = req.body.id;
+        break;
+      case 'comment':
+        database = db.Comment;
+        where.comment_id = req.body.id;
+        break;
+      default:
+        res.json(statusLib.CONNECTION_ERROR);
+    }
     database.destroy({ // need not to delete files
       where: where
     })
@@ -119,46 +114,103 @@ router.post('/delete', function (req, res, next) {
 router.post('/delete', function (req, res, next) {
   if (req.body.type !== 'blog') {
     next();
-  }
-  let Blog = db.Blog;
-  let Comment = db.Comment;
-  Blog.destroy({ // need not to delete files
-    where: {
-      blog_id: req.body.id
-    }
-  })
-    .then(function () {
-      moment.deleteMoment(req.body.id);
-      Comment.destroy({
-        where: {
-          blog_id: req.body.id
-        }
-      })
-        .then(function () {
-          res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-          console.log('blog & comments delete successful');
-        })
-        .catch(function (e) {
-          console.error(e);
-          res.json(statusLib.CONNECTION_ERROR);
-        });
+  } else {
+    let Blog = db.Blog;
+    let Comment = db.Comment;
+    Blog.destroy({ // need not to delete files
+      where: {
+        blog_id: req.body.id
+      }
     })
-    .catch(function (e) {
-      console.error(e);
-      res.json(statusLib.CONNECTION_ERROR);
-    });
-
+      .then(function () {
+        moment.deleteMoment(req.body.id);
+        Comment.destroy({
+          where: {
+            blog_id: req.body.id
+          }
+        })
+          .then(function () {
+            res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+            console.log('blog & comments delete successful');
+          })
+          .catch(function (e) {
+            console.error(e);
+            res.json(statusLib.CONNECTION_ERROR);
+          });
+      })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
+  }
 });
 
 router.post('/delete', function (req, res, next) {
-  // let database = null;
-  // let type = req.body.type;
-  // let where = {};
-  // if (type === 'blog') {
-  //   where.blog_id = req.body.id;
-  // } else {
-  //   next();
-  // }
+  if (req.body.type !== 'banner') {
+    next();
+  } else {
+    let Banner = db.Banner;
+    let url = pathLib.join(path.banner, req.body.id + '.jpg');
+    Banner.destroy({
+      where: {
+        img_id: req.body.id
+      }
+    })
+      .then(function () {
+        fs.unlink(url, function (err) {
+          if (err) throw err;
+          else {
+            res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+            console.log('info & file delete successful');
+          }
+        });
+      })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
+  }
+});
+
+router.post('/delete', function (req, res) {
+  if (req.body.type !== 'resource') {
+    res.json(statusLib.CONNECTION_ERROR);
+    console.log('type error');
+  } else {
+    let File = db.File;
+    File.findOne({
+      where: {
+        file_id: req.body.id
+      }
+    })
+      .then(function (file) {
+        let url = pathLib.join(path.sources, urlLib.parse(file.url, true).query.resource);
+        fs.unlink(url, function (err) {
+          if (err) throw err;
+          else {
+            File.destroy({
+              where: {
+                file_id: req.body.id
+              }
+            })
+              .then(function () {
+                moment.deleteMoment(req.body.id);
+                res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+                console.log('info & file delete successful');
+              })
+              .catch(function (e) {
+                console.error(e);
+                res.json(statusLib.CONNECTION_ERROR);
+              });
+          }
+        });
+      })
+      .catch(function (e) {
+        console.error(e);
+        console.log('error');
+        res.json(statusLib.CONNECTION_ERROR);
+      });
+  }
 });
 
 module.exports = router;
