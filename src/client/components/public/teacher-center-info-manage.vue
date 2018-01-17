@@ -92,43 +92,190 @@
         infoTypeList: [
           {
             index: 0,
+            value: '首页轮播图',
+            label: 'banner'
+          },
+          {
+            index: 1,
             value: '文 章',
             label: 'blog'
           },
           {
-            index: 1,
+            index: 2,
             value: '计 划',
             label: 'plan'
           },
           {
-            index: 2,
+            index: 3,
             value: '课堂记录',
             label: 'meeting'
           },
           {
-            index: 3,
+            index: 4,
             value: '资源文件',
             label: 'resource'
           },
           {
-            index: 4,
+            index: 5,
             value: '评 论',
             label: 'comment'
           },
           {
-            index: 5,
+            index: 6,
             value: '班 级',
             label: 'class'
-          },
-          {
-            index: 6,
-            value: '首页轮播图',
-            label: 'banner'
           }
         ],
         infoRange: ['', ''],
         infoSid: '',
         queryCols: {
+          banner: [
+            {
+              title: '轮播图ID',
+              key: 'img_id',
+              width: 120
+            },
+            {
+              title: '图片预览',
+              key: 'src',
+              align: 'center',
+              render: (h, params) => {
+                return h('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }
+                }, [
+                  h('img', {
+                    style: {
+                      height: '50px',
+                      margin: '5px'
+                    },
+                    attrs: {
+                      src: params.row.src + '&t=' + Math.random()
+                    }
+                  }),
+                  h('Button', {
+                    props: {
+                      type: 'dashed',
+                      size: 'small'
+                    },
+                    style: {
+                      margin: '18px 10px'
+                    },
+                    on: {
+                      click: () => {
+                        this.$Modal.info({
+                          width: 75,
+                          render: (h) => {
+                            return h('img', {
+                              style: {
+                                width: '100%',
+                                margin: '5px',
+                                borderRadius: '5px'
+                              },
+                              attrs: {
+                                src: params.row.src + '&t=' + Math.random()
+                              }
+                            });
+                          }
+                        });
+                      }
+                    }
+                  }, [h('Icon', {
+                    props: {
+                      type: 'ios-search-strong'
+                    }
+                  })])
+                ]);
+              }
+            },
+            {
+              title: '上传者ID',
+              key: 'uploader_id'
+            },
+            {
+              title: '上传时间',
+              key: 'created_at',
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '状 态',
+              key: 'status',
+              width: 100
+            },
+            {
+              title: '操 作',
+              width: 225,
+              align: 'center',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'dashed',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.bannerModify(params.row.img_id);
+                      }
+                    }
+                  }, '变更图片'),
+                  h('Button', {
+                    props: {
+                      type: params.row.status === 'active' ? 'error' : 'success',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认切换状态',
+                          content: '确定切换这张首页轮播图的展示状态？',
+                          onOk () {
+                            let curStatus = params.row.status;
+                            _this.changeBannerImgStatus(params.row.img_id, curStatus);
+                            params.row.status = (curStatus === 'archived') ? 'active' : 'archived';
+                          }
+                        });
+                      }
+                    }
+                  }, '切换状态'),
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除这张首页轮播图？',
+                          onOk () {
+                            // delete banner img
+                            _this.refreshData();
+                          }
+                        });
+                      }
+                    }
+                  }, '删 除')
+                ]);
+              }
+            }
+          ],
           blog: [
             {
               title: '文章ID',
@@ -591,153 +738,6 @@
                       }
                     }
                   }, '切换状态')
-                ]);
-              }
-            }
-          ],
-          banner: [
-            {
-              title: '轮播图ID',
-              key: 'img_id',
-              width: 120
-            },
-            {
-              title: '图片预览',
-              key: 'src',
-              align: 'center',
-              render: (h, params) => {
-                return h('div', {
-                  style: {
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }
-                }, [
-                  h('img', {
-                    style: {
-                      height: '50px',
-                      margin: '5px'
-                    },
-                    attrs: {
-                      src: params.row.src + '&t=' + Math.random()
-                    }
-                  }),
-                  h('Button', {
-                    props: {
-                      type: 'dashed',
-                      size: 'small'
-                    },
-                    style: {
-                      margin: '18px 10px'
-                    },
-                    on: {
-                      click: () => {
-                        this.$Modal.info({
-                          width: 75,
-                          render: (h) => {
-                            return h('img', {
-                              style: {
-                                width: '100%',
-                                margin: '5px',
-                                borderRadius: '5px'
-                              },
-                              attrs: {
-                                src: params.row.src + '&t=' + Math.random()
-                              }
-                            });
-                          }
-                        });
-                      }
-                    }
-                  }, [h('Icon', {
-                    props: {
-                      type: 'ios-search-strong'
-                    }
-                  })])
-                ]);
-              }
-            },
-            {
-              title: '上传者ID',
-              key: 'uploader_id'
-            },
-            {
-              title: '上传时间',
-              key: 'created_at',
-              sortable: true,
-              render: (h, params) => {
-                return h('span', this.getTime(params.row.created_at));
-              }
-            },
-            {
-              title: '状 态',
-              key: 'status',
-              width: 100
-            },
-            {
-              title: '操 作',
-              width: 225,
-              align: 'center',
-              render: (h, params) => {
-                return h('div', [
-                  h('Button', {
-                    props: {
-                      type: 'dashed',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        this.bannerModify(params.row.img_id);
-                      }
-                    }
-                  }, '变更图片'),
-                  h('Button', {
-                    props: {
-                      type: params.row.status === 'active' ? 'error' : 'success',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        let _this = this;
-                        this.$Modal.confirm({
-                          title: '确认切换状态',
-                          content: '确定切换这张首页轮播图的展示状态？',
-                          onOk () {
-                            let curStatus = params.row.status;
-                            _this.changeBannerImgStatus(params.row.img_id, curStatus);
-                            params.row.status = (curStatus === 'archived') ? 'active' : 'archived';
-                          }
-                        });
-                      }
-                    }
-                  }, '切换状态'),
-                  h('Button', {
-                    props: {
-                      type: 'error',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        let _this = this;
-                        this.$Modal.confirm({
-                          title: '确认删除',
-                          content: '确定删除这张首页轮播图？',
-                          onOk () {
-                            // delete banner img
-                            _this.refreshData();
-                          }
-                        });
-                      }
-                    }
-                  }, '删 除')
                 ]);
               }
             }
