@@ -32,9 +32,9 @@ const schema = {
     type: Sequelize.ENUM,
     values: ['已通过', '未通过', '未审核'],
   },
-  // cur_class: {
-  //   type: Sequelize.STRING
-  // },
+  class_id: {
+    type: Sequelize.STRING
+  },
   rate: {
     type: Sequelize.STRING(8)
   },

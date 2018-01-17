@@ -21,6 +21,10 @@ const schema = {
   href: {
     type: Sequelize.STRING(64),
     allowNull: false
+  },
+  uid: {
+    type: Sequelize.STRING(32),
+    allowNull: false
   }
 };
 

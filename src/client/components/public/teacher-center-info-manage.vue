@@ -25,7 +25,8 @@
                 </DatePicker>
               </div>
               <div class="options-sid">
-                <Input size="large" v-model="infoSid" placeholder="学生学号（选填）"/>
+                <Input size="large" v-model="infoSid" placeholder="学生学号（选填）" :disabled="infoLabel === 'banner' ||
+                infoLabel === 'class'"/>
               </div>
             </div>
             <div class="options-query">
@@ -184,10 +185,9 @@
                         let _this = this;
                         this.$Modal.confirm({
                           title: '确认删除',
-                          content: '确定删除此内容？',
+                          content: '确定删除此文章？（此文章下的评论信息也将被删除）',
                           onOk () {
                             _this.infoDelete('blog', params.row.blog_id);
-                            _this.refreshData();
                           }
                         });
                       }
@@ -236,6 +236,10 @@
               key: 'content'
             },
             {
+              title: '对应课程编号',
+              key: 'class_id'
+            },
+            {
               title: '状 态',
               key: 'status',
               width: 75,
@@ -250,65 +254,81 @@
               }
             },
             {
-              title: '审 核',
-              key: 'action',
+              title: '审核变更',
               width: 125,
               render: (h, params) => {
-                if (params.row.status === '未审核') {
-                  return h('div', [
-                    h('Button', {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'success',
+                      size: 'small',
+                      disabled: params.row.status === '已通过'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认计划审核变更',
+                          content: '确定变更这个计划的审核结果？',
+                          onOk () {
+                            _this.verifyPlan(params.row.plan_id, 1);
+                            params.row.status = '已通过';
+                          }
+                        });
+                      }
+                    }
+                  }, [
+                    h('Icon', {
                       props: {
-                        type: 'success',
-                        size: 'small'
-                      },
-                      style: {
-                        marginRight: '5px'
-                      },
-                      on: {
-                        click: () => {
-                          this.verifyPlan(params.row.plan_id, 1);
-                          params.row.status = '已通过';
-                        }
+                        type: 'checkmark'
                       }
-                    }, [
-                      h('Icon', {
-                        props: {
-                          type: 'checkmark'
-                        }
-                      }),
-                      h('span', '通 过')
-                    ]),
-                    h('Button', {
+                    }),
+                    h('span', '通 过')
+                  ]),
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small',
+                      disabled: params.row.status === '未通过'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认计划审核变更',
+                          content: '确定变更这个计划的审核结果？',
+                          onOk () {
+                            _this.verifyPlan(params.row.plan_id, 0);
+                            params.row.status = '未通过';
+                          }
+                        });
+                      }
+                    }
+                  }, [
+                    h('Icon', {
                       props: {
-                        type: 'error',
-                        size: 'small'
-                      },
-                      style: {
-                        marginRight: '5px'
-                      },
-                      on: {
-                        click: () => {
-                          this.verifyPlan(params.row.plan_id, 0);
-                          params.row.status = '未通过';
-                        }
+                        type: 'close'
                       }
-                    }, [
-                      h('Icon', {
-                        props: {
-                          type: 'close'
-                        }
-                      })
-                    ])
-                  ]);
-                } else {
-                  return h('div', [
-                    h('em', {
-                      style: {
-                        color: '#999999'
-                      }
-                    }, '已审核')
-                  ]);
-                }
+                    })
+                  ])
+                ]);
+                // if (params.row.status === '未审核') {
+                //
+                // } else {
+                //   return h('div', [
+                //     h('em', {
+                //       style: {
+                //         color: '#999999'
+                //       }
+                //     }, '已审核')
+                //   ]);
+                // }
               }
             }
           ],
@@ -367,10 +387,9 @@
                         let _this = this;
                         this.$Modal.confirm({
                           title: '确认删除',
-                          content: '确定删除此内容？',
+                          content: '确定删除此条课堂记录？',
                           onOk () {
                             _this.infoDelete('meeting', params.row.rec_id);
-                            _this.refreshData();
                           }
                         });
                       }
@@ -433,9 +452,9 @@
                         let _this = this;
                         this.$Modal.confirm({
                           title: '确认删除',
-                          content: '确定删除此内容？',
+                          content: '确定删除此文件？',
                           onOk () {
-                            // _this.infoDelete('blog', params.row.blog_id);
+                            _this.infoDelete('resource', params.row.file_id);
                             _this.refreshData();
                           }
                         });
@@ -493,9 +512,9 @@
                         let _this = this;
                         this.$Modal.confirm({
                           title: '确认删除',
-                          content: '确定删除此内容？',
+                          content: '确定删除此条评论？',
                           onOk () {
-                            // _this.infoDelete('blog', params.row.blog_id);
+                            _this.infoDelete('comment', params.row.comment_id);
                             _this.refreshData();
                           }
                         });
@@ -539,7 +558,7 @@
             {
               title: '状 态',
               key: 'status',
-              width: 70
+              width: 100
             },
             {
               title: '操 作',
@@ -548,7 +567,7 @@
                 return h('div', [
                   h('Button', {
                     props: {
-                      type: params.row.status === 'active' ? 'error' : 'disabled',
+                      type: params.row.status === 'active' ? 'error' : 'success',
                       size: 'small'
                     },
                     style: {
@@ -558,16 +577,17 @@
                       click: () => {
                         let _this = this;
                         this.$Modal.confirm({
-                          title: '确认删除',
-                          content: '确定将此课程标为 archived 状态？',
+                          title: '确认切换课程状态',
+                          content: '确定切换此课程的状态？',
                           onOk () {
-                            // _this.infoDelete('blog', params.row.blog_id);
-                            _this.refreshData();
+                            let curStatus = params.row.status;
+                            _this.changeClassStatus(params.row.class_id, curStatus);
+                            params.row.status = (curStatus === 'archived') ? 'active' : 'archived';
                           }
                         });
                       }
                     }
-                  }, '结束课程')
+                  }, '切换状态')
                 ]);
               }
             }
@@ -652,7 +672,8 @@
             },
             {
               title: '操 作',
-              width: 180,
+              width: 225,
+              align: 'center',
               render: (h, params) => {
                 return h('div', [
                   h('Button', {
@@ -665,15 +686,7 @@
                     },
                     on: {
                       click: () => {
-                        let _this = this;
-                        this.$Modal.confirm({
-                          title: '确认删除',
-                          content: '确定将此课程标为 archived 状态？',
-                          onOk () {
-                            // _this.infoDelete('blog', params.row.blog_id);
-                            _this.refreshData();
-                          }
-                        });
+                        // mycroppa
                       }
                     }
                   }, '变更图片'),
@@ -689,16 +702,39 @@
                       click: () => {
                         let _this = this;
                         this.$Modal.confirm({
-                          title: '确认删除',
-                          content: '确定将此课程标为 archived 状态？',
+                          title: '确认切换状态',
+                          content: '确定切换这张首页轮播图的展示状态？',
                           onOk () {
-                            // _this.infoDelete('blog', params.row.blog_id);
+                            let curStatus = params.row.status;
+                            _this.changeBannerImgStatus(params.row.img_id, curStatus);
+                            params.row.status = (curStatus === 'archived') ? 'active' : 'archived';
+                          }
+                        });
+                      }
+                    }
+                  }, '切换状态'),
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除这张首页轮播图？',
+                          onOk () {
+                            // delete banner img
                             _this.refreshData();
                           }
                         });
                       }
                     }
-                  }, '变更状态')
+                  }, '删 除')
                 ]);
               }
             }
@@ -782,6 +818,7 @@
           id: id
         })
           .then(function (res) {
+            _this.refreshData();
             _this.$Message.success(res.data.msg);
           })
           .catch(function (e) {
@@ -810,7 +847,23 @@
             console.log(e);
           });
       },
+      changeClassStatus (id, curStatus) {
+        let _this = this;
+        this.$ajax.post('/api/class/switch', {
+          class_id: id,
+          op: curStatus === 'archived' ? 1 : 0
+        })
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
       bannerEdit () {
+        this.bannerMng = true;
+      },
+      bannerModify () {
         this.bannerMng = true;
       },
       bannerEditCancel () {
@@ -837,8 +890,22 @@
               console.log(e);
             });
         }, 'image/jpeg', 0.8);
+      },
+      changeBannerImgStatus (id, curStatus) {
+        let _this = this;
+        this.$ajax.post('/api/banner/switch', {
+          img_id: id,
+          op: curStatus === 'archived' ? 1 : 0
+        })
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
+
     mounted () {
       this.refreshData();
     }

@@ -22,7 +22,7 @@ router.post('/publish', function (req, res) { // publish a blog(project or event
 
   Blog.create(publishData)
     .then(function () {
-      moment.createMoment('article', publishData.title, href, publishData.author_id);
+      moment.createMoment('article', publishData.title, href, publishData.author_id, publishData.blog_id);
       res.json(statusLib.BLOG_PUB_SUCCESSFUL);
       console.log('publish successful');
     })

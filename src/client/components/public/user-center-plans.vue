@@ -175,6 +175,9 @@
         this.planModify = false;
       },
       modifyPlan (plan) {
+        if (this.planEdit) {
+          return;
+        }
         this.planModify = true;
         this.planUnit = {
           plan_id: plan.plan_id,
@@ -196,7 +199,8 @@
           term: this.planUnit.term.split('-')[2],
           content: this.planUnit.content,
           start: this.date(this.planUnit.range[0]),
-          deadline: this.date(this.planUnit.range[1])
+          deadline: this.date(this.planUnit.range[1]),
+          class_id: JSON.parse(window.localStorage.user).cur_class
         };
         if (op === 'modify') {
           url = '/api/plan/modify';

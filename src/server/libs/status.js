@@ -225,6 +225,16 @@ module.exports = {
     'msg': '班级获取为空'
   },
 
+  CLASS_STATUS_CHANGE_SUCCESSFUL: {
+    'status': 6100,
+    'msg': '班级状态更改成功'
+  },
+
+  CLASS_STATUS_CHANGE_FAILED: {
+    'status': 6101,
+    'msg': '班级状态更改失败'
+  },
+
   MEETING_REC_SUBMIT_SUCCESSFUL: {
     'status': 7000,
     'msg': '记录提交成功'
@@ -268,6 +278,16 @@ module.exports = {
   BANNER_IMG_UPLOAD_FAILED: {
     'status': 8101,
     'msg': '轮播图上传失败'
+  },
+
+  BANNER_IMG_STATUS_CHANGE_SUCCESSFUL: {
+    'status': 8200,
+    'msg': '轮播图状态更改成功'
+  },
+
+  BANNER_IMG_STATUS_CHANGE_FAILED: {
+    'status': 8201,
+    'msg': '轮播图状态更改失败'
   },
 
   CONNECTION_ERROR: {

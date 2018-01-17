@@ -97,4 +97,23 @@ router.post('/upload', function (req, res) { // update database record
     });
 });
 
+router.post('/switch', function (req, res) {
+  Banner.update({
+    status: req.body.op ? 'active' : 'archived' // 0: archived 1: active
+  }, {
+    where: {
+      img_id: req.body.img_id
+    }
+  })
+    .then(function () {
+      res.json(statusLib.BANNER_IMG_STATUS_CHANGE_SUCCESSFUL);
+      console.log('banner img status change successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.BANNER_IMG_STATUS_CHANGE_FAILED);
+      console.log('banner img status change failed');
+    });
+});
+
 module.exports = router;

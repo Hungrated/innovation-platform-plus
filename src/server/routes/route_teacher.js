@@ -14,6 +14,7 @@ const sequelize = require('sequelize');
 const urlLib = require('url');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
+const moment = require('../middlewares/moment');
 
 // query by type
 router.get('/query', function (req, res) {
@@ -68,7 +69,7 @@ router.get('/query', function (req, res) {
   })
     .then(function (dataList) {
       res.json(dataList);
-      console.log('teacher query successful');
+      console.log('teacher: ' + query.type + ' query successful');
     })
     .catch(function (e) {
       console.error(e);
@@ -78,19 +79,28 @@ router.get('/query', function (req, res) {
 
 router.post('/delete', function (req, res) {
   let database = null;
+  let type = req.body.type;
   let where = {};
-  switch (req.body.type) {
+  switch (type) {
     case 'blog':
       database = db.Blog;
       where.blog_id = req.body.id;
       break;
-    case 'plan':
-      database = db.Plan;
-      where.plan_id = req.body.id;
-      break;
+    // case 'plan':
+    //   database = db.Plan;
+    //   where.plan_id = req.body.id;
+    //   break;
     case 'meeting':
       database = db.Meeting;
       where.rec_id = req.body.id;
+      break;
+    case 'comment':
+      database = db.Comment;
+      where.comment_id = req.body.id;
+      break;
+    case 'resource':
+      database = db.File;
+      where.file_id = req.body.id;
       break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
@@ -99,8 +109,11 @@ router.post('/delete', function (req, res) {
     where: where
   })
     .then(function () {
+      if(type === 'blog' || type === 'resource') {
+        moment.deleteMoment(req.body.id);
+      }
       res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-      console.log('info delete successful');
+      // console.log('info delete successful');
     })
     .catch(function (e) {
       console.error(e);

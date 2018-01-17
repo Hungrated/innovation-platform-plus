@@ -22,7 +22,8 @@ router.post('/query', function (req, res) { // class query
 
   if (typeof request === 'number') {
     where = {
-      teacher_id: request
+      teacher_id: request,
+      status: 'active'
     };
   }
 
@@ -48,6 +49,25 @@ router.post('/query', function (req, res) { // class query
       console.error(e);
       res.json(statusLib.CLASS_QUERY_FAILED);
       console.log('class query failed');
+    });
+});
+
+router.post('/switch', function (req, res) {
+  Class.update({
+    status: req.body.op ? 'active' : 'archived' // 0: archived 1: active
+  }, {
+    where: {
+      class_id: req.body.class_id
+    }
+  })
+    .then(function () {
+      res.json(statusLib.CLASS_STATUS_CHANGE_SUCCESSFUL);
+      console.log('class status change successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CLASS_QUERY_FAILED);
+      console.log('class status change failed');
     });
 });
 

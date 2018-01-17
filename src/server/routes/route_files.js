@@ -57,7 +57,7 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
       .then(function () {
         flag++;
         if (flag === req.files.length) {
-          moment.createMoment('resource', fileInfo.filename + ' | ' + fileInfo.description, fileInfo.url, fileInfo.uploader_id);
+          moment.createMoment('resource', fileInfo.filename + ' | ' + fileInfo.description, fileInfo.url, fileInfo.uploader_id, fileInfo.file_id);
           res.json(statusLib.FILE_UPLOAD_SUCCESSFUL);
           console.log('file upload successful');
         }

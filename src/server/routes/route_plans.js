@@ -25,7 +25,8 @@ router.post('/submit', function (req, res) { // a student create a plan
     term,
     content,
     start,
-    deadline
+    deadline,
+    class_id
   } = req.body;
 
   const status = '未审核';
@@ -39,11 +40,12 @@ router.post('/submit', function (req, res) { // a student create a plan
     start: start,
     deadline: deadline,
     student_id: student_id,
-    status: status
+    status: status,
+    class_id: class_id
   })
     .then(function () {
       // if plan is not validated, params[2] should be plan_id, otherwise it should be ''.
-      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', plan_id, student_id);
+      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', status, student_id, plan_id);
       res.json({
         'status': statusLib.PLAN_SUBMIT_SUCCESSFUL.status,
         'msg': statusLib.PLAN_SUBMIT_SUCCESSFUL.msg,
@@ -108,7 +110,7 @@ router.post('/modify', function (req, res) { // a student modifies a plan
     }
   })
     .then(function () {
-      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', req.body.plan_id, student_id);
+      moment.createPlanModifyMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', status, student_id, req.body.plan_id);
       res.json(statusLib.PLAN_MOD_SUCCESSFUL);
       console.log('plan modify successful');
     })
@@ -119,26 +121,26 @@ router.post('/modify', function (req, res) { // a student modifies a plan
     });
 });
 
-router.post('/op', function (req, res, next) { // check plan status before modification
-
-  Plan.findOne({
-    where: {
-      plan_id: req.body.plan_id
-    }
-  })
-    .then(function (plan) {
-      if (plan.status !== '未审核') {
-        res.json(statusLib.PLAN_MOD_FAILED);
-        console.log('plan modify failed');
-      } else
-        next();
-    })
-    .catch(function (e) {
-      console.error(e);
-      res.json(statusLib.PLAN_MOD_FAILED);
-      console.log('plan modify failed');
-    });
-});
+// router.post('/op', function (req, res, next) { // check plan status before modification
+//
+//   Plan.findOne({
+//     where: {
+//       plan_id: req.body.plan_id
+//     }
+//   })
+//     .then(function (plan) {
+//       if (plan.status !== '未审核') {
+//         res.json(statusLib.PLAN_MOD_FAILED);
+//         console.log('plan modify failed');
+//       } else
+//         next();
+//     })
+//     .catch(function (e) {
+//       console.error(e);
+//       res.json(statusLib.PLAN_MOD_FAILED);
+//       console.log('plan modify failed');
+//     });
+// });
 
 router.post('/op', function (req, res) { // teacher changes plan status
 
