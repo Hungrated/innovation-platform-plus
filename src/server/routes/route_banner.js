@@ -45,30 +45,6 @@ router.post('/upload', objMulter.any(), function (req, res, next) { // upload a 
   req.bannerURL = pathLib.join(path.banner, id + '.jpg');
   console.log('banner upload successful');
   next();
-
-  // // check existance of previous banner file
-  // Banner.findOne({
-  //   where: {
-  //     banner: '/api/download?banner=' + school_id + '.jpg'
-  //   }
-  // })
-  //   .then(function (user) {
-  //     if (user !== null) { // exists previous banner file: delete first
-  //       fs.unlink(url, function (err) {
-  //         if (err) throw err;
-  //         else {
-  //           console.log('previous banner file deleted');
-  //           next();
-  //         }
-  //       });
-  //     } else {
-  //       next();
-  //     }
-  //   })
-  //   .catch(function (e) {
-  //     console.error(e);
-  //     res.json(statusLib.CONNECTION_ERROR);
-  //   });
 });
 
 router.post('/upload', function (req, res, next) { // rename banner file
@@ -114,6 +90,55 @@ router.post('/switch', function (req, res) {
       res.json(statusLib.BANNER_IMG_STATUS_CHANGE_FAILED);
       console.log('banner img status change failed');
     });
+});
+
+router.post('/modify', objMulter.any(), function (req, res) {
+  // check existance of previous banner image file
+  const id = req.body.img_id;
+  const url = pathLib.join(path.banner, id + '.jpg');
+  Banner.findOne({
+    where: {
+      src: '/api/download?banner=' + id + '.jpg'
+    }
+  })
+    .then(function () {
+      fs.unlink(url, function (err) {
+        if (err) throw err;
+        else {
+          console.log('previous banner file deleted');
+          fs.rename(req.files[0].path, pathLib.join(path.banner, id + '.jpg'), function (err) {
+            if (err) {
+              console.log('banner file rename error');
+              res.json(statusLib.FILE_RENAME_FAILED);
+            } else {
+              res.json(statusLib.BANNER_IMG_MOD_SUCCESSFUL);
+              console.log('banner img mod successful');
+            }
+          });
+        }
+      });
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
+
+  // Banner.update({
+  //   status: req.body.op ? 'active' : 'archived' // 0: archived 1: active
+  // }, {
+  //   where: {
+  //     img_id: req.body.img_id
+  //   }
+  // })
+  //   .then(function () {
+  //     res.json(statusLib.BANNER_IMG_STATUS_CHANGE_SUCCESSFUL);
+  //     console.log('banner img status change successful');
+  //   })
+  //   .catch(function (e) {
+  //     console.error(e);
+  //     res.json(statusLib.BANNER_IMG_STATUS_CHANGE_FAILED);
+  //     console.log('banner img status change failed');
+  //   });
 });
 
 module.exports = router;

@@ -77,19 +77,12 @@ router.get('/query', function (req, res) {
     });
 });
 
-router.post('/delete', function (req, res) {
+router.post('/delete', function (req, res, next) {
+  let flag = 1;
   let database = null;
   let type = req.body.type;
   let where = {};
   switch (type) {
-    case 'blog':
-      database = db.Blog;
-      where.blog_id = req.body.id;
-      break;
-    // case 'plan':
-    //   database = db.Plan;
-    //   where.plan_id = req.body.id;
-    //   break;
     case 'meeting':
       database = db.Meeting;
       where.rec_id = req.body.id;
@@ -99,26 +92,73 @@ router.post('/delete', function (req, res) {
       where.comment_id = req.body.id;
       break;
     case 'resource':
-      database = db.File;
-      where.file_id = req.body.id;
+    case 'banner':
+    case 'blog':
+      flag = 0;
+      next();
       break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
   }
-  database.destroy({
-    where: where
+  if (flag) {
+    database.destroy({ // need not to delete files
+      where: where
+    })
+      .then(function () {
+        res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+        // console.log('info delete successful');
+      })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
+  }
+
+});
+
+router.post('/delete', function (req, res, next) {
+  if (req.body.type !== 'blog') {
+    next();
+  }
+  let Blog = db.Blog;
+  let Comment = db.Comment;
+  Blog.destroy({ // need not to delete files
+    where: {
+      blog_id: req.body.id
+    }
   })
     .then(function () {
-      if(type === 'blog' || type === 'resource') {
-        moment.deleteMoment(req.body.id);
-      }
-      res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-      // console.log('info delete successful');
+      moment.deleteMoment(req.body.id);
+      Comment.destroy({
+        where: {
+          blog_id: req.body.id
+        }
+      })
+        .then(function () {
+          res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+          console.log('blog & comments delete successful');
+        })
+        .catch(function (e) {
+          console.error(e);
+          res.json(statusLib.CONNECTION_ERROR);
+        });
     })
     .catch(function (e) {
       console.error(e);
       res.json(statusLib.CONNECTION_ERROR);
     });
+
+});
+
+router.post('/delete', function (req, res, next) {
+  // let database = null;
+  // let type = req.body.type;
+  // let where = {};
+  // if (type === 'blog') {
+  //   where.blog_id = req.body.id;
+  // } else {
+  //   next();
+  // }
 });
 
 module.exports = router;

@@ -290,6 +290,16 @@ module.exports = {
     'msg': '轮播图状态更改失败'
   },
 
+  BANNER_IMG_MOD_SUCCESSFUL: {
+    'status': 8300,
+    'msg': '轮播图更改成功'
+  },
+
+  BANNER_IMG_MOD_FAILED: {
+    'status': 8301,
+    'msg': '轮播图更改失败'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'

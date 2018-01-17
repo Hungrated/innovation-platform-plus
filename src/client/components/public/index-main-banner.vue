@@ -31,7 +31,11 @@
         this.$ajax.get('/api/banner')
           .then(function (res) {
             if (res.data.length) {
-              _this.imgList = res.data;
+              let tempList = res.data;
+              for (let i = 0; i < tempList.length; i++) {
+                tempList[i].src = tempList[i].src + '&t=' + Math.random();
+              }
+              _this.imgList = tempList;
             }
           })
           .catch(function (e) {
