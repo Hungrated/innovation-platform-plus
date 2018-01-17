@@ -282,7 +282,7 @@ router.post('/export', function (req, res) { // export plan archive
   let tableHeadOpts = {
     cellColWidth: 1800,
     b: true,
-    sz: 32,
+    sz: 20,
     shd: {
       fill: 'DDDDDD'
     },
@@ -292,7 +292,7 @@ router.post('/export', function (req, res) { // export plan archive
   let tableContentOpts = {
     cellColWidth: 1800,
     b: true,
-    sz: 28,
+    sz: 20,
     fontFamily: '宋体'
   };
 
@@ -375,7 +375,7 @@ router.post('/export', function (req, res) { // export plan archive
 
   let studentProfileStyle = {
     tableColWidth: 4261,
-    tableSize: 16,
+    tableSize: 10,
     tableAlign: 'center',
     tableFontFamily: 'Times New Roman'
   };
@@ -392,7 +392,7 @@ router.post('/export', function (req, res) { // export plan archive
       opts: {
         cellColWidth: 1000,
         b: true,
-        sz: 32,
+        sz: 20,
         shd: {
           fill: 'DDDDDD'
         },
@@ -404,7 +404,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 2500,
           b: true,
-          sz: 32,
+          sz: 20,
           shd: {
             fill: 'DDDDDD'
           },
@@ -416,7 +416,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 1800,
           b: true,
-          sz: 32,
+          sz: 20,
           shd: {
             fill: 'DDDDDD'
           },
@@ -428,7 +428,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 1250,
           b: true,
-          sz: 32,
+          sz: 20,
           shd: {
             fill: 'DDDDDD'
           },
@@ -440,7 +440,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 2000,
           b: true,
-          sz: 32,
+          sz: 20,
           shd: {
             fill: 'DDDDDD'
           },
@@ -452,7 +452,7 @@ router.post('/export', function (req, res) { // export plan archive
 
   let studentPlansStyle = {
     tableColWidth: 5000,
-    tableSize: 16,
+    tableSize: 10,
     tableAlign: 'left',
     tableFontFamily: 'Times New Roman'
   };
@@ -478,7 +478,7 @@ router.post('/export', function (req, res) { // export plan archive
       opts: {
         cellColWidth: 1000,
         b: true,
-        sz: 24,
+        sz: 20,
         fontFamily: '宋体'
       }
     },
@@ -487,7 +487,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 4000,
           b: true,
-          sz: 28,
+          sz: 20,
           fontFamily: '宋体'
         }
       },
@@ -496,7 +496,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 1800,
           b: true,
-          sz: 24,
+          sz: 20,
           fontFamily: '宋体'
         }
       },
@@ -505,7 +505,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 1800,
           b: true,
-          sz: 24,
+          sz: 20,
           fontFamily: '宋体'
         }
       },
@@ -514,7 +514,7 @@ router.post('/export', function (req, res) { // export plan archive
         opts: {
           cellColWidth: 2000,
           b: true,
-          sz: 24,
+          sz: 20,
           fontFamily: '宋体'
         }
       }
