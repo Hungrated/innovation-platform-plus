@@ -13,11 +13,12 @@
         <div class="plan-edit-body">
           <div class="plan-edit-left">
             <div class="plan-edit-unit">
-              <Select placeholder="学 期" size="large" v-model="planUnit.term">
-                <Option v-for="term in terms" :value="term.label" :key="term.index">
-                  {{ term.label }}
-                </Option>
-              </Select>
+              <!--<Select placeholder="学 期" size="large" v-model="planUnit.term">-->
+                <!--<Option v-for="term in terms" :value="term.label" :key="term.index">-->
+                  <!--{{ term.label }}-->
+                <!--</Option>-->
+              <!--</Select>-->
+              <Input v-model="planUnit.term" size="large" placeholder="学 期" disabled="true"/>
             </div>
             <div class="plan-edit-unit">
               <DatePicker v-model="planUnit.range"
@@ -163,10 +164,14 @@
         let day = convert(curTime.getDate());
         return year + '-' + month + '-' + day;
       },
+      getTerm () {
+        return JSON.parse(window.localStorage.user).cur_class.substring(1, 12);
+      },
       editPlan () {
         if (!this.planEdit && !this.planModify) {
           this.planEdit = true;
           this.planEmpty = false;
+          this.planUnit.term = this.getTerm();
         }
       },
       editPlanCancel () {
@@ -244,6 +249,7 @@
     },
     mounted () {
       this.refreshPlanList();
+      this.getTerm();
     }
   };
 </script>

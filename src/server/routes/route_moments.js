@@ -9,12 +9,18 @@ const Moment = db.Moment;
 const Profile = db.Profile;
 
 router.get('/fetch', function (req, res) {
+  const sid = urlLib.parse(req.url, true).query.sid;
   const type = urlLib.parse(req.url, true).query.type;
-  let where = (type === 'all') ? {} : {type: type};
-
+  const limit = urlLib.parse(req.url, true).query.limit;
+  let where = {};
+  if (sid) {
+    where.student_id = sid;
+  } else if (type) {
+    where = (type === 'all') ? {} : {type: type};
+  }
   Moment.findAll({
     where: where,
-    limit: 40,
+    limit: Number(limit),
     order: [
       ['created_at', 'DESC']
     ],

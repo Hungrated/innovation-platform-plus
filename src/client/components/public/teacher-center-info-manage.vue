@@ -9,7 +9,7 @@
           <div class="info-manage-options-body">
             <div class="options-list">
               <div class="options-type">
-                <Select placeholder="类 别" size="large" v-model="infoLabel">
+                <Select placeholder="类 别" size="large" v-model="infoLabel" @on-change="refreshData()">
                   <Option v-for="type in infoTypeList" :value="type.label" :key="type.index">
                     {{ type.value }}
                   </Option>

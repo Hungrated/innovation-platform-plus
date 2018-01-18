@@ -16,7 +16,7 @@
 .user-center-left {
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
+  flex: 1 1 auto;
 }
 
 .user-center-right {
@@ -163,4 +163,44 @@
 .plan-edit-textarea textarea {
   resize: none;
   height: 84px;
+}
+
+/* moments */
+
+.s-moments-container {
+  padding: 20px 0;
+  background: #FAFAFA;
+  border-radius: 5px;
+}
+
+.s-moment-item {
+  font-size: 14px;
+  line-height: 24px;
+  display: flex;
+}
+
+.s-moment-item div {
+  margin-left: 20px;
+}
+
+.s-moment-item-container {
+  padding: 20px 35px 0 35px;
+  background: #FAFAFA;
+  border-radius: 5px;
+}
+
+.s-moment-item-time {
+  flex: 0 0 90px;
+  border-radius: 5px;
+  padding: 0 8px;
+  background: #19be6b;
+  color: #EEEEEE;
+}
+
+.s-moment-item-status {
+  border-radius: 5px;
+  border: 1px dashed #999999;
+  font-size: 12px;
+  padding: 3px;
+  margin-right: 10px;
 }

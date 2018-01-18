@@ -122,7 +122,6 @@
               </div>
             </TimelineItem>
           </div>
-
         </Card>
       </Timeline>
     </div>
@@ -366,7 +365,7 @@
       },
       fetchMoments () {
         let _this = this;
-        this.$ajax.get('/api/moment/fetch?type=planmod')
+        this.$ajax.get('/api/moment/fetch?type=planmod&limit=40')
           .then(function (res) {
             _this.moments = res.data;
           })

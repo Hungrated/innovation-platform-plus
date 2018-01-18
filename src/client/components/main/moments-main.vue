@@ -47,6 +47,11 @@
 <script>
   export default {
     name: 'moments-main',
+    props: {
+      limit: {
+        default: 40
+      }
+    },
     data () {
       return {
         moments: []
@@ -55,7 +60,7 @@
     methods: {
       fetchMoments () {
         let _this = this;
-        this.$ajax.get('/api/moment/fetch?type=all')
+        this.$ajax.get('/api/moment/fetch?type=all&limit=' + this.limit)
           .then(function (res) {
             _this.moments = res.data;
           })

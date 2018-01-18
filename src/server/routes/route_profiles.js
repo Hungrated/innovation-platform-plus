@@ -227,7 +227,10 @@ router.post('/query', function (req, res) { // advanced query
   Plan.findAll({
     where: {
       student_id: school_id
-    }
+    },
+    order: [
+      ['created_at', 'DESC']
+    ]
   })
     .then(function (plans) {
       let plansArr = [];
@@ -249,7 +252,10 @@ router.post('/query', function (req, res) { // advanced query
   Meeting.findAll({
     where: {
       student_id: school_id
-    }
+    },
+    order: [
+      ['created_at', 'DESC']
+    ]
   })
     .then(function (meetings) {
       let meetingsArr = [];

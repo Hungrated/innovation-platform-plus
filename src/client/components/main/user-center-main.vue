@@ -30,7 +30,7 @@
             </span>
           </span>
         <div class="user-center-unit-container">
-          <div>我的动态</div>
+          <user-center-moments ref="moments"></user-center-moments>
         </div>
       </Card>
     </div>
@@ -77,6 +77,7 @@
   import userCenterPlans from '../public/user-center-plans';
   import userCenterMeetings from '../public/user-center-meetings';
   import userCenterArticles from '../public/user-center-articles';
+  import userCenterMoments from '../public/user-center-momoents';
 
   export default {
     name: 'user-center-main',
@@ -95,7 +96,8 @@
       userCenterProfile,
       userCenterPlans,
       userCenterMeetings,
-      userCenterArticles
+      userCenterArticles,
+      userCenterMoments
     }
   };
 </script>
