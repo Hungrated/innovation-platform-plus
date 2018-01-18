@@ -20,9 +20,7 @@
     data () {
       return {
         value: 0,
-        imgList: [
-          {img_id: '0', src: require('../../assets/banner_01.jpg')}
-        ]
+        imgList: []
       };
     },
     methods: {
@@ -33,9 +31,11 @@
             if (res.data.length) {
               let tempList = res.data;
               for (let i = 0; i < tempList.length; i++) {
-                tempList[i].src = tempList[i].src + '&t=' + Math.random();
+                tempList[i].src = tempList[i].src + '&t=' + Math.random(); // needs improving
               }
               _this.imgList = tempList;
+            } else {
+              // _this.imgList = [{img_id: '0', src: require('../../assets/banner.jpg')}];
             }
           })
           .catch(function (e) {
