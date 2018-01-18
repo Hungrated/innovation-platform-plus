@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize');
-const pathLib = require('path');
 
 const mysql = require('../middlewares/sequelize');
-
-const uid = require('../middlewares/id_gen');
 
 const schema = {
   file_id: {
@@ -21,10 +18,7 @@ const schema = {
   },
   url: {
     type: Sequelize.STRING,
-    allowNull: false,
-    set: function (val) {
-      this.setDataValue('url', pathLib.resolve(val));
-    }
+    allowNull: false
   },
   description: {
     type: Sequelize.STRING(128)
