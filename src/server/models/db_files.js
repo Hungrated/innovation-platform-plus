@@ -12,7 +12,7 @@ const schema = {
     unique: true
   },
   filename: {
-    type: Sequelize.STRING(32),
+    type: Sequelize.STRING,
     allowNull: false
   },
   size: {
