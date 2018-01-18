@@ -133,6 +133,7 @@
           },
           {
             title: '姓 名',
+            key: 'name',
             width: 85,
             sortable: true,
             render: (h, params) => {
