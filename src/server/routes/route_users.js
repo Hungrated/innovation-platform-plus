@@ -59,7 +59,7 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
 });
 
 router.post('/parse', objMulter.any(), function (req, res, next) { // XLS file upload
-  // rename a file
+                                                                   // rename a file
   let newName = req.files[0].path + pathLib.parse(req.files[0].originalname).ext;
   fs.rename(req.files[0].path, newName, function (err) {
     if (err) {
@@ -85,7 +85,9 @@ router.post('/parse', function (req, res, next) { // extract user data & convert
         return res.json(statusLib.USERINFO_PARSE_FAILED_NOT_SUITABLE);
       } else {
         Class.findOne({
-          class_id: sheet.cell(1, 6)
+          where: {
+            class_id: sheet.cell(1, 6)
+          }
         })
           .then(function (classData) {
             if (classData === null) {
@@ -93,7 +95,7 @@ router.post('/parse', function (req, res, next) { // extract user data & convert
               next();
             } else {
               console.log('duplicated class info');
-              return res.json(statusLib.USERINFO_PARSE_FAILED_DUP_CLASS_INFO);
+              res.json(statusLib.USERINFO_PARSE_FAILED_DUP_CLASS_INFO);
             }
           })
           .catch(function (e) {
@@ -169,7 +171,6 @@ router.post('/import', function (req, res, next) { // validate teacher identity
 });
 
 router.post('/import', function (req, res, next) { // import data
-  console.log(req.body);
   const classData = req.body.classData;
   Class.create(classData)
     .then(function () {

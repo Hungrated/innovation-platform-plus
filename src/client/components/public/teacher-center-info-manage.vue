@@ -21,7 +21,7 @@
                             format="yyyy-MM-dd"
                             type="daterange"
                             placeholder="时间范围（选填）"
-                            disabled="true"
+                            :disabled="true"
                             style="width: 100%">
                 </DatePicker>
               </div>
