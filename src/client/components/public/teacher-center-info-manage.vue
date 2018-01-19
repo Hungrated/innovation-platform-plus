@@ -267,7 +267,6 @@
                           content: '确定删除这张首页轮播图？',
                           onOk () {
                             _this.infoDelete('banner', params.row.img_id);
-                            _this.refreshData();
                           }
                         });
                       }
@@ -606,7 +605,6 @@
                           content: '确定删除此文件？',
                           onOk () {
                             _this.infoDelete('resource', params.row.file_id);
-                            _this.refreshData();
                           }
                         });
                       }
@@ -666,7 +664,6 @@
                           content: '确定删除此条评论？',
                           onOk () {
                             _this.infoDelete('comment', params.row.comment_id);
-                            _this.refreshData();
                           }
                         });
                       }

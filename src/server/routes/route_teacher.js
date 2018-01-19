@@ -117,19 +117,19 @@ router.post('/delete', function (req, res, next) {
   } else {
     let Blog = db.Blog;
     let Comment = db.Comment;
-    Blog.destroy({ // need not to delete files
+    Comment.destroy({
       where: {
         blog_id: req.body.id
       }
     })
       .then(function () {
-        moment.deleteMoment(req.body.id);
-        Comment.destroy({
+        Blog.destroy({
           where: {
             blog_id: req.body.id
           }
         })
           .then(function () {
+            moment.deleteMoment(req.body.id);
             res.json(statusLib.INFO_DELETE_SUCCESSFUL);
             console.log('blog & comments delete successful');
           })
