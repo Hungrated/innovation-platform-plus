@@ -4,6 +4,14 @@
 
 > initial commit on 27 Nov 2017
 
+> version v1.0.0 on 29 Dec 2017
+
+  basic frame, basic modules
+
+> version v2.0.0 on 19 Jan 2018
+
+  majorly added info-manage module for teachers & administrators
+
 ## Build Setup
 
 ``` bash
