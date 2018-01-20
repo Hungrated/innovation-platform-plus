@@ -19,7 +19,7 @@
             <span class="unit-title-btn">
               <Button @click="" type="primary" size="small">计 划</Button>
               &nbsp;|&nbsp;
-              <Button @click="" type="primary" size="small">总 评</Button>
+              <Button @click="" type="primary" size="small" disabled="true">总 评</Button>
             </span>
           </span>
           <span class="plans-students-list">
