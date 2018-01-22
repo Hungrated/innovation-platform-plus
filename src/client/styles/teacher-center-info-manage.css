@@ -1,3 +1,7 @@
+.info-manage-card-header {
+  line-height: 24px;
+}
+
 .info-manage-options-body {
   display: flex;
   line-height: 36px;

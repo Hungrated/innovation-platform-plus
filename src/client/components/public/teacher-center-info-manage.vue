@@ -3,7 +3,7 @@
     <div class="info-manage-header">
       <div class="info-manage-options">
         <Card disHover>
-          <span slot="title">
+          <span slot="title" class="info-manage-card-header">
             <strong>筛选条件</strong>
           </span>
           <div class="info-manage-options-body">
