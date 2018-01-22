@@ -17,9 +17,13 @@
           <span class="unit-title">
             <span class="unit-title-info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
             <span class="unit-title-btn">
-              <Button @click="" type="primary" size="small">计 划</Button>
-              &nbsp;|&nbsp;
-              <Button @click="" type="primary" size="small" disabled="true">总 评</Button>
+              <ButtonGroup class="articles-compose-header-type" shape="circle">
+                <Button
+                  :type="(displayMode === 'plans') ? ('primary') : ('ghost')" @click="changeDisplayMode('plans')"
+                  size="small">&nbsp;<Icon type="clipboard"></Icon>&nbsp;计 划</Button>
+                <Button :type="(displayMode === 'total') ? ('primary') : ('ghost')" @click="changeDisplayMode('total')"
+                        size="small"><Icon type="edit"></Icon>&nbsp;总 评&nbsp;</Button>
+              </ButtonGroup>
             </span>
           </span>
           <span class="plans-students-list">
@@ -124,7 +128,9 @@
       return {
         classArr: [],
         cur_class: {},
-        studentCols: [
+        displayMode: 'plans',
+        studentCols: [],
+        studentCols1: [
           {
             title: '学 号',
             key: 'school_id',
@@ -302,6 +308,71 @@
             }
           }
         ],
+        studentCols2: [
+          {
+            title: '学 号',
+            key: 'school_id',
+            width: 100,
+            sortable: true
+          },
+          {
+            title: '姓 名',
+            key: 'name',
+            width: 85,
+            sortable: true,
+            render: (h, params) => {
+              return h('strong', params.row.name);
+            }
+          },
+          {
+            title: '期末作业',
+            key: 'name'
+          },
+          {
+            title: '期末作业',
+            key: 'name',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.revealStudentDetails(params.row.school_id);
+                    }
+                  }
+                }, '下 载')
+              ]);
+            }
+          },
+          {
+            title: '详 情',
+            width: 120,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.revealStudentDetails(params.row.school_id);
+                    }
+                  }
+                }, '查看与管理')
+              ]);
+            }
+          }
+        ],
         studentArr: [],
         studentDetails: false,
         curStudentDetails: {
@@ -443,8 +514,13 @@
       };
     },
     methods: {
+      changeDisplayMode (mode) {
+        this.studentCols = (mode === 'plans') ? this.studentCols1 : this.studentCols2;
+        this.displayMode = mode;
+      },
       refreshClassList () {
         let _this = this;
+        this.studentCols = this.studentCols1;
         this.$ajax.post('/api/class/query', {
           request: JSON.parse(window.localStorage.user).school_id
         })
