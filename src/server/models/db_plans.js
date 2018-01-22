@@ -34,12 +34,6 @@ const schema = {
   },
   class_id: {
     type: Sequelize.STRING
-  },
-  rate: {
-    type: Sequelize.STRING(8)
-  },
-  remark: {
-    type: Sequelize.STRING(128)
   }
 };
 

@@ -8,6 +8,7 @@ const Banner = require('./db_banner');
 const Class = require('./db_classes');
 const Meeting = require('./db_meeting');
 const Moment = require('./db_moments');
+const Final = require('./db_finals');
 
 User.hasOne(Profile, {
   foreignKey: 'user_id'
@@ -70,6 +71,12 @@ Moment.belongsTo(Profile, {
 
 Moment.sync().then();
 
+Final.belongsTo(Profile, {
+  foreignKey: 'student_id'
+});
+
+Final.sync().then();
+
 module.exports = {
-  User, Profile, Blog, Comment, Plan, File, Banner, Class, Meeting, Moment
+  User, Profile, Blog, Comment, Plan, File, Banner, Class, Meeting, Moment, Final
 };
