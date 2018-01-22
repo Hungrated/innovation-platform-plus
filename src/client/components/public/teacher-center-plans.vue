@@ -326,11 +326,7 @@
           },
           {
             title: '期末作业',
-            key: 'name'
-          },
-          {
-            title: '期末作业',
-            key: 'name',
+            width: 100,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -349,6 +345,14 @@
                 }, '下 载')
               ]);
             }
+          },
+          {
+            title: '评 分',
+            key: 'rate'
+          },
+          {
+            title: '评 语',
+            key: 'remark'
           },
           {
             title: '详 情',
