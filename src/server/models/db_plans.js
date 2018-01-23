@@ -30,7 +30,7 @@ const schema = {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['已通过', '未通过', '未审核'],
+    values: ['已通过', '未通过', '未审核']
   },
   class_id: {
     type: Sequelize.STRING
