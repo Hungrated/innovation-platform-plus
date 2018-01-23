@@ -4,7 +4,6 @@ const router = express.Router();
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
-const uid = require('../middlewares/id_gen');
 const Final = db.Final;
 
 const path = require('../app_paths');
@@ -29,12 +28,39 @@ let objMulter = multer({
  */
 router.post('/upload', objMulter.any(), function (req, res, next) {
   // upload a course-work file
-  const id = 'cwk' + uid.generate();
-  req.body.cswk_id = id;
-  req.cswkURL = pathLib.join(path.final, id) + pathLib.parse(req.files[0].originalname).ext;
-  console.log(req.cswkURL);
-  console.log('course work upload successful');
-  next();
+  Final.findOne({
+    where: {
+      student_id: req.body.student_id,
+      class_id: req.body.class_id
+    }
+  })
+    .then(function (final) {
+      if (final.cswk_src) {
+        req.preExists = true;
+      }
+      req.cswk_id = final.cswk_id;
+      req.cswkURL = pathLib.join(path.final, final.cswk_id) + pathLib.parse(req.files[0].originalname).ext;
+      console.log('course work upload successful');
+      next();
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
+});
+
+router.post('/upload', function (req, res, next) {
+  // delete previous file if it exists
+  if (req.preExists) {
+    fs.unlink(req.cswkURL, function (err) {
+      if (err) throw err;
+      else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
 });
 
 router.post('/upload', function (req, res, next) {
@@ -49,11 +75,12 @@ router.post('/upload', function (req, res, next) {
 
 router.post('/upload', function (req, res) {
   // update database record
-  Final.create({
-    cswk_id: req.body.cswk_id,
-    class_id: req.body.class_id,
-    student_id: req.body.student_id,
-    cswk_src: '/api/download?cswk=' + req.body.cswk_id
+  Final.update({
+    cswk_src: '/api/download?cswk=' + req.cswk_id
+  }, {
+    where: {
+      cswk_id: req.cswk_id
+    }
   })
     .then(function () {
       console.log('course work upload successful');

@@ -12,10 +12,12 @@ const config = require('config-lite')(__dirname).database;
 const sequelize = require('sequelize');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
+const uid = require('../middlewares/id_gen');
 
 const Class = db.Class;
 const User = db.User;
 const Profile = db.Profile;
+const Final = db.Final;
 
 let objMulter = multer({
   dest: path.userinfo // file upload destination
@@ -231,6 +233,14 @@ router.post('/import', function (req, res) {
       }
     })
       .then(function (user) {
+        Final.create({
+          cswk_id: 'cwk' + uid.generate(),
+          class_id: users[userIdx].cur_class,
+          student_id: users[userIdx].school_id
+        })
+          .then(function () {
+            console.log('cswk record created');
+          });
         if (user !== null) { // exists duplication
           console.log('user already exists');
           Profile.update({
