@@ -5,6 +5,16 @@ const pathLib = require('path');
 const urlLib = require('url');
 const statusLib = require('../libs/status');
 
+/**
+ *
+ * 获取特定文件
+ *
+ * @api {get} /api/download?:type=:id
+ * @apiName download
+ *
+ * @apiSuccess {file} data Response data.
+ *
+ */
 router.get('/', function (req, res) { // download a file
   const raw = urlLib.parse(req.url, true).query;
   let filename = null;

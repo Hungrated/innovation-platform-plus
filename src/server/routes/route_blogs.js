@@ -14,7 +14,18 @@ const Blog = db.Blog;
 const Profile = db.Profile;
 const Comment = db.Comment;
 
-router.post('/publish', function (req, res) { // publish a blog(project or event)
+/**
+ *
+ * 发表文章
+ *
+ * @api {post} /api/blog/publish
+ * @apiName blogPublish
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/publish', function (req, res) {
+  // publish a blog(project or event)
   let publishData = req.body;
   publishData.blog_id = 'blg' + uid.generate();
 
@@ -33,8 +44,18 @@ router.post('/publish', function (req, res) { // publish a blog(project or event
     });
 });
 
-router.post('/query', function (req, res) { // fetch blog list for brief browsing
-
+/**
+ *
+ * 获取文章
+ *
+ * @api {post} /api/blog/query
+ * @apiName blogQuery
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res) {
+  // fetch blog list for brief browsing
   const request = req.body.request;
   const where = (typeof request === 'string') ? (
     (request === 'all') ? {} : {type: request}) : {author_id: request};
@@ -63,8 +84,18 @@ router.post('/query', function (req, res) { // fetch blog list for brief browsin
     });
 });
 
-router.get('/details', function (req, res) { // fetch blog details
-
+/**
+ *
+ * 获取文章详情
+ *
+ * @api {get} /api/blog/details?index=:blog_id
+ * @apiName blogDetails
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.get('/details', function (req, res) {
+  // fetch blog details
   const id = urlLib.parse(req.url, true).query.index;
   Blog.findByPrimary(id, {
     include: [{
@@ -87,7 +118,7 @@ router.get('/details', function (req, res) { // fetch blog details
         include: [{
           model: Profile,
           where: {
-            school_id: sequelize.col('comment.student_id'),
+            school_id: sequelize.col('comment.student_id')
           },
           attributes: ['name']
         }]

@@ -210,6 +210,7 @@
         if (op === 'modify') {
           url = '/api/plan/modify';
           planData.plan_id = this.planUnit.plan_id;
+          delete planData.class_id;
         }
         this.$ajax.post(url, planData)
           .then(function (res) {

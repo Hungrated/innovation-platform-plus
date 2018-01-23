@@ -18,7 +18,18 @@ const async = require('async');
 const fs = require('fs');
 const officeGen = require('officegen');
 
-router.post('/submit', function (req, res) { // a student create a plan
+/**
+ *
+ * 提交计划
+ *
+ * @api {post} /api/plan/submit
+ * @apiName planSubmit
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/submit', function (req, res) {
+  // a student create a plan
   const {
     student_id,
     year,
@@ -44,7 +55,8 @@ router.post('/submit', function (req, res) { // a student create a plan
     class_id: class_id
   })
     .then(function () {
-      // if plan is not validated, params[2] should be plan_id, otherwise it should be ''.
+      // if plan is not validated,
+      // params[2] should be plan_id, otherwise it should be ''.
       moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', status, student_id, plan_id);
       res.json({
         'status': statusLib.PLAN_SUBMIT_SUCCESSFUL.status,
@@ -60,7 +72,18 @@ router.post('/submit', function (req, res) { // a student create a plan
     });
 });
 
-router.post('/modify', function (req, res, next) { // check plan status before modification
+/**
+ *
+ * 修改计划
+ *
+ * @api {post} /api/plan/modify
+ * @apiName planModify
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/modify', function (req, res, next) {
+  // check plan status before modification
   Plan.findOne({
     where: {
       plan_id: req.body.plan_id
@@ -81,8 +104,8 @@ router.post('/modify', function (req, res, next) { // check plan status before m
     });
 });
 
-router.post('/modify', function (req, res) { // a student modifies a plan
-
+router.post('/modify', function (req, res) {
+  // a student modifies a plan
   const {
     student_id,
     year,
@@ -121,29 +144,18 @@ router.post('/modify', function (req, res) { // a student modifies a plan
     });
 });
 
-// router.post('/op', function (req, res, next) { // check plan status before modification
-//
-//   Plan.findOne({
-//     where: {
-//       plan_id: req.body.plan_id
-//     }
-//   })
-//     .then(function (plan) {
-//       if (plan.status !== '未审核') {
-//         res.json(statusLib.PLAN_MOD_FAILED);
-//         console.log('plan modify failed');
-//       } else
-//         next();
-//     })
-//     .catch(function (e) {
-//       console.error(e);
-//       res.json(statusLib.PLAN_MOD_FAILED);
-//       console.log('plan modify failed');
-//     });
-// });
-
-router.post('/op', function (req, res) { // teacher changes plan status
-
+/**
+ *
+ * （教师）审核计划
+ *
+ * @api {post} /api/plan/op
+ * @apiName planOp
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/op', function (req, res) {
+  // teacher changes plan status
   const status = req.body.op ? '已通过' : '未通过';
 
   Plan.update({
@@ -165,37 +177,48 @@ router.post('/op', function (req, res) { // teacher changes plan status
     });
 });
 
-router.post('/rate', function (req, res) { // a teacher rates a plan
-  const {
-    plan_id,
-    rate,
-    remark
-  } = req.body;
+// router.post('/rate', function (req, res) {
+//   // a teacher rates a plan
+//   const {
+//     plan_id,
+//     rate,
+//     remark
+//   } = req.body;
+//
+//   const modData = {
+//     rate: rate,
+//     remark: remark
+//   };
+//
+//   Plan.update(modData, {
+//     where: {
+//       plan_id: plan_id
+//     }
+//   })
+//     .then(function () {
+//       res.json(statusLib.PLAN_RATE_SUCCESSFUL);
+//       console.log('plan rate successful');
+//     })
+//     .catch(function (e) {
+//       console.error(e);
+//       res.json(statusLib.PLAN_RATE_FAILED);
+//       console.log('plan rate failed');
+//     });
+//
+// });
 
-  const modData = {
-    rate: rate,
-    remark: remark
-  };
-
-  Plan.update(modData, {
-    where: {
-      plan_id: plan_id
-    }
-  })
-    .then(function () {
-      res.json(statusLib.PLAN_RATE_SUCCESSFUL);
-      console.log('plan rate successful');
-    })
-    .catch(function (e) {
-      console.error(e);
-      res.json(statusLib.PLAN_RATE_FAILED);
-      console.log('plan rate failed');
-    });
-
-});
-
-router.post('/query', function (req, res) { // get list of all (or personal) plans
-
+/**
+ *
+ * 查询计划
+ *
+ * @api {post} /api/plan/query
+ * @apiName planQuery
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res) {
+  // get list of all (or personal) plans
   const request = req.body.request;
   const where = (request === 'all') ? {} : {student_id: request};
 
@@ -220,7 +243,18 @@ router.post('/query', function (req, res) { // get list of all (or personal) pla
     });
 });
 
-router.post('/export', function (req, res, next) { // fetch profile records from database
+/**
+ *
+ * 导出计划到Word
+ *
+ * @api {post} /api/plan/export
+ * @apiName planExport
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/export', function (req, res, next) {
+  // fetch profile records from database
   const student_id = req.body.student_id;
   Profile.findByPrimary(student_id)
     .then(function (profile) {
@@ -233,9 +267,9 @@ router.post('/export', function (req, res, next) { // fetch profile records from
     });
 });
 
-router.post('/export', function (req, res, next) { // fetch plan records from database
+router.post('/export', function (req, res, next) {
+  // fetch plan records from database
   let student_id = req.body.student_id;
-
   Plan.findAll({
     where: {
       student_id: student_id
@@ -255,13 +289,11 @@ router.post('/export', function (req, res, next) { // fetch plan records from da
     });
 });
 
-router.post('/export', function (req, res) { // export plan archive
-
+router.post('/export', function (req, res) {
+  // export plan archive
   const student_id = req.body.student_id;
   const profile = req.body.profile;
   const planArr = req.body.planArr;
-
-  // let avatarDir = '../public/upload/avatars/' + profile.school_id + '.jpg';
 
   // get export time & set filename
   let curTime = new Date();
@@ -471,7 +503,6 @@ router.post('/export', function (req, res) { // export plan archive
   };
 
   // fill data to studentPlans
-
   for (let i = 0; i < planArr.length; i++) {
     studentPlans.push([{
       val: i + 1,

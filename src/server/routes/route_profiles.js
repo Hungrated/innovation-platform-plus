@@ -17,7 +17,18 @@ let objMulter = multer({
   dest: path.avatars // file upload destination
 });
 
-router.post('/modify', function (req, res) { // modify a profile
+/**
+ *
+ * 修改用户资料
+ *
+ * @api {post} /api/profile/modify
+ * @apiName profileModify
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/modify', function (req, res) {
+  // modify a profile
   const {
     school_id,
     sex,
@@ -47,16 +58,27 @@ router.post('/modify', function (req, res) { // modify a profile
     });
 });
 
-router.post('/avatar', objMulter.any(), function (req, res, next) { // upload an avatar
-  const school_id = req.body.school_id; // id is school_id
-  const url = pathLib.join(path.avatars, school_id + '.jpg');
+/**
+ *
+ * 修改用户头像
+ *
+ * @api {post} /api/profile/avatar
+ * @apiName profileAvatar
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/avatar', objMulter.any(), function (req, res, next) {
+  // upload an avatar
+  const schoolId = req.body.school_id; // id is schoolId
+  const url = pathLib.join(path.avatars, schoolId + '.jpg');
   req.avatarURL = url;
   console.log('avatar upload successful');
 
   // check existance of previous avatar file
   Profile.findOne({
     where: {
-      avatar: '/api/download?avatar=' + school_id + '.jpg'
+      avatar: '/api/download?avatar=' + schoolId + '.jpg'
     }
   })
     .then(function (user) {
@@ -78,7 +100,8 @@ router.post('/avatar', objMulter.any(), function (req, res, next) { // upload an
     });
 });
 
-router.post('/avatar', function (req, res, next) { // rename avatar file
+router.post('/avatar', function (req, res, next) {
+  // rename avatar file
   fs.rename(req.files[0].path, req.avatarURL, function (err) {
     if (err) {
       console.log('avatar file rename error');
@@ -87,7 +110,8 @@ router.post('/avatar', function (req, res, next) { // rename avatar file
   });
 });
 
-router.post('/avatar', function (req, res) { // update database record
+router.post('/avatar', function (req, res) {
+  // update database record
   Profile.update({
     avatar: '/api/download?avatar=' + req.body.school_id + '.jpg'
   }, {
@@ -105,7 +129,18 @@ router.post('/avatar', function (req, res) { // update database record
     });
 });
 
-router.post('/query', function (req, res, next) { // parse req data
+/**
+ *
+ * 获取用户资料
+ *
+ * @api {post} /api/profile/query
+ * @apiName profileQuery
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res, next) {
+  // parse req data
   if (typeof req.body.request === 'object') {
     if (req.body.request.cur_class !== undefined) {
       req.body.where = {
@@ -141,7 +176,8 @@ router.post('/query', function (req, res, next) { // parse req data
   }
 });
 
-router.post('/query', function (req, res, next) { // standard query
+router.post('/query', function (req, res, next) {
+  // standard query
   if (req.body.include !== undefined || req.body.request.details === true) {
     next();
   } else {
@@ -163,7 +199,8 @@ router.post('/query', function (req, res, next) { // standard query
   }
 });
 
-router.post('/query', function (req, res, next) { // class-based query
+router.post('/query', function (req, res, next) {
+  // class-based query
   if (req.body.request.details === true) {
     next();
   } else {
@@ -194,8 +231,9 @@ router.post('/query', function (req, res, next) { // class-based query
   }
 });
 
-router.post('/query', function (req, res) { // advanced query
-  const school_id = req.body.request.school_id;
+router.post('/query', function (req, res) {
+  // advanced query
+  const schoolId = req.body.request.school_id;
   let flag = 0;
   let resData = {
     profile: {},
@@ -205,7 +243,7 @@ router.post('/query', function (req, res) { // advanced query
 
   Profile.findOne({
     where: {
-      school_id: school_id
+      school_id: schoolId
     }
   }).then(function (profile) {
     if (profile === null) {
@@ -226,7 +264,7 @@ router.post('/query', function (req, res) { // advanced query
     });
   Plan.findAll({
     where: {
-      student_id: school_id
+      student_id: schoolId
     },
     order: [
       ['created_at', 'DESC']
@@ -251,7 +289,7 @@ router.post('/query', function (req, res) { // advanced query
 
   Meeting.findAll({
     where: {
-      student_id: school_id
+      student_id: schoolId
     },
     order: [
       ['created_at', 'DESC']

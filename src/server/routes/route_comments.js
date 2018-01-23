@@ -6,6 +6,16 @@ const statusLib = require('../libs/status');
 
 const Comment = db.Comment;
 
+/**
+ *
+ * 发表评论
+ *
+ * @api {post} /api/comment/submit
+ * @apiName commentSubmit
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/submit', function (req, res) {
   const {
     student_id,

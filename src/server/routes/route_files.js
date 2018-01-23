@@ -23,16 +23,27 @@ let objMulter = multer({
 
 router.use(objMulter.any()); // any file type
 
-router.post('/upload', function (req, res) { // upload files: multipart/form-data
+/**
+ *
+ * 文件上传
+ *
+ * @api {post} /api/file/upload
+ * @apiName fileUpload
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/upload', function (req, res) {
+  // upload files: multipart/form-data
 
-  const school_id = req.body.school_id;
+  const schoolId = req.body.school_id;
   const fileDescriptions = req.body.descriptions.split(',');
 
   let flag = 0;
 
-  for (let i = 0; i < req.files.length; i++) { // for each file uploaded
-
-    //rename a file
+  for (let i = 0; i < req.files.length; i++) {
+    // for each file uploaded
+    // rename a file
     let newName = req.files[i].path + pathLib.parse(req.files[i].originalname).ext;
     let downloadUrl = '/api/download?resource=' + req.files[i].filename + pathLib.parse(req.files[i].originalname).ext;
 
@@ -48,7 +59,7 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
       filename: req.files[i].originalname,
       size: req.files[i].size,
       url: downloadUrl,
-      uploader_id: school_id,
+      uploader_id: schoolId,
       description: fileDescriptions[i]
     };
 
@@ -67,11 +78,20 @@ router.post('/upload', function (req, res) { // upload files: multipart/form-dat
         res.json(statusLib.CONNECTION_ERROR);
       });
   }
-
 });
 
-router.post('/query', function (req, res) { // fetch file list
-
+/**
+ *
+ * 获取文件列表
+ *
+ * @api {post} /api/file/query
+ * @apiName fileQuery
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res) {
+  // fetch file list
   const request = req.body.request;
   const where = (request === 'all') ? {} : {uploader_id: request};
 
@@ -95,24 +115,11 @@ router.post('/query', function (req, res) { // fetch file list
       }
       res.json(files);
       console.log('file list fetch successful');
-
     })
     .catch(function (e) {
       console.error(e);
       res.json(statusLib.CONNECTION_ERROR);
     });
 });
-
-// router.post('/download', function (req, res) { // download a file
-//
-//   const realDir = req.body.url;
-//   res.download(realDir, function (err) {
-//     if (err) {
-//       console.log(err);
-//       res.json(statusLib.FILE_DOWNLOAD_FAILED);
-//     }
-//   });
-//
-// });
 
 module.exports = router;

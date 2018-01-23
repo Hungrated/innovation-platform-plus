@@ -21,24 +21,33 @@ let objMulter = multer({
   dest: path.userinfo // file upload destination
 });
 
-// student register interface disabled: use '/import' instead
-
-router.post('/reg', function (req, res) { // only for teachers, only in backend
-  const {school_id, name, password, identity} = req.body;
-  if (!(school_id || name || password || identity)) { return res.json(statusLib.REG_FAILED); }
+/**
+ *
+ * （教师）用户注册
+ *
+ * @api {post} /api/user/reg
+ * @apiName userReg
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/reg', function (req, res) {
+  // only for teachers, only in backend
+  const {schoolId, name, password, identity} = req.body;
+  if (!(schoolId || name || password || identity)) { return res.json(statusLib.REG_FAILED); }
 
   if (identity !== 'teacher') {
     res.json(statusLib.REG_FAILED);
     console.log('identity wrong');
   } else {
     User.create({
-      username: school_id.toString(),
+      username: schoolId.toString(),
       password: password,
       identity: identity
     })
       .then(function (user) {
         Profile.create({
-          school_id: school_id,
+          school_id: schoolId,
           name: name,
           user_id: user.dataValues.id
         })
@@ -58,8 +67,19 @@ router.post('/reg', function (req, res) { // only for teachers, only in backend
   }
 });
 
-router.post('/parse', objMulter.any(), function (req, res, next) { // XLS file upload
-                                                                   // rename a file
+/**
+ *
+ * 学生用户解析
+ *
+ * @api {post} /api/user/parse
+ * @apiName userParse
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/parse', objMulter.any(), function (req, res, next) {
+  // XLS file upload
+  // rename a file
   let newName = req.files[0].path + pathLib.parse(req.files[0].originalname).ext;
   fs.rename(req.files[0].path, newName, function (err) {
     if (err) {
@@ -72,7 +92,8 @@ router.post('/parse', objMulter.any(), function (req, res, next) { // XLS file u
   });
 });
 
-router.post('/parse', function (req, res, next) { // extract user data & convert to JS object
+router.post('/parse', function (req, res, next) {
+  // extract user data & convert to JS object
   xl.open(req.fileURL, function (err, data) {
     if (err) {
       console.log(err.name, err.message);
@@ -149,7 +170,18 @@ router.post('/parse', function (req, res) {
   });
 });
 
-router.post('/import', function (req, res, next) { // validate teacher identity
+/**
+ *
+ * 学生用户导入
+ *
+ * @api {post} /api/user/import
+ * @apiName userImport
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/import', function (req, res, next) {
+  // validate teacher identity
   Profile.findOne({
     where: {
       school_id: req.body.teacher_id
@@ -170,7 +202,8 @@ router.post('/import', function (req, res, next) { // validate teacher identity
     });
 });
 
-router.post('/import', function (req, res, next) { // import data
+router.post('/import', function (req, res, next) {
+  // import data
   const classData = req.body.classData;
   Class.create(classData)
     .then(function () {
@@ -183,7 +216,8 @@ router.post('/import', function (req, res, next) { // import data
     });
 });
 
-router.post('/import', function (req, res) { // create record in table `user` & `profile`
+router.post('/import', function (req, res) {
+  // create record in table `user` & `profile`
   const users = req.body.userArr;
   const identity = 'student';
   const academy = '计算机学院';
@@ -229,7 +263,8 @@ router.post('/import', function (req, res) { // create record in table `user` & 
                   school_id: users[userIdx].school_id
                 }
               })
-                .then(function (profile) { // create a profile record for a student
+                .then(function (profile) {
+                  // create a profile record for a student
                   if (profile !== null) { // exists duplication
                     console.log('user already exists');
                   } else {
@@ -273,11 +308,20 @@ router.post('/import', function (req, res) { // create record in table `user` & 
   }
 });
 
+/**
+ *
+ * 用户登录
+ *
+ * @api {post} /api/user/login
+ * @apiName userLogin
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/login', function (req, res) {
   const {username, password} = req.body;
   if (!req.session.isLogin || username !== req.session.username) {
     // when not logged in or different user logging in
-
     // check if there is a record include username
     User.findOne({
       where: {
@@ -331,6 +375,16 @@ router.post('/login', function (req, res) {
   }
 });
 
+/**
+ *
+ * 用户登出
+ *
+ * @api {post} /api/user/logout
+ * @apiName userLogout
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/logout', function (req, res) {
   req.session.isLogin = false;
   res.clearCookie('isLogin');
@@ -339,15 +393,25 @@ router.post('/logout', function (req, res) {
   console.log('logged out');
 });
 
+/**
+ *
+ * 用户修改密码
+ *
+ * @api {post} /api/user/pwdmod
+ * @apiName userPwdMod
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/pwdmod', function (req, res, next) {
   if (!req.session.isLogin) {
     res.json(statusLib.NOT_YET_LOGGED_IN);
     console.log('not logged in');
   }
 
-  const {username, password, new_password} = req.body;
+  const {username, password, newPassword} = req.body;
 
-  if (!username || !password || !new_password) {
+  if (!username || !password || !newPassword) {
     console.log('data not complete');
     res.json(statusLib.USER_PWD_MOD_FAILED);
   } else {
@@ -360,7 +424,8 @@ router.post('/pwdmod', function (req, res, next) {
         if (user.dataValues.password ===
           crypto.createHash('sha256')
             .update(config.salt + password)
-            .digest('hex').slice(0, 255)) { // password checked
+            .digest('hex').slice(0, 255)) {
+          // password checked
           next();
         } else {
           res.json(statusLib.USER_PWD_MOD_FAILED);
@@ -374,7 +439,8 @@ router.post('/pwdmod', function (req, res, next) {
   }
 });
 
-router.post('/pwdmod', function (req, res) { // password checked
+router.post('/pwdmod', function (req, res) {
+  // password checked
   User.update({
     password: req.body.new_password
   }, {

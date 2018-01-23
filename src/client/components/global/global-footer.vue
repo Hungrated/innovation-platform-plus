@@ -35,7 +35,7 @@
       </i-col>
     </Row>
     <hr>
-    <span class="g-footer cprt">Copyright © 2017 Hungrated, Hangzhou Dianzi University, All rights reserved.</span>
+    <span class="g-footer cprt">Copyright © 2018 Hungrated, Hangzhou Dianzi University, All rights reserved.</span>
   </footer>
 </template>
 
