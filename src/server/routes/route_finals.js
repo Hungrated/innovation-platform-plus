@@ -39,7 +39,8 @@ router.get('/', function (req, res) {
     });
 });
 
-router.post('/upload', objMulter.any(), function (req, res, next) { // upload a banner img
+router.post('/upload', objMulter.any(), function (req, res, next) {
+  // upload a course-final file
   const id = 'bnr' + uid.generate();
   req.body.img_id = id;
   req.bannerURL = pathLib.join(path.banner, id + '.jpg');
