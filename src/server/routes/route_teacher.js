@@ -1,23 +1,27 @@
 const express = require('express');
 const router = express.Router();
 
-const crypto = require('crypto');
 const fs = require('fs');
-const multer = require('multer');
 const pathLib = require('path');
 const path = require('../app_paths');
-const xl = require('node-xlrd');
-const config = require('config-lite')(__dirname).database;
-
-const sequelize = require('sequelize');
 
 const urlLib = require('url');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const moment = require('../middlewares/moment');
 
-// query by type
+/**
+ *
+ * （教师）获取全站信息列表
+ *
+ * @api {get} /api/teacher/query
+ * @apiName teacherQuery
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.get('/query', function (req, res) {
+  // query by type
   let query = urlLib.parse(req.url, true).query;
   let where = {};
   let database = null;
@@ -77,6 +81,16 @@ router.get('/query', function (req, res) {
     });
 });
 
+/**
+ *
+ * （教师）删除信息
+ *
+ * @api {post} /api/teacher/delete
+ * @apiName teacherDelete
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/delete', function (req, res, next) {
   let database = null;
   let type = req.body.type;
@@ -108,7 +122,6 @@ router.post('/delete', function (req, res, next) {
         res.json(statusLib.CONNECTION_ERROR);
       });
   }
-
 });
 
 router.post('/delete', function (req, res, next) {

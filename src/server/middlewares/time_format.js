@@ -1,9 +1,6 @@
-function date (time, school_id) {
-  let curTime = undefined;
-  if (time && typeof time === 'string')
-    curTime = new Date(time);
-  else
-    curTime = (time) ? time : new Date();
+function date (time, schoolId) {
+  let curTime = null;
+  if (time && typeof time === 'string') { curTime = new Date(time); } else { curTime = (time) || new Date(); }
 
   let convert = function (digit) {
     if (digit < 10) return '0' + digit;
@@ -17,10 +14,7 @@ function date (time, school_id) {
   let minute = convert(curTime.getMinutes());
   let second = convert(curTime.getSeconds());
 
-  if (school_id)
-    return ((year % 100) + month + day + hour + minute + second).toString() + school_id;
-  else
-    return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+  if (schoolId) { return ((year % 100) + month + day + hour + minute + second).toString() + schoolId; } else return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
 }
 
 module.exports = date;

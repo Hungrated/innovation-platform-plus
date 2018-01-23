@@ -8,6 +8,16 @@ const statusLib = require('../libs/status');
 const Moment = db.Moment;
 const Profile = db.Profile;
 
+/**
+ *
+ * 获取动态列表
+ *
+ * @api {get} /api/moment/fetch?type=:type&limit=:limit
+ * @apiName momentFetch
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.get('/fetch', function (req, res) {
   const sid = urlLib.parse(req.url, true).query.sid;
   const type = urlLib.parse(req.url, true).query.type;

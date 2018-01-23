@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const sequelize = require('sequelize');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
-const urlLib = require('url');
-const timeFormat = require('../middlewares/time_format');
 
 const uid = require('../middlewares/id_gen');
 const Banner = db.Banner;
@@ -20,6 +17,16 @@ let objMulter = multer({
   dest: path.banner // file upload destination
 });
 
+/**
+ *
+ * 获取首页轮播图列表
+ *
+ * @api {get} /api/banner
+ * @apiName banner
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.get('/', function (req, res) {
   Banner.findAll({
     where: {
@@ -39,6 +46,16 @@ router.get('/', function (req, res) {
     });
 });
 
+/**
+ *
+ * 上传首页轮播图
+ *
+ * @api {post} /api/banner/upload
+ * @apiName bannerUpload
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/upload', objMulter.any(), function (req, res, next) { // upload a banner img
   const id = 'bnr' + uid.generate();
   req.body.img_id = id;
@@ -73,6 +90,16 @@ router.post('/upload', function (req, res) { // update database record
     });
 });
 
+/**
+ *
+ * 切换首页轮播图状态
+ *
+ * @api {post} /api/banner/switch
+ * @apiName bannerSwitch
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/switch', function (req, res) {
   Banner.update({
     status: req.body.op ? 'active' : 'archived' // 0: archived 1: active
@@ -92,8 +119,18 @@ router.post('/switch', function (req, res) {
     });
 });
 
+/**
+ *
+ * 修改当前首页轮播图
+ *
+ * @api {post} /api/banner/modify
+ * @apiName bannerModify
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/modify', objMulter.any(), function (req, res) {
-  // check existance of previous banner image file
+  // check existence of previous banner image file
   const id = req.body.img_id;
   const url = pathLib.join(path.banner, id + '.jpg');
   Banner.findOne({
@@ -122,23 +159,6 @@ router.post('/modify', objMulter.any(), function (req, res) {
       console.error(e);
       res.json(statusLib.CONNECTION_ERROR);
     });
-
-  // Banner.update({
-  //   status: req.body.op ? 'active' : 'archived' // 0: archived 1: active
-  // }, {
-  //   where: {
-  //     img_id: req.body.img_id
-  //   }
-  // })
-  //   .then(function () {
-  //     res.json(statusLib.BANNER_IMG_STATUS_CHANGE_SUCCESSFUL);
-  //     console.log('banner img status change successful');
-  //   })
-  //   .catch(function (e) {
-  //     console.error(e);
-  //     res.json(statusLib.BANNER_IMG_STATUS_CHANGE_FAILED);
-  //     console.log('banner img status change failed');
-  //   });
 });
 
 module.exports = router;

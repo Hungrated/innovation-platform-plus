@@ -1,22 +1,23 @@
 const express = require('express');
 const router = express.Router();
-// const pathLib = require('path');
-// const path = require('../app_paths');
-//
-// const timeFormat = require('../middlewares/time_format');
-// const uid = require('../middlewares/id_gen');
 
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
 const Class = db.Class;
-// const Profile = db.Profile;
 
-// const async = require('async');
-// const fs = require('fs');
-// const officeGen = require('officegen');
-
-router.post('/query', function (req, res) { // class query
+/**
+ *
+ * 获取班级列表
+ *
+ * @api {get} /api/class/query
+ * @apiName classQuery
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res) {
+  // class query
   const request = req.body.request;
   let where = {};
 
@@ -52,6 +53,16 @@ router.post('/query', function (req, res) { // class query
     });
 });
 
+/**
+ *
+ * 切换班级状态
+ *
+ * @api {post} /api/class/switch
+ * @apiName classSwitch
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/switch', function (req, res) {
   Class.update({
     status: req.body.op ? 'active' : 'archived' // 0: archived 1: active
