@@ -331,7 +331,7 @@
               return h('div', [
                 h('Button', {
                   props: {
-                    type: 'primary',
+                    type: params.row.cswk_src ? 'success' : 'disabled',
                     size: 'small'
                   },
                   style: {
@@ -339,15 +339,16 @@
                   },
                   on: {
                     click: () => {
-                      this.revealStudentDetails(params.row.school_id);
+                      this.downloadFile(params.row.cswk_src);
                     }
                   }
-                }, '下 载')
+                }, params.row.cswk_src ? '下 载' : '未 传')
               ]);
             }
           },
           {
             title: '评 分',
+            sortable: true,
             key: 'rate'
           },
           {
@@ -553,6 +554,20 @@
             console.log(e);
           });
       },
+      refreshStudentFinalList (id) {
+        let _this = this;
+        this.$ajax.post('/api/profile/query', {
+          request: {
+            cur_class: id
+          }
+        })
+          .then(function (res) {
+            _this.studentArr = res.data;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
       changeClass (unit) {
         this.cur_class = unit;
         this.refreshStudentList(unit.class_id);
@@ -634,13 +649,16 @@
           student_id: id
         })
           .then(function (res) {
-            let a = document.getElementById('fileDownloadTmpFrame');
-            a.src = res.data.path;
-            _this.$Message.success('文件下载成功');
+            _this.downloadFile(res.data.path);
           })
           .catch(function (e) {
             console.log(e);
           });
+      },
+      downloadFile (url) {
+        let a = document.getElementById('fileDownloadTmpFrame');
+        a.src = url;
+        this.$Message.success('文件下载成功');
       }
     },
     mounted () {

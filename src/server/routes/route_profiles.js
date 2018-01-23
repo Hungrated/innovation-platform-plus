@@ -9,6 +9,7 @@ const statusLib = require('../libs/status');
 const Profile = db.Profile;
 const Plan = db.Plan;
 const Meeting = db.Meeting;
+const Final = db.Final;
 
 const fs = require('fs');
 const multer = require('multer');
@@ -142,11 +143,11 @@ router.post('/avatar', function (req, res) {
 router.post('/query', function (req, res, next) {
   // parse req data
   if (typeof req.body.request === 'object') {
-    if (req.body.request.cur_class !== undefined) {
+    if (req.body.request.cur_class) {
       req.body.where = {
         cur_class: req.body.request.cur_class,
         school_id: {
-          $gt: 9999999 // student
+          $gt: 999999 // student
         }
       };
       req.body.include = [
@@ -157,6 +158,10 @@ router.post('/query', function (req, res, next) {
         {
           model: Meeting,
           attributes: ['date', 'content']
+        },
+        {
+          model: Final,
+          attributes: ['cswk_src', 'rate', 'remark']
         }
       ];
     }
@@ -183,15 +188,16 @@ router.post('/query', function (req, res, next) {
   } else {
     Profile.findAll({
       where: req.body.where
-    }).then(function (profile) {
-      if (profile === null) {
-        res.json(statusLib.PROFILE_FETCH_FAILED);
-        console.log('profile does not exist');
-      } else {
-        res.json(profile);
-        console.log('profile fetch successful');
-      }
     })
+      .then(function (profile) {
+        if (profile === null) {
+          res.json(statusLib.PROFILE_FETCH_FAILED);
+          console.log('profile does not exist');
+        } else {
+          res.json(profile);
+          console.log('profile fetch successful');
+        }
+      })
       .catch(function (e) {
         console.error(e);
         res.json(statusLib.CONNECTION_ERROR);
@@ -213,12 +219,23 @@ router.post('/query', function (req, res, next) {
         console.log('profile does not exist');
       } else {
         for (let i = 0; i < profiles.length; i++) {
-          let plansLength = profiles[i].dataValues.plans.length - 1;
-          let meetingsLength = profiles[i].dataValues.meetings.length - 1;
-          profiles[i].dataValues.newest_plan = profiles[i].dataValues.plans[plansLength] ? profiles[i].dataValues.plans[plansLength] : null;
-          profiles[i].dataValues.newest_meeting = profiles[i].dataValues.meetings[meetingsLength] ? profiles[i].dataValues.meetings[meetingsLength] : null;
+          let profile = profiles[i].dataValues;
+          let plansLength = profile.plans.length - 1;
+          let meetingsLength = profile.meetings.length - 1;
+          profiles[i].dataValues.newest_plan = profile.plans[plansLength]
+            ? profile.plans[plansLength]
+            : null;
+          profiles[i].dataValues.newest_meeting = profile.meetings[meetingsLength]
+            ? profile.meetings[meetingsLength]
+            : null;
+          if (profile.finals.length) {
+            profiles[i].dataValues.cswk_src = profile.finals[0].cswk_src;
+            profiles[i].dataValues.rate = profile.finals[0].rate;
+            profiles[i].dataValues.remark = profile.finals[0].remark;
+          }
           delete profiles[i].dataValues.plans;
           delete profiles[i].dataValues.meetings;
+          delete profiles[i].dataValues.finals;
         }
         res.json(profiles);
         console.log('profile fetch successful');

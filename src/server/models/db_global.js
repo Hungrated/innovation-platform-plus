@@ -22,6 +22,10 @@ Profile.hasMany(Meeting, {
   foreignKey: 'student_id'
 });
 
+Profile.hasMany(Final, {
+  foreignKey: 'student_id'
+});
+
 Profile.sync().then();
 User.sync().then();
 
@@ -64,18 +68,13 @@ Meeting.belongsTo(Class, {
 });
 
 Meeting.sync().then();
+Final.sync().then();
 
 Moment.belongsTo(Profile, {
   foreignKey: 'student_id'
 });
 
 Moment.sync().then();
-
-Final.belongsTo(Profile, {
-  foreignKey: 'student_id'
-});
-
-Final.sync().then();
 
 module.exports = {
   User, Profile, Blog, Comment, Plan, File, Banner, Class, Meeting, Moment, Final

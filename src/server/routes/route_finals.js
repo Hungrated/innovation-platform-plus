@@ -39,6 +39,7 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
         req.preExists = true;
       }
       req.cswk_id = final.cswk_id;
+      req.cswk_name = final.cswk_id + pathLib.parse(req.files[0].originalname).ext;
       req.cswkURL = pathLib.join(path.final, final.cswk_id) + pathLib.parse(req.files[0].originalname).ext;
       console.log('course work upload successful');
       next();
@@ -76,7 +77,7 @@ router.post('/upload', function (req, res, next) {
 router.post('/upload', function (req, res) {
   // update database record
   Final.update({
-    cswk_src: '/api/download?cswk=' + req.cswk_id
+    cswk_src: '/api/download?cswk=' + req.cswk_name
   }, {
     where: {
       cswk_id: req.cswk_id

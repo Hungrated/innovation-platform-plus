@@ -13,11 +13,6 @@
         <div class="plan-edit-body">
           <div class="plan-edit-left">
             <div class="plan-edit-unit">
-              <!--<Select placeholder="学 期" size="large" v-model="planUnit.term">-->
-                <!--<Option v-for="term in terms" :value="term.label" :key="term.index">-->
-                  <!--{{ term.label }}-->
-                <!--</Option>-->
-              <!--</Select>-->
               <Input v-model="planUnit.term" size="large" placeholder="学 期" disabled="true"/>
             </div>
             <div class="plan-edit-unit">
