@@ -161,7 +161,7 @@ router.post('/query', function (req, res, next) {
         },
         {
           model: Final,
-          attributes: ['cswk_src', 'rate', 'remark']
+          attributes: ['cswk_id', 'cswk_src', 'rate', 'remark', 'updated_at']
         }
       ];
     }
@@ -229,9 +229,11 @@ router.post('/query', function (req, res, next) {
             ? profile.meetings[meetingsLength]
             : null;
           if (profile.finals.length) {
+            profiles[i].dataValues.cswk_id = profile.finals[0].cswk_id;
             profiles[i].dataValues.cswk_src = profile.finals[0].cswk_src;
             profiles[i].dataValues.rate = profile.finals[0].rate;
             profiles[i].dataValues.remark = profile.finals[0].remark;
+            profiles[i].dataValues.cswk_time = profile.finals[0].updated_at;
           }
           delete profiles[i].dataValues.plans;
           delete profiles[i].dataValues.meetings;

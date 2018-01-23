@@ -113,8 +113,21 @@
         width="750px"
         :closable="false"
         @on-ok="submitClassRec()"
-        @on-cancel="addClassRecCancel()">
+        @on-cancel="editCancel()">
         <i-input v-model="classRecData.content" :placeholder="curClassRecProfile.name + '的新课堂记录...'"></i-input>
+      </Modal>
+      <Modal
+        v-model="finalRate"
+        width="750px"
+        :closable="false"
+        @on-ok="submitFinalRate()"
+        @on-cancel="editCancel()">
+        <Rate v-model="finalRateData.rate" show-text></Rate>&emsp;&emsp;<br>
+        <span>
+          <Icon type="information-circled"></Icon>&nbsp;
+          5星:优秀&emsp;4星:良好&emsp;3星:中等&emsp;2星:及格&emsp;1星:不及格
+        </span><br><br>
+        <i-input v-model="finalRateData.remark" :placeholder="curClassRecProfile.name + '的期末评语...'"></i-input>
       </Modal>
     </Card>
     <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
@@ -210,7 +223,6 @@
                         marginRight: '5px'
                       }
                     }, params.row.newest_meeting.date),
-                    // h('br'),
                     h('strong', params.row.newest_meeting.content)
                   ]),
                   h('span', {
@@ -326,13 +338,14 @@
           },
           {
             title: '期末作业',
-            width: 100,
+            width: 85,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
                   props: {
-                    type: params.row.cswk_src ? 'success' : 'disabled',
-                    size: 'small'
+                    type: 'success',
+                    size: 'small',
+                    disabled: !params.row.cswk_src
                   },
                   style: {
                     marginRight: '5px'
@@ -347,13 +360,119 @@
             }
           },
           {
-            title: '评 分',
+            title: '上传时间',
             sortable: true,
-            key: 'rate'
+            width: 120,
+            key: 'upload_time',
+            render: (h, params) => {
+              return h('div', [
+                h('span', params.row.cswk_src ? this.now(new Date(params.row.cswk_time)) : '暂 无')
+              ]);
+            }
           },
           {
-            title: '评 语',
-            key: 'remark'
+            title: '评分与评语',
+            sortable: true,
+            key: 'rate',
+            render: (h, params) => {
+              if (params.row.rate || params.row.remark) {
+                return h('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '5px'
+                  }
+                }, [
+                  h('div', {
+                    style: {
+                      lineHeight: '24px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }
+                  }, [
+                    h('strong', {
+                      style: {
+                        padding: '1px 5px',
+                        borderRadius: '3px',
+                        background: '#19be6b',
+                        color: '#FFFFFF',
+                        marginRight: '5px'
+                      }
+                    }, params.row.rate ? params.row.rate : 'N'),
+                    h('span', params.row.remark)
+                  ]),
+                  h('span', {
+                    style: {
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      marginLeft: '10px'
+                    }
+                  }, [
+                    h('Button', {
+                      props: {
+                        type: 'dashed',
+                        size: 'small'
+                      },
+                      on: {
+                        click: () => {
+                          this.addFinalRate(params.row);
+                        }
+                      }
+                    }, [
+                      h('Icon', {
+                        props: {
+                          type: 'edit'
+                        }
+                      }),
+                      h('span', ' 编 辑')
+                    ])
+                  ])
+                ]);
+              } else {
+                return h('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '5px'
+                  }
+                }, [
+                  h('span', {
+                    style: {
+                      lineHeight: '24px'
+                    }
+                  }, '暂 无'),
+                  h('span', {
+                    style: {
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      marginLeft: '10px'
+                    }
+                  }, [
+                    h('Button', {
+                      props: {
+                        type: 'dashed',
+                        size: 'small'
+                      },
+                      on: {
+                        click: () => {
+                          this.addFinalRate(params.row);
+                        }
+                      }
+                    }, [
+                      h('Icon', {
+                        props: {
+                          type: 'edit'
+                        }
+                      }),
+                      h('span', ' 总 评')
+                    ])
+                  ])
+                ]);
+              }
+            }
           },
           {
             title: '详 情',
@@ -515,7 +634,13 @@
           student_id: null,
           class_id: ''
         },
-        classRec: false
+        classRec: false,
+        finalRateData: {
+          cswk_id: '',
+          rate: 0,
+          remark: ''
+        },
+        finalRate: false
       };
     },
     methods: {
@@ -620,8 +745,11 @@
         let day = convert(curTime.getDate());
         return year + '-' + month + '-' + day;
       },
-      addClassRec (profile) {
+      updateProfile (profile) {
         this.curClassRecProfile = profile;
+      },
+      addClassRec (profile) {
+        this.updateProfile(profile);
         this.classRecData = {
           date: this.now(new Date()),
           student_id: profile.school_id,
@@ -629,14 +757,52 @@
         };
         this.classRec = true;
       },
-      addClassRecCancel () {
+      editCancel () {
         this.classRec = false;
+        this.finalRate = false;
       },
       submitClassRec () {
         let _this = this;
         this.$ajax.post('/api/meeting/submit', this.classRecData)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
+            _this.refreshStudentList(_this.cur_class.class_id);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      parseRate (rt) {
+        switch (rt) {
+          case 'A':
+            return 5;
+          case 'B':
+            return 4;
+          case 'C':
+            return 3;
+          case 'D':
+            return 2;
+          default:
+            return 1;
+        }
+      },
+      addFinalRate (profile) {
+        this.updateProfile(profile);
+        this.finalRateData.cswk_id = profile.cswk_id;
+        this.finalRateData.remark = profile.remark;
+        this.finalRateData.rate = this.parseRate(profile.rate);
+        this.finalRate = true;
+      },
+      submitFinalRate () {
+        let _this = this;
+        this.$ajax.post('/api/final/rate', this.finalRateData)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            _this.finalRateData = {
+              cswk_id: '',
+              rate: 0,
+              remark: ''
+            };
             _this.refreshStudentList(_this.cur_class.class_id);
           })
           .catch(function (e) {

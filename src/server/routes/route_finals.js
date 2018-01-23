@@ -131,6 +131,22 @@ router.post('/query', function (req, res) {
  */
 router.post('/rate', function (req, res) {
   // a teacher rates a course-work
+
+  let calcRate = function (rt) {
+    switch (rt) {
+      case 5:
+        return 'A';
+      case 4:
+        return 'B';
+      case 3:
+        return 'C';
+      case 2:
+        return 'D';
+      default:
+        return 'F';
+    }
+  };
+
   const {
     cswk_id,
     rate,
@@ -138,10 +154,10 @@ router.post('/rate', function (req, res) {
   } = req.body;
 
   const modData = {
-    rate: rate,
+    rate: calcRate(rate),
     remark: remark
   };
-
+  console.log(modData);
   Final.update(modData, {
     where: {
       cswk_id: cswk_id
@@ -149,12 +165,12 @@ router.post('/rate', function (req, res) {
   })
     .then(function () {
       res.json(statusLib.PLAN_RATE_SUCCESSFUL);
-      console.log('plan rate successful');
+      console.log('final rate successful');
     })
     .catch(function (e) {
       console.error(e);
       res.json(statusLib.PLAN_RATE_FAILED);
-      console.log('plan rate failed');
+      console.log('final rate failed');
     });
 });
 
