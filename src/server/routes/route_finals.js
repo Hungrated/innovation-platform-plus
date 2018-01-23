@@ -94,6 +94,32 @@ router.post('/upload', function (req, res) {
 
 /**
  *
+ * 获取期末评分列表
+ *
+ * @api {post} /api/final/query
+ * @apiName finalQuery
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res) {
+  Final.findAll({
+    where: {
+      class_id: req.body.class_id
+    }
+  })
+    .then(function (dataList) {
+      res.json(dataList);
+      console.log('final data query successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
+});
+
+/**
+ *
  * 期末总评
  *
  * @api {post} /api/final/rate
@@ -129,19 +155,6 @@ router.post('/rate', function (req, res) {
       res.json(statusLib.PLAN_RATE_FAILED);
       console.log('plan rate failed');
     });
-});
-
-/**
- *
- * 获取期末评分列表
- *
- * @api {post} /api/final/query
- * @apiName finalQuery
- *
- * @apiSuccess {JSON} data Response data.
- *
- */
-router.post('/query', function (req, res, next) {
 });
 
 /**
