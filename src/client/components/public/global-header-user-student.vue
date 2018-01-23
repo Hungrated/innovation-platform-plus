@@ -1,15 +1,15 @@
 <template>
-  <div class="layout-users">
+  <div class="m-users">
     <Submenu name="8">
       <template slot="title">
         <Icon type="person"></Icon>&nbsp;{{name}}
       </template>
       <MenuGroup title="管 理">
-        <MenuItem name="8-1"><span class="login-btn" @click="changeRoute('/user-center')">个人中心</span></MenuItem>
-        <MenuItem name="8-2"><span class="login-btn" @click="pwdMod = true">修改密码</span></MenuItem>
+        <MenuItem name="8-1"><span @click="changeRoute('/user-center')">个人中心</span></MenuItem>
+        <MenuItem name="8-2"><span @click="pwdMod = true">修改密码</span></MenuItem>
       </MenuGroup>
       <MenuGroup title="用 户">
-        <MenuItem name="8-3"><span class="login-btn" @click="logout()">退出登录</span></MenuItem>
+        <MenuItem name="8-3"><span @click="logout()">退出登录</span></MenuItem>
       </MenuGroup>
     </Submenu>
     <Modal
@@ -17,14 +17,14 @@
       title="修改密码"
       @on-ok="userPwdMod()">
       <!--用户输入框-->
-      <div class="layout-login">
-        <i-input class="layout-login-input" type="password" v-model="password.currentPwd" placeholder="当前密码">
+      <div class="m-login">
+        <i-input class="m-login input" type="password" v-model="password.currentPwd" placeholder="当前密码">
           <Icon type="ios-locked-outline" slot="prepend"></Icon>
         </i-input>
-        <i-input class="layout-login-input" type="password" v-model="password.newPwd" placeholder="新密码">
+        <i-input class="m-login input" type="password" v-model="password.newPwd" placeholder="新密码">
           <Icon type="ios-locked" slot="prepend"></Icon>
         </i-input>
-        <i-input class="layout-login-input" type="password" v-model="password.newPwdChk" placeholder="重复新密码">
+        <i-input class="m-login input" type="password" v-model="password.newPwdChk" placeholder="重复新密码">
           <Icon type="ios-locked" slot="prepend"></Icon>
         </i-input>
       </div>
@@ -87,4 +87,8 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import "../../styles/header-user";
+</style>
 

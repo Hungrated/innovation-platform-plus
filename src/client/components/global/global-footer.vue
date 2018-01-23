@@ -1,33 +1,33 @@
 <template>
-  <footer id="global-footer" class="layout-footer">
+  <footer id="global-footer" class="g-footer">
     <Row>
       <i-col span="6">
-        <div class="layout-sites">
-          <strong class="layout-sites-title">所有服务</strong>
+        <div class="g-footer sites">
+          <strong class="g-footer sites title">所有服务</strong>
           <router-link class="sites-col" tag="span" v-for="site in sites.siteList0" :key="site.id" :to="site.route">
             {{site.text}}
           </router-link>
         </div>
       </i-col>
       <i-col span="6">
-        <div class="layout-sites">
-          <strong class="layout-sites-title">管 理</strong>
+        <div class="g-footer sites">
+          <strong class="g-footer sites title">管 理</strong>
           <router-link class="sites-col" tag="span" v-for="site in sites.siteList1" :key="site.id" :to="site.route">
             {{site.text}}
           </router-link>
         </div>
       </i-col>
       <i-col span="6">
-        <div class="layout-sites">
-          <strong class="layout-sites-title">技术支持</strong>
+        <div class="g-footer sites">
+          <strong class="g-footer sites title">技术支持</strong>
           <router-link class="sites-col" tag="span" v-for="site in sites.siteList2" :key="site.id" :to="site.route">
             {{site.text}}
           </router-link>
         </div>
       </i-col>
       <i-col span="6">
-        <div class="layout-sites">
-          <strong class="layout-sites-title">其 他</strong>
+        <div class="g-footer sites">
+          <strong class="g-footer sites title">其 他</strong>
           <router-link class="sites-col" tag="span" v-for="site in sites.siteList2" :key="site.id" :to="site.route">
             {{site.text}}
           </router-link>
@@ -35,7 +35,7 @@
       </i-col>
     </Row>
     <hr>
-    <span class="layout-footer-cprt">Copyright © 2017 Hungrated, Hangzhou Dianzi University, All rights reserved.</span>
+    <span class="g-footer cprt">Copyright © 2017 Hungrated, Hangzhou Dianzi University, All rights reserved.</span>
   </footer>
 </template>
 
@@ -69,3 +69,7 @@
     components: {}
   };
 </script>
+
+<style scoped lang="scss">
+  @import "../../styles/footer";
+</style>

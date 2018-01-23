@@ -1,0 +1,12 @@
+@import "base";
+
+.g-extras {
+  .item {
+    display: inline-block;
+    width: calc(50% - 5px);
+  }
+}
+
+.moments-main {
+  padding: 0;
+}

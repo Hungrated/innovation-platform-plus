@@ -1,0 +1,32 @@
+@import "base";
+
+.g-header {
+  /*z-index: 20;*/
+  padding: 0 20px;
+  background: #222222;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+  display: flex;
+  user-select: none;
+
+  .brand {
+    padding: 0;
+    height: 45px;
+    display: flex;
+    width: 145px;
+    cursor: pointer;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .nav {
+    height: 100%;
+    flex: 1 0 auto;
+
+    li {
+      font-size: 16px;
+    }
+  }
+}

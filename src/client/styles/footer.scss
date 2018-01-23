@@ -1,0 +1,52 @@
+@import "base";
+
+.g-footer {
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, .1);
+  bottom: 0;
+  width: 100%;
+  background: #EEEEEE;
+  padding: 20px 90px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+
+  .sites {
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    user-select: none;
+
+    span {
+      font-size: 13px;
+      padding-bottom: 6px;
+      color: rgb(73, 80, 96);
+      cursor: pointer;
+      transition: all 350ms;
+
+      &:hover {
+        color: #222222;
+      }
+    }
+
+    .title {
+      font-size: 16px;
+      padding-bottom: 8px;
+    }
+  }
+
+  .cprt {
+    box-shadow: none;
+    padding: 10px 0;
+    color: rgb(73, 80, 96);
+    text-align: center;
+  }
+
+}
+
+@media only screen and (min-width: 1600px) {
+  .g-footer {
+    padding: 20px calc((100vw - 1420px) / 2);
+  }
+}

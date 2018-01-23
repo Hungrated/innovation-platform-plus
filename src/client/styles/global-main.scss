@@ -1,0 +1,11 @@
+@import "base";
+
+.g-container {
+  min-height: 500px;
+}
+
+@media only screen and (min-width: 1600px) {
+  .g-container {
+    padding: 0 calc((100vw - 1600px) / 2);
+  }
+}

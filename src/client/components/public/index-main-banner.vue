@@ -1,10 +1,10 @@
 <template>
-  <div class="index-banner">
-    <div class="index-banner-container">
+  <div class="m-banner">
+    <div class="m-banner container">
       <Carousel autoplay :autoplay-speed="3500" v-model="value" loop>
         <div v-for="img in imgList" :key="img.img_id">
           <CarouselItem>
-            <div class="index-banner-unit">
+            <div class="m-banner container unit">
               <img :src="img.src">
             </div>
           </CarouselItem>
@@ -49,3 +49,6 @@
   };
 </script>
 
+<style scoped lang="scss">
+  @import '../../styles/index-banner';
+</style>

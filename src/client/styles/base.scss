@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  min-width: 900px;
+  padding-bottom: 325px;
+}
+
+#app {
+  min-height: 100vh;
+  padding-bottom: 325px;
+}
+

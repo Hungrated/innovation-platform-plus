@@ -1,10 +1,10 @@
 <template>
   <header id="global-header">
-    <Menu mode="horizontal" class="layout-header" theme="dark">
-      <div class="layout-brand">
+    <Menu mode="horizontal" class="g-header" theme="dark">
+      <div class="g-header brand">
         <router-link tag="span" to="/index"><img :src="brand.src"></router-link>
       </div>
-      <ul class="layout-nav">
+      <ul class="g-header nav">
         <MenuItem name="1">
           <router-link tag="span" to="/index">
             <Icon type="home"></Icon>
@@ -120,3 +120,7 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import "../../styles/header";
+</style>

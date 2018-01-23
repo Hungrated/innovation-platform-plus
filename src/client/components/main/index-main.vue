@@ -1,7 +1,7 @@
 <template>
   <div id="index">
     <index-main-banner></index-main-banner>
-    <div class="index-extras">
+    <div class="g-extras">
       <moments-main :limit="10"></moments-main>
     </div>
   </div>
@@ -20,6 +20,6 @@
   };
 </script>
 
-<style>
-  @import '../../styles/index.css';
+<style scoped lang="scss">
+  @import '../../styles/index';
 </style>

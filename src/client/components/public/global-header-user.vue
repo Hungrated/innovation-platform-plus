@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-users">
+  <div class="m-users">
     <Submenu name="7">
       <template slot="title">
         <Icon type="person"></Icon>&nbsp;
@@ -13,11 +13,11 @@
       title="用户登录"
       @on-ok="handleSubmit()">
       <!--用户输入框-->
-      <div class="layout-login">
-        <i-input class="layout-login-input" type="text" v-model="signInData.username" placeholder="用户名">
+      <div class="m-login">
+        <i-input class="m-login input" type="text" v-model="signInData.username" placeholder="用户名">
           <Icon type="ios-person-outline" slot="prepend"></Icon>
         </i-input>
-        <i-input class="layout-login-input" type="password" v-model="signInData.password" placeholder="密码">
+        <i-input class="m-login input" type="password" v-model="signInData.password" placeholder="密码">
           <Icon type="ios-locked-outline" slot="prepend"></Icon>
         </i-input>
       </div>
@@ -65,3 +65,7 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import "../../styles/header-user";
+</style>
