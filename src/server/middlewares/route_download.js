@@ -7,7 +7,7 @@ const statusLib = require('../libs/status');
 
 /**
  *
- * 获取特定文件
+ * 下载文件
  *
  * @api {get} /api/download?:type=:id
  * @apiName download
@@ -32,6 +32,9 @@ router.get('/', function (req, res) { // download a file
   } else if (raw.banner) {
     filename = raw.banner;
     realPath = path.banner;
+  } else if (raw.cswk) {
+    filename = raw.cswk;
+    realPath = path.final;
   }
 
   const realDir = pathLib.join(realPath, filename);

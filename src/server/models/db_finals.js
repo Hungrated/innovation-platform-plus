@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const mysql = require('../middlewares/sequelize');
 
 const schema = {
-  final_id: {
+  cswk_id: {
     type: Sequelize.STRING(32),
     primaryKey: true,
     unique: true

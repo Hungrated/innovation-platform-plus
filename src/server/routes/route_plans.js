@@ -177,36 +177,6 @@ router.post('/op', function (req, res) {
     });
 });
 
-// router.post('/rate', function (req, res) {
-//   // a teacher rates a plan
-//   const {
-//     plan_id,
-//     rate,
-//     remark
-//   } = req.body;
-//
-//   const modData = {
-//     rate: rate,
-//     remark: remark
-//   };
-//
-//   Plan.update(modData, {
-//     where: {
-//       plan_id: plan_id
-//     }
-//   })
-//     .then(function () {
-//       res.json(statusLib.PLAN_RATE_SUCCESSFUL);
-//       console.log('plan rate successful');
-//     })
-//     .catch(function (e) {
-//       console.error(e);
-//       res.json(statusLib.PLAN_RATE_FAILED);
-//       console.log('plan rate failed');
-//     });
-//
-// });
-
 /**
  *
  * 查询计划

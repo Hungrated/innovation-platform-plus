@@ -16,6 +16,8 @@ const banner = pathLib.join(upload, 'banner');
 
 const plans = pathLib.join(root, 'public', 'files', 'plans');
 
+const final = pathLib.join(upload, 'final');
+
 module.exports = {
-  avatars, sources, userinfo, banner, plans
+  avatars, sources, userinfo, banner, plans, final
 };
