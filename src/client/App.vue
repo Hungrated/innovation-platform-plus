@@ -19,14 +19,13 @@
   };
 </script>
 
-<style>
+<style scoped lang="scss">
+  @import 'styles/base';
 
   #app {
+    min-height: 100vh;
     background: url('./assets/bg.png') repeat-y;
     background-size: 100% auto;
   }
 
-  * {
-    /*border: 1px solid red;*/
-  }
 </style>

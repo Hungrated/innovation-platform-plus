@@ -1,14 +1,14 @@
 <template>
-  <div class="resources-main">
+  <div class="g-resources">
     <Card disHover>
-      <span slot="title" class="resources-main-header">
+      <span slot="title" class="g-resources header">
         <span><strong>资源共享</strong></span>
         <span><Button type="primary" size="small" @click="editFile()">上 传</Button></span>
       </span>
-      <div class="resource-body">
+      <div class="g-resources body">
         <transition name="fade">
-          <div v-if="uploadPanel" class="resource-upload">
-            <div class="file-edit-header">
+          <div v-if="uploadPanel" class="m-upload">
+            <div class="m-upload header">
               <span>
                 <strong>上传文件</strong>&emsp;
                 <transition>
@@ -23,9 +23,9 @@
                 <Button type="primary" size="small" @click="submitFile()">提 交</Button>
               </span>
             </div>
-            <div class="file-edit-body">
-                <span class="file-edit-left">
-                  <Upload class="file-edit-button"
+            <div class="m-upload body">
+                <span class="m-left">
+                  <Upload class="button"
                           action="#"
                           :data="uploadData"
                           :before-upload="handleUpload">
@@ -33,8 +33,9 @@
                   </Upload>
                 </span>
 
-              <span class="file-edit-right">
-                  <i-input type="text" size="large" v-model="uploadData.desc" placeholder="文件描述..."></i-input>
+              <span class="m-right">
+                  <i-input type="text" size="large" v-model="uploadData.desc" placeholder="文件描述..."
+                           style="width: 100%"></i-input>
                 </span>
 
             </div>
@@ -42,10 +43,9 @@
         </transition>
         <Table stripe :columns="resourceTableColumns" :data="resourceList"></Table>
       </div>
-      <div class="resource-page">
+      <div class="g-resources page">
         <Page size="small" :total="count"></Page>
       </div>
-
     </Card>
     <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
   </div>
@@ -191,6 +191,6 @@
   };
 </script>
 
-<style>
-  @import '../../styles/resources.css';
+<style scoped lang="scss">
+  @import '../../styles/resources';
 </style>

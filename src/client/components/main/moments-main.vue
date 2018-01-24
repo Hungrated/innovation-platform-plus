@@ -1,25 +1,25 @@
 <template>
-  <div id="moments" class="moments-main">
+  <div id="moments" class="g-moments">
     <Timeline>
       <Card disHover>
         <span slot="title">
-          <span class="main-panel-card-header">
+          <span class="g-moments header">
             <strong>动 态</strong>
           </span>
         </span>
         <p v-if="moments.length === 0" style="text-align: center">暂无动态哦</p>
-        <div class="moment-item-container" v-else>
+        <div class="g-moments container" v-else>
           <TimelineItem v-for="moment in moments" key="moment.moment_id">
-            <div v-if="moment.type === 'planmod'" class="moment-item">
-              <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
+            <div v-if="moment.type === 'planmod'" class="m-moment">
+              <span class="m-moment time">{{ getTime(moment.created_at) }}</span>
               <div>
                 <Icon type="ios-lightbulb"></Icon>&nbsp;&nbsp;
                 <strong>{{moment.profile.name}}</strong>&nbsp;更新了计划：
                 <span>{{moment.desc}}</span>
               </div>
             </div>
-            <div v-if="moment.type === 'article'" class="moment-item">
-              <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
+            <div v-if="moment.type === 'article'" class="m-moment">
+              <span class="m-moment time">{{ getTime(moment.created_at) }}</span>
               <div>
                 <Icon type="document-text"></Icon>&nbsp;&nbsp;
                 <strong>{{moment.profile.name}}</strong>&nbsp;发布了文章：
@@ -27,8 +27,8 @@
                 <a :href="'/#' + moment.href">查 看</a>
               </div>
             </div>
-            <div v-if="moment.type === 'resource'" class="moment-item">
-              <span class="moment-item-time">{{ getTime(moment.created_at) }}</span>
+            <div v-if="moment.type === 'resource'" class="m-moment">
+              <span class="m-moment time">{{ getTime(moment.created_at) }}</span>
               <div>
                 <Icon type="android-folder-open"></Icon>&nbsp;
                 <strong>{{moment.profile.name}}</strong>&nbsp;上传了资源：
@@ -86,6 +86,6 @@
   };
 </script>
 
-<style scoped>
-  @import '../../styles/moments.css';
+<style scoped lang="scss">
+  @import '../../styles/moments';
 </style>

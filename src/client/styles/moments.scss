@@ -1,0 +1,29 @@
+.g-moments {
+  padding: 20px 50px;
+
+  .header {
+    padding: 0;
+    line-height: 24px;
+  }
+
+  .container {
+    padding: 20px 35px 0 35px;
+    border-radius: 5px;
+    background: #FAFAFA;
+  }
+}
+
+.m-moment {
+  font-size: 15px;
+
+  div {
+    padding: 10px 20px;
+  }
+
+  .time {
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: #2db7f5;
+    color: #EEEEEE;
+  }
+}
