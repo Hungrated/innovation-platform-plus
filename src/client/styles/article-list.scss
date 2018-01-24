@@ -1,0 +1,51 @@
+.m-unit {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #EEEEEE;
+  transition: all 250ms;
+  border-radius: 5px;
+
+  &:hover {
+    background: #F9F9F9;
+  }
+
+  .title {
+    padding: 0;
+    flex: 1 0 auto;
+    border: none;
+  }
+
+  .details {
+    padding: 0;
+    display: flex;
+    flex: 0 1 45%;
+    flex-direction: column;
+    justify-content: right;
+    border: none;
+
+    .info {
+      flex-direction: row;
+      line-height: 100%;
+      margin-bottom: 10px;
+      justify-content: right;
+      color: #999999;
+    }
+
+    .desc {
+      flex-direction: row;
+      line-height: 100%;
+      color: #999999;
+
+      p {
+        word-break: break-all;
+      }
+    }
+  }
+}
+
+.m-page {
+  margin-top: 10px;
+  padding: 20px;
+  text-align: center;
+}

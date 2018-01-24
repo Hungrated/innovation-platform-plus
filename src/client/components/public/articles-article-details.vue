@@ -1,33 +1,32 @@
 <template>
-  <div class="article-unit-details">
-    <Card disHover style="margin-bottom: 20px">
-      <div class="article-container">
-        <div class="article-container-left">
-          <div class="article-header">
-            <div class="article-details-title"><strong>{{details.blog.title}}</strong></div>
+  <div class="g-details">
+    <Card disHover>
+      <div class="g-details container">
+        <div class="g-details container left">
+          <div class="m-header">
+            <div class="m-header title"><strong>{{details.blog.title}}</strong></div>
             <div style="display: flex; justify-content: space-between">
-              <span class="article-details-info">
-              <Icon type="ios-person-outline"></Icon>&emsp;{{details.blog.profile.name}}&emsp;&emsp;
-              <Icon type="ios-clock-outline"></Icon>&emsp;{{details.blog.publishTime}}&emsp;
-            </span>
+              <span class="m-header info">
+                <Icon type="ios-person-outline"></Icon>&emsp;{{details.blog.profile.name}}&emsp;&emsp;
+                <Icon type="ios-clock-outline"></Icon>&emsp;{{details.blog.publishTime}}&emsp;
+              </span>
               <Button type="text" size="small" @click="back()">返回文章列表</Button>
             </div>
           </div>
-          <!--<div class="article-details-content" v-html="details.blog.content"></div>-->
-          <div class="article-details-content">
+          <div class="m-content">
             <mavon-editor :value="details.blog.content" :editable="false" default_open="preview"
                           :subfield="false" :toolbarsFlag="false"></mavon-editor>
           </div>
         </div>
-        <div class="article-container-right">
-          <div class="article-relative-list">
-            <span class="list-title"><strong>相关阅读</strong></span>
+        <div class="g-details container right">
+          <div class="m-list m-list-rel">
+            <span class="m-list title"><strong>相关阅读</strong></span>
             <span>
               list1
             </span>
           </div>
-          <div class="article-recommend-list">
-            <span class="list-title"><strong>推荐阅读</strong></span>
+          <div class="m-list m-list-rec">
+            <span class="m-list title"><strong>推荐阅读</strong></span>
             <span>
               list2
             </span>
@@ -39,27 +38,25 @@
       <span slot="title">
         <strong>评 论</strong>
       </span>
-      <div class="article-footer">
-        <div class="comment-container">
-          <div class="comment-unit" v-for="commentUnit in details.comments" :key="commentUnit.id">
-            <span class="comment-unit-header">
+      <div class="m-footer">
+        <div class="m-comment" v-for="commentUnit in details.comments" :key="commentUnit.id">
+            <span class="m-comment header">
               <span>
                 <strong>{{commentUnit.profile.name}}</strong>&emsp;&emsp;
                 <em><Icon type="card"></Icon>&emsp;{{commentUnit.student_id}}</em>&emsp;
               </span>
-              <span style="color: #999999"><Icon type="ios-clock-outline"></Icon>&emsp;{{commentUnit.submitTime}}</span>
+              <span class="m-comment time"><Icon type="ios-clock-outline"></Icon>&emsp;{{commentUnit.submitTime}}</span>
             </span>
-            <span class="comment-unit-body">
+            <span class="m-comment body">
               <span>{{commentUnit.content}}</span>
             </span>
-          </div>
         </div>
       </div>
     </Card>
     <br>
     <Card disHover>
-      <div class="comment-edit">
-        <i-input class="comment-edit-textarea" type="textarea" v-model="comment" placeholder="说点什么吧..."></i-input>
+      <div class="m-edit">
+        <i-input class="m-edit text" type="textarea" v-model="comment" placeholder="说点什么吧..."></i-input>
         <span>
             <Button type="ghost" size="large" @click="commentSubmit()">提 交</Button>
           </span>
@@ -79,9 +76,7 @@
         details: {
           blog: {
             content: '',
-            profile: {
-
-            }
+            profile: {}
           },
           comments: []
         },
@@ -137,6 +132,7 @@
   };
 </script>
 
-<style>
-  @import '../../styles/articles-article-details.css';
+<style scoped lang="scss">
+  @import "../../styles/articles-details";
 </style>
+

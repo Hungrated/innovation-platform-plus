@@ -11,7 +11,7 @@ import 'iview/dist/styles/iview.css';
 import mavonEditor from 'mavon-editor';
 import vueCroppa from 'vue-croppa';
 import 'vue-croppa/dist/vue-croppa.css';
-import './styles/iview-overwrite-global.css';
+import './styles/overwrite-global.css';
 
 Vue.use(iView);
 Vue.use(VueRouter);

@@ -1,18 +1,18 @@
 <template>
-  <div id="compose" class="articles-compose">
-    <div class="articles-compose-header">
-      <Card class="articles-compose-header-card" disHover>
+  <div id="compose" class="g-compose">
+    <div class="g-compose header">
+      <Card disHover>
         <span slot="title"><strong>发表文章</strong></span>
-        <div class="articles-compose-header-container">
-          <div class="articles-compose-header-label">
+        <div class="m-container1">
+          <div class="m-container1 label">
             <Select placeholder="文章分类" size="large" v-model="editor.label">
               <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
                 {{ type.label }}
               </Option>
             </Select>
           </div>
-          <Input class="articles-compose-header-topic" v-model="editor.title" size="large" placeholder="文章标题"/>
-          <ButtonGroup class="articles-compose-header-type" shape="circle" size="large">
+          <Input class="m-container1 title" v-model="editor.title" size="large" placeholder="文章标题"/>
+          <ButtonGroup class="m-container1 type" shape="circle" size="large">
             <Button :type="(editType === 'richText') ? ('primary') : ('default')" @click="changeEditType('richText')"
                     disabled>
               <Icon type="document-text" style="font-size: 17px"></Icon>
@@ -24,27 +24,30 @@
             </Button>
           </ButtonGroup>
         </div>
-        <div class="articles-compose-header-description">
+        <div class="m-desc">
           <Input v-model="editor.description" size="large" placeholder="文章描述"/>
         </div>
       </Card>
     </div>
-    <div class="articles-compose-body">
+    <div class="g-compose body">
       <transition name="fade">
-        <md-editor v-if="editType === 'markDown'" ref="editor" :title="editor.title" :label="editor.label"
-                   :description="editor.description"></md-editor>
+        <md-editor v-if="editType === 'markDown'"
+                   ref="editor"
+                   :title="editor.title"
+                   :label="editor.label"
+                   :description="editor.description" />
       </transition>
     </div>
-    <div class="articles-compose-footer">
-      <Card class="articles-compose-footer-card" disHover>
-        <div class="articles-compose-footer-container">
-          <Select class="articles-compose-header-label" placeholder="文章分类" size="large" v-model="editor.label">
+    <div class="g-compose footer">
+      <Card disHover>
+        <div class="m-container2">
+          <Select class="m-container2 label" placeholder="文章分类" size="large" v-model="editor.label">
             <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
               {{ type.label }}
             </Option>
           </Select>
-          <Button class="articles-compose-footer-submit" size="large" type="primary" @click="submit()">发&emsp;
-            表
+          <Button class="m-container submit" size="large" type="primary" @click="submit()">
+            发&emsp;表
           </Button>
         </div>
       </Card>
@@ -99,8 +102,8 @@
   };
 </script>
 
-<style>
-  @import '../../styles/articles-compose.css';
+<style scoped lang="scss">
+  @import "../../styles/articles-compose";
 </style>
 
 

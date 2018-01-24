@@ -1,10 +1,10 @@
 <template>
-  <div id="articles" class="articles-main">
-    <div class="articles-main-header">
-      <Card class="articles-main-header-card" disHover>
-        <div class="articles-main-header-container">
+  <div id="articles" class="g-articles">
+    <div class="g-articles header">
+      <Card class="m-card" disHover>
+        <div class="m-card container">
           <strong>文 章</strong>
-          <Dropdown style="margin-left: 10px; height: 100%">
+          <Dropdown class="m-card container type">
             <Button type="primary" v-model="articleListLabel">
               {{articleListLabel}}&nbsp;
               <Icon type="arrow-down-b"></Icon>
@@ -20,7 +20,7 @@
         </div>
       </Card>
     </div>
-    <div class="articles-main-body">
+    <div class="g-articles body">
       <article-list :articleList="articleList" :count="articleCount"></article-list>
     </div>
   </div>
@@ -73,29 +73,30 @@
       changeLabel (type) {
         this.changeRoute('/articles?label=' + type.index);
         this.articleListLabel = type.label;
+      },
+      getArticleList () {
+        let _this = this;
+        this.$ajax.post('/api/blog/query', {
+          request: 'all'
+        })
+          .then(function (res) {
+            _this.articleList = res.data;
+            _this.articleCount = res.data.length;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
     components: {
       articleList
     },
     mounted () {
-      let _this = this;
-      this.$ajax.post('/api/blog/query', {
-        request: 'all'
-      })
-        .then(function (res) {
-          _this.articleList = res.data;
-          _this.articleCount = res.data.length;
-          // console.log(_this.articleList);
-          // _this.refreshArticleList();
-        })
-        .catch(function (e) {
-          console.log(e);
-        });
+      this.getArticleList();
     }
   };
 </script>
 
-<style>
-  @import '../../styles/articles.css';
+<style scoped lang="scss">
+  @import '../../styles/articles';
 </style>

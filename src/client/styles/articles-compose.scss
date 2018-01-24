@@ -1,0 +1,49 @@
+@import "base";
+
+.g-compose {
+  .header, .footer {
+    padding: 20px 50px;
+  }
+
+  .body {
+    min-height: calc(100vh - 158px);
+    padding: 0 50px;
+  }
+}
+
+.m-container1 {
+  display: flex;
+
+  .label {
+    display: block;
+    flex: 0 0 200px;
+    margin-right: 10px;
+  }
+
+  .type {
+    margin-left: 10px;
+    justify-content: right;
+    flex: 0 0 210px;
+  }
+}
+
+.m-desc {
+  display: block;
+  margin-top: 15px;
+}
+
+.m-container2 {
+  display: flex;
+  justify-content: space-between;
+
+  .label {
+    display: block;
+    flex: 0 0 200px;
+    margin-right: 10px;
+  }
+
+  .submit {
+    flex: 0 0 100px;
+    font-size: 15px;
+  }
+}
