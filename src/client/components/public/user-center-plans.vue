@@ -1,8 +1,8 @@
 <template>
-  <div id="plan-container" class="plan-container">
+  <div id="plan-container" class="m-plan">
     <transition name="fade">
-      <div class="plan-edit-container" v-if="planEdit || planModify">
-        <div class="plan-edit-header">
+      <div class="m-edit border" v-if="planEdit || planModify">
+        <div class="m-edit header">
           <span><strong>编辑计划</strong></span>
           <span>
             <Button type="text" size="small" @click="editPlanCancel()">取 消</Button>
@@ -10,14 +10,13 @@
             <Button v-if="planModify === true" type="primary" size="small" @click="submitPlan('modify')">修 改</Button>
           </span>
         </div>
-        <div class="plan-edit-body">
-          <div class="plan-edit-left">
-            <div class="plan-edit-unit">
-              <Input v-model="planUnit.term" size="large" placeholder="学 期" disabled="true"/>
+        <div class="m-edit body">
+          <div class="m-edit left">
+            <div class="m-edit unit">
+              <Input v-model="planUnit.term" placeholder="学 期" :disabled="true"/>
             </div>
-            <div class="plan-edit-unit">
+            <div class="m-edit unit">
               <DatePicker v-model="planUnit.range"
-                          size="large"
                           format="yyyy-MM-dd"
                           type="daterange"
                           placeholder="计划起止日期"
@@ -25,19 +24,23 @@
               </DatePicker>
             </div>
           </div>
-          <div class="plan-edit-right">
-            <div class="plan-edit-unit">
-              <i-input class="plan-edit-textarea" type="textarea" v-model="planUnit.content"
-                       placeholder="计划内容..."></i-input>
+          <div class="m-edit right">
+            <div class="m-text">
+              <i-input class="m-text area"
+                       type="textarea"
+                       v-model="planUnit.content"
+                       placeholder="计划内容..."
+                       :rows="3">
+              </i-input>
             </div>
           </div>
         </div>
       </div>
     </transition>
-    <div class="plan-list" v-if="!planEmpty">
+    <div class="m-plan list" v-if="!planEmpty">
       <Table :columns="planCols" :data="planData" style="min-width: 800px" stripe></Table>
     </div>
-    <div class="plan-empty" v-if="planEmpty">
+    <div class="m-plan empty" v-if="planEmpty">
       <span><strong>当前暂无计划</strong>&emsp;<Button type="primary" size="large" @click="editPlan()">制定一个新计划</Button></span>
     </div>
   </div>
@@ -173,6 +176,12 @@
         // this.$Message.info('编辑计划取消');
         this.planEdit = false;
         this.planModify = false;
+        this.planUnit = {
+          plan_id: '',
+          term: '',
+          range: ['', ''],
+          content: ''
+        };
       },
       modifyPlan (plan) {
         if (this.planEdit) {
@@ -249,3 +258,7 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import '../../styles/user-center-plans';
+</style>

@@ -26,6 +26,7 @@
     min-height: 100vh;
     background: url('./assets/bg.png') repeat-y;
     background-size: 100% auto;
+    min-width: 900px !important;
   }
 
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div id="meeting-container" class="meeting-container">
-    <div class="meeting-list" v-if="!meetingEmpty">
+  <div id="meeting-container" class="m-meeting">
+    <div class="m-meeting list" v-if="!meetingEmpty">
       <Table :columns="meetingCols" :data="meetingData" style="min-width: 800px" stripe></Table>
     </div>
-    <div class="meeting-empty" v-if="meetingEmpty">
+    <div class="m-meeting empty" v-if="meetingEmpty">
       <span><strong>当前暂无课堂记录</strong></span>
     </div>
   </div>
@@ -63,3 +63,7 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import '../../styles/user-center-meetings';
+</style>

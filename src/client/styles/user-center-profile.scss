@@ -1,0 +1,74 @@
+.m-profile, .m-edit {
+  .avatar {
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .info {
+    hr {
+      padding: 0;
+      height: 1px;
+      border: none;
+      border-top: 1px solid #DDDDDD;
+    }
+  }
+  .unit {
+    padding: 0;
+    font-size: 15px;
+    margin-bottom: 7px;
+  }
+
+  .unit-name {
+    padding: 0;
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+
+  .unit-sub {
+    color: #999999
+  }
+}
+
+.m-edit {
+  padding: 10px 25px;
+  display: flex;
+
+  .left {
+    padding: 0;
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: column;
+
+    img {
+      margin-bottom: 10px;
+    }
+  }
+
+  .right {
+    padding: 0;
+    flex-direction: column;
+    flex: 1 0 auto;
+    margin-left: 25px;
+  }
+
+  .input {
+    margin: 10px 0;
+  }
+}
+
+.m-avatar {
+  display: flex;
+  padding: 20px;
+
+  span {
+    font-size: 15px;
+    padding: 95px 12px;
+    color: #777777;
+  }
+}
+
+.croppa-container {
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #999999;
+}

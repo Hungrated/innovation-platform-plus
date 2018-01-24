@@ -9,11 +9,12 @@ html {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+  min-width: 900px !important;
 }
 
 body {
   width: 100%;
   min-height: 100vh;
-  min-width: 900px;
   padding-bottom: 325px;
+  min-width: 900px !important;
 }

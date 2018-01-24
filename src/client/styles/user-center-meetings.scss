@@ -1,0 +1,24 @@
+.m-meeting {
+  min-width: 501px;
+  overflow: auto;
+
+  .list {
+    width: calc(100vw - 469px);
+    min-width: 501px;
+    overflow: auto;
+  }
+
+  .empty {
+    height: 84px;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 24px;
+    line-height: 24px;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .m-meeting.list {
+    width: 1131px;
+  }
+}

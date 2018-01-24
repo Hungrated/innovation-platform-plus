@@ -75,3 +75,7 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import '../../styles/user-center-moments';
+</style>

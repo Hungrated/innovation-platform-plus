@@ -1,51 +1,51 @@
 <template>
-  <div id="profile-container" class="profile-container">
-    <div class="profile-avatar">
+  <div id="profile-container" class="m-profile">
+    <div class="m-profile avatar">
       <img style="width: 100%; border-radius: 5px;" :src="profile.avatar">
     </div>
-    <div class="profile-info">
-      <p class="profile-info-unit profile-info-name">
+    <div class="m-profile info">
+      <p class="m-profile unit unit-name">
         <strong>{{profile.name}}</strong>
         <Icon v-if="profile.sex && profile.sex === '男'" style="font-size: 20px;color: #999999" type="male"></Icon>
         <Icon v-if="profile.sex && profile.sex === '女'" style="font-size: 20px;color: #999999" type="female"></Icon>
       </p>
-      <p class="profile-info-unit">
+      <p class="m-profile unit">
         <Icon type="university"></Icon>&emsp;{{profile.academy}} {{profile.grade}}级 {{profile.class_id}}班
       </p>
-      <p class="profile-info-unit profile-info-sub">
+      <p class="m-profile unit unit-sub">
         <Icon type="card"></Icon>&emsp;
         {{profile.school_id}}
       </p>
-      <p class="profile-info-unit profile-info-sub">
+      <p class="m-profile unit unit-sub">
         <Icon type="person-stalker"></Icon>&emsp;
         导 师：{{profile.supervisor}}
       </p>
       <hr>
       <br>
-      <p class="profile-info-unit profile-info-sub">
+      <p class="m-profile unit unit-sub">
         <Icon type="ios-body"></Icon>&emsp;
         <em v-if="!profile.birth_date">待完善信息</em>
         {{profile.birth_date}}
       </p>
-      <p class="profile-info-unit profile-info-sub">
+      <p class="m-profile unit unit-sub">
         <Icon type="ios-telephone"></Icon>&emsp;
         <em v-if="!profile.phone_num">待完善信息</em>
         {{profile.phone_num}}
       </p>
-      <p class="profile-info-unit profile-info-sub">
+      <p class="m-profile unit unit-sub">
         <Icon type="ios-lightbulb"></Icon>&emsp;
         <em v-if="!profile.description">待完善信息</em>
         {{profile.description}}
       </p>
     </div>
     <Modal v-model="profileMng" title="编辑资料" @on-ok="profileSubmit()" @on-cancel="refreshData()">
-      <div class="profile-edit">
-        <div class="profile-edit-left">
+      <div class="m-edit">
+        <div class="m-edit left">
           <img style="width: 100%; border-radius: 5px;" :src="profile.avatar">
           <Button size="small" type="dashed" @click="editAvatar()">修改头像</Button>
         </div>
-        <div class="profile-edit-right">
-          <p class="profile-info-unit profile-info-name">
+        <div class="m-edit right">
+          <p class="m-edit unit unit-name">
             <strong>{{profile.name}}</strong>
           </p>
           <div style="margin-bottom: 10px">
@@ -60,31 +60,31 @@
               </Radio>
             </RadioGroup>
           </div>
-          <p class="profile-info-unit">
+          <p class="m-edit   unit">
             <Icon type="university"></Icon>&emsp;{{profile.academy}} {{profile.grade}}级 {{profile.class_id}}班
           </p>
-          <p class="profile-info-unit profile-info-sub">
+          <p class="m-edit  unit unit-sub">
             <Icon type="card"></Icon>&emsp;
             {{profile.school_id}}
           </p>
-          <p class="profile-info-unit profile-info-sub">
+          <p class="m-edit  unit unit-sub">
             <Icon type="person-stalker"></Icon>&emsp;
             导 师：{{profile.supervisor}}
           </p>
-          <i-input class="profile-edit-input" type="text" v-model="profile.birth_date" placeholder="出生日期">
+          <i-input class="m-edit input" type="text" v-model="profile.birth_date" placeholder="出生日期">
             <Icon type="ios-body-outline" slot="prepend"></Icon>
           </i-input>
-          <i-input class="profile-edit-input" type="text" v-model="profile.phone_num" placeholder="电话号码">
+          <i-input class="m-edit input" type="text" v-model="profile.phone_num" placeholder="电话号码">
             <Icon type="ios-telephone-outline" slot="prepend"></Icon>
           </i-input>
-          <i-input class="profile-edit-input" type="text" v-model="profile.description" placeholder="自 述">
+          <i-input class="m-edit input" type="text" v-model="profile.description" placeholder="自 述">
             <Icon type="ios-lightbulb-outline" slot="prepend"></Icon>
           </i-input>
         </div>
       </div>
     </Modal>
     <Modal v-model="avatarMng" title="修改头像" @on-ok="avatarSubmit()" @on-cancel="refreshData()">
-      <div class="avatar-edit">
+      <div class="m-avatar">
         <croppa v-model="myCroppa"
                 accept="image/*"
                 placeholder="单击以选择图片"
@@ -95,7 +95,7 @@
         </croppa>
         <span>
           <span>点击并拖动鼠标以定位</span>
-          <br>
+          <br><br>
           <span>滚动鼠标滚轮以缩放</span>
         </span>
       </div>
@@ -210,3 +210,7 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import '../../styles/user-center-profile';
+</style>
