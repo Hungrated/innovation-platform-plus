@@ -88,11 +88,10 @@
   display: flex;
 
   .avatar {
-    margin: 0;
     padding: 0;
     display: block;
     flex: 0 0 180px;
-    margin-right: 20px;
+    margin: 0 20px 0 0;
   }
 
   .info {
