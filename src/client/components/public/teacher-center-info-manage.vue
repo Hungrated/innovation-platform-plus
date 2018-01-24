@@ -1,21 +1,21 @@
 <template>
-  <div class="info-manage-container">
-    <div class="info-manage-header">
-      <div class="info-manage-options">
+  <div class="g-info">
+    <div class="g-info header">
+      <div class="g-info options">
         <Card disHover>
-          <span slot="title" class="info-manage-card-header">
+          <span slot="title" class="g-info header-card">
             <strong>筛选条件</strong>
           </span>
-          <div class="info-manage-options-body">
-            <div class="options-list">
-              <div class="options-type">
+          <div class="g-info options body">
+            <div class="g-info options list">
+              <div class="g-info options type">
                 <Select placeholder="类 别" size="large" v-model="infoLabel" @on-change="refreshData()">
                   <Option v-for="type in infoTypeList" :value="type.label" :key="type.index">
                     {{ type.value }}
                   </Option>
                 </Select>
               </div>
-              <div class="options-range">
+              <div class="g-info options range">
                 <DatePicker v-model="infoRange"
                             size="large"
                             format="yyyy-MM-dd"
@@ -25,17 +25,17 @@
                             style="width: 100%">
                 </DatePicker>
               </div>
-              <div class="options-sid">
+              <div class="g-info options sid">
                 <Input size="large" v-model="infoSid" placeholder="学生学号（选填）" :disabled="infoLabel === 'banner' ||
                 infoLabel === 'class'"/>
               </div>
             </div>
-            <div class="options-query">
+            <div>
               <Button @click="refreshData()" type="primary" size="large">查 询</Button>
             </div>
           </div>
           <transition name="fade">
-            <div v-if="infoLabel === 'banner'" class="options-banner">
+            <div v-if="infoLabel === 'banner'" class="g-info options banner">
               <span>
                 &emsp;<Icon type="information-circled"></Icon>&nbsp;
                 轮播图用于首页展示，要上传新的轮播图，请点击右边的"新增"按钮
@@ -46,7 +46,7 @@
                      width="712"
                      @on-ok="bannerSubmit(bannerModMng,bannerImgId)"
                      @on-cancel="bannerEditCancel()">
-                <div class="banner-edit">
+                <div class="g-info options banner-edit">
                   <croppa v-model="myCroppa"
                           accept="image/*"
                           placeholder="单击以选择图片"
@@ -65,12 +65,12 @@
           </transition>
         </Card>
       </div>
-      <div class="info-manage-body">
+      <div class="m-manage">
         <Card disHover>
-          <div class="query-table">
+          <div class="m-manage table">
             <Table stripe :columns="infoCols" :data="infoData"></Table>
           </div>
-          <div class="query-pages">
+          <div class="m-manage pages">
             <Page size="small"></Page>
           </div>
         </Card>
@@ -930,6 +930,6 @@
   };
 </script>
 
-<style>
-  @import '../../styles/teacher-center-info-manage.css';
+<style lang="scss">
+  @import '../../styles/teacher-center-info-manage';
 </style>

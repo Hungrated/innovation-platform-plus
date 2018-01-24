@@ -1,8 +1,8 @@
 <template>
-  <div id="teacher-center-container">
-    <div class="teacher-center-nav-container">
-      <Menu mode="horizontal" theme="light" active-name="1">
-        <div class="teacher-center-nav">
+  <div id="teacher-center-main" class="g-teacher">
+    <div class="g-teacher nav">
+      <Menu mode="horizontal" theme="primary" active-name="1">
+        <div class="m-nav">
           <MenuItem name="1">
             <span @click="changePanel('main-panel')">
               <Icon type="ios-list"></Icon>&emsp;主览面板
@@ -54,6 +54,6 @@
   };
 </script>
 
-<style>
-  @import '../../styles/teacher-center.css';
+<style scoped lang="scss">
+  @import '../../styles/teacher-center';
 </style>

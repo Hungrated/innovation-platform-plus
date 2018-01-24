@@ -1,0 +1,79 @@
+.g-info {
+  .options {
+    .body {
+      display: flex;
+      line-height: 36px;
+      justify-content: space-between;
+    }
+
+    .list {
+      display: flex;
+      flex: auto;
+      max-width: 700px;
+    }
+
+    .type, .range, .sid {
+      margin-right: 10px;
+    }
+
+    .type {
+      flex: 0 0 200px;
+    }
+
+    .range {
+      flex: 1 0 300px;
+    }
+
+    .sid {
+      flex: 1 1 auto;
+    }
+
+    .banner {
+      display: flex;
+      justify-content: space-between;
+      background: #FAFAFA;
+      margin-top: 20px;
+      border-radius: 5px;
+      padding: 10px;
+
+      span {
+        color: #999999;
+      }
+    }
+
+    .banner-edit {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+
+      span {
+        margin-top: 20px;
+        text-align: center;
+        color: #777777;
+      }
+    }
+  }
+
+  .header-card {
+    line-height: 24px;
+  }
+}
+
+.m-manage {
+  margin-top: 20px;
+
+  .table {
+    margin: 0 0 20px 0;
+  }
+
+  .pages {
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+  }
+}
+
+.croppa-container {
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #999999;
+}

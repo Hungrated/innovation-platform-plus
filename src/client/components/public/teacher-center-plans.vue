@@ -1,23 +1,23 @@
 <template>
-  <div class="teacher-center-plans">
+  <div class="g-plans">
     <Card disHover>
-      <div class="plans-card-body">
-        <div class="plans-card-body-left" v-model="classArr">
-          <span class="unit-title">
-            <span class="unit-title-info">班级课程信息</span>
+      <div class="g-plans body">
+        <div class="g-plans left" v-model="classArr">
+          <span class="m-unit title">
+            <span class="m-unit info">班级课程信息</span>
           </span>
-          <span class="plans-class-list">
-            <span class="plans-class-unit" v-for="unit in classArr" :key="unit.class_id">
+          <span class="m-list-cls">
+            <span class="m-unit-cls" v-for="unit in classArr" :key="unit.class_id">
               <strong style="margin-left: 15px;">{{unit.cname}}</strong>
               <Button size="large" type="text" @click="changeClass(unit)">{{unit.class_id}}</Button>
             </span>
           </span>
         </div>
-        <div class="plans-card-body-right" v-model="cur_class">
-          <span class="unit-title">
-            <span class="unit-title-info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
-            <span class="unit-title-btn">
-              <ButtonGroup class="articles-compose-header-type" shape="circle">
+        <div class="g-plans right" v-model="cur_class">
+          <span class="m-unit title">
+            <span class="m-unit info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
+            <span class="m-unit btn">
+              <ButtonGroup shape="circle">
                 <Button
                   :type="(displayMode === 'plans') ? ('primary') : ('ghost')" @click="changeDisplayMode('plans')"
                   size="small">&nbsp;<Icon type="clipboard"></Icon>&nbsp;计 划</Button>
@@ -26,7 +26,7 @@
               </ButtonGroup>
             </span>
           </span>
-          <span class="plans-students-list">
+          <span class="m-list-stu">
             <Table :columns="studentCols" :data="studentArr" style="min-width: 800px" stripe></Table>
           </span>
           <Modal
@@ -35,20 +35,20 @@
             width="90"
             @on-ok="closeStudentDetails()"
             cancel-text="">
-            <div class="plans-student-details-container" v-model="curStudentDetails">
-              <div class="student-details-subtitle">
+            <div class="m-stu" v-model="curStudentDetails">
+              <div class="m-stu subtitle">
                 <p>
                   <Icon type="information-circled"></Icon>&nbsp;&nbsp;基本信息
                 </p>
                 <Button type="primary" @click="exportPlan(curStudentDetails.profile.school_id)">导出所有信息为Word</Button>
               </div>
 
-              <div class="student-details-profile">
-                <div class="details-profile-avatar">
+              <div class="m-profile">
+                <div class="m-profile avatar">
                   <img style="width: 100%; border-radius: 5px;" :src="curStudentDetails.profile.avatar">
                 </div>
-                <div class="details-profile-info">
-                  <div class="details-profile-info-unit details-profile-info-name">
+                <div class="m-height m-profile info">
+                  <div class="m-profile info info-name">
                     <strong>{{curStudentDetails.profile.name}}</strong>
                     <Icon v-if="curStudentDetails.profile.sex && curStudentDetails.profile.sex === '男'"
                           style="font-size: 20px;color: #999999"
@@ -57,33 +57,33 @@
                           style="font-size: 20px;color: #999999"
                           type="female"></Icon>
                   </div>
-                  <div class="details-profile-info-block">
-                    <span class="details-profile-info-blockunit">
-                      <p class="details-profile-info-unit">
+                  <div class="m-profile info-block">
+                    <span class="m-profile info info-blkunit">
+                      <p class="m-profile info">
                         <Icon type="university"></Icon>&emsp;{{curStudentDetails.profile.academy}}
                         {{curStudentDetails.profile.grade}}级 {{curStudentDetails.profile.class_id}}班
                       </p>
-                      <p class="details-profile-info-unit details-profile-info-sub">
+                      <p class="m-profile info info-sub">
                         <Icon type="card"></Icon>&emsp;学 号：
                         {{curStudentDetails.profile.school_id}}
                       </p>
-                      <p class="details-profile-info-unit details-profile-info-sub">
+                      <p class="m-profile info info-sub">
                         <Icon type="person-stalker"></Icon>&emsp;导 师：
                         {{curStudentDetails.profile.supervisor}}
                       </p>
                     </span>
-                    <span class="details-profile-info-blockunit-right">
-                      <p class="details-profile-info-unit details-profile-info-sub">
+                    <span class="m-profile info info-blkunit-right">
+                      <p class="m-profile info info-sub">
                         <Icon type="ios-body"></Icon>&emsp;生 日：
                         <em v-if="!curStudentDetails.profile.description">未填写</em>
                         {{curStudentDetails.profile.birth_date}}
                       </p>
-                      <p class="details-profile-info-unit details-profile-info-sub">
+                      <p class="m-profile info info-sub">
                         <Icon type="ios-telephone"></Icon>&emsp;电 话：
                         <em v-if="!curStudentDetails.profile.description">未填写</em>
                         {{curStudentDetails.profile.phone_num}}
                       </p>
-                      <p class="details-profile-info-unit details-profile-info-sub">
+                      <p class="m-profile info info-sub">
                         <Icon type="ios-lightbulb"></Icon>&emsp;简 介：
                         <em v-if="!curStudentDetails.profile.description">未填写</em>
                         {{curStudentDetails.profile.description}}
@@ -92,15 +92,15 @@
                   </div>
                 </div>
               </div>
-              <div class="student-details-subtitle">
+              <div class="m-stu subtitle">
                 <p>
                   <Icon type="navicon-round"></Icon>&nbsp;&nbsp;计划 & 课堂记录
                 </p>
               </div>
-              <div class="student-details-plans">
+              <div class="m-stu plans">
                 <Table :columns="curStudentDetails.plans.cols" :data="curStudentDetails.plans.data" stripe></Table>
               </div>
-              <div class="student-details-meetings">
+              <div class="m-stu meetings">
                 <Table :columns="curStudentDetails.meetings.cols" :data="curStudentDetails.meetings.data"
                        stripe></Table>
               </div>
@@ -833,6 +833,6 @@
   };
 </script>
 
-<style>
-  @import '../../styles/teacher-center-plans.css';
+<style scoped lang="scss">
+  @import '../../styles/teacher-center-plans';
 </style>

@@ -1,0 +1,148 @@
+.g-panel {
+  .header {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .header-card {
+    display: flex;
+    justify-content: space-between;
+    line-height: 24px;
+  }
+
+  .left {
+    flex: 1 0 auto;
+  }
+
+  .right {
+    flex: 0 0 300px;
+    margin-left: 20px;
+  }
+
+  .body {
+
+  }
+}
+
+/* class */
+
+.m-classes {
+  width: calc(100vw - 469px);
+  min-width: 446px;
+  overflow: auto;
+}
+
+@media only screen and (min-width: 1600px) {
+  .m-classes {
+    width: 1131px;
+  }
+}
+
+.m-import {
+  background: #F9F9F9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #EEEEEE;
+  }
+
+  .body {
+    padding: 10px 0;
+    display: flex;
+    margin: 0;
+
+    .left {
+      display: block;
+      padding: 0;
+      width: 150px;
+    }
+
+    .right {
+      display: block;
+      padding: 0;
+      margin-left: 25px;
+      flex: 1 0 auto;
+      line-height: 36px;
+      color: #999999;
+    }
+  }
+}
+
+
+.m-validate {
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+
+  .info {
+    text-align: center;
+    font-size: 16px;
+    color: #999999;
+    padding-bottom: 25px;
+  }
+
+  .data {
+    margin-bottom: 20px;
+  }
+
+  .stu {
+    margin-bottom: 20px;
+  }
+}
+
+/* profile */
+
+.m-profile {
+  span {
+    margin-bottom: 10px;
+  }
+
+  strong {
+    font-size: 24px;
+  }
+
+  em {
+    color: #999999;
+  }
+}
+
+/* moment */
+
+.m-moment {
+  padding: 20px 35px 0 35px;
+  background: #FAFAFA;
+  border-radius: 5px;
+
+  .item {
+    padding: 0;
+    font-size: 14px;
+    display: flex;
+    border-radius: unset;
+
+    div{
+      margin-left: 20px;
+    }
+
+    .time {
+      flex: 0 0 100px;
+      border-radius: 5px;
+      padding: 2px 12px;
+      background: #19be6b;
+      color: #EEEEEE;
+    }
+
+    .status {
+      border-radius: 5px;
+      border: 1px dashed #999999;
+      font-size: 12px;
+      padding: 3px;
+      margin-right: 10px;
+    }
+  }
+}

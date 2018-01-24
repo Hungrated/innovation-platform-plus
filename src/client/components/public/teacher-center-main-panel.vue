@@ -1,17 +1,17 @@
 <template>
-  <div class="teacher-center-main-panel">
-    <div class="main-panel-header">
-      <div class="main-panel-left">
+  <div class="g-panel">
+    <div class="g-panel header">
+      <div class="g-panel left">
         <Card disHover>
           <span slot="title">
-            <span class="main-panel-card-header">
+            <span class="g-panel header-card">
               <strong>我的班级</strong>
               <Button @click="parseClass()" type="text" size="small">导 入</Button>
             </span>
           </span>
           <transition name="fade">
-            <div class="class-import-container" v-if="classParse">
-              <div class="class-import-header">
+            <div class="m-import" v-if="classParse">
+              <div class="m-import header">
                 <span>
                   <strong>导入班级</strong>
                   <transition>
@@ -26,8 +26,8 @@
                   <Button type="primary" size="small" @click="parseClassData()">提 交</Button>
                 </span>
               </div>
-              <div class="class-import-body">
-                <div class="class-import-left">
+              <div class="m-import body">
+                <div class="m-import body left">
                   <Upload action="#"
                           :accept="'application/vnd.ms-excel'"
                           :data="uploadData"
@@ -35,7 +35,7 @@
                     <Button type="primary" size="large" icon="ios-cloud-upload-outline">&emsp;选择文件&emsp;</Button>
                   </Upload>
                 </div>
-                <div class="class-import-right">
+                <div class="m-import body right">
                   <p>
                     <Icon type="information-circled"></Icon>&emsp;
                     上传教务系统里下载的教学班点名册以导入班级与学生信息
@@ -44,7 +44,7 @@
               </div>
             </div>
           </transition>
-          <div class="class-list">
+          <div class="m-classes">
             <Table :columns="classCols" :data="classData" style="min-width: 800px" stripe></Table>
           </div>
           <Modal
@@ -53,18 +53,18 @@
             width="80"
             @on-ok="importClassData()"
             @on-cancel="importClassCancel()">
-            <div class="class-import-validate-container" v-model="classParseData">
-              <div class="class-import-validate-info">
+            <div class="m-validate" v-model="classParseData">
+              <div class="m-validate info">
                 <p>
                   <Icon type="information-circled"></Icon>&emsp;
                   请确认班级与学生信息，确认无误后点击确定按钮来导入或更新信息 (若学生用户已存在，则将会更新当前选课课号)
                 </p>
               </div>
-              <div class="validate-class-data">
+              <div class="m-validate data">
                 <Table :columns="classParseData.classData.cols" :data="classParseData.classData.data"
                        style="min-width: 800px" stripe></Table>
               </div>
-              <div class="validate-students">
+              <div class="m-validate stu">
                 <Table :columns="classParseData.students.cols" :data="classParseData.students.data" style="min-width:
                  800px" stripe></Table>
               </div>
@@ -72,15 +72,15 @@
           </Modal>
         </Card>
       </div>
-      <div class="main-panel-right">
+      <div class="g-panel right">
         <Card disHover>
           <span slot="title">
-            <span class="main-panel-card-header">
+            <span class="g-panel header-card">
               <strong>我的资料</strong>
               <!--<Button @click="" type="text" size="small">管 理</Button>-->
             </span>
           </span>
-          <div class="teacher-profile" v-model="teacherProfile">
+          <div class="m-profile" v-model="teacherProfile">
             <span><strong><Icon type="person"></Icon>&nbsp;{{teacherProfile.name}}</strong>&emsp;<em>导 师</em>&emsp;&emsp;</span>
             <span>
               <Icon type="card"></Icon>&emsp;{{teacherProfile.school_id}}
@@ -89,28 +89,28 @@
         </Card>
       </div>
     </div>
-    <div class="main-panel-body">
+    <div class="g-panel body">
       <Timeline>
         <Card disHover>
         <span slot="title">
-          <span class="main-panel-card-header">
+          <span class="g-panel header-card">
             <strong>学生计划动态</strong>
           </span>
         </span>
           <p v-if="moments.length === 0" style="text-align: center">暂无动态哦</p>
-          <div class="moment-item-container" v-else>
+          <div class="m-moment" v-else>
             <TimelineItem v-for="moment in moments" key="moment.moment_id">
-              <div v-if="moment.type === 'planmod'" class="moment-item">
-                <div class="moment-item-time">{{ getTime(moment.created_at) }}</div>
+              <div v-if="moment.type === 'planmod'" class="m-moment item">
+                <div class="m-moment item time">{{ getTime(moment.created_at) }}</div>
                 <div>
                   <Icon type="ios-lightbulb"></Icon>&nbsp;
                   <strong>{{moment.profile.name}}</strong>&nbsp;：
                   <span>{{moment.desc}}</span>
                 </div>
                 <div v-if="moment.href !== ''">
-                  <strong v-if="moment.href !== '未审核'" class="moment-item-status">{{ moment.href }}</strong>
+                  <strong v-if="moment.href !== '未审核'" class="m-moment item status">{{ moment.href }}</strong>
                   <span v-else>
-                    <strong class="moment-item-status">未审核</strong>
+                    <strong class="m-moment item status">未审核</strong>
                     <Button @click="verifyPlan(moment.uid, 1)" type="success" size="small">
                       <Icon type="checkmark"></Icon> 通 过
                     </Button>
@@ -406,6 +406,6 @@
   };
 </script>
 
-<style scoped>
-  @import '../../styles/teacher-center-main-panel.css';
+<style scoped lang="scss">
+  @import '../../styles/teacher-center-main-panel';
 </style>

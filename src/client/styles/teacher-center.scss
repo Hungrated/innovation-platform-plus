@@ -1,0 +1,22 @@
+.g-teacher {
+  padding: 20px 50px;
+
+  .nav {
+    position: absolute;
+    top: -45px;
+    right: 170px;
+    padding: 0;
+    box-shadow: 0 0 3px #DDDDDD;
+    width: 385px;
+    border-radius: 5px;
+  }
+}
+
+.m-nav {
+  margin: 0;
+  user-select: none;
+
+  span {
+    padding: 12px 0;
+  }
+}
