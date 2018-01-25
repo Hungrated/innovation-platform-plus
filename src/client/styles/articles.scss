@@ -1,4 +1,16 @@
 .g-articles {
+  .nav {
+    position: absolute;
+    top: -45px;
+    right: 170px;
+    padding: 0;
+    box-shadow: 0 0 3px #DDDDDD;
+    width: 114px;
+    border-radius: 5px;
+    overflow: hidden;
+    user-select: none;
+  }
+
   .header {
     padding: 20px 50px;
   }

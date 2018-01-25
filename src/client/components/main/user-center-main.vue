@@ -85,17 +85,17 @@
           <user-center-final ref="final"></user-center-final>
         </div>
       </Card>
-      <!--<Card class="m-card" disHover>-->
-      <!--<span slot="title">-->
-      <!--<span class="m-card header">-->
-      <!--<strong>我的文章</strong>-->
-      <!--<Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--<div class="m-card unit">-->
-      <!--<user-center-articles></user-center-articles>-->
-      <!--</div>-->
-      <!--</Card>-->
+      <Card class="m-card" disHover>
+      <span slot="title">
+        <span class="m-card header">
+          <strong>我的文章</strong>
+          <Button @click="changeRoute('/articles?label=4')" type="text" size="small">详 情</Button>
+        </span>
+      </span>
+        <div class="m-card unit">
+          <user-center-articles></user-center-articles>
+        </div>
+      </Card>
     </div>
     <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
   </div>

@@ -1,5 +1,4 @@
 
-
 .g-user {
   display: flex;
   padding: 20px 50px;
@@ -13,6 +12,7 @@
     width: 367px;
     border-radius: 5px;
     overflow: hidden;
+    user-select: none;
   }
 
   .left {

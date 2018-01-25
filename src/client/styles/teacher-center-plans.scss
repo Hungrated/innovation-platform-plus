@@ -1,7 +1,7 @@
 .g-plans {
   .body {
     display: flex;
-    min-height: 500px;
+    min-height: 700px;
   }
 
   .left {
@@ -49,14 +49,14 @@
 }
 
 .m-list-stu {
-  width: calc(100vw - 425px);
+  width: calc(100vw - 440px);
   min-width: 475px;
   overflow: auto;
 }
 
 @media only screen and (min-width: 1600px) {
   .m-list-stu {
-    width: 1175px;
+    width: 1160px;
   }
 }
 

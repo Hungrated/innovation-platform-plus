@@ -3,7 +3,7 @@ const pathLib = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const statusLib = require('./libs/status');
+// const statusLib = require('./libs/status');
 
 const app = express();
 
@@ -52,7 +52,8 @@ app.use(function (err, req, res) {
   console.error(err);
   // render the error page
   res.status(err.status || 500);
-  res.json(statusLib.SERVER_INNER_ERROR);
+  res.sendFile('public/index.html');
+  // res.json(statusLib.SERVER_INNER_ERROR);
 });
 
 // cross-domain access

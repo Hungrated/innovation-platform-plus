@@ -1,5 +1,16 @@
 <template>
   <div id="articles" class="g-articles">
+    <div class="g-articles nav">
+      <Menu mode="horizontal" theme="dark">
+        <div class="m-nav">
+          <MenuItem name="1">
+            <span @click="changeRoute('/articles/compose')">
+              <Icon type="compose"></Icon>&emsp;发布文章
+            </span>
+          </MenuItem>
+        </div>
+      </Menu>
+    </div>
     <div class="g-articles header">
       <Card class="m-card" disHover>
         <div class="m-card container">
@@ -21,7 +32,7 @@
       </Card>
     </div>
     <div class="g-articles body">
-      <article-list :articleList="articleList" :count="articleCount"></article-list>
+      <article-list :articleList="articleList" :count="articleCount"/>
     </div>
   </div>
 

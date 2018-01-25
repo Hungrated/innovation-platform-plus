@@ -1,0 +1,24 @@
+.m-unit {
+  padding: 5px 0 30px 0;
+  border-bottom: 1px solid #FAFAFA;
+  transition: all 250ms;
+
+  .title {
+    border: none;
+    display: block;
+    padding: 0;
+    text-align: left;
+  }
+
+  .info {
+    float: right;
+    border: none;
+    flex-direction: row;
+    line-height: 100%;
+    color: #999999;
+    &:before {
+      clear: both;
+    }
+  }
+
+}

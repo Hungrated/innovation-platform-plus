@@ -28,5 +28,4 @@
     background-size: 100% auto;
     min-width: 900px !important;
   }
-
 </style>
