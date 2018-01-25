@@ -348,7 +348,9 @@
           },
           {
             title: '期末作业',
-            width: 85,
+            width: 100,
+            align: 'center',
+
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -372,7 +374,9 @@
           {
             title: '上传时间',
             sortable: true,
-            width: 120,
+            width: 135,
+            align: 'center',
+
             key: 'upload_time',
             render: (h, params) => {
               return h('div', [

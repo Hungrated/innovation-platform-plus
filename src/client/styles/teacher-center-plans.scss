@@ -5,7 +5,7 @@
   }
 
   .left {
-    width: 250px;
+    flex: 0 0 250px;
     display: flex;
     flex-direction: column;
   }
@@ -49,14 +49,14 @@
 }
 
 .m-list-stu {
-  width: calc(100vw - 434px);
-  min-width: 446px;
+  width: calc(100vw - 425px);
+  min-width: 475px;
   overflow: auto;
 }
 
 @media only screen and (min-width: 1600px) {
   .m-list-stu {
-    width: 1171px;
+    width: 1175px;
   }
 }
 
@@ -109,7 +109,7 @@
   }
 
   .info-name {
-    padding: 0 20px;
+    padding: 5px 0 0 20px;
     font-size: 30px;
   }
 
@@ -119,6 +119,7 @@
 
   .info-block {
     display: flex;
+    padding: 5px 10px;
   }
 
   .info-blkunit {
@@ -129,6 +130,7 @@
     margin-left: 20px;
     padding-left: 20px;
     border-left: 1px solid #DDDDDD;
+    border-radius: unset;
   }
 }
 
