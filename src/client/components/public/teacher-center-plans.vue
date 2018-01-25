@@ -811,7 +811,7 @@
         let _this = this;
         this.$ajax.post('/api/final/rate', this.finalRateData)
           .then(function (res) {
-            _this.$Message.success(res.data.msg);
+            _this.$Message.success('总评成功');
             _this.finalRateData = {
               cswk_id: '',
               rate: 0,

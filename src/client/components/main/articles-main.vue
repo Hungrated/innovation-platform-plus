@@ -35,7 +35,6 @@
       <article-list :articleList="articleList" :count="articleCount"/>
     </div>
   </div>
-
 </template>
 
 <script>

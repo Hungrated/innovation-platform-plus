@@ -1,7 +1,7 @@
 <template>
   <div id="teacher-center-main" class="g-teacher">
     <div class="g-teacher nav">
-      <Menu mode="horizontal" theme="primary" active-name="1">
+      <Menu mode="horizontal" theme="dark" active-name="1">
         <div class="m-nav">
           <MenuItem name="1">
             <span @click="changePanel('main-panel')">

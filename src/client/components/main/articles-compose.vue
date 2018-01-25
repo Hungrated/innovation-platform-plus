@@ -56,7 +56,7 @@
 </template>
 
 <script>
-  import mdEditor from './articles-compose-markDownEditor';
+  import mdEditor from '../public/articles-compose-markDownEditor';
 
   export default {
     name: 'articles-compose',
