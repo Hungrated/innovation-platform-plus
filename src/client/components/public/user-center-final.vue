@@ -88,7 +88,6 @@
         })
           .then(function (res) {
             _this.cswkData = res.data[0];
-            console.log('refresh data');
           })
           .catch(function (e) {
             console.log(e);
