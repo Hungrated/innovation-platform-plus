@@ -74,7 +74,6 @@
   }
 }
 
-
 .m-validate {
   display: flex;
   flex-direction: column;
@@ -125,7 +124,7 @@
     display: flex;
     border-radius: unset;
 
-    div{
+    div {
       margin-left: 20px;
     }
 
@@ -138,6 +137,7 @@
     }
 
     .status {
+      display: inline-block;
       border-radius: 5px;
       border: 1px dashed #999999;
       font-size: 12px;

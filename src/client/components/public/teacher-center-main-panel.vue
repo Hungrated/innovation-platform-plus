@@ -109,14 +109,16 @@
                 </div>
                 <div v-if="moment.href !== ''">
                   <strong v-if="moment.href !== '未审核'" class="m-moment item status">{{ moment.href }}</strong>
-                  <span v-else>
+                  <span v-else class="m-moment item">
                     <strong class="m-moment item status">未审核</strong>
-                    <Button @click="verifyPlan(moment.uid, 1)" type="success" size="small">
+                    <span>
+                      <Button @click="verifyPlan(moment.uid, 1)" type="success" size="small">
                       <Icon type="checkmark"></Icon> 通 过
                     </Button>
                     <Button @click="verifyPlan(moment.uid, 0)" type="error" size="small">
                       <Icon type="close"></Icon>
                     </Button>
+                    </span>
                   </span>
                 </div>
               </div>

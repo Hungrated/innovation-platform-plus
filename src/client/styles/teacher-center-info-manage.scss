@@ -40,18 +40,6 @@
         color: #999999;
       }
     }
-
-    .banner-edit {
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-
-      span {
-        margin-top: 20px;
-        text-align: center;
-        color: #777777;
-      }
-    }
   }
 
   .header-card {
@@ -76,4 +64,19 @@
 .croppa-container {
   border-radius: 5px;
   box-shadow: 1px 1px 5px #999999;
+}
+
+.m-edit-bnr {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+
+  span {
+    font-size: 14px;
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #777777;
+  }
 }

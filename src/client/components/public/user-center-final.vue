@@ -1,18 +1,6 @@
 <template>
   <div id="final-container" class="m-final">
-    <div class="m-final none" v-if="!fileExists">
-      <em>期末作业未上传</em>&emsp;
-      <span>
-        <Upload class="button"
-                action="#"
-                accept="application/zip"
-                :data="uploadData"
-                :before-upload="handleUpload">
-          <Button type="dashed" icon="ios-cloud-upload-outline">选择并上传</Button>
-        </Upload>
-      </span>
-    </div>
-    <div class="m-final exist" v-else>
+    <div class="m-final exist" v-if="cswkData.cswk_src !== null">
       <em>期末作业已上传</em>&emsp;
       <div>
         <Button type="success"
@@ -53,6 +41,18 @@
         </strong>
       </span>
     </div>
+    <div class="m-final none" v-else>
+      <em>期末作业未上传</em>&emsp;
+      <span>
+        <Upload class="button"
+                action="#"
+                accept="application/zip"
+                :data="uploadData"
+                :before-upload="handleUpload">
+          <Button type="dashed" icon="ios-cloud-upload-outline">选择并上传</Button>
+        </Upload>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -63,7 +63,6 @@
       return {
         cur_class: '',
         school_id: '',
-        fileExists: false,
         uploadData: {
           file: null
         },
@@ -89,9 +88,7 @@
         })
           .then(function (res) {
             _this.cswkData = res.data[0];
-            if (res.data[0].cswk_src) {
-              _this.fileExists = true;
-            }
+            console.log('refresh data');
           })
           .catch(function (e) {
             console.log(e);
@@ -113,7 +110,6 @@
         formData.append('class_id', this.cur_class);
         formData.append('student_id', this.school_id);
         formData.append('file', this.uploadData.file);
-
         this.$ajax.post('/api/final/upload', formData, this.uploadConfig)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
@@ -129,18 +125,18 @@
         this.$Message.success('文件下载成功');
       },
       deleteFile (url) {
+        let _this = this;
         this.$Modal.confirm({
           title: '确认删除期末作业',
           content: '确定删除当前已上传的期末作业？',
           onOk () {
-            let _this = this;
+            this.fileExists = false;
             this.$ajax.post('/api/final/delete', {
               cswk_src: url
             })
               .then(function (res) {
                 _this.$Message.success(res.data.msg);
-                _this.fileExists = false;
-                _this.refreshData();
+                _this.cswkData.cswk_src = null;
               })
               .catch(function (e) {
                 console.log(e);

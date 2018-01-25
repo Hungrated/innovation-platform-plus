@@ -170,11 +170,18 @@ router.post('/delete', function (req, res, next) {
       }
     })
       .then(function () {
-        fs.unlink(url, function (err) {
-          if (err) throw err;
-          else {
-            res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-            console.log('info & file delete successful');
+        fs.access(url, function (err) {
+          if (err && err.code === 'ENOENT') {
+            console.log('delete: file no longer exists, skipped');
+            next();
+          } else {
+            fs.unlink(url, function (err) {
+              if (err) throw err;
+              else {
+                res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+                console.log('info & file delete successful');
+              }
+            });
           }
         });
       })
@@ -185,7 +192,8 @@ router.post('/delete', function (req, res, next) {
   }
 });
 
-router.post('/delete', function (req, res) {
+router.post('/delete', function (req, res, next) {
+  // delete file if exists
   if (req.body.type !== 'resource') {
     res.json(statusLib.CONNECTION_ERROR);
     console.log('type error');
@@ -198,23 +206,17 @@ router.post('/delete', function (req, res) {
     })
       .then(function (file) {
         let url = pathLib.join(path.sources, urlLib.parse(file.url, true).query.resource);
-        fs.unlink(url, function (err) {
-          if (err) throw err;
-          else {
-            File.destroy({
-              where: {
-                file_id: req.body.id
+        fs.access(url, function (err) {
+          if (err && err.code === 'ENOENT') {
+            console.log('delete: file no longer exists, skipped');
+            next();
+          } else {
+            fs.unlink(url, function (err) {
+              if (err) throw err;
+              else {
+                next();
               }
-            })
-              .then(function () {
-                moment.deleteMoment(req.body.id);
-                res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-                console.log('info & file delete successful');
-              })
-              .catch(function (e) {
-                console.error(e);
-                res.json(statusLib.CONNECTION_ERROR);
-              });
+            });
           }
         });
       })
@@ -224,6 +226,25 @@ router.post('/delete', function (req, res) {
         res.json(statusLib.CONNECTION_ERROR);
       });
   }
+});
+
+router.post('/delete', function (req, res) {
+  // delete resource record
+  let File = db.File;
+  File.destroy({
+    where: {
+      file_id: req.body.id
+    }
+  })
+    .then(function () {
+      moment.deleteMoment(req.body.id);
+      res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+      console.log('info & file delete successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
 });
 
 module.exports = router;

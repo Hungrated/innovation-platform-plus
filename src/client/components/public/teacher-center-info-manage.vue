@@ -46,7 +46,7 @@
                      width="712"
                      @on-ok="bannerSubmit(bannerModMng,bannerImgId)"
                      @on-cancel="bannerEditCancel()">
-                <div class="g-info options banner-edit">
+                <div class="m-edit-bnr">
                   <croppa v-model="myCroppa"
                           accept="image/*"
                           placeholder="单击以选择图片"

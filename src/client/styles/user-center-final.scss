@@ -1,9 +1,12 @@
 .m-final {
   display: flex;
+  flex-direction: column;
   width: 100%;
 
   .none, .exist {
+    flex-direction: row;
     justify-content: center;
+    margin: 3px 0;
     em {
       color: #999999;
       text-align: center;

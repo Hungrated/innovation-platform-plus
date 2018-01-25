@@ -213,6 +213,7 @@ router.post('/delete', function (req, res, next) {
   // delete cswk file if exists
   fs.access(cswkURL, function (err) {
     if (err && err.code === 'ENOENT') {
+      console.log('delete: file no longer exists, skipped');
       next();
     } else {
       fs.unlink(cswkURL, function (e) {
@@ -236,7 +237,7 @@ router.post('/delete', function (req, res) {
   })
     .then(function () {
       res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-      console.log('course word delete successful');
+      console.log('course work delete successful');
     })
     .catch(function (e) {
       console.error(e);
