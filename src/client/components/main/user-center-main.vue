@@ -1,5 +1,26 @@
 <template>
   <div id="user-center-container" class="g-user">
+    <div class="g-user nav">
+      <Menu mode="horizontal" theme="dark">
+        <div class="m-nav">
+          <MenuItem name="1">
+            <span @click="">
+              <Icon type="clipboard"></Icon>&emsp;制定计划
+            </span>
+          </MenuItem>
+          <MenuItem name="2">
+            <span @click="">
+              <Icon type="ios-person"></Icon>&emsp;修改资料
+            </span>
+          </MenuItem>
+          <MenuItem name="3">
+            <span @click="">
+              <Icon type="ios-cloud-upload"></Icon>&emsp;上传期末作业
+            </span>
+          </MenuItem>
+        </div>
+      </Menu>
+    </div>
     <div class="g-user left">
       <Card class="m-card" disHover>
           <span slot="title">
