@@ -5,6 +5,7 @@
 
   .container {
     padding: 0;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
 
@@ -77,14 +78,30 @@
 .m-comment {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
   padding: 20px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #EEEEEE;
+  border: 1px dashed #DDDDDD;
+  border-radius: 5px;
 
   .header {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    flex-direction: row;
+
+    .user, .time {
+      line-height: 24px;
+    }
+
     em, .time {
       color: #999999;
     }
+  }
+
+  .body {
+    margin-top: 10px;
+    padding: 0;
+    border: 0;
   }
 }
 

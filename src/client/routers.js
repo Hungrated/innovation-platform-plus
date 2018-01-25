@@ -1,6 +1,6 @@
 import indexMain from './components/main/index-main.vue';
 import articlesMain from './components/main/articles-main.vue';
-import articlesArticleDetails from './components/public/articles-article-details.vue';
+import articlesArticleDetails from './components/public/articles-details.vue';
 import articlesCompose from './components/main/articles-compose.vue';
 import discussionMain from './components/main/discussion-main.vue';
 import bulletinMain from './components/main/bulletin-main.vue';

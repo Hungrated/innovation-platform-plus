@@ -15,7 +15,7 @@
           </div>
           <div class="m-content">
             <mavon-editor :value="details.blog.content" :editable="false" default_open="preview"
-                          :subfield="false" :toolbarsFlag="false"></mavon-editor>
+                          :subfield="false" :toolbarsFlag="false"/>
           </div>
         </div>
         <div class="g-details container right">
@@ -33,24 +33,18 @@
           </div>
         </div>
       </div>
-    </Card>
-    <Card disHover v-if="details.comments.length > 0">
-      <span slot="title">
-        <strong>评 论</strong>
-      </span>
-      <div class="m-footer">
-        <div class="m-comment" v-for="commentUnit in details.comments" :key="commentUnit.id">
-            <span class="m-comment header">
-              <span>
-                <strong>{{commentUnit.profile.name}}</strong>&emsp;&emsp;
-                <em><Icon type="card"></Icon>&emsp;{{commentUnit.student_id}}</em>&emsp;
-              </span>
-              <span class="m-comment time"><Icon type="ios-clock-outline"></Icon>&emsp;{{commentUnit.submitTime}}</span>
-            </span>
-            <span class="m-comment body">
-              <span>{{commentUnit.content}}</span>
-            </span>
-        </div>
+      <div class="m-comment" v-for="commentUnit in details.comments" :key="commentUnit.id">
+        <span class="m-comment header">
+          <span class="m-comment header user">
+            <strong>{{commentUnit.profile.name}}</strong>&emsp;&emsp;
+            <em><Icon type="card"></Icon>&emsp;{{commentUnit.student_id}}</em>&emsp;
+          </span>
+          <span class="m-comment header time">
+            <span>
+              <Icon type="ios-clock-outline"></Icon>&emsp;
+              {{commentUnit.submitTime}}</span>
+          </span>
+        </span><span class="m-comment body"><span>{{commentUnit.content}}</span></span>
       </div>
     </Card>
     <br>
