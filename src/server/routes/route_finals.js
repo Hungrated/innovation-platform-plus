@@ -8,6 +8,7 @@ const Final = db.Final;
 
 const path = require('../app_paths');
 const pathLib = require('path');
+const urlLib = require('url');
 
 const fs = require('fs');
 const multer = require('multer');
@@ -50,18 +51,20 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
 });
 
 router.post('/upload', function (req, res, next) {
-  // delete previous file if it exists
-  if (req.preExists) {
-    fs.unlink(req.cswkURL, function (err) {
-      if (err) throw err;
-      else {
-        console.log('previous course work deleted');
-        next();
-      }
-    });
-  } else {
-    next();
-  }
+  // delete previous file if exists
+  fs.access(req.cswkURL, function (err) {
+    if (err && err.code === 'ENOENT') {
+      next();
+    } else {
+      fs.unlink(req.cswkURL, function (e) {
+        if (e) throw e;
+        else {
+          console.log('previous course work deleted');
+          next();
+        }
+      });
+    }
+  });
 });
 
 router.post('/upload', function (req, res, next) {
@@ -186,10 +189,44 @@ router.post('/rate', function (req, res) {
  * @api {post} /api/final/delete
  * @apiName finalDelete
  *
- * @apiSuccess {file} data Response data.
+ * @apiSuccess {JSON} data Response data.
  *
  */
 router.post('/delete', function (req, res, next) {
+  const cswkName = urlLib.parse(req.body.cswk_src, true).query.cswk;
+  const cswkURL = pathLib.join(path.final, cswkName);
+  // delete cswk file if exists
+  fs.access(cswkURL, function (err) {
+    if (err && err.code === 'ENOENT') {
+      next();
+    } else {
+      fs.unlink(cswkURL, function (e) {
+        if (e) throw e;
+        else {
+          console.log('previous course work deleted');
+          next();
+        }
+      });
+    }
+  });
+});
+
+router.post('/delete', function (req, res) {
+  Final.update({
+    cswk_src: null
+  }, {
+    where: {
+      cswk_src: req.body.cswk_src
+    }
+  })
+    .then(function () {
+      res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+      console.log('course word delete successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
 });
 
 /**

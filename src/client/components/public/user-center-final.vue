@@ -15,15 +15,26 @@
     <div class="m-final exist" v-else>
       <em>期末作业已上传</em>&emsp;
       <div>
-        <Button type="success" size="small">下 载</Button>
+        <Button type="success"
+                size="small"
+                @click="downloadFile(cswkData.cswk_src)">下 载
+        </Button>
         <Upload class="button"
                 action="#"
                 accept="application/zip"
+                :show-upload-list="false"
                 :data="uploadData"
                 :before-upload="handleUpload">
-          <Button type="ghost" size="small" :disabled="cswkData.rate">更 改</Button>
+          <Button type="ghost"
+                  size="small"
+                  :disabled="cswkData.rate">更 改
+          </Button>
         </Upload>
-        <Button type="error" size="small" :disabled="cswkData.rate">删 除</Button>
+        <Button type="error"
+                size="small"
+                :disabled="cswkData.rate"
+                @click="deleteFile(cswkData.cswk_src)">删 除
+        </Button>
       </div>
       <span class="m-final rate" v-model="cswkData">
         <strong>
@@ -52,7 +63,9 @@
         uploadData: {
           file: null
         },
-        cswkData: {},
+        cswkData: {
+          cswk_src: null
+        },
         uploadConfig: {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -81,9 +94,14 @@
           });
       },
       handleUpload (file) {
-        this.uploadData.file = file;
-        this.submitFile();
-        return false;
+        if (this.cswkData.rate) {
+          this.$Message.info('教师已进行过评分，无法更改上传文件');
+          return false;
+        } else {
+          this.uploadData.file = file;
+          this.submitFile();
+          return false;
+        }
       },
       submitFile () {
         let _this = this;
@@ -100,6 +118,31 @@
           .catch(function (e) {
             console.log(e);
           });
+      },
+      downloadFile (url) {
+        let a = document.getElementById('fileDownloadTmpFrame');
+        a.src = url;
+        this.$Message.success('文件下载成功');
+      },
+      deleteFile (url) {
+        this.$Modal.confirm({
+          title: '确认删除期末作业',
+          content: '确定删除当前已上传的期末作业？',
+          onOk () {
+            let _this = this;
+            this.$ajax.post('/api/final/delete', {
+              cswk_src: url
+            })
+              .then(function (res) {
+                _this.$Message.success(res.data.msg);
+                _this.fileExists = false;
+                _this.refreshData();
+              })
+              .catch(function (e) {
+                console.log(e);
+              });
+          }
+        });
       }
     },
     mounted () {

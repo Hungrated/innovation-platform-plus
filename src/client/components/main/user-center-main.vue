@@ -4,19 +4,27 @@
       <Menu mode="horizontal" theme="dark">
         <div class="m-nav">
           <MenuItem name="1">
-            <span @click="">
+            <span @click="editPlans()">
               <Icon type="clipboard"></Icon>&emsp;制定计划
             </span>
           </MenuItem>
           <MenuItem name="2">
-            <span @click="">
+            <span @click="editProfile()">
               <Icon type="ios-person"></Icon>&emsp;修改资料
             </span>
           </MenuItem>
+
           <MenuItem name="3">
-            <span @click="">
-              <Icon type="ios-cloud-upload"></Icon>&emsp;上传期末作业
-            </span>
+            <Upload class="button"
+                    action="#"
+                    accept="application/zip"
+                    :show-upload-list="false"
+                    :data="uploadData"
+                    :before-upload="uploadCourseWork">
+              <span>
+                <Icon type="ios-cloud-upload"></Icon>&emsp;上传期末作业
+              </span>
+            </Upload>
           </MenuItem>
         </div>
       </Menu>
@@ -89,6 +97,7 @@
       <!--</div>-->
       <!--</Card>-->
     </div>
+    <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
   </div>
 </template>
 
@@ -102,12 +111,28 @@
 
   export default {
     name: 'user-center-main',
+    data () {
+      return {
+        uploadData: {
+          file: null
+        }
+      };
+    },
     methods: {
       editPlans () {
         this.$refs.plans.editPlan();
       },
       editProfile () {
         this.$refs.profile.edit();
+      },
+      uploadCourseWork (file) {
+        if (this.$refs.final.cswkData.rate) {
+          this.$Message.info('教师已进行过评分，无法更改上传文件');
+          return false;
+        } else {
+          this.$refs.final.handleUpload(file);
+          return false;
+        }
       },
       changeRoute (path) {
         this.$router.push(path);
