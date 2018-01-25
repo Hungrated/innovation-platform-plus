@@ -155,6 +155,21 @@ router.post('/rate', function (req, res) {
     }
   };
 
+  let calcRemark = function (rt) {
+    switch (rt) {
+      case 5:
+        return '优 秀';
+      case 4:
+        return '良 好';
+      case 3:
+        return '中 等';
+      case 2:
+        return '及 格';
+      default:
+        return '不及格';
+    }
+  };
+
   const {
     cswk_id,
     rate,
@@ -163,9 +178,9 @@ router.post('/rate', function (req, res) {
 
   const modData = {
     rate: calcRate(rate),
-    remark: remark
+    remark: (remark && remark !== '') ? remark : calcRemark(rate)
   };
-  console.log(modData);
+
   Final.update(modData, {
     where: {
       cswk_id: cswk_id

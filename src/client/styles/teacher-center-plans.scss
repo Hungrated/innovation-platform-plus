@@ -135,3 +135,20 @@
 .m-height {
   height: 180px;
 }
+
+.m-rate {
+  height: 36px;
+  line-height: 36px;
+
+  .title {
+    font-size: 15px;
+  }
+  .mark {
+    margin-bottom: 5px;
+  }
+
+  .info {
+    color: #999999;
+    padding-left: 50px;
+  }
+}

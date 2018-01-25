@@ -27,16 +27,20 @@
                 :before-upload="handleUpload">
           <Button type="ghost"
                   size="small"
-                  :disabled="cswkData.rate">更 改
+                  :disabled="cswkData.rate !== null">更 改
           </Button>
         </Upload>
         <Button type="error"
                 size="small"
-                :disabled="cswkData.rate"
+                :disabled="cswkData.rate !== null"
                 @click="deleteFile(cswkData.cswk_src)">删 除
         </Button>
       </div>
       <span class="m-final rate" v-model="cswkData">
+        <strong>
+          当前选课号：<br>
+          <span>{{cswkData.class_id}}</span>
+        </strong>
         <strong>
           评 级：&nbsp;
           <span v-if="cswkData.rate">{{cswkData.rate}}</span>

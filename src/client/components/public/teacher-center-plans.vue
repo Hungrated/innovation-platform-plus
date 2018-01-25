@@ -18,11 +18,16 @@
             <span class="m-unit info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
             <span class="m-unit btn">
               <ButtonGroup shape="circle">
-                <Button
-                  :type="(displayMode === 'plans') ? ('primary') : ('ghost')" @click="changeDisplayMode('plans')"
-                  size="small">&nbsp;<Icon type="clipboard"></Icon>&nbsp;计 划</Button>
-                <Button :type="(displayMode === 'total') ? ('primary') : ('ghost')" @click="changeDisplayMode('total')"
-                        size="small"><Icon type="edit"></Icon>&nbsp;总 评&nbsp;</Button>
+                <Button :type="(displayMode === 'plans') ? ('primary') : ('ghost')"
+                        @click="changeDisplayMode('plans')"
+                        size="small">
+                  &nbsp;<Icon type="clipboard"></Icon>&nbsp;计 划
+                </Button>
+                <Button :type="(displayMode === 'total') ? ('primary') : ('ghost')"
+                        @click="changeDisplayMode('total')"
+                        size="small">
+                  <Icon type="edit"></Icon>&nbsp;总 评&nbsp;
+                </Button>
               </ButtonGroup>
             </span>
           </span>
@@ -122,12 +127,17 @@
         :closable="false"
         @on-ok="submitFinalRate()"
         @on-cancel="editCancel()">
-        <Rate v-model="finalRateData.rate" show-text></Rate>&emsp;&emsp;<br>
-        <span>
-          <Icon type="information-circled"></Icon>&nbsp;
-          5星:优秀&emsp;4星:良好&emsp;3星:中等&emsp;2星:及格&emsp;1星:不及格
-        </span><br><br>
-        <i-input v-model="finalRateData.remark" :placeholder="curClassRecProfile.name + '的期末评语...'"></i-input>
+        <span class="m-rate">
+          <strong class="m-rate title">评 级：</strong>&emsp;
+          <Rate class="m-rate mark" v-model="finalRateData.rate" show-text></Rate>&emsp;
+          <span class="m-rate info">
+            <Icon type="information-circled"></Icon>&nbsp;
+            5星: 优秀&emsp;4星: 良好&emsp;3星: 中等&emsp;2星: 及格&emsp;1星: 不及格
+          </span>
+        </span>
+        <br><br>
+        <i-input v-model="finalRateData.remark"
+                 :placeholder="curClassRecProfile.name + '的期末评语...  (若留空则自动补填成绩等级)'"></i-input>
       </Modal>
     </Card>
     <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
@@ -790,7 +800,7 @@
         this.updateProfile(profile);
         this.finalRateData.cswk_id = profile.cswk_id;
         this.finalRateData.remark = profile.remark;
-        this.finalRateData.rate = this.parseRate(profile.rate);
+        this.finalRateData.rate = profile.rate ? this.parseRate(profile.rate) : 5;
         this.finalRate = true;
       },
       submitFinalRate () {

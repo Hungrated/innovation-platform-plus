@@ -10,7 +10,7 @@
           </MenuItem>
           <MenuItem name="2">
             <span @click="editProfile()">
-              <Icon type="ios-person"></Icon>&emsp;修改资料
+              <Icon type="ios-person"></Icon>&emsp;更新资料
             </span>
           </MenuItem>
 
