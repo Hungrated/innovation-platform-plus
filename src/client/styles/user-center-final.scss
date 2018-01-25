@@ -1,0 +1,42 @@
+.m-final {
+  display: flex;
+  width: 100%;
+
+  .none, .exist {
+    justify-content: center;
+    em {
+      color: #999999;
+      text-align: center;
+    }
+  }
+
+  .none {
+
+    height: 36px;
+    line-height: 36px;
+  }
+
+  .exist {
+    display: inline-block;
+  }
+
+  .exist-mod {
+    display: inline-block;
+  }
+
+  .rate {
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 1px dashed #DDDDDD;
+    flex-direction: column;
+    margin-top: 20px;
+
+    strong {
+      margin: 3px 0;
+
+      em {
+        color: #999999;
+      }
+    }
+  }
+}

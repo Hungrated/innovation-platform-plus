@@ -49,12 +49,11 @@
       <Card class="m-card" disHover>
           <span slot="title">
             <span class="m-card header">
-              <strong>公告栏</strong>
-              <Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>
+              <strong>我的期末</strong>
             </span>
           </span>
         <div class="m-card unit">
-          <user-center-articles></user-center-articles>
+          <user-center-final></user-center-final>
         </div>
       </Card>
       <Card class="m-card" disHover>
@@ -78,6 +77,7 @@
   import userCenterMeetings from '../public/user-center-meetings';
   import userCenterArticles from '../public/user-center-articles';
   import userCenterMoments from '../public/user-center-moments';
+  import userCenterFinal from '../public/user-center-final';
 
   export default {
     name: 'user-center-main',
@@ -97,7 +97,8 @@
       userCenterPlans,
       userCenterMeetings,
       userCenterArticles,
-      userCenterMoments
+      userCenterMoments,
+      userCenterFinal
     }
   };
 </script>

@@ -104,10 +104,15 @@ router.post('/upload', function (req, res) {
  *
  */
 router.post('/query', function (req, res) {
+  let where = {
+    class_id: req.body.class_id
+  };
+  if (req.body.student_id) {
+    where.student_id = req.body.student_id;
+  }
+
   Final.findAll({
-    where: {
-      class_id: req.body.class_id
-    }
+    where: where
   })
     .then(function (dataList) {
       res.json(dataList);
