@@ -8,6 +8,10 @@
   line-height: 45px;
 }
 
+.ivu-menu-dark {
+  background: rgba(43, 133, 228, 0.8);
+}
+
 .ivu-menu-horizontal .ivu-menu-submenu .ivu-select-dropdown .ivu-menu-item-selected {
   background: transparent;
   color: rgb(73, 80, 96);
