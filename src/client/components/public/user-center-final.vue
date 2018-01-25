@@ -5,6 +5,7 @@
       <span>
         <Upload class="button"
                 action="#"
+                accept="application/zip"
                 :data="uploadData"
                 :before-upload="handleUpload">
           <Button type="dashed" icon="ios-cloud-upload-outline">选择并上传</Button>
@@ -13,11 +14,17 @@
     </div>
     <div class="m-final exist" v-else>
       <em>期末作业已上传</em>&emsp;
-      <span>
+      <div>
         <Button type="success" size="small">下 载</Button>
-        <Button type="ghost" size="small" :disabled="cswkData.rate">更 改</Button>
+        <Upload class="button"
+                action="#"
+                accept="application/zip"
+                :data="uploadData"
+                :before-upload="handleUpload">
+          <Button type="ghost" size="small" :disabled="cswkData.rate">更 改</Button>
+        </Upload>
         <Button type="error" size="small" :disabled="cswkData.rate">删 除</Button>
-      </span>
+      </div>
       <span class="m-final rate" v-model="cswkData">
         <strong>
           评 级：&nbsp;
@@ -86,7 +93,8 @@
         formData.append('file', this.uploadData.file);
 
         this.$ajax.post('/api/final/upload', formData, this.uploadConfig)
-          .then(function () {
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
             _this.refreshData();
           })
           .catch(function (e) {

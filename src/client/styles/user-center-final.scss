@@ -11,13 +11,15 @@
   }
 
   .none {
-
     height: 36px;
     line-height: 36px;
   }
 
   .exist {
     display: inline-block;
+    em, div {
+      display: inline-block;
+    }
   }
 
   .exist-mod {

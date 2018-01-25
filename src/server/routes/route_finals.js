@@ -41,7 +41,6 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
       req.cswk_id = final.cswk_id;
       req.cswk_name = final.cswk_id + pathLib.parse(req.files[0].originalname).ext;
       req.cswkURL = pathLib.join(path.final, final.cswk_id) + pathLib.parse(req.files[0].originalname).ext;
-      console.log('course work upload successful');
       next();
     })
     .catch(function (e) {
@@ -56,6 +55,7 @@ router.post('/upload', function (req, res, next) {
     fs.unlink(req.cswkURL, function (err) {
       if (err) throw err;
       else {
+        console.log('previous course work deleted');
         next();
       }
     });
@@ -177,6 +177,19 @@ router.post('/rate', function (req, res) {
       res.json(statusLib.PLAN_RATE_FAILED);
       console.log('final rate failed');
     });
+});
+
+/**
+ *
+ * 删除期末作业
+ *
+ * @api {post} /api/final/delete
+ * @apiName finalDelete
+ *
+ * @apiSuccess {file} data Response data.
+ *
+ */
+router.post('/delete', function (req, res, next) {
 });
 
 /**

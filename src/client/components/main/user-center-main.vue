@@ -26,7 +26,7 @@
           <span slot="title">
             <span class="m-card header">
               <strong>我的动态</strong>
-              <Button @click="changeRoute('/moments')" type="text" size="small"> >> 所有动态</Button>
+              <Button @click="changeRoute('/moments')" type="text" size="small">所有动态</Button>
             </span>
           </span>
         <div class="m-card unit">
@@ -53,20 +53,20 @@
             </span>
           </span>
         <div class="m-card unit">
-          <user-center-final></user-center-final>
+          <user-center-final ref="final"></user-center-final>
         </div>
       </Card>
-      <Card class="m-card" disHover>
-          <span slot="title">
-            <span class="m-card header">
-              <strong>我的文章</strong>
-              <Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>
-            </span>
-          </span>
-        <div class="m-card unit">
-          <user-center-articles></user-center-articles>
-        </div>
-      </Card>
+      <!--<Card class="m-card" disHover>-->
+      <!--<span slot="title">-->
+      <!--<span class="m-card header">-->
+      <!--<strong>我的文章</strong>-->
+      <!--<Button @click="changeRoute('/articles?label=4')" type="text" size="small">>> 详 情</Button>-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--<div class="m-card unit">-->
+      <!--<user-center-articles></user-center-articles>-->
+      <!--</div>-->
+      <!--</Card>-->
     </div>
   </div>
 </template>
