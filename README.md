@@ -2,23 +2,31 @@
 
 > An advanced on-line information-managing & resource-sharing platform for Innovation Practice courses.
 
-> initial commit on 27 Nov 2017
 
-> version v1.0.0 on 29 Dec 2017
+### 1 Version control
 
-  basic frame, basic modules
+**initial commit on 27 Nov 2017**
 
-> version v2.0.0 on 19 Jan 2018
+**version `v1.0.0` on 29 Dec 2017**
 
-  majorly added info-manage module for teachers & administrators
+_basic frame, basic modules_
 
-## Build Setup
+**version `v2.0.0` on 19 Jan 2018**
+
+_majorly added info-manage module for teachers & administrators_
+  
+**version `v2.1.0` on 25 Jan 2018**
+
+_added course-work module_
+  
+
+### 2 Build setup
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload
 npm run dev
 
 # build for production with minification
