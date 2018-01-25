@@ -322,7 +322,7 @@
                   },
                   on: {
                     click: () => {
-                      this.revealStudentDetails(params.row.school_id);
+                      this.revealStudentDetails(params.row.school_id, params.row.cur_class);
                     }
                   }
                 }, '查看与管理')
@@ -711,12 +711,13 @@
         this.cur_class = unit;
         this.refreshStudentList(unit.class_id);
       },
-      revealStudentDetails (id) {
+      revealStudentDetails (stuId, clsId) {
         let _this = this;
         this.studentDetails = true;
         this.$ajax.post('/api/profile/query', {
           request: {
-            school_id: id,
+            school_id: stuId,
+            cur_class: clsId,
             details: true
           }
         })

@@ -252,7 +252,8 @@ router.post('/query', function (req, res, next) {
 
 router.post('/query', function (req, res) {
   // advanced query
-  const schoolId = req.body.request.school_id;
+  const stuId = req.body.request.school_id;
+  const clsId = req.body.request.cur_class;
   let flag = 0;
   let resData = {
     profile: {},
@@ -262,7 +263,7 @@ router.post('/query', function (req, res) {
 
   Profile.findOne({
     where: {
-      school_id: schoolId
+      school_id: stuId
     }
   }).then(function (profile) {
     if (profile === null) {
@@ -283,7 +284,8 @@ router.post('/query', function (req, res) {
     });
   Plan.findAll({
     where: {
-      student_id: schoolId
+      student_id: stuId,
+      class_id: clsId
     },
     order: [
       ['created_at', 'DESC']
@@ -308,7 +310,8 @@ router.post('/query', function (req, res) {
 
   Meeting.findAll({
     where: {
-      student_id: schoolId
+      student_id: stuId,
+      class_id: clsId
     },
     order: [
       ['created_at', 'DESC']
