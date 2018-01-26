@@ -13,3 +13,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+/src/server/public/files/
+/src/server/public/static/
+/src/server/public/index.html
