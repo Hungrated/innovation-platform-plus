@@ -35,7 +35,7 @@
               }
               _this.imgList = tempList;
             } else {
-              // _this.imgList = [{img_id: '0', src: require('../../assets/banner.jpg')}];
+              _this.imgList = [{img_id: '0', src: require('../../assets/banner.jpg')}];
             }
           })
           .catch(function (e) {
