@@ -35,21 +35,21 @@ let objMulter = multer({
  */
 router.post('/reg', function (req, res) {
   // only for teachers, only in backend
-  const {schoolId, name, password, identity} = req.body;
-  if (!(schoolId || name || password || identity)) { return res.json(statusLib.REG_FAILED); }
+  const {id, name, password, identity} = req.body;
+  if (!(id || name || password || identity)) { return res.json(statusLib.REG_FAILED); }
 
   if (identity !== 'teacher') {
     res.json(statusLib.REG_FAILED);
     console.log('identity wrong');
   } else {
     User.create({
-      username: schoolId.toString(),
+      username: id.toString(),
       password: password,
       identity: identity
     })
       .then(function (user) {
         Profile.create({
-          school_id: schoolId,
+          school_id: id,
           name: name,
           user_id: user.dataValues.id
         })
