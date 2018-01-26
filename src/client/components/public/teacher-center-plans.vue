@@ -47,7 +47,6 @@
                 </p>
                 <Button type="primary" @click="exportPlan(curStudentDetails.profile.school_id)">导出所有信息为Word</Button>
               </div>
-
               <div class="m-profile">
                 <div class="m-profile avatar">
                   <img style="width: 100%; border-radius: 5px;" :src="curStudentDetails.profile.avatar">

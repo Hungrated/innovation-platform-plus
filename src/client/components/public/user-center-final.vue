@@ -32,12 +32,12 @@
         <strong>
           评 级：&nbsp;
           <span v-if="cswkData.rate">{{cswkData.rate}}</span>
-          <em v-else>未确定</em>
+          <em v-else>未 评</em>
         </strong>
         <strong>
           评 语：&nbsp;
           <span v-if="cswkData.remark">{{cswkData.remark}}</span>
-          <em v-else>未确定</em>
+          <em v-else>未 评</em>
         </strong>
       </span>
     </div>
