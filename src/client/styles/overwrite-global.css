@@ -50,10 +50,6 @@
   z-index: 5;
 }
 
-/*.ivu-modal-mask, .ivu-modal-wrap {*/
-  /*min-width: 900px;*/
-/*}*/
-
 .ivu-select-dropdown {
   max-height: 300px;
 }
