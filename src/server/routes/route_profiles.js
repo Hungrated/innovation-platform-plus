@@ -169,7 +169,7 @@ router.post('/query', function (req, res, next) {
   } else if (req.body.request === 'all') {
     req.body.where = {
       school_id: {
-        $gt: 9999999 // student
+        $gt: 999999 // student
       }
     };
     next();

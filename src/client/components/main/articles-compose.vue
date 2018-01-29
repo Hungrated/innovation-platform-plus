@@ -13,14 +13,13 @@
           </div>
           <Input class="m-container1 title" v-model="editor.title" size="large" placeholder="文章标题"/>
           <ButtonGroup class="m-container1 type" shape="circle" size="large">
-            <Button :type="(editType === 'richText') ? ('primary') : ('default')" @click="changeEditType('richText')"
-                    disabled>
+            <Button :type="(editType === 'markdown') ? ('primary') : ('default')" @click="changeEditType('markdown')">
               <Icon type="document-text" style="font-size: 17px"></Icon>
-              富文本
+              Markdown文档
             </Button>
-            <Button :type="(editType === 'markDown') ? ('primary') : ('default')" @click="changeEditType('markDown')">
-              <Icon type="social-markdown" style="font-size: 17px"></Icon>
-              MarkDown
+            <Button :type="(editType === 'event') ? ('primary') : ('default')" @click="changeEditType('event')">
+              <Icon type="flag" style="font-size: 17px"></Icon>
+              活动图集
             </Button>
           </ButtonGroup>
         </div>
@@ -31,11 +30,16 @@
     </div>
     <div class="g-compose body">
       <transition name="fade">
-        <md-editor v-if="editType === 'markDown'"
+        <markdown-editor v-if="editType === 'markdown'"
                    ref="editor"
                    :title="editor.title"
                    :label="editor.label"
-                   :description="editor.description" />
+                   :description="editor.description"/>
+        <event-editor v-if="editType === 'event'"
+                         ref="editor"
+                         :title="editor.title"
+                         :label="editor.label"
+                         :description="editor.description"/>
       </transition>
     </div>
     <div class="g-compose footer">
@@ -56,12 +60,13 @@
 </template>
 
 <script>
-  import mdEditor from '../public/articles-compose-markDownEditor';
+  import markdownEditor from '../public/articles-compose-markdown';
+  import eventEditor from '../public/articles-compose-event';
 
   export default {
     name: 'articles-compose',
     components: {
-      mdEditor
+      markdownEditor, eventEditor
     },
     data () {
       return {
@@ -83,7 +88,7 @@
             label: '其 他'
           }
         ],
-        editType: 'markDown',
+        editType: 'markdown',
         editor: {
           title: '',
           label: '',

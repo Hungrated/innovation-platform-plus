@@ -13,25 +13,23 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-(function () {
-  // cookie handler
-  app.use(cookieParser({
-    secret: 'floating-cloud-plus',
-    expires: 3600 * 24 * 7
-  }));
+// cookie handler
+app.use(cookieParser({
+  secret: 'floating-cloud-plus',
+  expires: 3600 * 24 * 7
+}));
 
-  // session handler
-  let arr = [];
-  for (let i = 0; i < 100000; i++) {
-    arr.push('keys_' + Math.random());
-  }
-  app.use(cookieSession({
-    name: 'session_id',
-    secret: 'floating-cloud-plus',
-    keys: arr,
-    maxAge: 3600 * 24 * 3 * 1000
-  }));
-})();
+// session handler
+let arr = [];
+for (let i = 0; i < 100000; i++) {
+  arr.push('keys_' + Math.random());
+}
+app.use(cookieSession({
+  name: 'session_id',
+  secret: 'floating-cloud-plus',
+  keys: arr,
+  maxAge: 3600 * 24 * 3 * 1000
+}));
 
 // static resources handler
 app.use(express.static(pathLib.join(__dirname, 'public')));
@@ -49,11 +47,9 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res) {
-  console.error(err);
-  // render the error page
+  console.log(err);
   res.status(err.status || 500);
-  res.sendFile('public/index.html');
-  // res.json(statusLib.SERVER_INNER_ERROR);
+  res.send('error');
 });
 
 // cross-domain access

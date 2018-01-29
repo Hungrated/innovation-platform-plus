@@ -13,6 +13,9 @@ const schema = {
     values: ['project', 'event'],
     allowNull: false
   },
+  labels: {
+    type: Sequelize.STRING
+  },
   title: {
     type: Sequelize.STRING(32),
     unique: true,
@@ -26,7 +29,7 @@ const schema = {
     allowNull: false
   },
   cover_url: {
-    type: Sequelize.STRING(64)
+    type: Sequelize.STRING
   },
   photo_url: {
     type: Sequelize.STRING

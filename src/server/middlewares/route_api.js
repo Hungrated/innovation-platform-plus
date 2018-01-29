@@ -14,6 +14,7 @@ const meeting = require('../routes/route_meeting');
 const moment = require('../routes/route_moments');
 const teacher = require('../routes/route_teacher');
 const final = require('../routes/route_finals');
+const label = require('../routes/route_labels');
 
 router.use('/user', user);
 router.use('/class', classes);
@@ -28,5 +29,6 @@ router.use('/meeting', meeting);
 router.use('/moment', moment);
 router.use('/teacher', teacher);
 router.use('/final', final);
+router.use('/label', label);
 
 module.exports = router;

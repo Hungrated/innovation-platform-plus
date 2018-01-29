@@ -8,6 +8,9 @@ const schema = {
     primaryKey: true,
     unique: true
   },
+  labels: {
+    type: Sequelize.STRING
+  },
   filename: {
     type: Sequelize.STRING,
     allowNull: false

@@ -9,6 +9,7 @@ const Class = require('./db_classes');
 const Meeting = require('./db_meeting');
 const Moment = require('./db_moments');
 const Final = require('./db_finals');
+const Label = require('./db_labels');
 
 User.hasOne(Profile, {
   foreignKey: 'user_id'
@@ -24,6 +25,10 @@ Profile.hasMany(Meeting, {
 
 Profile.hasMany(Final, {
   foreignKey: 'student_id'
+});
+
+Profile.hasMany(Label, {
+  foreignKey: 'adder_id'
 });
 
 Profile.sync().then();
@@ -69,6 +74,7 @@ Meeting.belongsTo(Class, {
 
 Meeting.sync().then();
 Final.sync().then();
+Label.sync().then();
 
 Moment.belongsTo(Profile, {
   foreignKey: 'student_id'

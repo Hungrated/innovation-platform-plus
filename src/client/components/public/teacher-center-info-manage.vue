@@ -26,8 +26,10 @@
                 </DatePicker>
               </div>
               <div class="g-info options sid">
-                <Input size="large" v-model="infoSid" placeholder="学生学号（选填）" :disabled="infoLabel === 'banner' ||
-                infoLabel === 'class'"/>
+                <Input size="large"
+                       v-model="infoSid"
+                       placeholder="学生学号（选填）"
+                       :disabled="infoLabel === 'banner' || infoLabel === 'class'"/>
               </div>
             </div>
             <div>
@@ -59,6 +61,23 @@
                     &emsp;<Icon type="information-circled"></Icon>&nbsp;
                     点击并拖动鼠标以定位，滚动鼠标滚轮以缩放
                   </span>
+                </div>
+              </Modal>
+            </div>
+            <div v-if="infoLabel === 'label'" class="g-info options banner">
+              <span>
+                &emsp;<Icon type="information-circled"></Icon>&nbsp;
+                标签用于文章和资源文件的分类筛选，要新增标签，请点击右边的"新增"按钮
+              </span>
+              <Button @click="bannerEdit()" type="dashed" size="small">新 增</Button>
+              <Modal v-model="bannerMng"
+                     title="编辑标签"
+                     width="712"
+                     @on-ok="bannerSubmit(bannerModMng,bannerImgId)"
+                     @on-cancel="bannerEditCancel()">
+                <div class="m-edit-bnr">
+                  test
+
                 </div>
               </Modal>
             </div>
@@ -125,6 +144,11 @@
             index: 6,
             value: '班 级',
             label: 'class'
+          },
+          {
+            index: 7,
+            value: '标 签',
+            label: 'label'
           }
         ],
         infoRange: ['', ''],

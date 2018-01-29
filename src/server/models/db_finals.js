@@ -27,6 +27,6 @@ const options = {
   underscored: true
 };
 
-const Rate = mysql.define('finals', schema, options);
+const Final = mysql.define('finals', schema, options);
 
-module.exports = Rate;
+module.exports = Final;
