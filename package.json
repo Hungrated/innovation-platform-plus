@@ -10,8 +10,8 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
-    "build": "node build/build.js",
-    "doc": "apidoc -i src/server/routes -o src/server/public/apidoc"
+    "doc": "apidoc -i src/server/routes -o src/server/public/apidoc",
+    "build": "npm run doc & node build/build.js"
   },
   "dependencies": {
     "apidoc": "^0.17.6",
@@ -107,6 +107,15 @@
   "apidoc": {
     "title": "innovation-platform-plus",
     "version": "2.1.0",
-    "url": "https://118.89.109.39:3000"
+    "url": "http://[host]",
+    "sampleUrl": "http://localhost:3000",
+    "template": {
+      "jQueryAjaxSetup": {
+        "crossDomain": "true",
+        "headers": {
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    }
   }
 }

@@ -8,6 +8,9 @@
         <MenuItem name="9-1"><span @click="changeRoute('/teacher-center')">管理中心</span></MenuItem>
         <MenuItem name="9-2"><span @click="pwdMod = true">修改密码</span></MenuItem>
       </MenuGroup>
+      <MenuGroup title="API">
+        <MenuItem name="9-3"><span @click="revealAPI()">查看API</span></MenuItem>
+      </MenuGroup>
       <MenuGroup title="用 户">
         <MenuItem name="9-3"><span @click="logout()">退出登录</span></MenuItem>
       </MenuGroup>
@@ -49,6 +52,12 @@
     methods: {
       changeRoute: function (path) {
         this.$router.push(path);
+      },
+      revealAPI () {
+        let location = window.location;
+        let url = `${location.protocol}//${location.host}/api`;
+        console.log(url);
+        window.open(url);
       },
       userPwdMod () {
         if (this.password.currentPwd === '' || this.password.newPwd === '' || this.password.newPwdChk === '') {

@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 const express = require('express');
 const router = express.Router();
 
@@ -19,14 +20,47 @@ let objMulter = multer({
 });
 
 /**
- *
- * 修改用户资料
- *
- * @api {post} /api/profile/modify
+ * @api {post} /api/profile/modify 修改用户资料
  * @apiName profileModify
+ * @apiGroup Profile
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 提供用户资料修改接口
+ * 用户可修改的资料有：
+ * 性别、出生日期、手机号码、自述
  *
+ * @apiSampleRequest /api/profile/modify
+ *
+ * @apiParam {Number} school_id  用户学号
+ * @apiParam {String} sex 用户性别
+ * @apiParam {String} birth_date 用户出生日期
+ * @apiParam {String} phone_num 用户手机号码
+ * @apiParam {String} description 用户自述
+ *
+ * @apiParamExample {json} Request-Example:
+ *     {
+ *      	"school_id": 14051531,
+ *      	"sex": "男",
+ *      	"birth_date": "1996-4-29",
+ *      	"phone_num": "135xxxx6570",
+ *      	"description": "A dream pursuer"
+ *     }
+ *
+ * @apiSuccess {json} data Response data.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "status": 2000,
+ *       "msg": "档案更新成功"
+ *     }
+ *
+ * @apiError profileModifyFailed 用户档案更新失败
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "status": 2001,
+ *       "msg": "档案更新失败"
+ *     }
  */
 router.post('/modify', function (req, res) {
   // modify a profile
