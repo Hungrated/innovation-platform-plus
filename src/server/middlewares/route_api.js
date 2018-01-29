@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const path = require('../app_paths');
+
 const user = require('../routes/route_users');
 const classes = require('../routes/route_classes');
 const blog = require('../routes/route_blogs');
@@ -15,6 +17,8 @@ const moment = require('../routes/route_moments');
 const teacher = require('../routes/route_teacher');
 const final = require('../routes/route_finals');
 const label = require('../routes/route_labels');
+
+router.use('/', express.static(path.apidoc));
 
 router.use('/user', user);
 router.use('/class', classes);

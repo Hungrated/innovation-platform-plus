@@ -18,6 +18,8 @@ const plans = pathLib.join(root, 'public', 'files', 'plans');
 
 const final = pathLib.join(upload, 'final');
 
+const apidoc = pathLib.join(root, 'public', 'apidoc');
+
 module.exports = {
-  avatars, sources, userinfo, banner, plans, final
+  avatars, sources, userinfo, banner, plans, final, apidoc
 };

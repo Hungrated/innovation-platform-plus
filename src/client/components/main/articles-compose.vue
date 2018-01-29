@@ -31,15 +31,15 @@
     <div class="g-compose body">
       <transition name="fade">
         <markdown-editor v-if="editType === 'markdown'"
-                   ref="editor"
-                   :title="editor.title"
-                   :label="editor.label"
-                   :description="editor.description"/>
-        <event-editor v-if="editType === 'event'"
                          ref="editor"
                          :title="editor.title"
                          :label="editor.label"
                          :description="editor.description"/>
+        <event-editor v-if="editType === 'event'"
+                      ref="editor2"
+                      :title="editor.title"
+                      :label="editor.label"
+                      :description="editor.description"/>
       </transition>
     </div>
     <div class="g-compose footer">
@@ -98,7 +98,18 @@
     },
     methods: {
       changeEditType (name) {
-        this.editType = name;
+        if (name !== this.editType && this.$refs.editor.$children[0].d_value) {
+          let _this = this;
+          this.$Modal.confirm({
+            title: '切换编辑类型',
+            content: '确定切换编辑类型？当前编辑将无法保存。',
+            onOk () {
+              _this.editType = name;
+            }
+          });
+        } else {
+          this.editType = name;
+        }
       },
       submit () {
         this.$refs.editor.submit();

@@ -19,10 +19,10 @@ let objMulter = multer({
 
 /**
  *
- * 上传期末作业
+ * 获取标签列表
  *
- * @api {post} /api/final/upload
- * @apiName finalUpload
+ * @api {post} /api/label/query
+ * @apiName labelQuery
  *
  * @apiSuccess {JSON} data Response data.
  *

@@ -10,9 +10,11 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "doc": "apidoc -i src/server/routes -o src/server/public/apidoc"
   },
   "dependencies": {
+    "apidoc": "^0.17.6",
     "axios": "^0.17.1",
     "iview": "^2.7.3",
     "js-cookie": "^2.2.0",
@@ -101,5 +103,10 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "apidoc": {
+    "title": "innovation-platform-plus",
+    "version": "2.1.0",
+    "url": "https://118.89.109.39:3000"
+  }
 }
