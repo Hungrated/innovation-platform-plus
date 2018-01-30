@@ -27,7 +27,7 @@ router.use(objMulter.any()); // any file type
  *
  * 文件上传
  *
- * @api {post} /api/file/upload
+ * @api {post} /api/file/upload upload
  * @apiName fileUpload
  *
  * @apiSuccess {JSON} data Response data.
@@ -84,7 +84,7 @@ router.post('/upload', function (req, res) {
  *
  * 获取文件列表
  *
- * @api {post} /api/file/query
+ * @api {post} /api/file/query query
  * @apiName fileQuery
  *
  * @apiSuccess {JSON} data Response data.

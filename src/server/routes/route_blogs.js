@@ -27,12 +27,12 @@ const Comment = db.Comment;
  * @apiDescription 用户发表文章。
  *
  * @apiParam {String} type 文章类别
- * @apiParam {String} title 标题
- * @apiParam {String} description 简介
- * @apiParam {String} content 内容
- * @apiParam {String} [cover_url] 封面图地址
- * @apiParam {String} [photo_url] 所有图片地址
- * @apiParam {Number} aurhor_id 作者编号
+ * @apiParam {String} title 文章标题
+ * @apiParam {String} description 文章简介
+ * @apiParam {String} content 文章内容
+ * @apiParam {String} [cover_url] 文章封面图地址
+ * @apiParam {String} [photo_url] 文章所有图片地址
+ * @apiParam {Number} aurhor_id 文章作者编号
  *
  * @apiParamExample {json} 请求示例
  * {
@@ -134,11 +134,67 @@ router.post('/query', function (req, res) {
  *
  * 获取文章详情
  *
- * @api {get} /api/blog/details?index=:blog_id
+ * @api {get} /api/blog/details?index=:blog_id details
  * @apiName blogDetails
+ * @apiGroup Blog
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 根据文章编号获取文章详细信息。
  *
+ * @apiParamExample {url} 请求示例
+ * details?index=blg782148
+ *
+ * @apiSuccess {Object} blog 文章列表信息
+ * @apiSuccess {Array} comments 文章列表信息
+ *
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "blog": {
+ *         "blog_id": "blg782148",
+ *         "type": "project",
+ *         "labels": null,
+ *         "title": "title0",
+ *         "description": "desccription0",
+ *         "content": "content0",
+ *         "cover_url": "",
+ *         "photo_url": "",
+ *         "created_at": "2018-01-30T03:35:15.000Z",
+ *         "updated_at": "2018-01-30T03:35:15.000Z",
+ *         "author_id": 14051531,
+ *         "profile": {
+ *             "name": "章梓航"
+ *         },
+ *         "publishTime": "2018-01-30 11:35:15"
+ *     },
+ *     "comments": [
+ *         {
+ *             "comment_id": 2,
+ *             "content": "comment1",
+ *             "created_at": "2018-01-30T03:37:29.000Z",
+ *             "updated_at": "2018-01-30T03:37:29.000Z",
+ *             "blog_id": "blg782148",
+ *             "student_id": 14051531,
+ *             "profile": {
+ *                 "name": "章梓航"
+ *             },
+ *             "submitTime": "2018-01-30 11:37:29"
+ *         },
+ *         {
+ *             "comment_id": 1,
+ *             "content": "comment0",
+ *             "created_at": "2018-01-30T03:37:24.000Z",
+ *             "updated_at": "2018-01-30T03:37:24.000Z",
+ *             "blog_id": "blg782148",
+ *             "student_id": 14051531,
+ *             "profile": {
+ *                 "name": "章梓航"
+ *             },
+ *             "submitTime": "2018-01-30 11:37:24"
+ *         }
+ *     ]
+ * }
  */
 router.get('/details', function (req, res) {
   // fetch blog details

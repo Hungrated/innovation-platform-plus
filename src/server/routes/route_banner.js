@@ -21,7 +21,7 @@ let objMulter = multer({
  *
  * 获取首页轮播图列表
  *
- * @api {get} /api/banner
+ * @api {get} /api/banner fetch
  * @apiName banner
  *
  * @apiSuccess {JSON} data Response data.
@@ -50,7 +50,7 @@ router.get('/', function (req, res) {
  *
  * 上传首页轮播图
  *
- * @api {post} /api/banner/upload
+ * @api {post} /api/banner/upload upload
  * @apiName bannerUpload
  *
  * @apiSuccess {JSON} data Response data.
@@ -94,7 +94,7 @@ router.post('/upload', function (req, res) { // update database record
  *
  * 切换首页轮播图状态
  *
- * @api {post} /api/banner/switch
+ * @api {post} /api/banner/switch switch
  * @apiName bannerSwitch
  *
  * @apiSuccess {JSON} data Response data.
@@ -123,7 +123,7 @@ router.post('/switch', function (req, res) {
  *
  * 修改当前首页轮播图
  *
- * @api {post} /api/banner/modify
+ * @api {post} /api/banner/modify modify
  * @apiName bannerModify
  *
  * @apiSuccess {JSON} data Response data.

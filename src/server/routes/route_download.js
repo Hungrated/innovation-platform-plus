@@ -9,7 +9,7 @@ const statusLib = require('../libs/status');
  *
  * 下载文件
  *
- * @api {get} /api/download?:type=:id
+ * @api {get} /api/download?:type=:id download
  * @apiName download
  *
  * @apiSuccess {file} data Response data.

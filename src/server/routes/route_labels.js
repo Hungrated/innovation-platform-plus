@@ -21,7 +21,7 @@ let objMulter = multer({
  *
  * 获取标签列表
  *
- * @api {post} /api/label/query
+ * @api {post} /api/label/query query
  * @apiName labelQuery
  *
  * @apiSuccess {JSON} data Response data.

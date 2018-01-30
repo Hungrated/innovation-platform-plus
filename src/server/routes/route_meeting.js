@@ -10,7 +10,7 @@ const Meeting = db.Meeting;
  *
  * 提交课堂记录
  *
- * @api {post} /api/meeting/submit
+ * @api {post} /api/meeting/submit submit
  * @apiName meetingSubmit
  *
  * @apiSuccess {JSON} data Response data.
@@ -33,7 +33,7 @@ router.post('/submit', function (req, res) { // publish a Meeting(project or eve
  *
  * 获取课堂记录列表
  *
- * @api {post} /api/meeting/query
+ * @api {post} /api/meeting/query query
  * @apiName meetingQuery
  *
  * @apiSuccess {JSON} data Response data.

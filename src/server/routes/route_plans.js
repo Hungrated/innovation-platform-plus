@@ -22,7 +22,7 @@ const officeGen = require('officegen');
  *
  * 提交计划
  *
- * @api {post} /api/plan/submit
+ * @api {post} /api/plan/submit submit
  * @apiName planSubmit
  *
  * @apiSuccess {JSON} data Response data.
@@ -76,7 +76,7 @@ router.post('/submit', function (req, res) {
  *
  * 修改计划
  *
- * @api {post} /api/plan/modify
+ * @api {post} /api/plan/modify modify
  * @apiName planModify
  *
  * @apiSuccess {JSON} data Response data.
@@ -148,7 +148,7 @@ router.post('/modify', function (req, res) {
  *
  * （教师）审核计划
  *
- * @api {post} /api/plan/op
+ * @api {post} /api/plan/op op
  * @apiName planOp
  *
  * @apiSuccess {JSON} data Response data.
@@ -181,7 +181,7 @@ router.post('/op', function (req, res) {
  *
  * 查询计划
  *
- * @api {post} /api/plan/query
+ * @api {post} /api/plan/query query
  * @apiName planQuery
  *
  * @apiSuccess {JSON} data Response data.
@@ -217,7 +217,7 @@ router.post('/query', function (req, res) {
  *
  * 导出计划到Word
  *
- * @api {post} /api/plan/export
+ * @api {post} /api/plan/export export
  * @apiName planExport
  *
  * @apiSuccess {JSON} data Response data.

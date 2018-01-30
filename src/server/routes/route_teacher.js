@@ -14,7 +14,7 @@ const moment = require('../middlewares/moment');
  *
  * （教师）获取全站信息列表
  *
- * @api {get} /api/teacher/query
+ * @api {get} /api/teacher/query query
  * @apiName teacherQuery
  *
  * @apiSuccess {JSON} data Response data.
@@ -85,7 +85,7 @@ router.get('/query', function (req, res) {
  *
  * （教师）删除信息
  *
- * @api {post} /api/teacher/delete
+ * @api {post} /api/teacher/delete delete
  * @apiName teacherDelete
  *
  * @apiSuccess {JSON} data Response data.

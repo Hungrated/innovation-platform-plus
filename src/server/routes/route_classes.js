@@ -10,7 +10,7 @@ const Class = db.Class;
  *
  * 获取班级列表
  *
- * @api {get} /api/class/query
+ * @api {get} /api/class/query query
  * @apiName classQuery
  *
  * @apiSuccess {JSON} data Response data.
@@ -57,7 +57,7 @@ router.post('/query', function (req, res) {
  *
  * 切换班级状态
  *
- * @api {post} /api/class/switch
+ * @api {post} /api/class/switch switch
  * @apiName classSwitch
  *
  * @apiSuccess {JSON} data Response data.
