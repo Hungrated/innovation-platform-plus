@@ -97,12 +97,12 @@ module.exports = {
 
   BLOG_PUB_SUCCESSFUL: {
     'status': 3000,
-    'msg': '博文发布成功'
+    'msg': '文章发布成功'
   },
 
   BLOG_PUB_FAILED: {
     'status': 3001,
-    'msg': '博文发布失败'
+    'msg': '文章发布失败'
   },
 
   BLOG_LIST_FETCH_FAILED: {

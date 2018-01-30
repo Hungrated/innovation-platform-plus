@@ -1,4 +1,3 @@
-/* eslint-disable no-tabs */
 const express = require('express');
 const router = express.Router();
 
@@ -20,16 +19,16 @@ let objMulter = multer({
 });
 
 /**
- * @api {post} /api/profile/modify 修改用户资料
+ *
+ * 更新用户档案
+ *
+ * @api {post} /api/profile/modify modify
  * @apiName profileModify
  * @apiGroup Profile
- * @apiPermission user
+ * @apiVersion 2.1.0
+ * @apiPermission user.student
  *
- * @apiDescription 提供用户资料修改接口
- * 用户可修改的资料有：
- * 性别、出生日期、手机号码、自述
- *
- * @apiSampleRequest /api/profile/modify
+ * @apiDescription 修改用户资料。用户可修改的资料有：性别、出生日期、手机号码、自述。
  *
  * @apiParam {Number} school_id  用户学号
  * @apiParam {String} sex 用户性别
@@ -37,30 +36,23 @@ let objMulter = multer({
  * @apiParam {String} phone_num 用户手机号码
  * @apiParam {String} description 用户自述
  *
- * @apiParamExample {json} Request-Example:
- *     {
- *      	"school_id": 14051531,
- *      	"sex": "男",
- *      	"birth_date": "1996-4-29",
- *      	"phone_num": "135xxxx6570",
- *      	"description": "A dream pursuer"
- *     }
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "school_id": 14051531,
+ *     "sex": "男",
+ *     "birth_date": "1996-4-29",
+ *     "phone_num": "135xxxx6570",
+ *     "description": "A dream pursuer"
+ * }
  *
- * @apiSuccess {json} data Response data.
- * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "status": 2000,
- *       "msg": "档案更新成功"
- *     }
- *
- * @apiError profileModifyFailed 用户档案更新失败
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "status": 2001,
- *       "msg": "档案更新失败"
- *     }
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 2000,
+ *     "msg": "档案更新成功"
+ * }
  */
 router.post('/modify', function (req, res) {
   // modify a profile
@@ -95,13 +87,32 @@ router.post('/modify', function (req, res) {
 
 /**
  *
- * 修改用户头像
+ * 更新用户头像
  *
- * @api {post} /api/profile/avatar
+ * @api {post} /api/profile/avatar avatar
  * @apiName profileAvatar
+ * @apiGroup Profile
+ * @apiVersion 2.1.0
+ * @apiPermission user.student
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 用户通过上传图片修改头像。
  *
+ * @apiParam {File} avatar 头像图片
+ * @apiParam {Number} school_id 学生学号
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "avatar": <avatar.jpg>,
+ *     "school_id": 14051531
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 2000,
+ *     "msg": "档案更新成功"
+ * }
  */
 router.post('/avatar', objMulter.any(), function (req, res, next) {
   // upload an avatar
@@ -168,11 +179,42 @@ router.post('/avatar', function (req, res) {
  *
  * 获取用户资料
  *
- * @api {post} /api/profile/query
+ * @api {post} /api/profile/query query
  * @apiName profileQuery
+ * @apiGroup Profile
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 用户通过上传图片修改头像。
  *
+ * @apiParam request 请求条件：可发送"all"获取所有资料，或根据学号、当前选课号或详细模式查询所需信息
+ *
+ * @apiParamExample {json} 请求示例1
+ * {
+ *     "request": "all"
+ * }
+ * @apiParamExample {json} 请求示例2
+ * {
+ *     "request": 14051531
+ * }
+ * @apiParamExample {json} 请求示例3
+ * {
+ *     "request": {
+ *         "cur_class": "(2017-2018-1)-S0500560-40429-2"
+ *     }
+ * }
+ *
+ * @apiParam {Object} request 请求条件
+ *
+ * @apiParamExample {json} 请求示例4
+ * {
+ *     "request": {
+ *         "school_id": 14051531,
+ *         "details": true
+ *     }
+ * }
+ *
+ * @apiSuccess {Array} data 返回根据上述条件所请求的信息
  */
 router.post('/query', function (req, res, next) {
   // parse req data

@@ -27,57 +27,126 @@ let objMulter = multer({
  *
  * （教师）用户注册
  *
- * @api {post} /api/user/reg
+ * @api {post} /api/user/reg reg
  * @apiName userReg
+ * @apiGroup User
+ * @apiVersion 2.1.0
+ * @apiPermission administrator
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师用户注册。
  *
+ * @apiParam {Number} school_id 教师工号
+ * @apiParam {String} name 教师姓名
+ * @apiParam {String} password 密码
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "school_id": 40429,
+ *     "name": "邬惠峰",
+ *     "password": "teacher"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 1000,
+ *     "msg": "注册成功"
+ * }
  */
 router.post('/reg', function (req, res) {
   // only for teachers, only in backend
-  const {id, name, password, identity} = req.body;
-  if (!(id || name || password || identity)) { return res.json(statusLib.REG_FAILED); }
+  const {id, name, password} = req.body;
+  if (!(id || name || password)) { return res.json(statusLib.REG_FAILED); }
 
-  if (identity !== 'teacher') {
-    res.json(statusLib.REG_FAILED);
-    console.log('identity wrong');
-  } else {
-    User.create({
-      username: id.toString(),
-      password: password,
-      identity: identity
-    })
-      .then(function (user) {
-        Profile.create({
-          school_id: id,
-          name: name,
-          user_id: user.dataValues.id
-        })
-          .then(function () {
-            res.json(statusLib.REG_SUCCESSFUL);
-            console.log('teacher reg successful');
-          })
-          .catch(function (e) {
-            console.error(e);
-            res.json(statusLib.CONNECTION_ERROR);
-          });
+  User.create({
+    username: id.toString(),
+    password: password,
+    identity: 'teacher'
+  })
+    .then(function (user) {
+      Profile.create({
+        school_id: id,
+        name: name,
+        user_id: user.dataValues.id
       })
-      .catch(function (e) {
-        console.error(e);
-        res.json(statusLib.CONNECTION_ERROR);
-      });
-  }
+        .then(function () {
+          res.json(statusLib.REG_SUCCESSFUL);
+          console.log('teacher reg successful');
+        })
+        .catch(function (e) {
+          console.error(e);
+          res.json(statusLib.CONNECTION_ERROR);
+        });
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
 });
 
 /**
  *
  * 学生用户解析
  *
- * @api {post} /api/user/parse
+ * @api {post} /api/user/parse parse
  * @apiName userParse
+ * @apiGroup User
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 学生用户解析。上传一个给定格式的Excel表格，返回解析的学生用户注册信息，含用户名和初始密码。
  *
+ * @apiParam {File} excel 指定电子表格
+ *
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "file": <教学班点名册.xls>
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {Object} classData 班级信息
+ * @apiSuccess {Array} userArr 待注册学生用户信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 1300,
+ *     "msg": "学生信息解析成功",
+ *     "classData": {
+ *         "year": "2017-2018",
+ *         "term": "1",
+ *         "class_id": "(2017-2018-1)-S0500560-40429-2",
+ *         "cname": "创新综合实践",
+ *         "time": "周六第6,7节{第1-17周};周六第8,9节{第1-17周}",
+ *         "loc": "第1教研楼608;第1教研楼608",
+ *         "status": "active",
+ *         "teacher_id": 40429
+ *     },
+ *     "userArr": [
+ *         {
+ *             "username": "14051531",
+ *             "password": "14051531",
+ *             "name": "章梓航",
+ *             "school_id": 14051531,
+ *             "class_id": 14052313,
+ *             "grade": "2014",
+ *             "cur_class": "(2017-2018-1)-S0500566-40429-2",
+ *             "supervisor": "邬惠峰"
+ *         },
+ *         {
+ *             "username": "14051309",
+ *             "password": "14051309",
+ *             "name": "陈钧博",
+ *             "school_id": 14051309,
+ *             "class_id": 14052312,
+ *             "grade": "2014",
+ *             "cur_class": "(2017-2018-1)-S0500566-40429-2",
+ *             "supervisor": "邬惠峰"
+ *         }
+ *     ]
+ * }
  */
 router.post('/parse', objMulter.any(), function (req, res, next) {
   // XLS file upload
@@ -176,11 +245,65 @@ router.post('/parse', function (req, res) {
  *
  * 学生用户导入
  *
- * @api {post} /api/user/import
+ * @api {post} /api/user/import import
  * @apiName userImport
+ * @apiGroup User
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 学生用户导入。
+ * 将 User - parse 接口获得的用户信息确认后进行批量注册，同时将班级信息也存入数据库。
  *
+ * @apiParam {Number} teacher_id 指定电子表格
+ * @apiParam {Object} classData 班级信息
+ * @apiParam {Array} userArr 待注册学生用户信息
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "teacher_id": 40429,
+ *     "classData": {
+ *         "year": "2017-2018",
+ *         "term": "1",
+ *         "class_id": "(2017-2018-1)-S0500560-40429-2",
+ *         "cname": "创新综合实践",
+ *         "time": "周六第6,7节{第1-17周};周六第8,9节{第1-17周}",
+ *         "loc": "第1教研楼608;第1教研楼608",
+ *         "status": "active",
+ *         "teacher_id": 40429
+ *     },
+ *     "userArr": [
+ *         {
+ *             "username": "14051531",
+ *             "password": "14051531",
+ *             "name": "章梓航",
+ *             "school_id": 14051531,
+ *             "class_id": 14052313,
+ *             "grade": "2014",
+ *             "cur_class": "(2017-2018-1)-S0500566-40429-2",
+ *             "supervisor": "邬惠峰"
+ *         },
+ *         {
+ *             "username": "14051309",
+ *             "password": "14051309",
+ *             "name": "陈钧博",
+ *             "school_id": 14051309,
+ *             "class_id": 14052312,
+ *             "grade": "2014",
+ *             "cur_class": "(2017-2018-1)-S0500566-40429-2",
+ *             "supervisor": "邬惠峰"
+ *         }
+ *     ]
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ *
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 1400,
+ *     "msg": "学生信息导入成功"
+ * }
  */
 router.post('/import', function (req, res, next) {
   // validate teacher identity
@@ -322,11 +445,42 @@ router.post('/import', function (req, res) {
  *
  * 用户登录
  *
- * @api {post} /api/user/login
+ * @api {post} /api/user/login login
  * @apiName userLogin
+ * @apiGroup User
+ * @apiVersion 2.1.0
+ * @apiPermission none
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 用户登入系统。
  *
+ * @apiParam {String} username 用户名（学号/工号）
+ * @apiParam {String} password 密码
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "username": "14051531",
+ *     "password": "14051531"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {Number} id 用户编号
+ * @apiSuccess {String} username 用户名
+ * @apiSuccess {Number} school_id 用户名
+ * @apiSuccess {String} name 姓名
+ * @apiSuccess {String} cur_class 当前选课号
+ *
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 1100,
+ *     "msg": "登录成功",
+ *     "id":16,
+ *     "username":"14051531",
+ *     "school_id":14051531,
+ *     "name":"章梓航",
+ *     "cur_class":"(2017-2018-1)-S0500560-40429-2"
+ * }
  */
 router.post('/login', function (req, res) {
   const {username, password} = req.body;
@@ -389,11 +543,25 @@ router.post('/login', function (req, res) {
  *
  * 用户登出
  *
- * @api {post} /api/user/logout
+ * @api {post} /api/user/logout logout
  * @apiName userLogout
+ * @apiGroup User
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 用户登出系统。
  *
+ * @apiParamExample {json} 请求示例
+ * {}
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 1200,
+ *     "msg": "已退出登录"
+ * }
  */
 router.post('/logout', function (req, res) {
   req.session.isLogin = false;
@@ -407,11 +575,33 @@ router.post('/logout', function (req, res) {
  *
  * 用户修改密码
  *
- * @api {post} /api/user/pwdmod
+ * @api {post} /api/user/pwdmod pwdmod
  * @apiName userPwdMod
+ * @apiGroup User
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 用户修改密码。
  *
+ * @apiParam {String} username 用户名（学号/工号）
+ * @apiParam {String} password 当前密码
+ * @apiParam {String} newPassword 新密码
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "username": "14051531",
+ *     "password": "14051531"，
+ *     "newPassword": "14051531"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 1500,
+ *     "msg": "密码修改成功"
+ * }
  */
 router.post('/pwdmod', function (req, res, next) {
   if (!req.session.isLogin) {

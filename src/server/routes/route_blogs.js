@@ -18,11 +18,41 @@ const Comment = db.Comment;
  *
  * 发表文章
  *
- * @api {post} /api/blog/publish
+ * @api {post} /api/blog/publish publish
  * @apiName blogPublish
+ * @apiGroup Blog
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 用户发表文章。
  *
+ * @apiParam {String} type 文章类别
+ * @apiParam {String} title 标题
+ * @apiParam {String} description 简介
+ * @apiParam {String} content 内容
+ * @apiParam {String} [cover_url] 封面图地址
+ * @apiParam {String} [photo_url] 所有图片地址
+ * @apiParam {Number} aurhor_id 作者编号
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "type": "project",
+ *     "title": "title0",
+ *     "description": "description0",
+ *     "content": "content0",
+ *     "cover_url": "",
+ *     "photo_url": "",
+ *     "author_id": 14051531
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 3000,
+ *     "msg": "文章发布成功"
+ * }
  */
 router.post('/publish', function (req, res) {
   // publish a blog(project or event)
@@ -46,13 +76,29 @@ router.post('/publish', function (req, res) {
 
 /**
  *
- * 获取文章
+ * 获取文章列表
  *
- * @api {post} /api/blog/query
+ * @api {post} /api/blog/query query
  * @apiName blogQuery
+ * @apiGroup Blog
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 根据条件查询并获取文章列表。
  *
+ * @apiParam request 查询条件：文章类型或用户编号
+ *
+ * @apiParamExample {json} 请求示例1
+ * {
+ *     "request": "project"
+ * }
+ *
+ * @apiParamExample {json} 请求示例2
+ * {
+ *     "request": 14051531
+ * }
+ *
+ * @apiSuccess {Array} data 文章列表信息
  */
 router.post('/query', function (req, res) {
   // fetch blog list for brief browsing
