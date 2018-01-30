@@ -83,5 +83,5 @@ Moment.belongsTo(Profile, {
 Moment.sync().then();
 
 module.exports = {
-  User, Profile, Blog, Comment, Plan, File, Banner, Class, Meeting, Moment, Final
+  User, Profile, Blog, Comment, Plan, File, Banner, Class, Meeting, Moment, Final, Label
 };

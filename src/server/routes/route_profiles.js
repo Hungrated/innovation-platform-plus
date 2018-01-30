@@ -214,7 +214,7 @@ router.post('/avatar', function (req, res) {
  *     }
  * }
  *
- * @apiSuccess {Array} data 返回根据上述条件所请求的信息
+ * @apiSuccess {Array} data 返回根据上述条件所请求的信息列表
  */
 router.post('/query', function (req, res, next) {
   // parse req data

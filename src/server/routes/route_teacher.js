@@ -16,9 +16,18 @@ const moment = require('../middlewares/moment');
  *
  * @api {get} /api/teacher/query teacher.query
  * @apiName teacherQuery
+ * @apiGroup Teacher
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师根据查询条件获取全站信息列表。
  *
+ * @apiParam request 请求条件：可发送"all"获取所有资料，或根据学号、当前选课号或详细模式查询所需信息
+ *
+ * @apiParamExample {url} 请求示例
+ * teacher/query?type=blog|plan|meeting|resource|comment|class|banner|label
+ *
+ * @apiSuccess {Array} data 返回根据上述条件所请求的信息列表
  */
 router.get('/query', function (req, res) {
   // query by type
@@ -62,6 +71,9 @@ router.get('/query', function (req, res) {
     case 'banner':
       database = db.Banner;
       break;
+    case 'label':
+      database = db.Label;
+      break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
   }
@@ -87,9 +99,29 @@ router.get('/query', function (req, res) {
  *
  * @api {post} /api/teacher/delete teacher.delete
  * @apiName teacherDelete
+ * @apiGroup Teacher
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师根据查询条件删除特定信息。
  *
+ * @apiParam {String} type 目标信息类型："blog"|"meeting"|"resource"|"comment"|"banner"|"label"
+ * @apiParam {String} id 目标信息编号
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "type": "resource",
+ *     "id": "fil963a43"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 8000,
+ *     "msg": "信息删除成功"
+ * }
  */
 router.post('/delete', function (req, res, next) {
   let database = null;

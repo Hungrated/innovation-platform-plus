@@ -29,7 +29,7 @@ let objMulter = multer({
  *
  * @apiDescription 获取首页轮播图列表。
  *
- * @apiSuccess {Array} data 轮播图列表信息
+ * @apiSuccess {Array} data 轮播图列表
  * @apiSuccessExample {json} 成功返回示例
  * HTTP/1.1 200 OK
  * [

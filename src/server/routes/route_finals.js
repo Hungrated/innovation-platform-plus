@@ -19,13 +19,34 @@ let objMulter = multer({
 
 /**
  *
- * 上传期末作业
+ * 上传或更改期末作业
  *
  * @api {post} /api/final/upload final.upload
  * @apiName finalUpload
+ * @apiGroup Final
+ * @apiVersion 2.1.0
+ * @apiPermission user.student
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 学生上传或更改期末作业。上传方式为form-data。仅支持上传zip文件。
  *
+ * @apiParam {File} cswk 期末作业压缩包
+ * @apiParam {String} class_id 学生选课号
+ * @apiParam {Number} student_id 学生学号
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "cswk": <cswk.zip>,
+ *     "school_id": 14051531,
+ *     "student_id": 14051531
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 2000,
+ *     "msg": "档案更新成功"
+ * }
  */
 router.post('/upload', objMulter.any(), function (req, res, next) {
   // upload a course-work file
@@ -98,13 +119,39 @@ router.post('/upload', function (req, res) {
 
 /**
  *
- * 获取期末评分列表
+ * 获取期末信息
  *
  * @api {post} /api/final/query final.query
  * @apiName finalQuery
+ * @apiGroup Final
+ * @apiVersion 2.1.0
+ * @apiPermission user.student
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 获取期末信息。
  *
+ * @apiParam {String} class_id 班级编号
+ * @apiParam {Number} student_id 学生学号
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "class_id": "(2017-2018-1)-S0500560-40429-2"，
+ *     "student_id": 14051531
+ * }
+ *
+ * @apiSuccess {Array} data 期末总评列表
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * [
+ *     {
+ *         "cswk_id":"cwka05ae5",
+ *         "class_id":"(2017-2018-1)-S0500560-40429-2",
+ *         "cswk_src":"/api/download?cswk=cwka05ae5.zip",
+ *         "rate":"A",
+ *         "remark":"优 秀",
+ *         "created_at":"2018-01-23T17:17:28.000Z",
+ *         "updated_at":"2018-01-26T04:50:02.000Z",
+ *         "student_id":14051531
+ *     }
+ * ]
  */
 router.post('/query', function (req, res) {
   let where = {
@@ -133,9 +180,29 @@ router.post('/query', function (req, res) {
  *
  * @api {post} /api/final/rate final.rate
  * @apiName finalRate
+ * @apiGroup Final
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师进行期末总评。
  *
+ * @apiParam {String} cswk_id 期末总评编号
+ * @apiParam {Number} rate 期末评级
+ * @apiParam {String} remark 期末评语
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "cswk_id": "(2017-2018-1)-S0500560-40429-2",
+ *     "student_id": 14051531
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 5300,
+ *     "msg": "总评成功"
+ * }
  */
 router.post('/rate', function (req, res) {
   // a teacher rates a course-work
@@ -203,9 +270,26 @@ router.post('/rate', function (req, res) {
  *
  * @api {post} /api/final/delete final.delete
  * @apiName finalDelete
+ * @apiGroup Final
+ * @apiVersion 2.1.0
+ * @apiPermission user.student
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 删除期末作业。
  *
+ * @apiParam {String} cswk_src 期末作业下载链接
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "cswk_src":"/api/download?cswk=cwka05ae5.zip"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 8000,
+ *     "msg": "信息删除成功"
+ * }
  */
 router.post('/delete', function (req, res, next) {
   const cswkName = urlLib.parse(req.body.cswk_src, true).query.cswk;
@@ -251,6 +335,9 @@ router.post('/delete', function (req, res) {
  *
  * @api {post} /api/final/export final.export
  * @apiName finalExport
+ * @apiGroup Final
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
  * @apiSuccess {file} data Response data.
  *

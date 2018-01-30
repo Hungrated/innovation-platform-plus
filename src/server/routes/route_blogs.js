@@ -98,7 +98,7 @@ router.post('/publish', function (req, res) {
  *     "request": 14051531
  * }
  *
- * @apiSuccess {Array} data 文章列表信息
+ * @apiSuccess {Array} data 文章列表列表
  */
 router.post('/query', function (req, res) {
   // fetch blog list for brief browsing

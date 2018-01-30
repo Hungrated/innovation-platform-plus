@@ -182,12 +182,12 @@ module.exports = {
 
   PLAN_RATE_SUCCESSFUL: {
     'status': 5300,
-    'msg': '计划评价成功'
+    'msg': '总评成功'
   },
 
   PLAN_RATE_FAILED: {
     'status': 5301,
-    'msg': '计划评价失败'
+    'msg': '总评失败'
   },
 
   PLAN_QUERY_SUCCESSFUL: {

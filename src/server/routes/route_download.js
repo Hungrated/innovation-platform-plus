@@ -15,7 +15,8 @@ const statusLib = require('../libs/status');
  * @apiVersion 2.1.0
  * @apiPermission all / user
  *
- * @apiDescription 下载文件或图片。类型有：resource资源文件，avatar头像，banner首页轮播图，cswk期末作业。
+ * @apiDescription 下载文件或图片。
+ * 类型有："resource"资源文件，"avatar"头像，"banner"首页轮播图，"cswk"期末作业。
  *
  * @apiParamExample {url} 请求示例
  * download?resource=blg782148

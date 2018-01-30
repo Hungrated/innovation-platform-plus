@@ -1,21 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../models/db_global');
-const statusLib = require('../libs/status');
-
-const Final = db.Final;
-
-const path = require('../app_paths');
-const pathLib = require('path');
-const urlLib = require('url');
-
-const fs = require('fs');
-const multer = require('multer');
-
-let objMulter = multer({
-  dest: path.final // file upload destination
-});
+// const db = require('../models/db_global');
+// const statusLib = require('../libs/status');
+//
+// const Final = db.Final;
+//
+// const path = require('../app_paths');
+// const pathLib = require('path');
+// const urlLib = require('url');
+//
+// const fs = require('fs');
+// const multer = require('multer');
 
 /**
  *
@@ -23,6 +19,9 @@ let objMulter = multer({
  *
  * @api {post} /api/label/query label.query
  * @apiName labelQuery
+ * @apiGroup Label
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
  * @apiSuccess {JSON} data Response data.
  *
