@@ -18,7 +18,7 @@ const Comment = db.Comment;
  *
  * 发表文章
  *
- * @api {post} /api/blog/publish publish
+ * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
  * @apiVersion 2.1.0
@@ -78,7 +78,7 @@ router.post('/publish', function (req, res) {
  *
  * 获取文章列表
  *
- * @api {post} /api/blog/query query
+ * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
  * @apiVersion 2.1.0
@@ -134,7 +134,7 @@ router.post('/query', function (req, res) {
  *
  * 获取文章详情
  *
- * @api {get} /api/blog/details?index=:blog_id details
+ * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
  * @apiVersion 2.1.0

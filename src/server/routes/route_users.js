@@ -27,7 +27,7 @@ let objMulter = multer({
  *
  * （教师）用户注册
  *
- * @api {post} /api/user/reg reg
+ * @api {post} /api/user/reg user.reg
  * @apiName userReg
  * @apiGroup User
  * @apiVersion 2.1.0
@@ -90,13 +90,15 @@ router.post('/reg', function (req, res) {
  *
  * 学生用户解析
  *
- * @api {post} /api/user/parse parse
+ * @api {post} /api/user/parse user.parse
  * @apiName userParse
  * @apiGroup User
  * @apiVersion 2.1.0
  * @apiPermission user.teacher
  *
- * @apiDescription 学生用户解析。上传一个给定格式的Excel表格，返回解析的学生用户注册信息，含用户名和初始密码。
+ * @apiDescription 学生用户解析。
+ * 上传一个给定格式的Excel表格，返回解析的学生用户注册信息，含用户名和初始密码。
+ * 表格上传方式为form-data。
  *
  * @apiParam {File} excel 指定电子表格
  *
@@ -245,7 +247,7 @@ router.post('/parse', function (req, res) {
  *
  * 学生用户导入
  *
- * @api {post} /api/user/import import
+ * @api {post} /api/user/import user.import
  * @apiName userImport
  * @apiGroup User
  * @apiVersion 2.1.0
@@ -445,11 +447,11 @@ router.post('/import', function (req, res) {
  *
  * 用户登录
  *
- * @api {post} /api/user/login login
+ * @api {post} /api/user/login user.login
  * @apiName userLogin
  * @apiGroup User
  * @apiVersion 2.1.0
- * @apiPermission none
+ * @apiPermission all
  *
  * @apiDescription 用户登入系统。
  *
@@ -543,7 +545,7 @@ router.post('/login', function (req, res) {
  *
  * 用户登出
  *
- * @api {post} /api/user/logout logout
+ * @api {post} /api/user/logout user.logout
  * @apiName userLogout
  * @apiGroup User
  * @apiVersion 2.1.0
@@ -575,7 +577,7 @@ router.post('/logout', function (req, res) {
  *
  * 用户修改密码
  *
- * @api {post} /api/user/pwdmod pwdmod
+ * @api {post} /api/user/pwdmod user.pwdmod
  * @apiName userPwdMod
  * @apiGroup User
  * @apiVersion 2.1.0

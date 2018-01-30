@@ -21,7 +21,7 @@ let objMulter = multer({
  *
  * 上传期末作业
  *
- * @api {post} /api/final/upload upload
+ * @api {post} /api/final/upload final.upload
  * @apiName finalUpload
  *
  * @apiSuccess {JSON} data Response data.
@@ -100,7 +100,7 @@ router.post('/upload', function (req, res) {
  *
  * 获取期末评分列表
  *
- * @api {post} /api/final/query query
+ * @api {post} /api/final/query final.query
  * @apiName finalQuery
  *
  * @apiSuccess {JSON} data Response data.
@@ -131,7 +131,7 @@ router.post('/query', function (req, res) {
  *
  * 期末总评
  *
- * @api {post} /api/final/rate rate
+ * @api {post} /api/final/rate final.rate
  * @apiName finalRate
  *
  * @apiSuccess {JSON} data Response data.
@@ -201,7 +201,7 @@ router.post('/rate', function (req, res) {
  *
  * 删除期末作业
  *
- * @api {post} /api/final/delete delete
+ * @api {post} /api/final/delete final.delete
  * @apiName finalDelete
  *
  * @apiSuccess {JSON} data Response data.
@@ -249,7 +249,7 @@ router.post('/delete', function (req, res) {
  *
  * 导出期末成绩到Excel
  *
- * @api {post} /api/final/export export
+ * @api {post} /api/final/export final.export
  * @apiName finalExport
  *
  * @apiSuccess {file} data Response data.

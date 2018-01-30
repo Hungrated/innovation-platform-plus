@@ -21,11 +21,35 @@ let objMulter = multer({
  *
  * 获取首页轮播图列表
  *
- * @api {get} /api/banner fetch
- * @apiName banner
+ * @api {get} /api/banner banner.fetch
+ * @apiName fetch
+ * @apiGroup Banner
+ * @apiVersion 2.1.0
+ * @apiPermission all
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 获取首页轮播图列表。
  *
+ * @apiSuccess {Array} data 轮播图列表信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * [
+ *     {
+ *         "img_id": "bnr7e8d5d",
+ *         "src": "/api/download?banner=bnr7e8d5d.jpg",
+ *         "status": "active",
+ *         "created_at": "2018-01-26T09:19:36.000Z",
+ *         "updated_at": "2018-01-26T09:19:36.000Z",
+ *         "uploader_id": 40429
+ *     },
+ *     {
+ *         "img_id": "bnr799d27",
+ *         "src": "/api/download?banner=bnr799d27.jpg",
+ *         "status": "active",
+ *         "created_at": "2018-01-26T09:19:30.000Z",
+ *         "updated_at": "2018-01-26T09:19:30.000Z",
+ *         "uploader_id": 40429
+ *     }
+ * ]
  */
 router.get('/', function (req, res) {
   Banner.findAll({
@@ -50,11 +74,30 @@ router.get('/', function (req, res) {
  *
  * 上传首页轮播图
  *
- * @api {post} /api/banner/upload upload
+ * @api {post} /api/banner/upload banner.upload
  * @apiName bannerUpload
+ * @apiGroup Banner
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师上传首页轮播图。上传方式为form-data。
  *
+ * @apiParam {File} banner 头像图片
+ * @apiParam {Number} uploader_id 上传者编号
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "banner": <banner.jpg>,
+ *     "uploader_id": 40429
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 8100,
+ *     "msg": "轮播图上传成功"
+ * }
  */
 router.post('/upload', objMulter.any(), function (req, res, next) { // upload a banner img
   const id = 'bnr' + uid.generate();
@@ -94,11 +137,30 @@ router.post('/upload', function (req, res) { // update database record
  *
  * 切换首页轮播图状态
  *
- * @api {post} /api/banner/switch switch
+ * @api {post} /api/banner/switch banner.switch
  * @apiName bannerSwitch
+ * @apiGroup Banner
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师切换首页轮播图状态。
  *
+ * @apiParam {String} img_id 头像图片
+ * @apiParam {Number} op 操作：0 存档；1 活跃
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "img_id": "bnr7e8d5d",
+ *     "op": 0
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 8200,
+ *     "msg": "轮播图状态更改成功"
+ * }
  */
 router.post('/switch', function (req, res) {
   Banner.update({
@@ -123,11 +185,30 @@ router.post('/switch', function (req, res) {
  *
  * 修改当前首页轮播图
  *
- * @api {post} /api/banner/modify modify
+ * @api {post} /api/banner/modify banner.modify
  * @apiName bannerModify
+ * @apiGroup Banner
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师修改首页轮播图。图片上传方式为form-data。
  *
+ * @apiParam {File} banner 首页轮播图
+ * @apiParam {String} img_id 轮播图编号
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "banner": <banner.jpg>,
+ *     "img_id": "bnr7e8d5d",
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 8300,
+ *     "msg": "轮播图更改成功"
+ * }
  */
 router.post('/modify', objMulter.any(), function (req, res) {
   // check existence of previous banner image file

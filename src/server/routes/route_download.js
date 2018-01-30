@@ -11,9 +11,16 @@ const statusLib = require('../libs/status');
  *
  * @api {get} /api/download?:type=:id download
  * @apiName download
+ * @apiGroup Download
+ * @apiVersion 2.1.0
+ * @apiPermission all / user
+ *
+ * @apiDescription 下载文件或图片。类型有：resource资源文件，avatar头像，banner首页轮播图，cswk期末作业。
+ *
+ * @apiParamExample {url} 请求示例
+ * download?resource=blg782148
  *
  * @apiSuccess {file} data Response data.
- *
  */
 router.get('/', function (req, res) { // download a file
   const raw = urlLib.parse(req.url, true).query;

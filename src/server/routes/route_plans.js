@@ -22,11 +22,43 @@ const officeGen = require('officegen');
  *
  * 提交计划
  *
- * @api {post} /api/plan/submit submit
+ * @api {post} /api/plan/submit plan.submit
  * @apiName planSubmit
+ * @apiGroup Plan
+ * @apiVersion 2.1.0
+ * @apiPermission user.student
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 学生提交计划。
  *
+ * @apiParam {Number} student_id 用户编号
+ * @apiParam {String} year 学年
+ * @apiParam {String} term 学期
+ * @apiParam {String} content 计划内容
+ * @apiParam {String} start 文章编号
+ * @apiParam {String} deadline 文章编号
+ * @apiParam {String} class_id 当前选课号
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "student_id": 14051531,
+ *     "year": "2017-2018",
+ *     "term": "1",
+ *     "content": "创新实践平台开发",
+ *     "start": "2017-10-11",
+ *     "deadline": "2017-12-29",
+ *     "class_id": "(2017-2018-1)-S0500560-40429-2"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} plan_id 计划编号
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 5000,
+ *     "msg": "计划提交成功",
+ *     "plan_id": "pln9c43dc"
+ * }
  */
 router.post('/submit', function (req, res) {
   // a student create a plan
@@ -76,11 +108,41 @@ router.post('/submit', function (req, res) {
  *
  * 修改计划
  *
- * @api {post} /api/plan/modify modify
+ * @api {post} /api/plan/modify plan.modify
  * @apiName planModify
+ * @apiGroup Plan
+ * @apiVersion 2.1.0
+ * @apiPermission user.student
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 学生修改计划。
  *
+ * @apiParam {Number} student_id 用户编号
+ * @apiParam {String} year 学年
+ * @apiParam {String} term 学期
+ * @apiParam {String} content 计划内容
+ * @apiParam {String} start 文章编号
+ * @apiParam {String} deadline 文章编号
+ * @apiParam {String} plan_id 计划编号
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "student_id": 14051531,
+ *     "year": "2017-2018",
+ *     "term": "1",
+ *     "content": "创新实践平台开发V2.0.0",
+ *     "start": "2018-01-04",
+ *     "deadline": "2018-01-19",
+ *     "plan_id": "pln9c43dc"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 5100,
+ *     "msg": "计划修改成功"
+ * }
  */
 router.post('/modify', function (req, res, next) {
   // check plan status before modification
@@ -148,11 +210,31 @@ router.post('/modify', function (req, res) {
  *
  * （教师）审核计划
  *
- * @api {post} /api/plan/op op
+ * @api {post} /api/plan/op plan.op
  * @apiName planOp
+ * @apiGroup Plan
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师审核学生计划。
  *
+ * @apiParam {String} plan_id 计划编号
+ * @apiParam {Number} op 操作：0 不通过；1 通过
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "plan_id": "pln9c43dc"，
+ *     "op": 1
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 5200,
+ *     "msg": "计划审核成功"
+ * }
  */
 router.post('/op', function (req, res) {
   // teacher changes plan status
@@ -181,11 +263,58 @@ router.post('/op', function (req, res) {
  *
  * 查询计划
  *
- * @api {post} /api/plan/query query
+ * @api {post} /api/plan/query plan.query
  * @apiName planQuery
+ * @apiGroup Plan
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 获取学生计划列表。
  *
+ * @apiParam request 查询条件："all"或用户编号
+ *
+ * @apiParamExample {json} 请求示例1
+ * {
+ *     "request": "all"
+ * }
+ * @apiParamExample {json} 请求示例2
+ * {
+ *     "request": 14051531
+ * }
+ *
+ * @apiSuccess {Array} data 计划列表
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * [
+ *     {
+ *         "plan_id": "pln9c43dc",
+ *         "year": "2017-2018",
+ *         "term": "1",
+ *         "content": "创新实践平台开发V2.0.0",
+ *         "start": "2018-01-04",
+ *         "deadline": "2018-01-19",
+ *         "status": "未审核",
+ *         "class_id": "(2017-2018-1)-S0500560-40429-2",
+ *         "created_at": "2018-01-30T05:50:22.000Z",
+ *         "updated_at": "2018-01-30T05:53:44.000Z",
+ *         "student_id": 14051531,
+ *         "submitTime": "2018-01-30 13:50:22"
+ *     },
+ *     {
+ *         "plan_id": "plnf1d5c4",
+ *         "year": "2017-2018",
+ *         "term": "1",
+ *         "content": "test0",
+ *         "start":"2018-01-26",
+ *         "deadline": "2018-01-27",
+ *         "status": "已通过",
+ *         "class_id": "(2017-2018-1)-S0500560-40429-2",
+ *         "created_at": "2018-01-25T17:15:25.000Z",
+ *         "updated_at": "2018-01-25T17:16:33.000Z",
+ *         "student_id": 14051531,
+ *         "submitTime": "2018-01-26 01:15:25"
+ *     }
+ * ]
  */
 router.post('/query', function (req, res) {
   // get list of all (or personal) plans
@@ -217,11 +346,22 @@ router.post('/query', function (req, res) {
  *
  * 导出计划到Word
  *
- * @api {post} /api/plan/export export
+ * @api {post} /api/plan/export plan.export
  * @apiName planExport
+ * @apiGroup Plan
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 教师导出学生个人计划表。
  *
+ * @apiParam {Number} student_id 学生学号
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "student_id": 14051531
+ * }
+ *
+ * @apiSuccess {file} data 包含学生个人计划信息的Word文档。
  */
 router.post('/export', function (req, res, next) {
   // fetch profile records from database

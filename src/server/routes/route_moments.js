@@ -12,7 +12,7 @@ const Profile = db.Profile;
  *
  * 获取动态列表
  *
- * @api {get} /api/moment/fetch?type=:type&limit=:limit fetch
+ * @api {get} /api/moment/fetch?type=:type&limit=:limit moment.fetch
  * @apiName momentFetch
  *
  * @apiSuccess {JSON} data Response data.

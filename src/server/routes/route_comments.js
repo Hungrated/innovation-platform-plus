@@ -10,7 +10,7 @@ const Comment = db.Comment;
  *
  * 发表评论
  *
- * @api {post} /api/comment/submit submit
+ * @api {post} /api/comment/submit comment.submit
  * @apiName commentSubmit
  * @apiGroup Comment
  * @apiVersion 2.1.0

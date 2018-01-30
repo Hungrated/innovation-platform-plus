@@ -27,11 +27,32 @@ router.use(objMulter.any()); // any file type
  *
  * 文件上传
  *
- * @api {post} /api/file/upload upload
+ * @api {post} /api/file/upload file.upload
  * @apiName fileUpload
+ * @apiGroup File
+ * @apiVersion 2.1.0
+ * @apiPermission user
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 用户上传资源文件。上传方式为form-data。
  *
+ * @apiParam {File} file 资源文件
+ * @apiParam {Number} school_id 上传者编号
+ * @apiParam {String} descriptions 文件描述
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "file": <file>,
+ *     "school_id": 14051531,
+ *     "descriptions": "A file"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 4000,
+ *     "msg": "资源文件上传成功"
+ * }
  */
 router.post('/upload', function (req, res) {
   // upload files: multipart/form-data
@@ -84,11 +105,60 @@ router.post('/upload', function (req, res) {
  *
  * 获取文件列表
  *
- * @api {post} /api/file/query query
+ * @api {post} /api/file/query file.query
  * @apiName fileQuery
+ * @apiGroup File
+ * @apiVersion 2.1.0
+ * @apiPermission user.teacher
  *
- * @apiSuccess {JSON} data Response data.
+ * @apiDescription 获取资源文件列表。
  *
+ * @apiParam request 查询条件："all"或用户编号
+ *
+ * @apiParamExample {json} 请求示例1
+ * {
+ *     "request": "all"
+ * }
+ * @apiParamExample {json} 请求示例2
+ * {
+ *     "request": 14051531
+ * }
+ *
+ * @apiSuccess {Array} data 班级列表
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * [
+ *     {
+ *         "file_id": "fil963a43",
+ *         "labels": null,
+ *         "filename": "bg02.jpg",
+ *         "size": 17011752,
+ *         "url": "/api/download?resource=55c9be61cb025487e99e04458ea52334.jpg",
+ *         "description": "another background image",
+ *         "created_at": "2018-01-30T05:34:25.000Z",
+ *         "updated_at": "2018-01-30T05:34:25.000Z",
+ *         "uploader_id": 14051531,
+ *         "profile": {
+ *             "name": "章梓航"
+ *         },
+ *         "uploadTime": "2018-01-30 13:34:25"
+ *     },
+ *     {
+ *         "file_id": "fil4e108b",
+ *         "labels": null,
+ *         "filename": "bg01.jpg",
+ *         "size": 15936775,
+ *         "url": "/api/download?resource=9405ba39a6fbffd4e8c673a529316ed6.jpg",
+ *         "description": "a background image",
+ *         "created_at": "2018-01-30T05:34:09.000Z",
+ *         "updated_at": "2018-01-30T05:34:09.000Z",
+ *         "uploader_id": 14051531,
+ *         "profile": {
+ *             "name": "章梓航"
+ *         },
+ *         "uploadTime": "2018-01-30 13:34:09"
+ *     }
+ * ]
  */
 router.post('/query', function (req, res) {
   // fetch file list

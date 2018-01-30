@@ -22,7 +22,7 @@ let objMulter = multer({
  *
  * 更新用户档案
  *
- * @api {post} /api/profile/modify modify
+ * @api {post} /api/profile/modify profile.modify
  * @apiName profileModify
  * @apiGroup Profile
  * @apiVersion 2.1.0
@@ -89,13 +89,13 @@ router.post('/modify', function (req, res) {
  *
  * 更新用户头像
  *
- * @api {post} /api/profile/avatar avatar
+ * @api {post} /api/profile/avatar profile.avatar
  * @apiName profileAvatar
  * @apiGroup Profile
  * @apiVersion 2.1.0
  * @apiPermission user.student
  *
- * @apiDescription 用户通过上传图片修改头像。
+ * @apiDescription 用户通过上传图片修改头像。上传方式为form-data。
  *
  * @apiParam {File} avatar 头像图片
  * @apiParam {Number} school_id 学生学号
@@ -179,7 +179,7 @@ router.post('/avatar', function (req, res) {
  *
  * 获取用户资料
  *
- * @api {post} /api/profile/query query
+ * @api {post} /api/profile/query profile.query
  * @apiName profileQuery
  * @apiGroup Profile
  * @apiVersion 2.1.0
