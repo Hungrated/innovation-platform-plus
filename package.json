@@ -6,11 +6,11 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --config build/webpack.dev.conf.js & node src/server/bin/www",
-    "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "doc": "apidoc -i src/server/routes -o src/server/public/apidoc",
+    "start": "npm run dev",
     "build": "npm run doc & node build/build.js"
   },
   "dependencies": {
