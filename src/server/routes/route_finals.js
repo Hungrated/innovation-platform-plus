@@ -5,6 +5,7 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
 const Final = db.Final;
+const Profile = db.Profile;
 
 const path = require('../app_paths');
 const pathLib = require('path');
@@ -346,7 +347,27 @@ router.post('/delete', function (req, res) {
  *
  */
 router.post('/export', function (req, res, next) {
-  next();
+  Final.findAll({
+    where: {
+      class_id: req.body.class_id
+    },
+    order: [
+      ['created_at', 'DESC']
+    ],
+    include: [{
+      model: Profile,
+      attributes: ['name']
+    }]
+  })
+    .then(function (finalList) {
+      res.json(finalList);
+      console.log('final query successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+      console.log('moment fetch failed');
+    });
 });
 
 router.post('/export', function (req, res) {
