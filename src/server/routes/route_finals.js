@@ -13,6 +13,9 @@ const urlLib = require('url');
 const fs = require('fs');
 const multer = require('multer');
 
+const async = require('async');
+const officeGen = require('officegen');
+
 let objMulter = multer({
   dest: path.final // file upload destination
 });
@@ -343,6 +346,86 @@ router.post('/delete', function (req, res) {
  *
  */
 router.post('/export', function (req, res, next) {
+  next();
+});
+
+router.post('/export', function (req, res) {
+  // export final marks
+  const class_id = req.body.class_id;
+
+  // get export time & set filename
+  let curTime = new Date();
+  let exportTime = new Date(curTime.getTime() - curTime.getTimezoneOffset() * 60 * 1000);
+
+  // set filename
+  let fileName = 'final_export_' + class_id + '_' + exportTime.getTime() + '.xlsx';
+  let filePath = pathLib.join(path.finalout, fileName);
+
+  // create file
+  let xlsx = officeGen({
+    type: 'xlsx'
+  });
+
+  // officeGen.setVerboseMode ( true );
+
+  xlsx.on('finalize', function (written) {
+    console.log('Finish to create an Excel file.\nTotal bytes created: ' + written + '\n');
+  });
+
+  xlsx.on('error', function (err) {
+    console.log(err);
+  });
+
+  sheet = xlsx.makeNewSheet();
+  sheet.name = 'Excel Test';
+
+  // The direct option - two-dimensional array:
+  sheet.data[0] = [];
+  sheet.data[0][0] = 1;
+  sheet.data[1] = [];
+  sheet.data[1][3] = 'abc';
+  sheet.data[1][4] = 'More';
+  sheet.data[1][5] = 'Text';
+  sheet.data[1][6] = 'Here';
+  sheet.data[2] = [];
+  sheet.data[2][5] = 'abc';
+  sheet.data[2][6] = 900;
+  sheet.data[6] = [];
+  sheet.data[6][2] = 1972;
+
+  // Using setCell:
+  sheet.setCell('E7', 340);
+  sheet.setCell('I1', -3);
+  sheet.setCell('I2', 31.12);
+  sheet.setCell('G102', 'Hello World!');
+
+  // export file
+  let out = fs.createWriteStream(filePath);
+
+  out.on('error', function (err) {
+    console.log(err);
+  });
+
+  async.parallel([
+    function (done) {
+      out.on('close', function () {
+        console.log('final export successful');
+        res.json({
+          status: statusLib.PLAN_EXPORT_SUCCESSFUL.status,
+          msg: statusLib.PLAN_EXPORT_SUCCESSFUL.msg,
+          path: '/api/download?finals=' + fileName
+        });
+        done(null);
+      });
+      xlsx.generate(out);
+    }
+
+  ], function (err) {
+    if (err) {
+      console.log('error: ' + err);
+    }
+  });
+
 });
 
 module.exports = router;
