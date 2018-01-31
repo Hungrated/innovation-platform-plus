@@ -414,7 +414,12 @@ router.post('/export', function (req, res) {
   let filePath = pathLib.join(path.plans, fileName);
 
   // create file
-  let docx = officeGen('docx');
+  let docx = officeGen({
+    type: 'docx',
+    orientation: 'portrait'
+  });
+
+  // officeGen.setVerboseMode ( true );
 
   docx.on('error', function (err) {
     console.log(err);
@@ -428,14 +433,14 @@ router.post('/export', function (req, res) {
     shd: {
       fill: 'DDDDDD'
     },
-    fontFamily: '黑体'
+    fontFamily: 'Times New Roman'
   };
 
   let tableContentOpts = {
     cellColWidth: 1800,
     b: true,
     sz: 20,
-    fontFamily: '宋体'
+    fontFamily: 'Times New Roman'
   };
 
   let objLine = {
@@ -466,7 +471,7 @@ router.post('/export', function (req, res) {
   let objTitle = {
     type: 'text',
     val: '创新实践个人计划报告',
-    opt: {font_face: '黑体', bold: true, font_size: 24},
+    opt: {font_face: '黑体', bold: true, font_size: 22},
     lopt: {align: 'center'}
   };
 
@@ -505,7 +510,7 @@ router.post('/export', function (req, res) {
         opts: tableContentOpts
       },
       {
-        val: '2014',
+        val: profile.grade,
         opts: tableContentOpts
       },
       {
@@ -517,9 +522,10 @@ router.post('/export', function (req, res) {
 
   let studentProfileStyle = {
     tableColWidth: 4261,
-    tableSize: 10,
+    tableSize: 20,
     tableAlign: 'center',
-    tableFontFamily: 'Times New Roman'
+    tableFontFamily: 'Times New Roman',
+    borders: true
   };
 
   let objProfile = {
@@ -538,7 +544,7 @@ router.post('/export', function (req, res) {
         shd: {
           fill: 'DDDDDD'
         },
-        fontFamily: '黑体'
+        fontFamily: 'Times New Roman'
       }
     },
       {
@@ -550,7 +556,7 @@ router.post('/export', function (req, res) {
           shd: {
             fill: 'DDDDDD'
           },
-          fontFamily: '黑体'
+          fontFamily: 'Times New Roman'
         }
       },
       {
@@ -562,41 +568,42 @@ router.post('/export', function (req, res) {
           shd: {
             fill: 'DDDDDD'
           },
-          fontFamily: '黑体'
+          fontFamily: 'Times New Roman'
         }
       },
-      {
-        val: '评 级',
-        opts: {
-          cellColWidth: 1250,
-          b: true,
-          sz: 20,
-          shd: {
-            fill: 'DDDDDD'
-          },
-          fontFamily: '黑体'
-        }
-      },
-      {
-        val: '评 语',
-        opts: {
-          cellColWidth: 2000,
-          b: true,
-          sz: 20,
-          shd: {
-            fill: 'DDDDDD'
-          },
-          fontFamily: '黑体'
-        }
-      }
+      // {
+      //   val: '评 级',
+      //   opts: {
+      //     cellColWidth: 1250,
+      //     b: true,
+      //     sz: 20,
+      //     shd: {
+      //       fill: 'DDDDDD'
+      //     },
+      //     fontFamily: 'Times New Roman'
+      //   }
+      // },
+      // {
+      //   val: '评 语',
+      //   opts: {
+      //     cellColWidth: 2000,
+      //     b: true,
+      //     sz: 20,
+      //     shd: {
+      //       fill: 'DDDDDD'
+      //     },
+      //     fontFamily: 'Times New Roman'
+      //   }
+      // }
     ]
   ];
 
   let studentPlansStyle = {
     tableColWidth: 5000,
-    tableSize: 10,
+    tableSize: 20,
     tableAlign: 'left',
-    tableFontFamily: 'Times New Roman'
+    tableFontFamily: 'Times New Roman',
+    borders: true
   };
 
   let objPlans = {
@@ -608,7 +615,7 @@ router.post('/export', function (req, res) {
   let objFooter = {
     type: 'text',
     val: '导出时间： ' + timeFormat(curTime),
-    opt: {font_face: '宋体', color: 'DDDDDD', bold: true},
+    opt: {font_face: 'Times New Roman', color: 'DDDDDD', bold: true},
     lopt: {align: 'right'}
   };
 
@@ -617,10 +624,10 @@ router.post('/export', function (req, res) {
     studentPlans.push([{
       val: i + 1,
       opts: {
-        cellColWidth: 1000,
+        cellColWidth: 1500,
         b: true,
         sz: 20,
-        fontFamily: '宋体'
+        fontFamily: 'Times New Roman'
       }
     },
       {
@@ -629,34 +636,16 @@ router.post('/export', function (req, res) {
           cellColWidth: 4000,
           b: true,
           sz: 20,
-          fontFamily: '宋体'
+          fontFamily: 'Times New Roman'
         }
       },
       {
         val: planArr[i].start + '-' + planArr[i].deadline,
         opts: {
-          cellColWidth: 1800,
+          cellColWidth: 3500,
           b: true,
           sz: 20,
-          fontFamily: '宋体'
-        }
-      },
-      {
-        val: planArr[i].rate,
-        opts: {
-          cellColWidth: 1800,
-          b: true,
-          sz: 20,
-          fontFamily: '宋体'
-        }
-      },
-      {
-        val: planArr[i].remark,
-        opts: {
-          cellColWidth: 2000,
-          b: true,
-          sz: 20,
-          fontFamily: '宋体'
+          fontFamily: 'Times New Roman'
         }
       }
     ]);
@@ -681,7 +670,7 @@ router.post('/export', function (req, res) {
     {
       type: 'text',
       val: '个人计划详情',
-      opt: {font_face: '黑体', bold: true, font_size: 18},
+      opt: {font_face: '黑体', bold: true, font_size: 16},
       lopt: {align: 'left'}
     },
     objPlans,
