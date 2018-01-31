@@ -17,6 +17,9 @@
           <span class="m-unit title">
             <span class="m-unit info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
             <span class="m-unit btn">
+              <span class="m-unit export" v-if="displayMode === 'total'">
+                <Button size="small" type="success">导出该班级期末成绩</Button>
+              </span>
               <ButtonGroup shape="circle">
                 <Button :type="(displayMode === 'plans') ? ('primary') : ('ghost')"
                         @click="changeDisplayMode('plans')"

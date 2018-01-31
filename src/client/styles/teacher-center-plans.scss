@@ -22,13 +22,17 @@
 
 .m-unit {
   height: 48px;
-  line-height: 36px;
+  line-height: 32px;
 
   .info {
     padding: 8px;
     background: #2b85e4;
     border-radius: 5px;
     color: #FFFFFF;
+  }
+
+  .export {
+    padding: 8px;
   }
 
   .btn {
