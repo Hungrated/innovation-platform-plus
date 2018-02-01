@@ -211,7 +211,13 @@ router.post('/query', function (req, res) {
 router.post('/rate', function (req, res) {
   // a teacher rates a course-work
 
-  let calcRate = function (rt) {
+  const {
+    cswk_id,
+    rate,
+    remark
+  } = req.body;
+
+  const calcRate = function (rt) {
     switch (rt) {
       case 5:
         return 'A';
@@ -226,7 +232,7 @@ router.post('/rate', function (req, res) {
     }
   };
 
-  let calcRemark = function (rt) {
+  const calcRemark = function (rt) {
     switch (rt) {
       case 5:
         return '优 秀';
@@ -240,12 +246,6 @@ router.post('/rate', function (req, res) {
         return '不及格';
     }
   };
-
-  const {
-    cswk_id,
-    rate,
-    remark
-  } = req.body;
 
   const modData = {
     rate: calcRate(rate),
@@ -360,8 +360,9 @@ router.post('/export', function (req, res, next) {
     }]
   })
     .then(function (finalList) {
-      res.json(finalList);
+      req.body.finalList = finalList;
       console.log('final query successful');
+      next();
     })
     .catch(function (e) {
       console.error(e);
@@ -373,6 +374,22 @@ router.post('/export', function (req, res, next) {
 router.post('/export', function (req, res) {
   // export final marks
   const class_id = req.body.class_id;
+  const finalList = req.body.finalList;
+
+  const calcRemark = function (rt) {
+    switch (rt) {
+      case 'A':
+        return '优 秀';
+      case 'B':
+        return '良 好';
+      case 'C':
+        return '中 等';
+      case 'D':
+        return '及 格';
+      default:
+        return '不及格';
+    }
+  };
 
   // get export time & set filename
   let curTime = new Date();
@@ -398,27 +415,23 @@ router.post('/export', function (req, res) {
   });
 
   sheet = xlsx.makeNewSheet();
-  sheet.name = 'Excel Test';
+  sheet.name = req.body.class_id;
 
   // The direct option - two-dimensional array:
-  sheet.data[0] = [];
-  sheet.data[0][0] = 1;
-  sheet.data[1] = [];
-  sheet.data[1][3] = 'abc';
-  sheet.data[1][4] = 'More';
-  sheet.data[1][5] = 'Text';
-  sheet.data[1][6] = 'Here';
-  sheet.data[2] = [];
-  sheet.data[2][5] = 'abc';
-  sheet.data[2][6] = 900;
-  sheet.data[6] = [];
-  sheet.data[6][2] = 1972;
+  sheet.data[0] = ['创新实践期末成绩表'];
+  sheet.data[1] = ['序 号', '学 号', '姓 名', '选课号', '成 绩', '评 语'];
 
-  // Using setCell:
-  sheet.setCell('E7', 340);
-  sheet.setCell('I1', -3);
-  sheet.setCell('I2', 31.12);
-  sheet.setCell('G102', 'Hello World!');
+  for (let i = 0; i < finalList.length; i++) {
+    let final = finalList[i];
+    sheet.data[i + 2] = [
+      i + 1,
+      final.student_id,
+      final.profile.name,
+      req.body.class_id,
+      calcRemark(final.rate),
+      final.remark
+    ];
+  }
 
   // export file
   let out = fs.createWriteStream(filePath);
