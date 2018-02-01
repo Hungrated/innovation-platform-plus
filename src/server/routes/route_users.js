@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/user/reg user.reg
  * @apiName userReg
  * @apiGroup User
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission administrator
  *
  * @apiDescription 教师用户注册。
@@ -93,7 +93,7 @@ router.post('/reg', function (req, res) {
  * @api {post} /api/user/parse user.parse
  * @apiName userParse
  * @apiGroup User
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user.teacher
  *
  * @apiDescription 学生用户解析。
@@ -250,7 +250,7 @@ router.post('/parse', function (req, res) {
  * @api {post} /api/user/import user.import
  * @apiName userImport
  * @apiGroup User
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user.teacher
  *
  * @apiDescription 学生用户导入。
@@ -450,7 +450,7 @@ router.post('/import', function (req, res) {
  * @api {post} /api/user/login user.login
  * @apiName userLogin
  * @apiGroup User
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission all
  *
  * @apiDescription 用户登入系统。
@@ -548,7 +548,7 @@ router.post('/login', function (req, res) {
  * @api {post} /api/user/logout user.logout
  * @apiName userLogout
  * @apiGroup User
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user
  *
  * @apiDescription 用户登出系统。
@@ -580,7 +580,7 @@ router.post('/logout', function (req, res) {
  * @api {post} /api/user/pwdmod user.pwdmod
  * @apiName userPwdMod
  * @apiGroup User
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user
  *
  * @apiDescription 用户修改密码。

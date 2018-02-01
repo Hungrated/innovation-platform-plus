@@ -15,7 +15,7 @@ const Profile = db.Profile;
  * @api {get} /api/moment/fetch?type=:type&limit=:limit moment.fetch
  * @apiName momentFetch
  * @apiGroup Moment
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission all
  *
  * @apiDescription 获取动态列表。

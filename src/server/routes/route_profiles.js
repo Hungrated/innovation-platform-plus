@@ -25,7 +25,7 @@ let objMulter = multer({
  * @api {post} /api/profile/modify profile.modify
  * @apiName profileModify
  * @apiGroup Profile
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user.student
  *
  * @apiDescription 修改用户资料。用户可修改的资料有：性别、出生日期、手机号码、自述。
@@ -92,7 +92,7 @@ router.post('/modify', function (req, res) {
  * @api {post} /api/profile/avatar profile.avatar
  * @apiName profileAvatar
  * @apiGroup Profile
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user.student
  *
  * @apiDescription 用户通过上传图片修改头像。上传方式为form-data。
@@ -182,7 +182,7 @@ router.post('/avatar', function (req, res) {
  * @api {post} /api/profile/query profile.query
  * @apiName profileQuery
  * @apiGroup Profile
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user
  *
  * @apiDescription 用户通过上传图片修改头像。

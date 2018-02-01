@@ -18,6 +18,10 @@ _majorly added info-manage module for teachers & administrators_
 **version `v2.1.0` on 25 Jan 2018**
 
 _added course-work module_
+
+**version `v2.2.0` on 1 Feb 2018**
+
+_added final mark export module_
   
 
 ### 2 Build setup

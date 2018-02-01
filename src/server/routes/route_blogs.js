@@ -21,7 +21,7 @@ const Comment = db.Comment;
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
@@ -81,7 +81,7 @@ router.post('/publish', function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
@@ -137,7 +137,7 @@ router.post('/query', function (req, res) {
  * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user
  *
  * @apiDescription 根据文章编号获取文章详细信息。

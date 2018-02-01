@@ -24,7 +24,7 @@ let objMulter = multer({
  * @api {get} /api/banner banner.fetch
  * @apiName fetch
  * @apiGroup Banner
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission all
  *
  * @apiDescription 获取首页轮播图列表。
@@ -77,7 +77,7 @@ router.get('/', function (req, res) {
  * @api {post} /api/banner/upload banner.upload
  * @apiName bannerUpload
  * @apiGroup Banner
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师上传首页轮播图。上传方式为form-data。
@@ -140,7 +140,7 @@ router.post('/upload', function (req, res) { // update database record
  * @api {post} /api/banner/switch banner.switch
  * @apiName bannerSwitch
  * @apiGroup Banner
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师切换首页轮播图状态。
@@ -188,7 +188,7 @@ router.post('/switch', function (req, res) {
  * @api {post} /api/banner/modify banner.modify
  * @apiName bannerModify
  * @apiGroup Banner
- * @apiVersion 2.1.0
+ * @apiVersion 2.2.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师修改首页轮播图。图片上传方式为form-data。
