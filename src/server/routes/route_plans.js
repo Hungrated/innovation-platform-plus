@@ -361,7 +361,16 @@ router.post('/query', function (req, res) {
  *     "student_id": 14051531
  * }
  *
- * @apiSuccess {file} data 包含学生个人计划信息的Word文档。
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} path 生成包含学生个人计划信息的Word文档的链接信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 5500,
+ *     "msg": "计划导出成功",
+ *     "path": "/api/download?plans=plan_export_14051531_1517480499563.docx"
+ * }
  */
 router.post('/export', function (req, res, next) {
   // fetch profile records from database
