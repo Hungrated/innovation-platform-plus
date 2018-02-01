@@ -48,7 +48,11 @@
                 <p>
                   <Icon type="information-circled"></Icon>&nbsp;&nbsp;基本信息
                 </p>
-                <Button type="primary" @click="exportPlan(curStudentDetails.profile.school_id)">导出所有信息为Word</Button>
+                <Button type="success"
+                        size="small"
+                        @click="exportPlan(curStudentDetails.profile.school_id)">
+                  导出所有信息为Word
+                </Button>
               </div>
               <div class="m-profile">
                 <div class="m-profile avatar">
@@ -105,10 +109,15 @@
                 </p>
               </div>
               <div class="m-stu plans">
-                <Table :columns="curStudentDetails.plans.cols" :data="curStudentDetails.plans.data" stripe></Table>
+                <Table :columns="curStudentDetails.plans.cols"
+                       :data="curStudentDetails.plans.data"
+                       style="min-width: 800px"
+                       stripe></Table>
               </div>
               <div class="m-stu meetings">
-                <Table :columns="curStudentDetails.meetings.cols" :data="curStudentDetails.meetings.data"
+                <Table :columns="curStudentDetails.meetings.cols"
+                       :data="curStudentDetails.meetings.data"
+                       style="min-width: 800px"
                        stripe></Table>
               </div>
             </div>
