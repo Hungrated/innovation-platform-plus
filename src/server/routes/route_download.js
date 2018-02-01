@@ -16,7 +16,7 @@ const statusLib = require('../libs/status');
  * @apiPermission all / user
  *
  * @apiDescription 下载文件或图片。
- * 类型有："resource"资源文件，"avatar"头像，"banner"首页轮播图，"cswk"期末作业。
+ * 类型有："resource"资源文件，"avatar"头像，"banner"首页轮播图，"cswk"期末作业，"finals"期末成绩表。
  *
  * @apiParamExample {url} 请求示例
  * download?resource=blg782148
@@ -43,6 +43,9 @@ router.get('/', function (req, res) { // download a file
   } else if (raw.cswk) {
     filename = raw.cswk;
     realPath = path.final;
+  } else if (raw.finals) {
+    filename = raw.finals;
+    realPath = path.finalout;
   }
 
   const realDir = pathLib.join(realPath, filename);
