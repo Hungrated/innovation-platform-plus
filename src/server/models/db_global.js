@@ -27,6 +27,10 @@ Profile.hasMany(Label, {
   foreignKey: 'adder_id'
 });
 
+Profile.hasMany(Final, {
+  foreignKey: 'student_id'
+});
+
 Profile.sync().then();
 User.sync().then();
 
@@ -72,7 +76,7 @@ Meeting.sync().then();
 Label.sync().then();
 
 Final.belongsTo(Profile, {
-  foreignKey: 'student_id'
+  foreignKey: 'school_id'
 });
 
 Final.sync().then();
