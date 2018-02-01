@@ -354,8 +354,8 @@ router.post('/delete', function (req, res) {
  * @apiSuccessExample {json} 成功返回示例
  * HTTP/1.1 200 OK
  * {
- *     "status": 8000,
- *     "msg": "信息删除成功",
+ *     "status": 5600,
+ *     "msg": "期末成绩表导出成功",
  *     "path": "/api/download?finals=final_export_(2017-2018-1)-S0500560-40429-2_1517479373965.xlsx"
  * }
  */
