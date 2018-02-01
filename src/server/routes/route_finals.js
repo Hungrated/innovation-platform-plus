@@ -351,9 +351,6 @@ router.post('/export', function (req, res, next) {
     where: {
       class_id: req.body.class_id
     },
-    order: [
-      ['created_at', 'DESC']
-    ],
     include: [{
       model: Profile,
       attributes: ['name']
@@ -373,7 +370,7 @@ router.post('/export', function (req, res, next) {
 
 router.post('/export', function (req, res) {
   // export final marks
-  const class_id = req.body.class_id;
+  const cid = req.body.class_id;
   const finalList = req.body.finalList;
 
   const calcRemark = function (rt) {
@@ -396,7 +393,7 @@ router.post('/export', function (req, res) {
   let exportTime = new Date(curTime.getTime() - curTime.getTimezoneOffset() * 60 * 1000);
 
   // set filename
-  let fileName = 'final_export_' + class_id + '_' + exportTime.getTime() + '.xlsx';
+  let fileName = 'final_export_' + cid + '_' + exportTime.getTime() + '.xlsx';
   let filePath = pathLib.join(path.finalout, fileName);
 
   // create file
@@ -414,7 +411,7 @@ router.post('/export', function (req, res) {
     console.log(err);
   });
 
-  sheet = xlsx.makeNewSheet();
+  let sheet = xlsx.makeNewSheet();
   sheet.name = req.body.class_id;
 
   // The direct option - two-dimensional array:
@@ -445,8 +442,8 @@ router.post('/export', function (req, res) {
       out.on('close', function () {
         console.log('final export successful');
         res.json({
-          status: statusLib.PLAN_EXPORT_SUCCESSFUL.status,
-          msg: statusLib.PLAN_EXPORT_SUCCESSFUL.msg,
+          status: statusLib.FINAL_EXPORT_SUCCESSFUL.status,
+          msg: statusLib.FINAL_EXPORT_SUCCESSFUL.msg,
           path: '/api/download?finals=' + fileName
         });
         done(null);
@@ -459,7 +456,6 @@ router.post('/export', function (req, res) {
       console.log('error: ' + err);
     }
   });
-
 });
 
 module.exports = router;
