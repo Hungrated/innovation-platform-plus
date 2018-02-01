@@ -416,7 +416,9 @@ router.post('/export', function (req, res) {
 
   // The direct option - two-dimensional array:
   sheet.data[0] = ['创新实践期末成绩表'];
-  sheet.data[1] = ['序 号', '学 号', '姓 名', '选课号', '成 绩', '评 语'];
+  sheet.data[1] = ['序 号', '学 号', '姓 名', '选课号'];
+  sheet.data[1][7] = '成 绩';
+  sheet.data[1][8] = '评 语';
 
   for (let i = 0; i < finalList.length; i++) {
     let final = finalList[i];
@@ -424,10 +426,10 @@ router.post('/export', function (req, res) {
       i + 1,
       final.student_id,
       final.profile.name,
-      req.body.class_id,
-      calcRemark(final.rate),
-      final.remark
+      req.body.class_id
     ];
+    sheet.data[i + 2][7] = calcRemark(final.rate);
+    sheet.data[i + 2][8] = final.remark;
   }
 
   // export file
