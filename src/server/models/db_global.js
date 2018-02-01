@@ -74,11 +74,6 @@ Meeting.belongsTo(Class, {
 
 Meeting.sync().then();
 Label.sync().then();
-
-Final.belongsTo(Profile, {
-  foreignKey: 'school_id'
-});
-
 Final.sync().then();
 
 Moment.belongsTo(Profile, {
