@@ -210,6 +210,16 @@ module.exports = {
     'msg': '计划导出失败'
   },
 
+  FINAL_EXPORT_SUCCESSFUL: {
+    'status': 5600,
+    'msg': '期末成绩表导出成功'
+  },
+
+  FINAL_EXPORT_FAILED: {
+    'status': 5601,
+    'msg': '期末成绩表导出失败'
+  },
+
   CLASS_QUERY_SUCCESSFUL: {
     'status': 6000,
     'msg': '班级获取成功'

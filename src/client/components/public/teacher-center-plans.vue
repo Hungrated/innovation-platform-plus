@@ -17,6 +17,9 @@
           <span class="m-unit title">
             <span class="m-unit info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
             <span class="m-unit btn">
+              <span class="m-unit export" v-if="displayMode === 'total'">
+                <Button size="small" type="success" @click="exportFinal(cur_class.class_id)">导出期末成绩表</Button>
+              </span>
               <ButtonGroup shape="circle">
                 <Button :type="(displayMode === 'plans') ? ('primary') : ('ghost')"
                         @click="changeDisplayMode('plans')"
@@ -823,6 +826,11 @@
             console.log(e);
           });
       },
+      downloadFile (url) {
+        let a = document.getElementById('fileDownloadTmpFrame');
+        a.src = url;
+        this.$Message.success('文件下载成功');
+      },
       exportPlan (id) {
         let _this = this;
         this.$ajax.post('/api/plan/export', {
@@ -835,10 +843,17 @@
             console.log(e);
           });
       },
-      downloadFile (url) {
-        let a = document.getElementById('fileDownloadTmpFrame');
-        a.src = url;
-        this.$Message.success('文件下载成功');
+      exportFinal (id) {
+        let _this = this;
+        this.$ajax.post('/api/final/export', {
+          class_id: id
+        })
+          .then(function (res) {
+            _this.downloadFile(res.data.path);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
     mounted () {

@@ -35,7 +35,7 @@ app.use(cookieSession({
 app.use(express.static(pathLib.join(__dirname, 'public')));
 
 // backend routes handler
-const api = require('./middlewares/route_api');
+const api = require('./routes/route_api');
 app.use('/api', api);
 
 // catch 404 and forward to error handler

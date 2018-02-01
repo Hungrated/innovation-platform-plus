@@ -63,7 +63,7 @@
             {id: 10, text: '联系我们（课程对接）', route: '/index'}
           ],
           siteList3: [
-            {id: 11, text: '关于创新实践课程交流平台', route: '/index'}
+            {id: 11, text: '关于《创新实践》课程交流平台', route: '/index'}
           ]
 
         }
