@@ -347,13 +347,19 @@ router.post('/delete', function (req, res) {
  *
  */
 router.post('/export', function (req, res, next) {
-  Final.findAll({
+  Profile.findAll({
     where: {
-      class_id: req.body.class_id
+      cur_class: req.body.class_id
     },
+    attributes: ['name', 'academy', 'class_id', 'grade', 'supervisor'],
     include: [{
-      model: Profile,
-      attributes: ['name']
+      model: Final,
+      where: {
+        class_id: req.body.class_id
+      },
+      order: [
+        ['created_at', 'DESC']
+      ]
     }]
   })
     .then(function (finalList) {
@@ -403,10 +409,6 @@ router.post('/export', function (req, res) {
 
   // officeGen.setVerboseMode ( true );
 
-  xlsx.on('finalize', function (written) {
-    console.log('Finish to create an Excel file.\nTotal bytes created: ' + written + '\n');
-  });
-
   xlsx.on('error', function (err) {
     console.log(err);
   });
@@ -416,20 +418,26 @@ router.post('/export', function (req, res) {
 
   // The direct option - two-dimensional array:
   sheet.data[0] = ['创新实践期末成绩表'];
-  sheet.data[1] = ['序 号', '学 号', '姓 名', '选课号'];
-  sheet.data[1][7] = '成 绩';
-  sheet.data[1][8] = '评 语';
+  sheet.data[1] = ['序 号', '学 号', '姓 名', '学 院', '班级号', '年 级', '选课号'];
+  sheet.data[1][10] = '导 师';
+  sheet.data[1][11] = '成 绩';
+  sheet.data[1][12] = '评 语';
 
   for (let i = 0; i < finalList.length; i++) {
-    let final = finalList[i];
+    let profile = finalList[i];
+    let final = profile.finals[0];
     sheet.data[i + 2] = [
       i + 1,
       final.student_id,
-      final.profile.name,
-      req.body.class_id
+      profile.name,
+      profile.academy,
+      profile.class_id,
+      profile.grade,
+      final.class_id
     ];
-    sheet.data[i + 2][7] = calcRemark(final.rate);
-    sheet.data[i + 2][8] = final.remark;
+    sheet.data[i + 2][10] = profile.supervisor;
+    sheet.data[i + 2][11] = calcRemark(final.rate);
+    sheet.data[i + 2][12] = final.remark;
   }
 
   // export file
