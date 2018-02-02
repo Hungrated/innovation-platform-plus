@@ -768,6 +768,11 @@
         bannerModMng: false,
         bannerImgId: null,
         bannerSrc: null,
+        uploadConfig: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        },
         myCroppa: {}
       };
     },
@@ -911,7 +916,7 @@
           formData.append('uploader_id', JSON.parse(window.localStorage.user).school_id);
           formData.append('banner', blob);
           if (!isModify) {
-            this.$ajax.post('/api/banner/upload', formData)
+            this.$ajax.post('/api/banner/upload', formData, this.uploadConfig)
               .then(function (res) {
                 _this.$Message.success(res.data.msg);
                 _this.myCroppa.remove();
@@ -923,7 +928,7 @@
           } else {
             formData.append('img_id', id);
             formData.append('src', src);
-            this.$ajax.post('/api/banner/modify', formData)
+            this.$ajax.post('/api/banner/modify', formData, this.uploadConfig)
               .then(function (res) {
                 _this.$Message.success(res.data.msg);
                 _this.myCroppa.remove();

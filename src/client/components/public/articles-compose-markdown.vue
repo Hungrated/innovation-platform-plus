@@ -1,5 +1,10 @@
 <template>
-  <mavon-editor :ishljs="ishljs" :toolbars="toolbars" style="min-height: 100vh; z-index: 1"></mavon-editor>
+  <mavon-editor ref="md"
+                @imgAdd="$imgAdd"
+                @imgDel="$imgDel"
+                :ishljs="ishljs"
+                :toolbars="toolbars"
+                style="min-height: 100vh; z-index: 1"/>
 </template>
 <script>
   import 'mavon-editor/dist/css/index.css';
@@ -10,6 +15,11 @@
     data () {
       return {
         img_file: {},
+        uploadConfig: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        },
         ishljs: true,
         toolbars: {
           bold: true, // 粗体
@@ -55,21 +65,20 @@
       $imgDel (pos) {
         delete this.img_file[pos];
       },
-      uploadimg ($e) {
-        // upload files in one request.
+      uploadImg (id) {
         console.log(this.img_file);
-        let formdata = new FormData();
+        let formData = new FormData();
+        formData.append('blog_id', id);
         for (let _img in this.img_file) {
-          formdata.append(_img, this.img_file[_img]);
+          formData.append(_img, this.img_file[_img]);
         }
-//        this.$ajax({
-//          url: 'http://127.0.0.1/index.php',
-//          method: 'post',
-//          data: formdata,
-//          headers: {'Content-Type': 'multipart/form-data'}
-//        }).then((res) => {
-//          console.log(res);
-//        });
+        this.$ajax.post('/api/blog/imgupload', formData, this.uploadConfig)
+          .then(function (res) {
+
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       },
       submit () {
         let submitData = {
@@ -86,8 +95,13 @@
           this.$Message.info('请将空余内容补充完整');
         } else {
           const _this = this;
+
+          // publish the article
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
+              if (!(_this.img_file === {})) {
+                _this.uploadImg(res.data.blog_id);
+              }
               _this.$Message.success(res.data.msg);
               _this.$router.push({path: '/articles'});
             })

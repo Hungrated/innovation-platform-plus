@@ -55,7 +55,7 @@ const Comment = db.Comment;
  * }
  */
 router.post('/publish', function (req, res) {
-  // publish a blog(project or event)
+  // publish an article
   let publishData = req.body;
   publishData.blog_id = 'blg' + uid.generate();
 
