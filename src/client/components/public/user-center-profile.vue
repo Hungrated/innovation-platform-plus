@@ -1,7 +1,7 @@
 <template>
   <div id="profile-container" class="m-profile">
     <div class="m-profile avatar">
-      <img style="width: 100%; border-radius: 5px;" :src="profile.avatar">
+      <img style="width: 100%; border-radius: 5px;" :src="avatar">
     </div>
     <div class="m-profile info">
       <p class="m-profile unit unit-name">
@@ -41,7 +41,7 @@
     <Modal v-model="profileMng" title="编辑资料" @on-ok="profileSubmit()" @on-cancel="refreshData()">
       <div class="m-edit">
         <div class="m-edit left">
-          <img style="width: 100%; border-radius: 5px;" :src="profile.avatar">
+          <img style="width: 100%; border-radius: 5px;" :src="avatar">
           <Button size="small" type="dashed" @click="editAvatar()">修改头像</Button>
         </div>
         <div class="m-edit right">
@@ -111,6 +111,7 @@
         profileMng: false,
         avatarMng: false,
         myCroppa: {},
+        avatar: require('../../assets/avatar.jpg'),
         profile: {
 //          school_id: null,
 //          avatar: null,
@@ -138,8 +139,8 @@
         })
           .then(function (res) {
             _this.profile = res.data[0];
-            if (!res.data[0].avatar) {
-              _this.profile.avatar = require('../../assets/avatar.jpg');
+            if (res.data[0].avatar) {
+              _this.avatar = _this.profile.avatar;
             }
           })
           .catch(function (e) {
@@ -182,19 +183,20 @@
           });
       },
       avatarSubmit () {
+        let _this = this;
         this.myCroppa.generateBlob((blob) => {
           if (blob === null) {
             this.$Message.info('请选择需要上传的头像图片');
             return;
           }
-          let _this = this;
           let formData = new FormData();
           formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
+          formData.append('avatar_src', _this.profile.avatar);
           formData.append('avatar', blob);
           this.$ajax.post('/api/profile/avatar', formData)
             .then(function (res) {
               _this.$Message.success(res.data.msg);
-              _this.profile.avatar = 'http://localhost:3001/images/avatars/' + _this.profile.school_id + '.jpg';
+              _this.avatar = _this.profile.avatar = res.data.avatar_src;
               _this.myCroppa.remove();
             })
             .catch(function (e) {
