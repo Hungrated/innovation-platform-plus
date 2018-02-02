@@ -5,6 +5,7 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
 const Final = db.Final;
+const Profile = db.Profile;
 
 const path = require('../app_paths');
 const pathLib = require('path');
@@ -12,6 +13,9 @@ const urlLib = require('url');
 
 const fs = require('fs');
 const multer = require('multer');
+
+const async = require('async');
+const officeGen = require('officegen');
 
 let objMulter = multer({
   dest: path.final // file upload destination
@@ -207,7 +211,13 @@ router.post('/query', function (req, res) {
 router.post('/rate', function (req, res) {
   // a teacher rates a course-work
 
-  let calcRate = function (rt) {
+  const {
+    cswk_id,
+    rate,
+    remark
+  } = req.body;
+
+  const calcRate = function (rt) {
     switch (rt) {
       case 5:
         return 'A';
@@ -222,7 +232,7 @@ router.post('/rate', function (req, res) {
     }
   };
 
-  let calcRemark = function (rt) {
+  const calcRemark = function (rt) {
     switch (rt) {
       case 5:
         return '优 秀';
@@ -236,12 +246,6 @@ router.post('/rate', function (req, res) {
         return '不及格';
     }
   };
-
-  const {
-    cswk_id,
-    rate,
-    remark
-  } = req.body;
 
   const modData = {
     rate: calcRate(rate),
@@ -360,6 +364,125 @@ router.post('/delete', function (req, res) {
  * }
  */
 router.post('/export', function (req, res, next) {
+  Profile.findAll({
+    where: {
+      cur_class: req.body.class_id
+    },
+    attributes: ['name', 'academy', 'class_id', 'grade', 'supervisor'],
+    include: [{
+      model: Final,
+      where: {
+        class_id: req.body.class_id
+      },
+      order: [
+        ['created_at', 'DESC']
+      ]
+    }]
+  })
+    .then(function (finalList) {
+      req.body.finalList = finalList;
+      console.log('final query successful');
+      next();
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+      console.log('moment fetch failed');
+    });
+});
+
+router.post('/export', function (req, res) {
+  // export final marks
+  const cid = req.body.class_id;
+  const finalList = req.body.finalList;
+
+  const calcRemark = function (rt) {
+    switch (rt) {
+      case 'A':
+        return '优 秀';
+      case 'B':
+        return '良 好';
+      case 'C':
+        return '中 等';
+      case 'D':
+        return '及 格';
+      default:
+        return '不及格';
+    }
+  };
+
+  // get export time & set filename
+  let curTime = new Date();
+  let exportTime = new Date(curTime.getTime() - curTime.getTimezoneOffset() * 60 * 1000);
+
+  // set filename
+  let fileName = 'final_export_' + cid + '_' + exportTime.getTime() + '.xlsx';
+  let filePath = pathLib.join(path.finalout, fileName);
+
+  // create file
+  let xlsx = officeGen({
+    type: 'xlsx'
+  });
+
+  // officeGen.setVerboseMode ( true );
+
+  xlsx.on('error', function (err) {
+    console.log(err);
+  });
+
+  let sheet = xlsx.makeNewSheet();
+  sheet.name = req.body.class_id;
+
+  // The direct option - two-dimensional array:
+  sheet.data[0] = ['创新实践期末成绩表'];
+  sheet.data[1] = ['序 号', '学 号', '姓 名', '学 院', '班级号', '年 级', '选课号'];
+  sheet.data[1][10] = '导 师';
+  sheet.data[1][11] = '成 绩';
+  sheet.data[1][12] = '评 语';
+
+  for (let i = 0; i < finalList.length; i++) {
+    let profile = finalList[i];
+    let final = profile.finals[0];
+    sheet.data[i + 2] = [
+      i + 1,
+      final.student_id,
+      profile.name,
+      profile.academy,
+      profile.class_id,
+      profile.grade,
+      final.class_id
+    ];
+    sheet.data[i + 2][10] = profile.supervisor;
+    sheet.data[i + 2][11] = calcRemark(final.rate);
+    sheet.data[i + 2][12] = final.remark;
+  }
+
+  // export file
+  let out = fs.createWriteStream(filePath);
+
+  out.on('error', function (err) {
+    console.log(err);
+  });
+
+  async.parallel([
+    function (done) {
+      out.on('close', function () {
+        console.log('final export successful');
+        res.json({
+          status: statusLib.FINAL_EXPORT_SUCCESSFUL.status,
+          msg: statusLib.FINAL_EXPORT_SUCCESSFUL.msg,
+          path: '/api/download?finals=' + fileName
+        });
+        done(null);
+      });
+      xlsx.generate(out);
+    }
+
+  ], function (err) {
+    if (err) {
+      console.log('error: ' + err);
+    }
+  });
 });
 
 module.exports = router;
