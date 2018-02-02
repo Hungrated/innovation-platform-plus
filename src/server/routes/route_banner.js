@@ -200,10 +200,12 @@ router.post('/switch', function (req, res) {
  *
  * @apiParam {File} banner 首页轮播图
  * @apiParam {String} img_id 轮播图编号
+ * @apiParam {String} src 当前轮播图资源路径
  * @apiParamExample {formdata} 请求示例
  * {
  *     "banner": <banner.jpg>,
  *     "img_id": "bnr7e8d5d",
+ *     "src": "http://[host]/images/banner/bnr7e8d5d_23cdff.jpg"
  * }
  *
  * @apiSuccess {Number} status 状态代码
