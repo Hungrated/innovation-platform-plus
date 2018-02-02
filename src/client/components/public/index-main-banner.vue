@@ -29,11 +29,11 @@
         this.$ajax.get('/api/banner')
           .then(function (res) {
             if (res.data.length) {
-              let tempList = res.data;
-              for (let i = 0; i < tempList.length; i++) {
-                tempList[i].src = tempList[i].src + '&t=' + Math.random(); // needs improving
-              }
-              _this.imgList = tempList;
+              // let tempList = res.data;
+              // for (let i = 0; i < tempList.length; i++) {
+              //   tempList[i].src = tempList[i].src + '&t=' + Math.random(); // needs improving
+              // }
+              _this.imgList = res.data;
             } else {
               _this.imgList = [{img_id: '0', src: require('../../assets/banner.jpg')}];
             }

@@ -3,6 +3,7 @@ const router = express.Router();
 
 const path = require('../app_paths');
 const pathLib = require('path');
+const uid = require('../middlewares/id_gen');
 
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
@@ -115,51 +116,58 @@ router.post('/modify', function (req, res) {
  * }
  */
 router.post('/avatar', objMulter.any(), function (req, res, next) {
-  // upload an avatar
-  const schoolId = req.body.school_id; // id is schoolId
-  const url = pathLib.join(path.avatars, schoolId + '.jpg');
-  req.avatarURL = url;
+  const url = req.body.avatar_src;
   console.log('avatar upload successful');
 
-  // check existance of previous avatar file
-  Profile.findOne({
-    where: {
-      avatar: '/api/download?avatar=' + schoolId + '.jpg'
-    }
-  })
-    .then(function (user) {
-      if (user !== null) { // exists previous avatar file: delete first
-        fs.unlink(url, function (err) {
-          if (err) throw err;
-          else {
+  if (url === '') {
+    next();
+  } else {
+    // get path of old avatar
+    let oldPath = pathLib.join(path.avatars, url.match(/avatars\/(\S*)/)[1]);
+    console.log(path.avatars, url.match(/avatars\/(\S*)/)[1]);
+    // check existance of previous avatar file, delete if exists
+    fs.access(oldPath, function (err) {
+      if (err && err.code === 'ENOENT') {
+        console.log('delete avatar: file no longer exists, skipped');
+        next();
+      } else {
+        fs.unlink(oldPath, function (err) {
+          if (err) {
+            console.error(err);
+            res.json(statusLib.CONNECTION_ERROR);
+          } else {
             console.log('previous avatar file deleted');
             next();
           }
         });
-      } else {
-        next();
       }
-    })
-    .catch(function (e) {
-      console.error(e);
-      res.json(statusLib.CONNECTION_ERROR);
     });
+  }
 });
 
 router.post('/avatar', function (req, res, next) {
   // rename avatar file
-  fs.rename(req.files[0].path, req.avatarURL, function (err) {
+  let newFilename = `${req.body.school_id}_${uid.generate()}.jpg`;
+  let newPath = pathLib.join(path.avatars, newFilename);
+  let newUrl = path.host + '/images/avatars/' + newFilename;
+  console.log(req.files[0].path);
+  fs.rename(req.files[0].path, newPath, function (err) {
     if (err) {
       console.log('avatar file rename error');
       res.json(statusLib.FILE_RENAME_FAILED);
-    } else { next(); }
+    } else {
+      req.newUrl = newUrl;
+      console.log('avatar: file renamed to ' + newFilename);
+      next();
+    }
   });
 });
 
 router.post('/avatar', function (req, res) {
   // update database record
+
   Profile.update({
-    avatar: '/api/download?avatar=' + req.body.school_id + '.jpg'
+    avatar: req.newUrl
   }, {
     where: {
       school_id: req.body.school_id
@@ -167,7 +175,11 @@ router.post('/avatar', function (req, res) {
   })
     .then(function () {
       console.log('avatar modify successful');
-      res.json(statusLib.PROFILE_MOD_SUCCESSFUL);
+      res.json({
+        status: statusLib.PROFILE_MOD_SUCCESSFUL.status,
+        msg: statusLib.PROFILE_MOD_SUCCESSFUL.msg,
+        avatar_src: req.newUrl
+      });
     })
     .catch(function (e) {
       console.error(e);

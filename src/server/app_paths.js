@@ -1,27 +1,72 @@
 const pathLib = require('path');
+const fs = require('fs');
 
 const root = __dirname;
 
-// const app = pathLib.join(root, 'app.js');
+const host = 'http://localhost:3001';
 
+const app = pathLib.join(root, 'app.js');
+
+// file upload root
 const upload = pathLib.join(root, 'public', 'files');
 
-const avatars = pathLib.join(upload, 'avatars');
+// image dir
+const images = pathLib.join(upload, 'images');
 
+const avatars = pathLib.join(images, 'avatars');
+
+const banner = pathLib.join(images, 'banner');
+
+// source dir
 const sources = pathLib.join(upload, 'sources');
 
 const userinfo = pathLib.join(upload, 'userinfo');
 
-const banner = pathLib.join(upload, 'banner');
-
-const plans = pathLib.join(root, 'public', 'files', 'plans');
+const plans = pathLib.join(upload, 'plans');
 
 const final = pathLib.join(upload, 'final');
 
 const finalout = pathLib.join(final, 'out');
 
+// document dir
 const apidoc = pathLib.join(root, 'public', 'apidoc');
 
+// make dir functions
+const makeDir = function (dir) {
+  // noinspection JSAnnotator
+  fs.mkdir(dir, 0777, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(dir + ' created.');
+    }
+  });
+};
+
+const mkdirIfNotExist = function (dir) {
+  fs.access(dir, function (err) {
+    if (err && err.code === 'ENOENT') {
+      makeDir(dir);
+    } else {
+      console.log('dir: `' + dir + '` exists.');
+    }
+  });
+};
+
+mkdirIfNotExist(finalout);
+
 module.exports = {
-  avatars, sources, userinfo, banner, plans, final, finalout, apidoc
+  app,
+  host,
+  upload,
+  images,
+  avatars,
+  sources,
+  userinfo,
+  banner,
+  plans,
+  final,
+  finalout,
+  apidoc,
+  mkdirIfNotExist
 };
