@@ -87,7 +87,22 @@ router.post('/publish', function (req, res) {
     });
 });
 
-// upload images for an article
+/**
+ *
+ * 上传文章中的图片（用在发表文章中）
+ *
+ * @api {post} /api/blog/imgupload blog.imgUpload
+ * @apiName blogImgUpload
+ * @apiGroup Blog
+ * @apiVersion 2.1.0
+ * @apiPermission user
+ *
+ * @apiDescription 用户上传文章中的图片。
+ *
+ * @apiParam {array} imageList 文件列表
+ *
+ * @apiSuccess end 默认成功无返回
+ */
 router.post('/imgupload', objMulter.any(), function (req, res, next) {
   // upload images for an article
   let id = req.body.blog_id;
