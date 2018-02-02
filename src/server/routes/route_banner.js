@@ -261,11 +261,7 @@ router.post('/modify', function (req, res) {
     }
   })
     .then(function () {
-      res.json({
-        status: statusLib.BANNER_IMG_MOD_SUCCESSFUL.status,
-        msg: statusLib.BANNER_IMG_MOD_SUCCESSFUL.msg,
-        src: req.newBannerSrc
-      });
+      res.json(statusLib.BANNER_IMG_MOD_SUCCESSFUL);
       console.log('banner img mod successful');
   })
     .catch(function (e) {
