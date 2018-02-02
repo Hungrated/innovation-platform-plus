@@ -66,12 +66,12 @@
 }
 
 .m-stu {
+  overflow: auto;
   .subtitle {
     display: flex;
     justify-content: space-between;
     padding: 16px 0;
     border-bottom: 1px solid #EEEEEE;
-    line-height: 36px;
     margin-bottom: 20px;
 
     p {
@@ -91,6 +91,8 @@
   margin: 5px 0;
   padding: 15px;
   display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   .avatar {
     padding: 0;

@@ -110,6 +110,11 @@
       return {
         profileMng: false,
         avatarMng: false,
+        uploadConfig: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        },
         myCroppa: {},
         avatar: require('../../assets/avatar.jpg'),
         profile: {
@@ -193,7 +198,7 @@
           formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
           formData.append('avatar_src', _this.profile.avatar);
           formData.append('avatar', blob);
-          this.$ajax.post('/api/profile/avatar', formData)
+          this.$ajax.post('/api/profile/avatar', formData, this.uploadConfig)
             .then(function (res) {
               _this.$Message.success(res.data.msg);
               _this.avatar = _this.profile.avatar = res.data.avatar_src;
