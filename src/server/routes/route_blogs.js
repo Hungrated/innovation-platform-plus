@@ -91,7 +91,7 @@ router.post('/publish', function (req, res) {
 router.post('/imgupload', objMulter.any(), function (req, res, next) {
   // upload images for an article
   let id = req.body.blog_id;
-  let folderName = `${id}_${Date.now()}`;
+  let folderName = id;
   let dir = pathLib.join(path.blogs, folderName);
   let imgArr = [];
   // noinspection JSAnnotator

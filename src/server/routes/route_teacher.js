@@ -160,6 +160,13 @@ router.post('/delete', function (req, res, next) {
   if (req.body.type !== 'blog') {
     next();
   } else {
+    let removeDir = function (fileUrl) {
+      let files = fs.readdirSync(fileUrl);
+      files.forEach(function (file) {
+        fs.unlinkSync(fileUrl + '/' + file);
+      });
+      fs.rmdirSync(fileUrl);
+    };
     let Blog = db.Blog;
     let Comment = db.Comment;
     Comment.destroy({
@@ -174,6 +181,15 @@ router.post('/delete', function (req, res, next) {
           }
         })
           .then(function () {
+            let dir = pathLib.join(path.blogs, req.body.id);
+            fs.access(dir, function (err) {
+              if (!(err && err.code === 'ENOENT')) {
+                removeDir(dir);
+                console.log('Images of this article has been removed.')
+              } else {
+                console.log('This article has no images. Skipped.');
+              }
+            });
             moment.deleteMoment(req.body.id);
             res.json(statusLib.INFO_DELETE_SUCCESSFUL);
             console.log('blog & comments delete successful');
