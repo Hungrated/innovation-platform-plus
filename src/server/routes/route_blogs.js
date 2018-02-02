@@ -8,11 +8,20 @@ const urlLib = require('url');
 const timeFormat = require('../middlewares/time_format');
 const uid = require('../middlewares/id_gen');
 
+const fs = require('fs');
+const multer = require('multer');
+const path = require('../app_paths');
+const pathLib = require('path');
+
 const moment = require('../middlewares/moment');
 
 const Blog = db.Blog;
 const Profile = db.Profile;
 const Comment = db.Comment;
+
+let objMulter = multer({
+  dest: pathLib.join(path.blogs, '__temp__')
+});
 
 /**
  *
@@ -62,9 +71,13 @@ router.post('/publish', function (req, res) {
   let href = '/articles/details?index=' + publishData.blog_id;
 
   Blog.create(publishData)
-    .then(function () {
+    .then(function (blog) {
       moment.createMoment('article', publishData.title, href, publishData.author_id, publishData.blog_id);
-      res.json(statusLib.BLOG_PUB_SUCCESSFUL);
+      res.json({
+        status: statusLib.BLOG_PUB_SUCCESSFUL.status,
+        msg: statusLib.BLOG_PUB_SUCCESSFUL.msg,
+        blog_id: blog.blog_id
+      });
       console.log('publish successful');
     })
     .catch(function (e) {
@@ -73,6 +86,75 @@ router.post('/publish', function (req, res) {
       console.log('publish failed');
     });
 });
+
+// upload images for an article
+router.post('/imgupload', objMulter.any(), function (req, res, next) {
+  // upload images for an article
+  let id = req.body.blog_id;
+  let folderName = `${id}_${Date.now()}`;
+  let dir = pathLib.join(path.blogs, folderName);
+  let imgArr = [];
+  // noinspection JSAnnotator
+  fs.mkdir(dir, 0777, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(dir + ' created.');
+      for (let i = 0; i < req.files.length; i++) {
+        // for each file uploaded
+        // rename & move a file
+        let newFilename = req.files[i].filename + pathLib.parse(req.files[i].originalname).ext;
+        let newDir = pathLib.join(dir, newFilename);
+        let newUrl = path.host + '/images/blogs/' + folderName + '/' + newFilename;
+        fs.rename(req.files[i].path, newDir, function (err) {
+          if (err) {
+            console.log(err);
+            console.log('file rename & move error');
+            return res.json(statusLib.FILE_RENAME_FAILED);
+          }
+        });
+        imgArr.push([req.files[i].fieldname, newUrl]);
+        if (i === req.files.length - 1) {
+          req.imgArr = imgArr;
+          next();
+        }
+      }
+    }
+  });
+});
+
+router.post('/imgupload', function (req, res) {
+  let correctImgUrl = function (content, imgArr) {
+    let contentCorrected = content;
+    for (let i = 0; i < imgArr.length; i++) {
+      let reg = new RegExp(`\(${imgArr[i][0]}\)`, 'g');
+      contentCorrected = contentCorrected.replace(reg, imgArr[i][1]);
+    }
+    return contentCorrected;
+  };
+  Blog.findByPrimary(req.body.blog_id)
+    .then(function (profile) {
+      Blog.update({
+        content: correctImgUrl(profile.content, req.imgArr)
+      }, {
+        where: {
+          blog_id: req.body.blog_id
+        }
+      })
+        .then(function () {
+          res.end();
+        })
+        .catch(function (e) {
+          console.log(e);
+          res.json(statusLib.PLAN_EXPORT_FAILED);
+        });
+    })
+    .catch(function (e) {
+      console.log(e);
+      res.json(statusLib.PLAN_EXPORT_FAILED);
+    });
+})
+;
 
 /**
  *

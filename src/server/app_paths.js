@@ -13,6 +13,8 @@ const upload = pathLib.join(root, 'public', 'files');
 // image dir
 const images = pathLib.join(upload, 'images');
 
+const blogs = pathLib.join(images, 'blogs');
+
 const avatars = pathLib.join(images, 'avatars');
 
 const banner = pathLib.join(images, 'banner');
@@ -36,7 +38,7 @@ const makeDir = function (dir) {
   // noinspection JSAnnotator
   fs.mkdir(dir, 0777, function (err) {
     if (err) {
-      console.log(err);
+      console.log('dir: `' + dir + '` exists.');
     } else {
       console.log(dir + ' created.');
     }
@@ -54,12 +56,15 @@ const mkdirIfNotExist = function (dir) {
 };
 
 mkdirIfNotExist(finalout);
+mkdirIfNotExist(blogs);
+mkdirIfNotExist(pathLib.join(blogs, '__temp__'));
 
 module.exports = {
   app,
   host,
   upload,
   images,
+  blogs,
   avatars,
   sources,
   userinfo,
