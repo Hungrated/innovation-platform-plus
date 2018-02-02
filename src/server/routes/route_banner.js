@@ -99,16 +99,20 @@ router.get('/', function (req, res) {
  *     "msg": "轮播图上传成功"
  * }
  */
-router.post('/upload', objMulter.any(), function (req, res, next) { // upload a banner img
-  const id = 'bnr' + uid.generate();
+router.post('/upload', objMulter.any(), function (req, res, next) {
+  // upload a banner img
+  let id = 'bnr' + uid.generate();
+  let filename = `${id}_${uid.generate()}.jpg`;
   req.body.img_id = id;
-  req.bannerURL = pathLib.join(path.banner, id + '.jpg');
+  req.bannerPath = pathLib.join(path.banner, req.body.filename);
+  req.bannerUrl = path.host + '/images/banner/' + filename + '.jpg'
   console.log('banner upload successful');
   next();
 });
 
-router.post('/upload', function (req, res, next) { // rename banner file
-  fs.rename(req.files[0].path, req.bannerURL, function (err) {
+router.post('/upload', function (req, res, next) {
+  // rename banner file
+  fs.rename(req.files[0].path, req.bannerPath, function (err) {
     if (err) {
       console.log('banner file rename error');
       res.json(statusLib.FILE_RENAME_FAILED);
@@ -116,12 +120,13 @@ router.post('/upload', function (req, res, next) { // rename banner file
   });
 });
 
-router.post('/upload', function (req, res) { // update database record
+router.post('/upload', function (req, res) {
+  // update database record
   Banner.create({
     img_id: req.body.img_id,
     status: 'active',
     uploader_id: req.body.uploader_id,
-    src: '/images/banner/' + req.body.img_id + '.jpg'
+    src: req.bannerUrl
   })
     .then(function () {
       console.log('banner upload successful');
