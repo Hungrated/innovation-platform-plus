@@ -73,9 +73,6 @@
           formData.append(_img, this.img_file[_img]);
         }
         this.$ajax.post('/api/blog/imgupload', formData, this.uploadConfig)
-          .then(function (res) {
-
-          })
           .catch(function (e) {
             console.log(e);
           });

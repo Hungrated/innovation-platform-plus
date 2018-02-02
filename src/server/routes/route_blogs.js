@@ -8,6 +8,7 @@ const urlLib = require('url');
 const timeFormat = require('../middlewares/time_format');
 const uid = require('../middlewares/id_gen');
 
+const fs = require('fs');
 const multer = require('multer');
 const path = require('../app_paths');
 const pathLib = require('path');
@@ -18,7 +19,9 @@ const Blog = db.Blog;
 const Profile = db.Profile;
 const Comment = db.Comment;
 
-let objMulter = null;
+let objMulter = multer({
+  dest: pathLib.join(path.blogs, '__temp__')
+});
 
 /**
  *
@@ -68,9 +71,13 @@ router.post('/publish', function (req, res) {
   let href = '/articles/details?index=' + publishData.blog_id;
 
   Blog.create(publishData)
-    .then(function () {
+    .then(function (blog) {
       moment.createMoment('article', publishData.title, href, publishData.author_id, publishData.blog_id);
-      res.json(statusLib.BLOG_PUB_SUCCESSFUL);
+      res.json({
+        status: statusLib.BLOG_PUB_SUCCESSFUL.status,
+        msg: statusLib.BLOG_PUB_SUCCESSFUL.msg,
+        blog_id: blog.blog_id
+      });
       console.log('publish successful');
     })
     .catch(function (e) {
@@ -81,26 +88,37 @@ router.post('/publish', function (req, res) {
 });
 
 // upload images for an article
-router.post('/imgupload', function (req, res, next) {
+router.post('/imgupload', objMulter.any(), function (req, res) {
   // upload images for an article
   let id = req.body.blog_id;
-  let dir = pathLib.join(path.blogs, id);
-  path.mkdirIfNotExist(dir);
-  let storage = multer.diskStorage({
-    destination (req, file, cb) {
-      cb(null, dir);
+  let dir = pathLib.join(path.blogs, `${id}_${Date.now()}`);
+  let imgArr = [];
+  // noinspection JSAnnotator
+  fs.mkdir(dir, 0777, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(dir + ' created.');
+      for (let i = 0; i < req.files.length; i++) {
+        // for each file uploaded
+        // rename & move a file
+        let newDir = pathLib.join(dir, req.files[i].filename + pathLib.parse(req.files[i].originalname).ext);
+        fs.rename(req.files[i].path, newDir, function (err) {
+          if (err) {
+            console.log(err);
+            console.log('file rename & move error');
+            return res.json(statusLib.FILE_RENAME_FAILED);
+          }
+        });
+        imgArr.push([req.files[i].fieldname, newDir]);
+        if(i === req.files.length) {
+          res.json({
+            images: imgArr
+          });
+        }
+        console.log(imgArr);
+      }
     }
-  });
-  objMulter = multer({storage: storage});
-  next();
-});
-
-router.post('/imgupload', objMulter.any(), function (req, res) {
-  for (let i = 0; i < req.files.length; i++) {
-    console.log(req.files[i].path);
-  }
-  res.json({
-    images: []
   });
 });
 

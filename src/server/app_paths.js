@@ -38,7 +38,7 @@ const makeDir = function (dir) {
   // noinspection JSAnnotator
   fs.mkdir(dir, 0777, function (err) {
     if (err) {
-      console.log(err);
+      console.log('dir: `' + dir + '` exists.');
     } else {
       console.log(dir + ' created.');
     }
@@ -56,6 +56,8 @@ const mkdirIfNotExist = function (dir) {
 };
 
 mkdirIfNotExist(finalout);
+mkdirIfNotExist(blogs);
+mkdirIfNotExist(pathLib.join(blogs, '__temp__'));
 
 module.exports = {
   app,
