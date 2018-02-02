@@ -13,6 +13,8 @@ const upload = pathLib.join(root, 'public', 'files');
 // image dir
 const images = pathLib.join(upload, 'images');
 
+const blogs = pathLib.join(images, 'blogs');
+
 const avatars = pathLib.join(images, 'avatars');
 
 const banner = pathLib.join(images, 'banner');
@@ -60,6 +62,7 @@ module.exports = {
   host,
   upload,
   images,
+  blogs,
   avatars,
   sources,
   userinfo,

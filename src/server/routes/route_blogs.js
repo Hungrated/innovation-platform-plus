@@ -8,11 +8,17 @@ const urlLib = require('url');
 const timeFormat = require('../middlewares/time_format');
 const uid = require('../middlewares/id_gen');
 
+const multer = require('multer');
+const path = require('../app_paths');
+const pathLib = require('path');
+
 const moment = require('../middlewares/moment');
 
 const Blog = db.Blog;
 const Profile = db.Profile;
 const Comment = db.Comment;
+
+let objMulter = null;
 
 /**
  *
@@ -72,6 +78,30 @@ router.post('/publish', function (req, res) {
       res.json(statusLib.BLOG_PUB_FAILED);
       console.log('publish failed');
     });
+});
+
+// upload images for an article
+router.post('/imgupload', function (req, res, next) {
+  // upload images for an article
+  let id = req.body.blog_id;
+  let dir = pathLib.join(path.blogs, id);
+  path.mkdirIfNotExist(dir);
+  let storage = multer.diskStorage({
+    destination (req, file, cb) {
+      cb(null, dir);
+    }
+  });
+  objMulter = multer({storage: storage});
+  next();
+});
+
+router.post('/imgupload', objMulter.any(), function (req, res) {
+  for (let i = 0; i < req.files.length; i++) {
+    console.log(req.files[i].path);
+  }
+  res.json({
+    images: []
+  });
 });
 
 /**
