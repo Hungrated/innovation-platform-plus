@@ -28,7 +28,7 @@ let objMulter = multer({
  * @api {post} /api/final/upload final.upload
  * @apiName finalUpload
  * @apiGroup Final
- * @apiVersion 2.2.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 学生上传或更改期末作业。上传方式为form-data。仅支持上传zip文件。
@@ -128,7 +128,7 @@ router.post('/upload', function (req, res) {
  * @api {post} /api/final/query final.query
  * @apiName finalQuery
  * @apiGroup Final
- * @apiVersion 2.2.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 获取期末信息。
@@ -185,7 +185,7 @@ router.post('/query', function (req, res) {
  * @api {post} /api/final/rate final.rate
  * @apiName finalRate
  * @apiGroup Final
- * @apiVersion 2.2.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师进行期末总评。
@@ -275,7 +275,7 @@ router.post('/rate', function (req, res) {
  * @api {post} /api/final/delete final.delete
  * @apiName finalDelete
  * @apiGroup Final
- * @apiVersion 2.2.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 删除期末作业。
@@ -340,7 +340,7 @@ router.post('/delete', function (req, res) {
  * @api {post} /api/final/export final.export
  * @apiName finalExport
  * @apiGroup Final
- * @apiVersion 2.2.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 导出当前班级的期末成绩表。

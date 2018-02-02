@@ -22,6 +22,10 @@ _added course-work module_
 **version `v2.2.0` on 1 Feb 2018**
 
 _added final mark export module_
+
+**version `v2.3.0` on 2 Feb 2018**
+
+_totally modified image upload module & add image upload feature for article publishing_
   
 
 ### 2 Build setup
