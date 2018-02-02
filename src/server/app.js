@@ -40,7 +40,6 @@ const api = require('./routes/route_api');
 app.use('/api', api);
 app.use('/images', express.static(path.images));
 
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   let err = new Error('Not Found');
@@ -50,7 +49,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function ( req, res) {
+app.use(function (req, res) {
   // res.status(err.status || 500);
   res.send('Not found.');
 });
