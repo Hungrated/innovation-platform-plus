@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 // const statusLib = require('./libs/status');
+const path = require('./app_paths');
 
 const app = express();
 
@@ -37,6 +38,8 @@ app.use(express.static(pathLib.join(__dirname, 'public')));
 // backend routes handler
 const api = require('./routes/route_api');
 app.use('/api', api);
+app.use('/images', express.static(path.images));
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

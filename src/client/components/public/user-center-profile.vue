@@ -140,8 +140,6 @@
             _this.profile = res.data[0];
             if (!res.data[0].avatar) {
               _this.profile.avatar = require('../../assets/avatar.jpg');
-            } else {
-              _this.profile.avatar = _this.profile.avatar + '&t=' + Math.random();
             }
           })
           .catch(function (e) {
@@ -196,7 +194,7 @@
           this.$ajax.post('/api/profile/avatar', formData)
             .then(function (res) {
               _this.$Message.success(res.data.msg);
-              _this.profile.avatar = '/api/download?avatar=' + _this.profile.school_id + '.jpg&t=' + Math.random();
+              _this.profile.avatar = 'http://localhost:3001/images/avatars/' + _this.profile.school_id + '.jpg';
               _this.myCroppa.remove();
             })
             .catch(function (e) {

@@ -124,16 +124,23 @@ router.post('/avatar', objMulter.any(), function (req, res, next) {
   // check existance of previous avatar file
   Profile.findOne({
     where: {
-      avatar: '/api/download?avatar=' + schoolId + '.jpg'
+      avatar: path.host + '/images/avatars/' + schoolId + '.jpg'
     }
   })
     .then(function (user) {
       if (user !== null) { // exists previous avatar file: delete first
-        fs.unlink(url, function (err) {
-          if (err) throw err;
-          else {
-            console.log('previous avatar file deleted');
+        fs.access(url, function (err) {
+          if (err && err.code === 'ENOENT') {
+            console.log('delete avatar: file no longer exists, skipped');
             next();
+          } else {
+            fs.unlink(url, function (err) {
+              if (err) throw err;
+              else {
+                console.log('previous avatar file deleted');
+                next();
+              }
+            });
           }
         });
       } else {
@@ -159,7 +166,7 @@ router.post('/avatar', function (req, res, next) {
 router.post('/avatar', function (req, res) {
   // update database record
   Profile.update({
-    avatar: '/api/download?avatar=' + req.body.school_id + '.jpg'
+    avatar: path.host + '/images/avatars/' + req.body.school_id + '.jpg'
   }, {
     where: {
       school_id: req.body.school_id

@@ -121,7 +121,7 @@ router.post('/upload', function (req, res) { // update database record
     img_id: req.body.img_id,
     status: 'active',
     uploader_id: req.body.uploader_id,
-    src: '/api/download?banner=' + req.body.img_id + '.jpg'
+    src: '/images/banner/' + req.body.img_id + '.jpg'
   })
     .then(function () {
       console.log('banner upload successful');
@@ -216,7 +216,7 @@ router.post('/modify', objMulter.any(), function (req, res) {
   const url = pathLib.join(path.banner, id + '.jpg');
   Banner.findOne({
     where: {
-      src: '/api/download?banner=' + id + '.jpg'
+      src: '/images/banner/' + id + '.jpg'
     }
   })
     .then(function () {
