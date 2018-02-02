@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 // const statusLib = require('./libs/status');
+const path = require('./app_paths');
 
 const app = express();
 
@@ -37,19 +38,20 @@ app.use(express.static(pathLib.join(__dirname, 'public')));
 // backend routes handler
 const api = require('./routes/route_api');
 app.use('/api', api);
+app.use('/images', express.static(path.images));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   let err = new Error('Not Found');
+  console.log(err);
   err.status = 404;
-  next(err);
+  next();
 });
 
 // error handler
-app.use(function (err, req, res) {
-  console.log(err);
-  res.status(err.status || 500);
-  res.send('error');
+app.use(function (req, res) {
+  // res.status(err.status || 500);
+  res.send('Not found.');
 });
 
 // cross-domain access

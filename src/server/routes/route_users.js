@@ -405,6 +405,7 @@ router.post('/import', function (req, res) {
                   } else {
                     Profile.create({
                       school_id: users[userIdx].school_id,
+                      avatar: '',
                       name: users[userIdx].name,
                       academy: academy,
                       class_id: users[userIdx].class_id,

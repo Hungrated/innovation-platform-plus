@@ -160,6 +160,13 @@ router.post('/delete', function (req, res, next) {
   if (req.body.type !== 'blog') {
     next();
   } else {
+    let removeDir = function (fileUrl) {
+      let files = fs.readdirSync(fileUrl);
+      files.forEach(function (file) {
+        fs.unlinkSync(fileUrl + '/' + file);
+      });
+      fs.rmdirSync(fileUrl);
+    };
     let Blog = db.Blog;
     let Comment = db.Comment;
     Comment.destroy({
@@ -174,6 +181,15 @@ router.post('/delete', function (req, res, next) {
           }
         })
           .then(function () {
+            let dir = pathLib.join(path.blogs, req.body.id);
+            fs.access(dir, function (err) {
+              if (!(err && err.code === 'ENOENT')) {
+                removeDir(dir);
+                console.log('Images of this article has been removed.')
+              } else {
+                console.log('This article has no images. Skipped.');
+              }
+            });
             moment.deleteMoment(req.body.id);
             res.json(statusLib.INFO_DELETE_SUCCESSFUL);
             console.log('blog & comments delete successful');
@@ -195,32 +211,38 @@ router.post('/delete', function (req, res, next) {
     next();
   } else {
     let Banner = db.Banner;
-    let url = pathLib.join(path.banner, req.body.id + '.jpg');
-    Banner.destroy({
+    Banner.findOne({
       where: {
         img_id: req.body.id
       }
-    })
-      .then(function () {
-        fs.access(url, function (err) {
-          if (err && err.code === 'ENOENT') {
-            console.log('delete: file no longer exists, skipped');
-            next();
-          } else {
-            fs.unlink(url, function (err) {
-              if (err) throw err;
-              else {
-                res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-                console.log('info & file delete successful');
-              }
-            });
-          }
-        });
+    }).then(function (banner) {
+      Banner.destroy({
+        where: {
+          img_id: req.body.id
+        }
       })
-      .catch(function (e) {
-        console.error(e);
-        res.json(statusLib.CONNECTION_ERROR);
-      });
+        .then(function () {
+          let url = pathLib.join(path.banner, banner.src.match(/banner\/(\S*)/)[1]);
+          fs.access(url, function (err) {
+            if (err && err.code === 'ENOENT') {
+              console.log('delete: file no longer exists, skipped');
+              res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+            } else {
+              fs.unlink(url, function (err) {
+                if (err) throw err;
+                else {
+                  res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+                  console.log('info & file delete successful');
+                }
+              });
+            }
+          });
+        })
+        .catch(function (e) {
+          console.error(e);
+          res.json(statusLib.CONNECTION_ERROR);
+        });
+    });
   }
 });
 
@@ -254,7 +276,6 @@ router.post('/delete', function (req, res, next) {
       })
       .catch(function (e) {
         console.error(e);
-        console.log('error');
         res.json(statusLib.CONNECTION_ERROR);
       });
   }
