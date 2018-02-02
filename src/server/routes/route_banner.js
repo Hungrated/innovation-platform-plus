@@ -104,8 +104,8 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
   let id = 'bnr' + uid.generate();
   let filename = `${id}_${uid.generate()}.jpg`;
   req.body.img_id = id;
-  req.bannerPath = pathLib.join(path.banner, req.body.filename);
-  req.bannerUrl = path.host + '/images/banner/' + filename + '.jpg'
+  req.bannerPath = pathLib.join(path.banner, filename);
+  req.bannerUrl = path.host + '/images/banner/' + filename;
   console.log('banner upload successful');
   next();
 });
@@ -215,36 +215,65 @@ router.post('/switch', function (req, res) {
  *     "msg": "轮播图更改成功"
  * }
  */
-router.post('/modify', objMulter.any(), function (req, res) {
+router.post('/modify', objMulter.any(), function (req, res, next) {
   // check existence of previous banner image file
-  const id = req.body.img_id;
-  const url = pathLib.join(path.banner, id + '.jpg');
-  Banner.findOne({
+  let oldUrl = req.body.src;
+  let oldFilename = oldUrl.match(/banner\/(\S*)/)[1];
+  let oldPath = pathLib.join(path.banner, oldFilename);
+
+  fs.access(oldPath, function (err) {
+    if (err && err.code === 'ENOENT') {
+      console.log('delete: file no longer exists, skipped');
+      next();
+    } else {
+      fs.unlink(oldPath, function (err) {
+        if (err) {
+          console.error(err);
+          res.json(statusLib.CONNECTION_ERROR);
+        } else {
+          console.log('previous banner file deleted');
+          next();
+        }
+      });
+    }
+  });
+});
+
+router.post('/modify', function (req, res, next) {
+  let newFilename = `${req.body.img_id}_${uid.generate()}.jpg`;
+  fs.rename(req.files[0].path, pathLib.join(path.banner, newFilename), function (err) {
+    if (err) {
+      console.log('banner file rename error');
+      res.json(statusLib.FILE_RENAME_FAILED);
+    } else {
+      req.newBannerSrc = path.host + '/images/banner/' + newFilename;
+      next();
+    }
+  });
+});
+
+router.post('/modify', function (req, res) {
+  Banner.update({
+    src: req.newBannerSrc
+  }, {
     where: {
-      src: '/images/banner/' + id + '.jpg'
+      img_id: req.body.img_id
     }
   })
     .then(function () {
-      fs.unlink(url, function (err) {
-        if (err) throw err;
-        else {
-          console.log('previous banner file deleted');
-          fs.rename(req.files[0].path, pathLib.join(path.banner, id + '.jpg'), function (err) {
-            if (err) {
-              console.log('banner file rename error');
-              res.json(statusLib.FILE_RENAME_FAILED);
-            } else {
-              res.json(statusLib.BANNER_IMG_MOD_SUCCESSFUL);
-              console.log('banner img mod successful');
-            }
-          });
-        }
+      res.json({
+        status: statusLib.BANNER_IMG_MOD_SUCCESSFUL.status,
+        msg: statusLib.BANNER_IMG_MOD_SUCCESSFUL.msg,
+        src: req.newBannerSrc
       });
-    })
+      console.log('banner img mod successful');
+  })
     .catch(function (e) {
       console.error(e);
-      res.json(statusLib.CONNECTION_ERROR);
+      res.json(statusLib.MOMENT_FETCH_FAILED);
+      console.log('moment fetch failed');
     });
+
 });
 
 module.exports = router;

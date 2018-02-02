@@ -46,7 +46,7 @@
               <Modal v-model="bannerMng"
                      title="编辑首页轮播图"
                      width="712"
-                     @on-ok="bannerSubmit(bannerModMng,bannerImgId)"
+                     @on-ok="bannerSubmit(bannerModMng, bannerImgId, bannerSrc)"
                      @on-cancel="bannerEditCancel()">
                 <div class="m-edit-bnr">
                   <croppa v-model="myCroppa"
@@ -73,11 +73,10 @@
               <Modal v-model="bannerMng"
                      title="编辑标签"
                      width="712"
-                     @on-ok="bannerSubmit(bannerModMng,bannerImgId)"
+                     @on-ok=""
                      @on-cancel="bannerEditCancel()">
                 <div class="m-edit-bnr">
                   test
-
                 </div>
               </Modal>
             </div>
@@ -177,7 +176,7 @@
                       margin: '5px'
                     },
                     attrs: {
-                      src: params.row.src + '&t=' + Math.random()
+                      src: params.row.src
                     }
                   }),
                   h('Button', {
@@ -200,7 +199,7 @@
                                 borderRadius: '5px'
                               },
                               attrs: {
-                                src: params.row.src + '&t=' + Math.random()
+                                src: params.row.src
                               }
                             });
                           }
@@ -248,7 +247,7 @@
                     },
                     on: {
                       click: () => {
-                        this.bannerModify(params.row.img_id);
+                        this.bannerModify(params.row.img_id, params.row.src);
                       }
                     }
                   }, '变更图片'),
@@ -768,6 +767,7 @@
         bannerMng: false,
         bannerModMng: false,
         bannerImgId: null,
+        bannerSrc: null,
         myCroppa: {}
       };
     },
@@ -890,16 +890,17 @@
       bannerEdit () {
         this.bannerMng = true;
       },
-      bannerModify (id) {
+      bannerModify (id, src) {
         this.bannerMng = true;
         this.bannerModMng = true;
         this.bannerImgId = id;
+        this.bannerSrc = src;
       },
       bannerEditCancel () {
         this.bannerMng = false;
         this.bannerModMng = false;
       },
-      bannerSubmit (isModify, id) {
+      bannerSubmit (isModify, id, src) {
         this.myCroppa.generateBlob((blob) => {
           if (blob === null) {
             this.$Message.info('请选择需要上传的图片');
@@ -921,11 +922,14 @@
               });
           } else {
             formData.append('img_id', id);
+            formData.append('src', src);
             this.$ajax.post('/api/banner/modify', formData)
               .then(function (res) {
                 _this.$Message.success(res.data.msg);
                 _this.myCroppa.remove();
+                _this.bannerModMng = false;
                 _this.bannerImgId = null;
+                _this.bannerImgSrc = null;
                 _this.refreshData();
               })
               .catch(function (e) {
