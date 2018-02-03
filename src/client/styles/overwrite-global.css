@@ -76,7 +76,13 @@
 }
 
 .v-note-img-wrapper img {
-  /*margin-top: 40px;*/
   max-width: 75%;
   max-height: 83%;
 }
+
+.v-note-op {
+  border-bottom: 1px solid #DDDDDD;
+  /*box-shadow: 0 3px 5px #DDDDDD !important;*/
+  box-shadow: none !important;
+}
+

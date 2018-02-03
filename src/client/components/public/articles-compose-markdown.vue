@@ -1,10 +1,23 @@
 <template>
-  <mavon-editor ref="md"
-                @imgAdd="$imgAdd"
-                @imgDel="$imgDel"
-                :ishljs="ishljs"
-                :toolbars="toolbars"
-                style="min-height: 100vh; z-index: 1"/>
+  <Card disHover>
+    <div class="m-import">
+      <span>
+        &emsp;<Icon type="information-circled"></Icon>&nbsp;
+        文章内容可从文件导入，要导入内容，请对应文件类型点击右边的"导入"按钮
+      </span>
+      <span>
+        <Button @click="" type="dashed" size="small" icon="social-markdown">导入Markdown</Button>
+        <Button @click="" type="dashed" size="small" icon="social-wordpress">导入Word</Button>
+        <Button @click="" type="dashed" size="small" icon="android-document">导入文本文档</Button>
+      </span>
+    </div>
+    <mavon-editor ref="md"
+                  @imgAdd="$imgAdd"
+                  @imgDel="$imgDel"
+                  :ishljs="ishljs"
+                  :toolbars="toolbars"
+                  style="min-height: 100vh; z-index: 1"/>
+  </Card>
 </template>
 <script>
   import 'mavon-editor/dist/css/index.css';
@@ -110,3 +123,7 @@
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import "../../styles/articles-compose-markdown";
+</style>

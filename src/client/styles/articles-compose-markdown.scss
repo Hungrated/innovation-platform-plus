@@ -1,0 +1,17 @@
+.m-import {
+  display: flex;
+  margin-bottom: 5px;
+  justify-content: space-between;
+  background: #FAFAFA;
+  border-radius: 5px;
+  padding: 10px;
+  line-height: 24px;
+
+  span {
+    color: #999999;
+
+    * {
+      color: #999999
+    }
+  }
+}
