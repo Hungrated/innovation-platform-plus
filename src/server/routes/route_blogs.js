@@ -172,7 +172,38 @@ router.post('/imgupload', function (req, res) {
     });
 });
 
-// import text of a file
+/**
+ *
+ * 从现有文件导入文章内容
+ *
+ * @api {post} /api/blog/import blog.import
+ * @apiName blogImport
+ * @apiGroup Blog
+ * @apiVersion 2.3.0
+ * @apiPermission user
+ *
+ * @apiDescription 用户导入文章内容。
+ *
+ * @apiParam {file} file 含有文本内容的文件
+ * @apiParam {String} type 文件类型
+ *
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "file": <text.md>,
+ *     "type": "md"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} content 导入的文章内容
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 3300,
+ *     "msg": "文章导入成功",
+ *     "content": "`机器学习` 是使用计算机来彰显数据背后的真实含义，它为了把无序的数据转换成有用的信息。"
+ * }
+ */
 router.post('/import', objMulter.any(), function (req, res, next) {
   // upload text file
   console.log('text file upload successful');
