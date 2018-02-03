@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.4.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
@@ -105,8 +105,7 @@ router.post('/publish', function (req, res) {
  */
 router.post('/imgupload', objMulter.any(), function (req, res, next) {
   // upload images for an article
-  let id = req.body.blog_id;
-  let folderName = id;
+  let folderName = req.body.blog_id;
   let dir = pathLib.join(path.blogs, folderName);
   let imgArr = [];
   // noinspection JSAnnotator
@@ -120,7 +119,6 @@ router.post('/imgupload', objMulter.any(), function (req, res, next) {
         // rename & move a file
         let newFilename = req.files[i].filename + pathLib.parse(req.files[i].originalname).ext;
         // seem to have problems
-        console.log(newFilename);
         let newDir = pathLib.join(dir, newFilename);
         let newUrl = path.host + '/images/blogs/' + folderName + '/' + newFilename;
         fs.rename(req.files[i].path, newDir, function (err) {
@@ -179,7 +177,7 @@ router.post('/imgupload', function (req, res) {
  * @api {post} /api/blog/import blog.import
  * @apiName blogImport
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.4.0
  * @apiPermission user
  *
  * @apiDescription 用户导入文章内容。
@@ -248,7 +246,7 @@ router.post('/import', function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.4.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
@@ -304,7 +302,7 @@ router.post('/query', function (req, res) {
  * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.4.0
  * @apiPermission user
  *
  * @apiDescription 根据文章编号获取文章详细信息。

@@ -13,7 +13,7 @@ const Meeting = db.Meeting;
  * @api {post} /api/meeting/submit meeting.submit
  * @apiName meetingSubmit
  * @apiGroup Meeting
- * @apiVersion 2.3.0
+ * @apiVersion 2.4.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师提交课堂记录。
@@ -60,7 +60,7 @@ router.post('/submit', function (req, res) { // publish a Meeting(project or eve
  * @api {post} /api/meeting/query meeting.query
  * @apiName meetingQuery
  * @apiGroup Meeting
- * @apiVersion 2.3.0
+ * @apiVersion 2.4.0
  * @apiPermission user.student
  *
  * @apiDescription 根据条件获取课堂记录列表。
