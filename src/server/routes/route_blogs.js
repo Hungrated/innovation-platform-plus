@@ -212,13 +212,22 @@ router.post('/import', objMulter.any(), function (req, res, next) {
   } else {
     fs.readFile(req.files[0].path, function (err, data) {
       if (err) {
-        throw err;
+        console.err(err);
+        console.log('blog import failed');
+        res.json(statusLib.BLOG_IMPORT_FAILED);
+      } else {
+        console.log('blog import successful');
+        res.json({
+          status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
+          msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
+          content: data.toString()
+        });
+        fs.unlink(req.files[0].path, function (err) {
+          if (err) {
+            console.err(err);
+          }
+        });
       }
-      res.json({
-        status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
-        msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
-        content: data.toString()
-      });
     });
   }
 });

@@ -134,7 +134,7 @@
         this.$ajax.post('/api/blog/import', formData, this.uploadConfig)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
-            _this.value = _this.$refs.md.d_value + '\n' + res.data.content;
+            _this.value = _this.$refs.md.d_value + res.data.content;
           })
           .catch(function (e) {
             console.log(e);
