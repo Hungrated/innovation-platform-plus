@@ -379,7 +379,7 @@ router.post('/export', function (req, res) {
   const cid = req.body.class_id;
   const finalList = req.body.finalList;
 
-  const calcRemark = function (rt) {
+  const calcRemarkOutput = function (rt) {
     switch (rt) {
       case 'A':
         return '优 秀';
@@ -389,8 +389,10 @@ router.post('/export', function (req, res) {
         return '中 等';
       case 'D':
         return '及 格';
-      default:
+      case 'F':
         return '不及格';
+      default:
+        return '';
     }
   };
 
@@ -436,8 +438,8 @@ router.post('/export', function (req, res) {
       final.class_id
     ];
     sheet.data[i + 2][10] = profile.supervisor;
-    sheet.data[i + 2][11] = calcRemark(final.rate);
-    sheet.data[i + 2][12] = final.remark;
+    sheet.data[i + 2][11] = calcRemarkOutput(final.rate);
+    sheet.data[i + 2][12] = final.remark ? final.remark : '';
   }
 
   // export file
