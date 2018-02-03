@@ -107,12 +107,12 @@ module.exports = {
 
   BLOG_LIST_FETCH_FAILED: {
     'status': 3101,
-    'msg': '获取博文列表失败'
+    'msg': '获取文章列表失败'
   },
 
   BLOG_DETAILS_FETCH_FAILED: {
     'status': 3102,
-    'msg': '获取博文详情失败'
+    'msg': '获取文章详情失败'
   },
 
   COMMENT_SUCCESSFUL: {
@@ -123,6 +123,16 @@ module.exports = {
   COMMENT_FAILED: {
     'status': 3201,
     'msg': '评论失败'
+  },
+
+  BLOG_IMPORT_SUCCESSFUL: {
+    'status': 3300,
+    'msg': '文章导入成功'
+  },
+
+  BLOG_IMPORT_FAILED: {
+    'status': 3301,
+    'msg': '文章导入失败'
   },
 
   FILE_UPLOAD_SUCCESSFUL: {

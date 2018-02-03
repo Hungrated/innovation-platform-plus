@@ -170,8 +170,33 @@ router.post('/imgupload', function (req, res) {
       console.log(e);
       res.json(statusLib.PLAN_EXPORT_FAILED);
     });
-})
-;
+});
+
+// import text of a file
+router.post('/import', objMulter.any(), function (req, res, next) {
+  // upload text file
+  console.log('text file upload successful');
+  if (req.body.type === 'word') {
+    next();
+  } else {
+    fs.readFile(req.files[0].path, function (err, data) {
+      if (err) {
+        throw err;
+      }
+      console.log(data.toString());
+      res.json({
+        status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
+        msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
+        content: data.toString()
+      });
+    });
+  }
+});
+
+router.post('/import', objMulter.any(), function (req, res, next) {
+  console.log('text file upload successful');
+  res.json({});
+});
 
 /**
  *
