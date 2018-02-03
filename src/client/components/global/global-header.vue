@@ -25,11 +25,10 @@
             </router-link>
           </span>
           <MenuGroup title="类 别">
-            <MenuItem name="3-1"><span @click="changeRoute('/articles?label=0')">所有文章</span></MenuItem>
-            <MenuItem name="3-2"><span @click="changeRoute('/articles?label=1')">项目成果</span></MenuItem>
-            <MenuItem name="3-3"><span @click="changeRoute('/articles?label=2')">技术交流</span></MenuItem>
-            <MenuItem name="3-4"><span @click="changeRoute('/articles?label=3')">活 动</span></MenuItem>
-            <MenuItem name="3-5"><span @click="changeRoute('/articles?label=4')">我的文章</span></MenuItem>
+            <MenuItem name="3-1"><span @click="changeRoute('/articles')">所有文章</span></MenuItem>
+            <MenuItem name="3-2"><span @click="changeRoute('/articles')">Markdown文档</span></MenuItem>
+            <MenuItem name="3-3"><span @click="changeRoute('/articles')">活动图集</span></MenuItem>
+            <MenuItem name="3-4"><span @click="changeRoute('/articles')">我的文章</span></MenuItem>
           </MenuGroup>
           <MenuGroup title="发 布">
             <MenuItem name="3-5"><span @click="changeRoute('/articles/compose')"><Icon

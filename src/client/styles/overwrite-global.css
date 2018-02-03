@@ -58,10 +58,6 @@
   color: rgba(255, 255, 255, 1);
 }
 
-.v-note-wrapper {
-  z-index: 0 !important;
-}
-
 .v-note-panel {
   box-shadow: none !important;
   border-radius: 5px;
@@ -69,4 +65,22 @@
 
 .ivu-input {
   resize: none;
+}
+
+.v-note-wrapper {
+  z-index: 500 !important;
+}
+
+.v-note-img-wrapper {
+  z-index: 2000 !important;
+}
+
+.v-note-img-wrapper i {
+  top: 48px !important;
+}
+
+.v-note-img-wrapper img {
+  margin-top: 40px;
+  max-width: 75vw;
+  max-height: 83vh;
 }
