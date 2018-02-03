@@ -1,16 +1,16 @@
 {
   "name": "innovation-platform-plus",
-  "version": "2.1.0",
+  "version": "2.3.0",
   "description": "An advanced on-line information-managing & resource-sharing platform for Innovation Practice courses.",
   "author": "hungrated <zhang295415658@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --config build/webpack.dev.conf.js & node src/server/bin/www",
-    "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "doc": "apidoc -i src/server/routes -o src/server/public/apidoc",
+    "start": "npm run dev",
     "build": "npm run doc & node build/build.js"
   },
   "dependencies": {
@@ -106,7 +106,7 @@
   ],
   "apidoc": {
     "title": "innovation-platform-plus",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "url": "http://[host]"
   }
 }

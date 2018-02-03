@@ -26,7 +26,7 @@ let objMulter = multer({
  * @api {post} /api/profile/modify profile.modify
  * @apiName profileModify
  * @apiGroup Profile
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 修改用户资料。用户可修改的资料有：性别、出生日期、手机号码、自述。
@@ -93,26 +93,30 @@ router.post('/modify', function (req, res) {
  * @api {post} /api/profile/avatar profile.avatar
  * @apiName profileAvatar
  * @apiGroup Profile
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 用户通过上传图片修改头像。上传方式为form-data。
  *
  * @apiParam {File} avatar 头像图片
  * @apiParam {Number} school_id 学生学号
+ * @apiParam {String} avatar_src 当前头像资源路径
  * @apiParamExample {formdata} 请求示例
  * {
  *     "avatar": <avatar.jpg>,
- *     "school_id": 14051531
+ *     "school_id": 14051531，
+ *     "avatar_src": "http://[host]/images/avatars/14051531_40e48b.jpg"
  * }
  *
  * @apiSuccess {Number} status 状态代码
  * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} src 新头像资源路径
  * @apiSuccessExample {json} 成功返回示例
  * HTTP/1.1 200 OK
  * {
  *     "status": 2000,
  *     "msg": "档案更新成功"
+ *     "src": "http://[host]/images/avatars/14051531_y5o75a.jpg"
  * }
  */
 router.post('/avatar', objMulter.any(), function (req, res, next) {
@@ -194,7 +198,7 @@ router.post('/avatar', function (req, res) {
  * @api {post} /api/profile/query profile.query
  * @apiName profileQuery
  * @apiGroup Profile
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user
  *
  * @apiDescription 用户通过上传图片修改头像。

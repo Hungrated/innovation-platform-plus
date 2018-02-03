@@ -25,7 +25,7 @@ const officeGen = require('officegen');
  * @api {post} /api/plan/submit plan.submit
  * @apiName planSubmit
  * @apiGroup Plan
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 学生提交计划。
@@ -111,7 +111,7 @@ router.post('/submit', function (req, res) {
  * @api {post} /api/plan/modify plan.modify
  * @apiName planModify
  * @apiGroup Plan
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 学生修改计划。
@@ -213,7 +213,7 @@ router.post('/modify', function (req, res) {
  * @api {post} /api/plan/op plan.op
  * @apiName planOp
  * @apiGroup Plan
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师审核学生计划。
@@ -266,7 +266,7 @@ router.post('/op', function (req, res) {
  * @api {post} /api/plan/query plan.query
  * @apiName planQuery
  * @apiGroup Plan
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user
  *
  * @apiDescription 获取学生计划列表。
@@ -349,7 +349,7 @@ router.post('/query', function (req, res) {
  * @api {post} /api/plan/export plan.export
  * @apiName planExport
  * @apiGroup Plan
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师导出学生个人计划表。
@@ -361,7 +361,16 @@ router.post('/query', function (req, res) {
  *     "student_id": 14051531
  * }
  *
- * @apiSuccess {file} data 包含学生个人计划信息的Word文档。
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} path 生成包含学生个人计划信息的Word文档的链接信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 5500,
+ *     "msg": "计划导出成功",
+ *     "path": "/api/download?plans=plan_export_14051531_1517480499563.docx"
+ * }
  */
 router.post('/export', function (req, res, next) {
   // fetch profile records from database

@@ -15,6 +15,11 @@
     data () {
       return {
         img_file: {},
+        uploadConfig: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        },
         ishljs: true,
         toolbars: {
           bold: true, // 粗体

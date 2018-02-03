@@ -17,6 +17,9 @@
           <span class="m-unit title">
             <span class="m-unit info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
             <span class="m-unit btn">
+              <span class="m-unit export" v-if="displayMode === 'total'">
+                <Button size="small" type="success" @click="exportFinal(cur_class.class_id)">导出期末成绩表</Button>
+              </span>
               <ButtonGroup shape="circle">
                 <Button :type="(displayMode === 'plans') ? ('primary') : ('ghost')"
                         @click="changeDisplayMode('plans')"
@@ -45,7 +48,11 @@
                 <p>
                   <Icon type="information-circled"></Icon>&nbsp;&nbsp;基本信息
                 </p>
-                <Button type="primary" @click="exportPlan(curStudentDetails.profile.school_id)">导出所有信息为Word</Button>
+                <Button type="success"
+                        size="small"
+                        @click="exportPlan(curStudentDetails.profile.school_id)">
+                  导出所有信息为Word
+                </Button>
               </div>
               <div class="m-profile">
                 <div class="m-profile avatar">
@@ -102,10 +109,15 @@
                 </p>
               </div>
               <div class="m-stu plans">
-                <Table :columns="curStudentDetails.plans.cols" :data="curStudentDetails.plans.data" stripe></Table>
+                <Table :columns="curStudentDetails.plans.cols"
+                       :data="curStudentDetails.plans.data"
+                       style="min-width: 800px"
+                       stripe></Table>
               </div>
               <div class="m-stu meetings">
-                <Table :columns="curStudentDetails.meetings.cols" :data="curStudentDetails.meetings.data"
+                <Table :columns="curStudentDetails.meetings.cols"
+                       :data="curStudentDetails.meetings.data"
+                       style="min-width: 800px"
                        stripe></Table>
               </div>
             </div>
@@ -823,6 +835,11 @@
             console.log(e);
           });
       },
+      downloadFile (url) {
+        let a = document.getElementById('fileDownloadTmpFrame');
+        a.src = url;
+        this.$Message.success('文件下载成功');
+      },
       exportPlan (id) {
         let _this = this;
         this.$ajax.post('/api/plan/export', {
@@ -835,10 +852,17 @@
             console.log(e);
           });
       },
-      downloadFile (url) {
-        let a = document.getElementById('fileDownloadTmpFrame');
-        a.src = url;
-        this.$Message.success('文件下载成功');
+      exportFinal (id) {
+        let _this = this;
+        this.$ajax.post('/api/final/export', {
+          class_id: id
+        })
+          .then(function (res) {
+            _this.downloadFile(res.data.path);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
     mounted () {

@@ -30,7 +30,7 @@ router.use(objMulter.any()); // any file type
  * @api {post} /api/file/upload file.upload
  * @apiName fileUpload
  * @apiGroup File
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user
  *
  * @apiDescription 用户上传资源文件。上传方式为form-data。
@@ -108,7 +108,7 @@ router.post('/upload', function (req, res) {
  * @api {post} /api/file/query file.query
  * @apiName fileQuery
  * @apiGroup File
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 获取资源文件列表。

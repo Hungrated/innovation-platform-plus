@@ -2,6 +2,7 @@
   .body {
     display: flex;
     min-height: 700px;
+    overflow-x: hidden;
   }
 
   .left {
@@ -22,13 +23,17 @@
 
 .m-unit {
   height: 48px;
-  line-height: 36px;
+  line-height: 32px;
 
   .info {
     padding: 8px;
     background: #2b85e4;
     border-radius: 5px;
     color: #FFFFFF;
+  }
+
+  .export {
+    padding: 8px;
   }
 
   .btn {
@@ -61,12 +66,12 @@
 }
 
 .m-stu {
+  overflow: auto;
   .subtitle {
     display: flex;
     justify-content: space-between;
     padding: 16px 0;
     border-bottom: 1px solid #EEEEEE;
-    line-height: 36px;
     margin-bottom: 20px;
 
     p {
@@ -86,6 +91,8 @@
   margin: 5px 0;
   padding: 15px;
   display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   .avatar {
     padding: 0;
