@@ -9,9 +9,21 @@
 
   span {
     color: #999999;
+  }
+
+  .upload {
+    margin: 0;
+    padding: 0;
+    border-radius: unset;
+    background: transparent;
 
     * {
-      color: #999999
+      color: #999999;
+
+      button {
+        margin-left: 5px;
+      }
     }
   }
+
 }

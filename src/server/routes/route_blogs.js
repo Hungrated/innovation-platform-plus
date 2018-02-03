@@ -183,7 +183,6 @@ router.post('/import', objMulter.any(), function (req, res, next) {
       if (err) {
         throw err;
       }
-      console.log(data.toString());
       res.json({
         status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
         msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
@@ -193,9 +192,13 @@ router.post('/import', objMulter.any(), function (req, res, next) {
   }
 });
 
-router.post('/import', objMulter.any(), function (req, res, next) {
+router.post('/import', function (req, res) {
   console.log('text file upload successful');
-  res.json({});
+  res.json({
+    status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
+    msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
+    content: 'word'
+  });
 });
 
 /**

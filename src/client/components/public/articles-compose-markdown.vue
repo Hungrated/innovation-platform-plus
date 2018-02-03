@@ -3,20 +3,51 @@
     <div class="m-import">
       <span>
         &emsp;<Icon type="information-circled"></Icon>&nbsp;
-        文章内容可从文件导入，要导入内容，请对应文件类型点击右边的"导入"按钮
+        文章内容可从文件导入，追加到现有编辑中，要导入内容，请点击右边的"导入"按钮
       </span>
-      <span>
-        <Button @click="" type="dashed" size="small" icon="social-markdown">导入Markdown</Button>
-        <Button @click="" type="dashed" size="small" icon="social-wordpress">导入Word</Button>
-        <Button @click="" type="dashed" size="small" icon="android-document">导入文本文档</Button>
+      <span class="m-import upload">
+        <Upload action="#"
+                accept="text/plain"
+                :show-upload-list="false"
+                :before-upload="importText">
+          <Button @click="setUploadTxtType('md')"
+                  type="dashed"
+                  size="small"
+                  icon="social-markdown">
+            导入Markdown
+          </Button>
+        </Upload>
+        <!--<Upload action="#"-->
+        <!--accept="application/msword"-->
+        <!--:show-upload-list="false"-->
+        <!--:before-upload="importText">-->
+        <!--<Button @click="setUploadTxtType('docx')"-->
+        <!--type="dashed"-->
+        <!--size="small"-->
+        <!--icon="social-markdown">-->
+        <!--导入Word-->
+        <!--</Button>-->
+        <!--</Upload>-->
+        <Upload action="#"
+                accept="text/plain"
+                :show-upload-list="false"
+                :before-upload="importText">
+          <Button @click="setUploadTxtType('txt')"
+                  type="dashed"
+                  size="small"
+                  icon="android-document">
+            导入文本文档
+          </Button>
+        </Upload>
       </span>
     </div>
     <mavon-editor ref="md"
+                  :value="value"
                   @imgAdd="$imgAdd"
                   @imgDel="$imgDel"
                   :ishljs="ishljs"
                   :toolbars="toolbars"
-                  style="min-height: 100vh; z-index: 1"/>
+                  style="min-height: 100vh"/>
   </Card>
 </template>
 <script>
@@ -27,7 +58,9 @@
     props: ['title', 'label', 'description'],
     data () {
       return {
+        value: '',
         img_file: {},
+        uploadTxtType: 'txt',
         uploadConfig: {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -50,7 +83,7 @@
           imagelink: true, // 图片链接
           code: true, // code
           table: true, // 表格
-          fullscreen: false, // 全屏编辑
+          fullscreen: true, // 全屏编辑
           readmodel: false, // 沉浸式阅读
           htmlcode: true, // 展示html源码
           help: true, // 帮助
@@ -79,7 +112,6 @@
         delete this.img_file[pos];
       },
       uploadImg (id) {
-        console.log(this.img_file);
         let formData = new FormData();
         formData.append('blog_id', id);
         for (let _img in this.img_file) {
@@ -90,22 +122,41 @@
             console.log(e);
           });
       },
+      setUploadTxtType (type) {
+        this.uploadTxtType = type;
+      },
+      importText (file) {
+        let _this = this;
+        let formData = new FormData();
+        formData.append('type', this.uploadTxtType);
+        formData.append('file', file);
+
+        this.$ajax.post('/api/blog/import', formData, this.uploadConfig)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            _this.value = _this.$refs.md.d_value + '\n' + res.data.content;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+        return false;
+      },
       submit () {
         let submitData = {
           type: 'project',
           title: this.title,
           description: this.description,
           // content: this.$children[0].d_render,
-          content: this.$children[0].d_value,
+          content: this.$refs.md.d_value,
           cover_url: '',
           photo_url: '',
           author_id: JSON.parse(window.localStorage.user).school_id
         };
         if (!submitData.title || !submitData.content) {
+          console.log(submitData);
           this.$Message.info('请将空余内容补充完整');
         } else {
           const _this = this;
-
           // publish the article
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {

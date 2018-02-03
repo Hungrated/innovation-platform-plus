@@ -75,6 +75,10 @@
   z-index: 2000 !important;
 }
 
+.v-note-wrapper .markdown-body .fullscreen {
+  z-index: 2000 !important;
+}
+
 .v-note-img-wrapper img {
   max-width: 75%;
   max-height: 83%;
