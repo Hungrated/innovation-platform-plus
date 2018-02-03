@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
@@ -64,7 +64,7 @@ let objMulter = multer({
  * }
  */
 router.post('/publish', function (req, res) {
-  // publish an article
+  // publish a blog(project or event)
   let publishData = req.body;
   publishData.blog_id = 'blg' + uid.generate();
 
@@ -87,11 +87,27 @@ router.post('/publish', function (req, res) {
     });
 });
 
-// upload images for an article
-router.post('/imgupload', objMulter.any(), function (req, res) {
+/**
+ *
+ * 上传文章中的图片（用在发表文章中）
+ *
+ * @api {post} /api/blog/imgupload blog.imgUpload
+ * @apiName blogImgUpload
+ * @apiGroup Blog
+ * @apiVersion 2.1.0
+ * @apiPermission user
+ *
+ * @apiDescription 用户上传文章中的图片。
+ *
+ * @apiParam {array} imageList 文件列表
+ *
+ * @apiSuccess end 默认成功无返回
+ */
+router.post('/imgupload', objMulter.any(), function (req, res, next) {
   // upload images for an article
   let id = req.body.blog_id;
-  let dir = pathLib.join(path.blogs, `${id}_${Date.now()}`);
+  let folderName = id;
+  let dir = pathLib.join(path.blogs, folderName);
   let imgArr = [];
   // noinspection JSAnnotator
   fs.mkdir(dir, 0777, function (err) {
@@ -102,7 +118,11 @@ router.post('/imgupload', objMulter.any(), function (req, res) {
       for (let i = 0; i < req.files.length; i++) {
         // for each file uploaded
         // rename & move a file
-        let newDir = pathLib.join(dir, req.files[i].filename + pathLib.parse(req.files[i].originalname).ext);
+        let newFilename = req.files[i].filename + pathLib.parse(req.files[i].originalname).ext;
+        // seem to have problems
+        console.log(newFilename);
+        let newDir = pathLib.join(dir, newFilename);
+        let newUrl = path.host + '/images/blogs/' + folderName + '/' + newFilename;
         fs.rename(req.files[i].path, newDir, function (err) {
           if (err) {
             console.log(err);
@@ -110,16 +130,72 @@ router.post('/imgupload', objMulter.any(), function (req, res) {
             return res.json(statusLib.FILE_RENAME_FAILED);
           }
         });
-        imgArr.push([req.files[i].fieldname, newDir]);
-        if(i === req.files.length) {
-          res.json({
-            images: imgArr
-          });
+        imgArr.push([req.files[i].fieldname, newUrl]);
+        if (i === req.files.length - 1) {
+          req.imgArr = imgArr;
+          next();
         }
-        console.log(imgArr);
       }
     }
   });
+});
+
+router.post('/imgupload', function (req, res) {
+  let correctImgUrl = function (content, imgArr) {
+    let contentCorrected = content;
+    for (let i = 0; i < imgArr.length; i++) {
+      let reg = new RegExp(`\(${imgArr[i][0]}\)`, 'g');
+      contentCorrected = contentCorrected.replace(reg, imgArr[i][1]);
+    }
+    return contentCorrected;
+  };
+  Blog.findByPrimary(req.body.blog_id)
+    .then(function (profile) {
+      Blog.update({
+        content: correctImgUrl(profile.content, req.imgArr)
+      }, {
+        where: {
+          blog_id: req.body.blog_id
+        }
+      })
+        .then(function () {
+          res.end();
+        })
+        .catch(function (e) {
+          console.log(e);
+          res.json(statusLib.PLAN_EXPORT_FAILED);
+        });
+    })
+    .catch(function (e) {
+      console.log(e);
+      res.json(statusLib.PLAN_EXPORT_FAILED);
+    });
+});
+
+// import text of a file
+router.post('/import', objMulter.any(), function (req, res, next) {
+  // upload text file
+  console.log('text file upload successful');
+  if (req.body.type === 'word') {
+    next();
+  } else {
+    fs.readFile(req.files[0].path, function (err, data) {
+      if (err) {
+        throw err;
+      }
+      console.log(data.toString());
+      res.json({
+        status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
+        msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
+        content: data.toString()
+      });
+    });
+  }
+});
+
+router.post('/import', objMulter.any(), function (req, res, next) {
+  console.log('text file upload successful');
+  res.json({});
 });
 
 /**
@@ -129,7 +205,7 @@ router.post('/imgupload', objMulter.any(), function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
@@ -185,7 +261,7 @@ router.post('/query', function (req, res) {
  * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user
  *
  * @apiDescription 根据文章编号获取文章详细信息。

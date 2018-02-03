@@ -17,7 +17,7 @@ const moment = require('../middlewares/moment');
  * @api {get} /api/teacher/query teacher.query
  * @apiName teacherQuery
  * @apiGroup Teacher
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件获取全站信息列表。
@@ -100,7 +100,7 @@ router.get('/query', function (req, res) {
  * @api {post} /api/teacher/delete teacher.delete
  * @apiName teacherDelete
  * @apiGroup Teacher
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件删除特定信息。
@@ -160,6 +160,13 @@ router.post('/delete', function (req, res, next) {
   if (req.body.type !== 'blog') {
     next();
   } else {
+    let removeDir = function (fileUrl) {
+      let files = fs.readdirSync(fileUrl);
+      files.forEach(function (file) {
+        fs.unlinkSync(fileUrl + '/' + file);
+      });
+      fs.rmdirSync(fileUrl);
+    };
     let Blog = db.Blog;
     let Comment = db.Comment;
     Comment.destroy({
@@ -174,6 +181,15 @@ router.post('/delete', function (req, res, next) {
           }
         })
           .then(function () {
+            let dir = pathLib.join(path.blogs, req.body.id);
+            fs.access(dir, function (err) {
+              if (!(err && err.code === 'ENOENT')) {
+                removeDir(dir);
+                console.log('Images of this article has been removed.')
+              } else {
+                console.log('This article has no images. Skipped.');
+              }
+            });
             moment.deleteMoment(req.body.id);
             res.json(statusLib.INFO_DELETE_SUCCESSFUL);
             console.log('blog & comments delete successful');

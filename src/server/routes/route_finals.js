@@ -28,7 +28,7 @@ let objMulter = multer({
  * @api {post} /api/final/upload final.upload
  * @apiName finalUpload
  * @apiGroup Final
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 学生上传或更改期末作业。上传方式为form-data。仅支持上传zip文件。
@@ -128,7 +128,7 @@ router.post('/upload', function (req, res) {
  * @api {post} /api/final/query final.query
  * @apiName finalQuery
  * @apiGroup Final
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 获取期末信息。
@@ -185,7 +185,7 @@ router.post('/query', function (req, res) {
  * @api {post} /api/final/rate final.rate
  * @apiName finalRate
  * @apiGroup Final
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师进行期末总评。
@@ -195,7 +195,7 @@ router.post('/query', function (req, res) {
  * @apiParam {String} remark 期末评语
  * @apiParamExample {json} 请求示例
  * {
- *     "cswk_id": "(2017-2018-1)-S0500560-40429-2",
+ *     "cswk_id": "cwka05ae5",
  *     "student_id": 14051531
  * }
  *
@@ -275,7 +275,7 @@ router.post('/rate', function (req, res) {
  * @api {post} /api/final/delete final.delete
  * @apiName finalDelete
  * @apiGroup Final
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.student
  *
  * @apiDescription 删除期末作业。
@@ -340,11 +340,27 @@ router.post('/delete', function (req, res) {
  * @api {post} /api/final/export final.export
  * @apiName finalExport
  * @apiGroup Final
- * @apiVersion 2.1.0
+ * @apiVersion 2.3.0
  * @apiPermission user.teacher
  *
- * @apiSuccess {file} data Response data.
+ * @apiDescription 导出当前班级的期末成绩表。
  *
+ * @apiParam {String} class_id 班级选课号
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "class_id":"(2017-2018-1)-S0500560-40429-2"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} path 生成成绩表的链接信息
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 5600,
+ *     "msg": "期末成绩表导出成功",
+ *     "path": "/api/download?finals=final_export_(2017-2018-1)-S0500560-40429-2_1517479373965.xlsx"
+ * }
  */
 router.post('/export', function (req, res, next) {
   Profile.findAll({
@@ -379,7 +395,7 @@ router.post('/export', function (req, res) {
   const cid = req.body.class_id;
   const finalList = req.body.finalList;
 
-  const calcRemark = function (rt) {
+  const calcRemarkOutput = function (rt) {
     switch (rt) {
       case 'A':
         return '优 秀';
@@ -389,8 +405,10 @@ router.post('/export', function (req, res) {
         return '中 等';
       case 'D':
         return '及 格';
-      default:
+      case 'F':
         return '不及格';
+      default:
+        return '';
     }
   };
 
@@ -436,8 +454,8 @@ router.post('/export', function (req, res) {
       final.class_id
     ];
     sheet.data[i + 2][10] = profile.supervisor;
-    sheet.data[i + 2][11] = calcRemark(final.rate);
-    sheet.data[i + 2][12] = final.remark;
+    sheet.data[i + 2][11] = calcRemarkOutput(final.rate);
+    sheet.data[i + 2][12] = final.remark ? final.remark : '';
   }
 
   // export file
