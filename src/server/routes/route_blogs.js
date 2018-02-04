@@ -464,9 +464,9 @@ router.post('/export', function (req, res, next) {
 
 router.post('/export', function (req, res, next) {
   const data = req.blogData;
-  const header = `# ${data.title}  \n\n
-                  > ${data.profile.name} 发表于 ${data.publishTime}  \n\n
-                  _描 述：${data.description}_  \n\n`;
+  const header = `# ${data.title}  \n\n` +
+    ` > ${data.profile.name} 发表于 ${data.publishTime}  \n\n` +
+    `_描 述：${data.description}_  \n\n`;
   const outputText = header + data.content;
   const outputPath = pathLib.join(path.blogs, data.blog_id);
   const outputFile = pathLib.join(outputPath, `${data.blog_id}.md`);

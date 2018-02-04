@@ -16,7 +16,7 @@ const statusLib = require('../libs/status');
  * @apiPermission all / user
  *
  * @apiDescription 下载文件或图片。
- * 类型有："resource"资源文件，"blog"文章Markdown文档，"cswk"期末作业，"finals"期末成绩表。
+ * 类型有："resource"资源文件，"blog"文章，"cswk"期末作业，"finals"期末成绩表。
  *
  * @apiParamExample {url} 请求示例
  * download?resource=fil059e27
