@@ -19,7 +19,7 @@ const statusLib = require('../libs/status');
  * 类型有："resource"资源文件，"avatar"头像，"banner"首页轮播图，"cswk"期末作业，"finals"期末成绩表。
  *
  * @apiParamExample {url} 请求示例
- * download?resource=blg782148
+ * download?resource=fil059e27
  *
  * @apiSuccess {file} data Response data.
  */
