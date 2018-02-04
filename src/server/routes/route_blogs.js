@@ -413,7 +413,36 @@ router.get('/details', function (req, res) {
     });
 });
 
-// export
+/**
+ *
+ * 导出文章内容
+ *
+ * @api {post} /api/blog/export blog.export
+ * @apiName blogExport
+ * @apiGroup Blog
+ * @apiVersion 2.3.0
+ * @apiPermission user
+ *
+ * @apiDescription 用户导出文章内容到Markdown文档。
+ *
+ * @apiParam {String} blog_id 文章编号
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "blog_id": "blg408695"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} url 文章导出文件下载地址
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 3400,
+ *     "msg": "文章导出成功",
+ *     "url": "/api/download?blog=blg408695"
+ * }
+ */
 router.post('/export', function (req, res, next) {
   Blog.findByPrimary(req.body.blog_id, {
     include: [{
