@@ -12,7 +12,7 @@ const statusLib = require('../libs/status');
  * @api {get} /api/download?:type=:id download
  * @apiName download
  * @apiGroup Download
- * @apiVersion 2.4.0
+ * @apiVersion 2.5.0
  * @apiPermission all / user
  *
  * @apiDescription 下载文件或图片。

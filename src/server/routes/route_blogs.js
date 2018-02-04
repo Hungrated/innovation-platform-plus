@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 2.4.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
@@ -177,7 +177,7 @@ router.post('/imgupload', function (req, res) {
  * @api {post} /api/blog/import blog.import
  * @apiName blogImport
  * @apiGroup Blog
- * @apiVersion 2.4.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 用户导入文章内容。
@@ -246,7 +246,7 @@ router.post('/import', function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 2.4.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
@@ -302,7 +302,7 @@ router.post('/query', function (req, res) {
  * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
- * @apiVersion 2.4.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 根据文章编号获取文章详细信息。
@@ -420,7 +420,7 @@ router.get('/details', function (req, res) {
  * @api {post} /api/blog/export blog.export
  * @apiName blogExport
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 用户导出文章内容到Markdown文档。
