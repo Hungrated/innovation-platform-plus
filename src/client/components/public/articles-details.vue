@@ -10,7 +10,10 @@
                 <Icon type="ios-person-outline"></Icon>&emsp;{{details.blog.profile.name}}&emsp;&emsp;
                 <Icon type="ios-clock-outline"></Icon>&emsp;{{details.blog.publishTime}}&emsp;
               </span>
-              <Button type="text" size="small" @click="back()">返回文章列表</Button>
+              <span>
+                <Button type="success" size="small" icon="social-markdown" @click="">导出为Markdown文档</Button>
+                <Button type="text" size="small" @click="back()">返回文章列表</Button>
+              </span>
             </div>
           </div>
           <div class="m-content">

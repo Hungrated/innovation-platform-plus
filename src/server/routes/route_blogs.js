@@ -406,4 +406,68 @@ router.get('/details', function (req, res) {
     });
 });
 
+// export
+router.post('/export', function (req, res, next) {
+  Blog.findByPrimary(id, {
+    include: [{
+      model: Profile,
+      attributes: ['name']
+    }]
+  })
+    .then(function (data) {
+      req.blogData = data;
+      next();
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.BLOG_DETAILS_FETCH_FAILED);
+      console.log('fetch detail failed');
+    });
+});
+
+router.post('/export', function (req, res, next) {
+  const data = req.blogData;
+  const header = `# ${data.title}  \n\n
+                  > ${data.profile.name} 发表于 ${data.publishTime}  \n\n
+                  _描 述：${data.description}_  \n\n`;
+  const outputText = header + data.content;
+  const outputPath = pathLib.join(path.blogs, data.blog_id);
+  const outputFile = pathLib.join(outputPath, `${data.blog_id}.md`);
+  const outputUrl = path.host + '/images/blogs/' + data.blog_id + '/' + data.blog_id + '.md';
+
+  const writeFile = function(path, str, next) {
+    fs.writeFile(path, str, function (err) {
+      if (err) {
+        console.err(err);
+      }
+      console.log('output: ' + path);
+      next();
+    });
+  };
+
+  req.outputUrl = outputUrl;
+  fs.access(outputPath, function (err) {
+    if (!(err && err.code === "ENOENT")) {
+      writeFile(outputFile, outputText, next);
+    } else {
+      // noinspection JSAnnotator
+      fs.mkdir(outputPath, 0777, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          writeFile(outputFile, outputText, next);
+        }
+      });
+    }
+  });
+});
+
+router.post('/export', function (req, res) {
+  res.json({
+    status: statusLib.BLOG_EXPORT_SUCCESSFUL.status,
+    msg: statusLib.BLOG_EXPORT_SUCCESSFUL.msg,
+    src: req.outputUrl
+  });
+});
+
 module.exports = router;
