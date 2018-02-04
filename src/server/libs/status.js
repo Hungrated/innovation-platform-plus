@@ -135,6 +135,16 @@ module.exports = {
     'msg': '文章导入失败'
   },
 
+  BLOG_EXPORT_SUCCESSFUL: {
+    'status': 3400,
+    'msg': '文章导出成功'
+  },
+
+  BLOG_EXPORT_FAILED: {
+    'status': 3401,
+    'msg': '文章导出失败'
+  },
+
   FILE_UPLOAD_SUCCESSFUL: {
     'status': 4000,
     'msg': '资源文件上传成功'
