@@ -415,14 +415,15 @@ router.get('/details', function (req, res) {
 
 // export
 router.post('/export', function (req, res, next) {
-  Blog.findByPrimary(id, {
+  Blog.findByPrimary(req.body.blog_id, {
     include: [{
       model: Profile,
       attributes: ['name']
     }]
   })
     .then(function (data) {
-      req.blogData = data;
+      data.dataValues.publishTime = timeFormat(data.dataValues.created_at);
+      req.blogData = data.dataValues;
       next();
     })
     .catch(function (e) {
@@ -440,7 +441,7 @@ router.post('/export', function (req, res, next) {
   const outputText = header + data.content;
   const outputPath = pathLib.join(path.blogs, data.blog_id);
   const outputFile = pathLib.join(outputPath, `${data.blog_id}.md`);
-  const outputUrl = path.host + '/images/blogs/' + data.blog_id + '/' + data.blog_id + '.md';
+  const downloadUrl = '/api/download?blog=' + data.blog_id;
 
   const writeFile = function(path, str, next) {
     fs.writeFile(path, str, function (err) {
@@ -452,7 +453,7 @@ router.post('/export', function (req, res, next) {
     });
   };
 
-  req.outputUrl = outputUrl;
+  req.downloadUrl = downloadUrl;
   fs.access(outputPath, function (err) {
     if (!(err && err.code === "ENOENT")) {
       writeFile(outputFile, outputText, next);
@@ -473,7 +474,7 @@ router.post('/export', function (req, res) {
   res.json({
     status: statusLib.BLOG_EXPORT_SUCCESSFUL.status,
     msg: statusLib.BLOG_EXPORT_SUCCESSFUL.msg,
-    src: req.outputUrl
+    url: req.downloadUrl
   });
 });
 
