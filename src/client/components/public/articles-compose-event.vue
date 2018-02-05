@@ -1,6 +1,26 @@
 <template>
   <div>
-    eventEditor
+    <Card disHover>
+      <div id="uploader" class="m-upload">
+        <div class="queueList">
+          <div id="dndArea" class="placeholder">
+            <div id="filePicker"></div>
+            <p>或将照片拖到这里，单次最多可选10张</p>
+          </div>
+        </div>
+        <div class="statusBar" style="display:none">
+          <div class="progress">
+            <span class="text">0%</span>
+            <span class="percentage"></span>
+          </div>
+          <div class="info"></div>
+          <div class="btns">
+            <div id="filePicker2"></div>
+            <div class="uploadBtn">开始上传</div>
+          </div>
+        </div>
+      </div>
+    </Card>
   </div>
 </template>
 <script>
@@ -11,28 +31,6 @@
       return {};
     },
     methods: {
-      $imgAdd (pos, $file) {
-        this.img_file[pos] = $file;
-      },
-      $imgDel (pos) {
-        delete this.img_file[pos];
-      },
-      uploadimg ($e) {
-        // upload files in one request.
-        console.log(this.img_file);
-        let formdata = new FormData();
-        for (let _img in this.img_file) {
-          formdata.append(_img, this.img_file[_img]);
-        }
-//        this.$ajax({
-//          url: 'http://127.0.0.1/index.php',
-//          method: 'post',
-//          data: formdata,
-//          headers: {'Content-Type': 'multipart/form-data'}
-//        }).then((res) => {
-//          console.log(res);
-//        });
-      },
       submit () {
         let submitData = {
           type: 'project',
@@ -58,6 +56,13 @@
             });
         }
       }
+    },
+    mounted () {
+
     }
   };
 </script>
+
+<style scoped lang="scss">
+  @import '../../styles/articles-compose-event';
+</style>
