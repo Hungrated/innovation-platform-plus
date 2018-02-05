@@ -134,7 +134,7 @@
         this.$ajax.post('/api/blog/import', formData, this.uploadConfig)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
-            _this.value = _this.$refs.md.d_value + '\n' + res.data.content;
+            _this.value = _this.$refs.md.d_value + res.data.content;
           })
           .catch(function (e) {
             console.log(e);
@@ -146,21 +146,19 @@
           type: 'project',
           title: this.title,
           description: this.description,
-          // content: this.$children[0].d_render,
           content: this.$refs.md.d_value,
           cover_url: '',
           photo_url: '',
           author_id: JSON.parse(window.localStorage.user).school_id
         };
         if (!submitData.title || !submitData.content) {
-          console.log(submitData);
           this.$Message.info('请将空余内容补充完整');
         } else {
           const _this = this;
           // publish the article
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
-              if (!(_this.img_file === {})) {
+              if (!(JSON.stringify(_this.img_file) === '{}')) {
                 _this.uploadImg(res.data.blog_id);
               }
               _this.$Message.success(res.data.msg);

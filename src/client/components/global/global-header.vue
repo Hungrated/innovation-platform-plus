@@ -8,20 +8,20 @@
         <MenuItem name="1">
           <router-link tag="span" to="/index">
             <Icon type="home"></Icon>
-            &nbsp;<strong>主 页</strong>
+            &nbsp;<span>主 页</span>
           </router-link>
         </MenuItem>
         <MenuItem name="2">
           <router-link tag="span" to="/moments">
             <Icon type="compass"></Icon>
-            &nbsp;<strong>动 态</strong>
+            &nbsp;<span>动 态</span>
           </router-link>
         </MenuItem>
         <Submenu name="3">
           <span slot="title">
             <router-link tag="span" to="/articles">
               <Icon type="document-text"></Icon>
-              <strong>文 章</strong>
+              <span>文 章</span>
             </router-link>
           </span>
           <MenuGroup title="类 别">
@@ -39,7 +39,7 @@
         <MenuItem name="4">
           <router-link tag="span" to="/resources">
             <Icon type="folder"></Icon>
-            &nbsp;<strong>资源共享</strong>
+            &nbsp;<span>资源共享</span>
           </router-link>
         </MenuItem>
         <!--<MenuItem name="5">-->

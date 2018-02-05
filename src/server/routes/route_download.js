@@ -12,14 +12,14 @@ const statusLib = require('../libs/status');
  * @api {get} /api/download?:type=:id download
  * @apiName download
  * @apiGroup Download
- * @apiVersion 2.3.0
+ * @apiVersion 2.5.0
  * @apiPermission all / user
  *
  * @apiDescription 下载文件或图片。
- * 类型有："resource"资源文件，"blog"文章Markdown文档，"cswk"期末作业，"finals"期末成绩表。
+ * 类型有："resource"资源文件，"blog"文章，"cswk"期末作业，"finals"期末成绩表。
  *
  * @apiParamExample {url} 请求示例
- * download?resource=blg782148
+ * download?resource=fil059e27
  *
  * @apiSuccess {file} data Response data.
  */

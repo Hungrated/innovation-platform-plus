@@ -64,7 +64,6 @@
           }
         },
         uploadData: {
-          school_id: JSON.parse(window.localStorage.user).school_id,
           desc: '',
           file: null
         },
@@ -141,7 +140,7 @@
         return false;
       },
       fileSizeFormat (size) {
-        return (size / 1048576).toFixed(1) + ' MB';
+        return (size / 1048576).toFixed(2) + ' MB';
       },
       submitFile () {
         if (this.uploadData.file === null || this.uploadData.desc === '') {
@@ -151,7 +150,7 @@
         let _this = this;
         let formData = new FormData();
         formData.append('file', this.uploadData.file);
-        formData.append('school_id', this.uploadData.school_id);
+        formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
         formData.append('descriptions', this.uploadData.desc);
 
         this.$ajax.post('/api/file/upload', formData, this.uploadConfig)

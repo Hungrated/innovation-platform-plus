@@ -25,7 +25,15 @@ _added final mark export module_
 
 **version `v2.3.0` on 2 Feb 2018**
 
-_totally modified image upload module & add image upload feature for article publishing_
+_totally modified image upload module & added image upload feature for article publishing_
+
+**version `v2.4.0` on 3 Feb 2018**
+
+_added content import feature for article publishing_
+
+**version `v2.5.0` on 4 Feb 2018**
+
+_added content export feature for article review_
   
 
 ### 2 Build setup

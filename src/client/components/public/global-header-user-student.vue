@@ -2,7 +2,9 @@
   <div class="m-users">
     <Submenu name="8">
       <template slot="title">
-        <Icon type="person"></Icon>&nbsp;{{name}}
+        <router-link tag="span" to="/user-center">
+          <Icon type="person"></Icon>{{name}}
+        </router-link>
       </template>
       <MenuGroup title="管 理">
         <MenuItem name="8-1"><span @click="changeRoute('/user-center')">个人中心</span></MenuItem>
