@@ -10,6 +10,7 @@ const Profile = db.Profile;
 const path = require('../app_paths');
 const pathLib = require('path');
 const urlLib = require('url');
+const timeFormat = require('../middlewares/time_format');
 
 const fs = require('fs');
 const multer = require('multer');
@@ -436,15 +437,16 @@ router.post('/export', function (req, res) {
 
   // The direct option - two-dimensional array:
   sheet.data[0] = ['创新实践期末成绩表'];
-  sheet.data[1] = ['序 号', '学 号', '姓 名', '学 院', '班级号', '年 级', '选课号'];
-  sheet.data[1][10] = '导 师';
-  sheet.data[1][11] = '成 绩';
-  sheet.data[1][12] = '评 语';
+  sheet.data[0][10] = '导出时间: ' + timeFormat(new Date());
+  sheet.data[2] = ['序 号', '学 号', '姓 名', '学 院', '班级号', '年 级', '选课号'];
+  sheet.data[2][10] = '导 师';
+  sheet.data[2][11] = '成 绩';
+  sheet.data[2][12] = '评 语';
 
   for (let i = 0; i < finalList.length; i++) {
     let profile = finalList[i];
     let final = profile.finals[0];
-    sheet.data[i + 2] = [
+    sheet.data[i + 3] = [
       i + 1,
       final.student_id,
       profile.name,
@@ -453,9 +455,9 @@ router.post('/export', function (req, res) {
       profile.grade,
       final.class_id
     ];
-    sheet.data[i + 2][10] = profile.supervisor;
-    sheet.data[i + 2][11] = calcRemarkOutput(final.rate);
-    sheet.data[i + 2][12] = final.remark ? final.remark : '';
+    sheet.data[i + 3][10] = profile.supervisor;
+    sheet.data[i + 3][11] = calcRemarkOutput(final.rate);
+    sheet.data[i + 3][12] = final.remark ? final.remark : '';
   }
 
   // export file
