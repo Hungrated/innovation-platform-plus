@@ -6,9 +6,7 @@
         :show-upload-list="false"
         :default-file-list="defaultList"
         :on-success="handleSuccess"
-        :format="['jpg','jpeg','png']"
-        :on-format-error="handleFormatError"
-        :on-exceeded-size="handleMaxSize"
+        accept="image/*"
         :before-upload="handleBeforeUpload"
         multiple
         type="drag"
@@ -91,18 +89,6 @@
       handleSuccess (res, file) {
         file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
         file.name = '7eb99afb9d5f317c912f08b5212fd69a';
-      },
-      handleFormatError (file) {
-        this.$Notice.warning({
-          title: 'The file format is incorrect',
-          desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-        });
-      },
-      handleMaxSize (file) {
-        this.$Notice.warning({
-          title: 'Exceeding file size limit',
-          desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-        });
       },
       handleBeforeUpload () {
         const check = this.uploadList.length < 5;
