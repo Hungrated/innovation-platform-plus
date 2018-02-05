@@ -358,7 +358,7 @@
                         let _this = this;
                         this.$Modal.confirm({
                           title: '确认删除',
-                          content: '确定删除此文章？（此文章下的评论信息也将被删除）',
+                          content: '确定删除此文章？（此文章所含评论与图片也将被删除）',
                           onOk () {
                             _this.infoDelete('blog', params.row.blog_id);
                           }
