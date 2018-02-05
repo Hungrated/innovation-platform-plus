@@ -98,7 +98,9 @@
     },
     methods: {
       changeEditType (name) {
-        if (name !== this.editType && this.$refs.editor.$children[0].d_value) {
+        if ((name === 'event' && this.$refs.editor.$children[0].d_value)
+          // || (name === 'markdown')
+        ) {
           let _this = this;
           this.$Modal.confirm({
             title: '切换编辑类型',
