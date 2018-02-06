@@ -49,7 +49,9 @@
         ],
         imgName: '',
         visible: false,
-        uploadList: []
+        uploadList: [
+
+        ]
       };
     },
     methods: {
