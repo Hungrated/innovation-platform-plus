@@ -2,8 +2,11 @@
 
 > An advanced on-line information-managing & resource-sharing platform for Innovation Practice courses.
 
+### 1 Introduction
 
-### 1 Version control
+The `Innovation Platform` is a showcase that teachers and students can display class culture, project status and events, etc. The platform is made for the Innovation Practice course, integrating functions of content publishing and sharing, course achievements showing, student events displaying, on-line file sharing, on- line plan management and so on, holding the features of simplicity, light-weight and easy-to-use.The platform can become an efficient course testing tool and information-sharing platform. It is suitable for small classes. It can contribute a lot to the construction of the Innovation Practice course.
+
+### 2 Version control
 
 **initial commit on 27 Nov 2017**
 
@@ -36,7 +39,7 @@ _added content import feature for article publishing_
 _added content export feature for article review_
   
 
-### 2 Build setup
+### 3 Build setup
 
 ``` bash
 # install dependencies
