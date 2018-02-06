@@ -87,17 +87,11 @@
         this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
       },
       handleSuccess (res, file) {
-        file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-        file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+        // file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
+        // file.name = '7eb99afb9d5f317c912f08b5212fd69a';
       },
       handleBeforeUpload () {
-        const check = this.uploadList.length < 5;
-        if (!check) {
-          this.$Notice.warning({
-            title: 'Up to five pictures can be uploaded.'
-          });
-        }
-        return check;
+        return false;
       }
     },
     mounted () {
