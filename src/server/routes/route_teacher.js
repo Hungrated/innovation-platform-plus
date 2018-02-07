@@ -169,30 +169,42 @@ router.post('/delete', function (req, res, next) {
     };
     let Blog = db.Blog;
     let Comment = db.Comment;
+    let Image = db.Image;
     Comment.destroy({
       where: {
         blog_id: req.body.id
       }
     })
       .then(function () {
-        Blog.destroy({
+        Image.destroy({
           where: {
             blog_id: req.body.id
           }
         })
           .then(function () {
-            let dir = pathLib.join(path.blogs, req.body.id);
-            fs.access(dir, function (err) {
-              if (!(err && err.code === 'ENOENT')) {
-                removeDir(dir);
-                console.log('Images of this article has been removed.')
-              } else {
-                console.log('This article has no images. Skipped.');
+            Blog.destroy({
+              where: {
+                blog_id: req.body.id
               }
-            });
-            moment.deleteMoment(req.body.id);
-            res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-            console.log('blog & comments delete successful');
+            })
+              .then(function () {
+                let dir = pathLib.join(path.blogs, req.body.id);
+                fs.access(dir, function (err) {
+                  if (!(err && err.code === 'ENOENT')) {
+                    removeDir(dir);
+                    console.log('Images of this article has been removed.');
+                  } else {
+                    console.log('This article has no images. Skipped.');
+                  }
+                });
+                moment.deleteMoment(req.body.id);
+                res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+                console.log('blog & comments delete successful');
+              })
+              .catch(function (e) {
+                console.error(e);
+                res.json(statusLib.CONNECTION_ERROR);
+              });
           })
           .catch(function (e) {
             console.error(e);
