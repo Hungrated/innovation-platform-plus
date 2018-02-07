@@ -162,7 +162,13 @@
         }
       },
       $imgAdd (pos, $file) {
-        this.img_file[pos] = $file;
+        let _this = this;
+        this.compress($file, 0.5, function (err, data) { // data: Blob
+          if (err) {
+            console.log(err);
+          }
+          _this.img_file[pos] = data;
+        });
       },
       $imgDel (pos) {
         delete this.img_file[pos];
