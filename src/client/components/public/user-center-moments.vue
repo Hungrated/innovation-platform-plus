@@ -3,7 +3,7 @@
     <Timeline>
       <p v-if="momentsList.length === 0" style="text-align: center">暂无动态哦</p>
       <div class="s-moment-item-container" v-else>
-        <TimelineItem v-for="moment in momentsList" key="moment.moment_id">
+        <TimelineItem v-for="moment in momentsList" :key="moment.moment_id">
           <div v-if="moment.type === 'planmod'" class="s-moment-item">
             <div class="s-moment-item-time">{{ getTime(moment.created_at) }}</div>
             <div>
