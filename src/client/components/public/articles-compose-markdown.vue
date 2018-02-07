@@ -173,9 +173,10 @@
       $imgDel (pos) {
         delete this.img_file[pos];
       },
-      uploadImg (id, type) {
+      uploadImg (blogId, type, uploaderId) {
         let formData = new FormData();
-        formData.append('blog_id', id);
+        formData.append('blog_id', blogId);
+        formData.append('uploader_id', uploaderId);
         formData.append('type', type);
         for (let _img in this.img_file) {
           formData.append(_img, this.img_file[_img]);
@@ -222,7 +223,8 @@
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
               if (!(JSON.stringify(_this.img_file) === '{}')) {
-                _this.uploadImg(res.data.blog_id, res.data.type);
+                console.log(res.data.blog_id, res.data.type, res.data.author_id);
+                _this.uploadImg(res.data.blog_id, res.data.type, res.data.author_id);
               }
               _this.$Message.success(res.data.msg);
               _this.$router.push({path: '/articles'});

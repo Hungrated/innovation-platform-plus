@@ -76,7 +76,9 @@ router.post('/publish', function (req, res) {
       res.json({
         status: statusLib.BLOG_PUB_SUCCESSFUL.status,
         msg: statusLib.BLOG_PUB_SUCCESSFUL.msg,
-        blog_id: blog.blog_id
+        blog_id: blog.blog_id,
+        type: blog.type,
+        author_id: blog.author_id
       });
       console.log('publish successful');
     })

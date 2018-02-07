@@ -121,10 +121,11 @@
           return false;
         });
       },
-      uploadImgList (id, type) {
+      uploadImgList (blogId, type, uploaderId) {
         const imgList = this.toUploadList;
         let imgData = new FormData();
-        imgData.append('blog_id', id);
+        imgData.append('blog_id', blogId);
+        imgData.append('uploader_id', uploaderId);
         imgData.append('type', type);
         for (let i = 0; i < imgList.length; i++) {
           imgData.append(`img_${i}`, imgList[i].blob);
@@ -153,7 +154,7 @@
           // publish the article
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
-              _this.uploadImgList(res.data.blog_id, res.data.type);
+              _this.uploadImgList(res.data.blog_id, res.data.type, res.data.author_id);
               _this.$Message.success(res.data.msg);
               _this.$router.push({path: '/articles'});
             })
