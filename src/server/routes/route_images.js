@@ -22,7 +22,7 @@ let objMulter = multer({
  *
  * 上传文章图片（用在发表文章中）
  *
- * @api {post} /api/image/upload imageUpload
+ * @api {post} /api/image/upload image.upload
  * @apiName imageUpload
  * @apiGroup Image
  * @apiVersion 2.5.0
@@ -32,12 +32,11 @@ let objMulter = multer({
  *
  * @apiParam {formdata} imageList 文件列表
  *
- * @apiSuccess end 默认成功无返回
+ * @apiSuccess / 默认成功无返回
  */
 router.post('/upload', objMulter.any(), function (req, res, next) {
   // upload images for an article
-  let id = req.body.blog_id;
-  let folderName = id;
+  let folderName = req.body.blog_id;
   let dir = pathLib.join(path.blogs, folderName);
   let imgArr = [];
   // noinspection JSAnnotator
@@ -50,8 +49,6 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
         // for each file uploaded
         // rename & move a file
         let newFilename = req.files[i].filename + pathLib.parse(req.files[i].originalname).ext;
-        // seem to have problems
-        console.log(newFilename);
         let newDir = pathLib.join(dir, newFilename);
         let newUrl = path.host + '/images/blogs/' + folderName + '/' + newFilename;
         fs.rename(req.files[i].path, newDir, function (err) {
@@ -80,27 +77,31 @@ router.post('/upload', function (req, res) {
     }
     return contentCorrected;
   };
-  Blog.findByPrimary(req.body.blog_id)
-    .then(function (profile) {
-      Blog.update({
-        content: correctImgUrl(profile.content, req.imgArr)
-      }, {
-        where: {
-          blog_id: req.body.blog_id
-        }
-      })
-        .then(function () {
-          res.end();
+  if(req.body.type === 'event') {
+    res.end();
+  } else {
+    Blog.findByPrimary(req.body.blog_id)
+      .then(function (profile) {
+        Blog.update({
+          content: correctImgUrl(profile.content, req.imgArr)
+        }, {
+          where: {
+            blog_id: req.body.blog_id
+          }
         })
-        .catch(function (e) {
-          console.log(e);
-          res.json(statusLib.PLAN_EXPORT_FAILED);
-        });
-    })
-    .catch(function (e) {
-      console.log(e);
-      res.json(statusLib.PLAN_EXPORT_FAILED);
-    });
+          .then(function () {
+            res.end();
+          })
+          .catch(function (e) {
+            console.log(e);
+            res.json(statusLib.PLAN_EXPORT_FAILED);
+          });
+      })
+      .catch(function (e) {
+        console.log(e);
+        res.json(statusLib.PLAN_EXPORT_FAILED);
+      });
+  }
 });
 
 module.exports = router;
