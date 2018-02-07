@@ -1,6 +1,7 @@
 const User = require('./db_users');
 const Profile = require('./db_profiles');
 const Blog = require('./db_blogs');
+const Image = require('./db_images');
 const Comment = require('./db_comments');
 const Plan = require('./db_plans');
 const File = require('./db_files');
@@ -47,12 +48,21 @@ Blog.hasMany(Comment, {
   foreignKey: 'blog_id'
 });
 
+Blog.hasMany(Image, {
+  foreignKey: 'blog_id'
+});
+
+Image.belongsTo(Profile, {
+  foreignKey: 'uploader_id'
+});
+
 Comment.belongsTo(Profile, {
   foreignKey: 'student_id'
 });
 
 Blog.sync().then();
 Comment.sync().then();
+Image.sync().then();
 
 Plan.sync().then();
 

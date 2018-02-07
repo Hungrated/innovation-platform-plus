@@ -5,8 +5,8 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
 const uid = require('../middlewares/id_gen');
-const Banner = db.Banner;
 const Blog = db.Blog;
+const Image = db.Image;
 
 const path = require('../app_paths');
 const pathLib = require('path');
@@ -39,6 +39,19 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
   let folderName = req.body.blog_id;
   let dir = pathLib.join(path.blogs, folderName);
   let imgArr = [];
+  let addImage = function (url) {
+    Image.create({
+      image_id: 'img' + uid.generate(),
+      src: url,
+      blog_id: req.body.blog_id,
+      uploader_id: req.body.uploader_id
+    })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
+  };
+
   // noinspection JSAnnotator
   fs.mkdir(dir, 0777, function (err) {
     if (err) {
@@ -59,6 +72,7 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
           }
         });
         imgArr.push([req.files[i].fieldname, newUrl]);
+        addImage(newUrl);
         if (i === req.files.length - 1) {
           req.imgArr = imgArr;
           next();
