@@ -1,11 +1,11 @@
 <template>
-  <Card disHover>
+  <Card disHover class="g-container">
     <div class="g-done">
       <div class="m-upload-list" v-for="item in uploadList">
         <div >
           <img :src="item.url">
           <div class="m-upload-list-cover">
-            <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+            <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
             <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
           </div>
         </div>
@@ -13,7 +13,6 @@
     </div>
     <Upload ref="upload"
             :show-upload-list="false"
-            :default-file-list="defaultList"
             :format="['jpg','jpeg','png']"
             :max-size="2048"
             :before-upload="handleBeforeUpload"
@@ -139,19 +138,17 @@
         this.visible = true;
       },
       handleRemove (file) {
-        const fileList = this.$refs.upload.fileList;
-        this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+        const fileList = this.uploadList;
+        this.uploadList.splice(fileList.indexOf(file), 1);
       },
       handleBeforeUpload (file) {
         let _this = this;
-        console.log(file);
         this.compress(file, 0.5, function (err, data) { // data: Blob
           console.log(data);
           if (err) {
             console.log(err);
           }
           _this.toUploadList.push({
-            'name': 'a42bdcc1178e62b4694c830f028db5c0',
             'url': window.URL.createObjectURL(data)
           });
           _this.uploadList = _this.toUploadList;
