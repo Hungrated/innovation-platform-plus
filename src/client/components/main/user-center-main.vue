@@ -34,7 +34,7 @@
           <span slot="title">
             <span class="m-card header">
               <strong>我的计划 & 任务</strong>
-              <Button @click="editPlans()" type="text" size="small">新 增</Button>
+              <Button @click="editPlans()" type="dashed" size="small"><Icon type="edit"></Icon></Button>
             </span>
           </span>
         <div class="m-card unit">
@@ -55,7 +55,7 @@
           <span slot="title">
             <span class="m-card header">
               <strong>我的动态</strong>
-              <Button @click="changeRoute('/moments')" type="text" size="small">所有动态</Button>
+              <Button @click="changeRoute('/moments')" type="ghost" size="small"><Icon type="more"></Icon></Button>
             </span>
           </span>
         <div class="m-card unit">
@@ -68,7 +68,7 @@
           <span slot="title">
             <span class="m-card header">
               <strong>我的资料</strong>
-              <Button @click="editProfile()" type="text" size="small">编 辑</Button>
+              <Button @click="editProfile()" type="dashed" size="small"><Icon type="edit"></Icon></Button>
             </span>
           </span>
         <div class="m-card unit">
@@ -89,7 +89,11 @@
       <span slot="title">
         <span class="m-card header">
           <strong>我的文章</strong>
-          <Button @click="changeRoute('/articles?label=4')" type="text" size="small">详 情</Button>
+          <span>
+            <Button @click="changeRoute('/articles')" type="ghost" size="small"><Icon type="more"></Icon></Button>
+            <Button @click="changeRoute('/articles/compose')" type="dashed"
+                    size="small"><Icon type="compose"></Icon></Button>
+          </span>
         </span>
       </span>
         <div class="m-card unit">
