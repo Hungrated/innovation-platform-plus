@@ -8,36 +8,35 @@ The `Innovation Platform` is a showcase that teachers and students can display c
 
 ### 2 Version control
 
-**initial commit on 27 Nov 2017**
+**version `v2.5.0` on 4 Feb 2018**
 
-**version `v1.0.0` on 29 Dec 2017**
-
-_basic frame, basic modules_
-
-**version `v2.0.0` on 19 Jan 2018**
-
-_majorly added info-manage module for teachers & administrators_
-  
-**version `v2.1.0` on 25 Jan 2018**
-
-_added course-work module_
-
-**version `v2.2.0` on 1 Feb 2018**
-
-_added final mark export module_
-
-**version `v2.3.0` on 2 Feb 2018**
-
-_totally modified image upload module & added image upload feature for article publishing_
+_added content export feature for article review_
 
 **version `v2.4.0` on 3 Feb 2018**
 
 _added content import feature for article publishing_
 
-**version `v2.5.0` on 4 Feb 2018**
+**version `v2.3.0` on 2 Feb 2018**
 
-_added content export feature for article review_
-  
+_totally modified image upload module & added image upload feature for article publishing_
+
+**version `v2.2.0` on 1 Feb 2018**
+
+_added final mark export module_
+
+**version `v2.1.0` on 25 Jan 2018**
+
+_added course-work module_
+
+**version `v2.0.0` on 19 Jan 2018**
+
+_majorly added info-manage module for teachers & administrators_
+
+**version `v1.0.0` on 29 Dec 2017**
+
+_basic frame, basic modules_
+
+**initial commit on 27 Nov 2017**  
 
 ### 3 Build setup
 
