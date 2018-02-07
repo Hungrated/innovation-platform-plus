@@ -8,7 +8,7 @@
           </span>
           <span class="m-list-cls">
             <span class="m-unit-cls" v-for="unit in classArr" :key="unit.class_id">
-              <strong style="margin-left: 15px;">{{unit.cname}}</strong>
+              <strong style="margin-left: 15px">{{unit.cname}}</strong>
               <Button size="large" type="text" @click="changeClass(unit)">{{unit.class_id}}</Button>
             </span>
           </span>
@@ -18,7 +18,11 @@
             <span class="m-unit info">学生信息： <strong>{{cur_class.class_id}}</strong></span>
             <span class="m-unit btn">
               <span class="m-unit export" v-if="displayMode === 'total'">
-                <Button size="small" type="success" @click="exportFinal(cur_class.class_id)">导出期末成绩表</Button>
+                <Button size="small"
+                        type="success"
+                        @click="exportFinal(cur_class.class_id)"
+                        icon="archive">导出期末成绩表
+                </Button>
               </span>
               <ButtonGroup shape="circle">
                 <Button :type="(displayMode === 'plans') ? ('primary') : ('ghost')"
@@ -50,8 +54,8 @@
                 </p>
                 <Button type="success"
                         size="small"
-                        @click="exportPlan(curStudentDetails.profile.school_id)">
-                  导出所有信息为Word
+                        @click="exportPlan(curStudentDetails.profile.school_id)"
+                        icon="archive">导出所有信息为Word
                 </Button>
               </div>
               <div class="m-profile">

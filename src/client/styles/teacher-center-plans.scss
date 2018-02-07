@@ -47,10 +47,16 @@
 }
 
 .m-unit-cls {
-  box-shadow: 0 0 2px #DDDDDD;
+  margin-left: 1px;
+  box-shadow: 0 0 1px #DDDDDD;
   padding: 8px 0 0 0;
   margin-bottom: 5px;
   border-radius: 5px;
+  transition: all 200ms;
+
+  &:hover {
+    box-shadow: 0 0 1px #2b85e4;
+  }
 }
 
 .m-list-stu {
