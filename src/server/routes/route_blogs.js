@@ -142,7 +142,7 @@ router.post('/imgupload', function (req, res) {
   let correctImgUrl = function (content, imgArr) {
     let contentCorrected = content;
     for (let i = 0; i < imgArr.length; i++) {
-      let reg = new RegExp(`\(${imgArr[i][0]}\)`, 'g');
+      let reg = new RegExp(`\(${imgArr[i][0]}\)`, 'g'); // needs improving
       contentCorrected = contentCorrected.replace(reg, imgArr[i][1]);
     }
     return contentCorrected;
