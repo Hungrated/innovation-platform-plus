@@ -105,6 +105,62 @@
       };
     },
     methods: {
+      compress (file, quality, callback) {
+        if (!window.FileReader || !window.Blob) {
+          return errorHandler('您的浏览器不支持图片压缩')();
+        }
+
+        let reader = new FileReader();
+        let mimeType = file.type || 'image/jpeg';
+
+        reader.onload = createImage;
+        reader.onerror = errorHandler('图片读取失败！');
+        reader.readAsDataURL(file);
+
+        function createImage () {
+          let dataURL = this.result;
+          let image = new Image();
+          image.onload = compressImage;
+          image.onerror = errorHandler('图片加载失败');
+          image.src = dataURL;
+        }
+
+        function compressImage () {
+          let canvas = document.createElement('canvas');
+          let ctx;
+          let dataURI;
+          let result;
+
+          canvas.width = this.naturalWidth;
+          canvas.height = this.naturalHeight;
+          ctx = canvas.getContext('2d');
+          ctx.drawImage(this, 0, 0);
+          dataURI = canvas.toDataURL(mimeType, quality);
+          result = dataURIToBlob(dataURI);
+
+          callback(null, result);
+        }
+
+        function dataURIToBlob (dataURI) {
+          let type = dataURI.match(/data:([^;]+)/)[1];
+          let base64 = dataURI.replace(/^[^,]+,/, '');
+          let byteString = atob(base64);
+
+          let ia = new Uint8Array(byteString.length);
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+
+          return new Blob([ia], {type: type});
+        }
+
+        function errorHandler (message) {
+          return function () {
+            let error = new Error('Compression Error:', message);
+            callback(error, null);
+          };
+        }
+      },
       $imgAdd (pos, $file) {
         this.img_file[pos] = $file;
       },

@@ -2,12 +2,10 @@
   <Card disHover class="g-container">
     <div class="g-done">
       <div class="m-upload-list" v-for="item in toUploadList">
-        <div>
-          <img :src="item.url">
-          <div class="m-upload-list-cover">
-            <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
-            <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-          </div>
+        <img :src="item.url">
+        <div class="m-upload-list-cover">
+          <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
+          <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
         </div>
       </div>
     </div>
@@ -24,7 +22,7 @@
         <p>单击或拖拽图片到此处以上传到活动图集</p>
       </div>
     </Upload>
-    <Modal title="View Image" v-model="visible" width="50">
+    <Modal title="查看大图" v-model="visible" width="50">
       <img :src="viewSrc" style="width: 100%">
     </Modal>
   </Card>
