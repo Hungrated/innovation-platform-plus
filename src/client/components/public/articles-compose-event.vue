@@ -113,7 +113,6 @@
       handleBeforeUpload (file) {
         let _this = this;
         this.compress(file, 0.5, function (err, data) { // data: Blob
-          console.log(data);
           if (err) {
             console.log(err);
           }
@@ -121,14 +120,14 @@
             'blob': data,
             'url': window.URL.createObjectURL(data)
           });
+          return false;
         });
-        return false;
       },
       uploadImgList (id) {
         const imgList = this.toUploadList;
         let imgData = new FormData();
         imgData.append('blog_id', id);
-        for (let i = 0; i < imgData.length; i++) {
+        for (let i = 0; i < imgList.length; i++) {
           imgData.append(`img_${i}`, imgList[i].blob);
         }
         this.$ajax.post('/api/blog/imgupload', imgData, this.uploadConfig)
@@ -141,7 +140,7 @@
           type: 'event',
           title: this.title,
           description: this.description,
-          content: '',
+          content: '这是一篇活动文章，请用图片查看方式浏览',
           cover_url: '',
           photo_url: '',
           author_id: JSON.parse(window.localStorage.user).school_id
@@ -155,9 +154,7 @@
           // publish the article
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
-              if (!(JSON.stringify(_this.img_file) === '{}')) {
-                _this.uploadImgList(res.data.blog_id);
-              }
+              _this.uploadImgList(res.data.blog_id);
               _this.$Message.success(res.data.msg);
               _this.$router.push({path: '/articles'});
             })
