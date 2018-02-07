@@ -34,7 +34,7 @@ let objMulter = multer({
  *
  * @apiSuccess end 默认成功无返回
  */
-router.post('/imgupload', objMulter.any(), function (req, res, next) {
+router.post('/upload', objMulter.any(), function (req, res, next) {
   // upload images for an article
   let id = req.body.blog_id;
   let folderName = id;
@@ -71,7 +71,7 @@ router.post('/imgupload', objMulter.any(), function (req, res, next) {
   });
 });
 
-router.post('/imgupload', function (req, res) {
+router.post('/upload', function (req, res) {
   let correctImgUrl = function (content, imgArr) {
     let contentCorrected = content;
     for (let i = 0; i < imgArr.length; i++) {

@@ -179,7 +179,7 @@
         for (let _img in this.img_file) {
           formData.append(_img, this.img_file[_img]);
         }
-        this.$ajax.post('/api/blog/imgupload', formData, this.uploadConfig)
+        this.$ajax.post('/api/image/upload', formData, this.uploadConfig)
           .catch(function (e) {
             console.log(e);
           });
