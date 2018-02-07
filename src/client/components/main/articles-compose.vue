@@ -29,18 +29,16 @@
       </Card>
     </div>
     <div class="g-compose body">
-      <transition name="fade">
-        <markdown-editor v-if="editType === 'markdown'"
-                         ref="editor"
-                         :title="editor.title"
-                         :label="editor.label"
-                         :description="editor.description"/>
-        <event-editor v-if="editType === 'event'"
-                      ref="editor2"
-                      :title="editor.title"
-                      :label="editor.label"
-                      :description="editor.description"/>
-      </transition>
+      <markdown-editor v-if="editType === 'markdown'"
+                       ref="editor"
+                       :title="editor.title"
+                       :label="editor.label"
+                       :description="editor.description"/>
+      <event-editor v-if="editType === 'event'"
+                    ref="editor2"
+                    :title="editor.title"
+                    :label="editor.label"
+                    :description="editor.description"/>
     </div>
     <div class="g-compose footer">
       <Card disHover>
@@ -99,7 +97,7 @@
     methods: {
       changeEditType (name) {
         if ((name === 'event' && this.$refs.editor.$children[0].d_value)
-          // || (name === 'markdown')
+        // || (name === 'markdown')
         ) {
           let _this = this;
           this.$Modal.confirm({
