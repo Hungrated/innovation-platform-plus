@@ -72,13 +72,12 @@ router.post('/upload', function (req, res) {
   let correctImgUrl = function (content, imgArr) {
     let contentCorrected = content;
     for (let i = 0; i < imgArr.length; i++) {
-      let reg = new RegExp(`\(${imgArr[i][0]}\)`, 'g');
-      contentCorrected.replace(reg, imgArr[i]);
-      contentCorrected = contentCorrected.replace(reg, imgArr[i][1]);
+      let reg = new RegExp(`\\\(\\${imgArr[i][0]}\\\)`, 'g');
+      contentCorrected = contentCorrected.replace(reg, `(${imgArr[i][1]})`);
     }
     return contentCorrected;
   };
-  if(req.body.type === 'event') {
+  if (req.body.type === 'event') {
     res.end();
   } else {
     Blog.findByPrimary(req.body.blog_id)
