@@ -151,7 +151,7 @@
           photo_url: '',
           author_id: JSON.parse(window.localStorage.user).school_id
         };
-        if (!submitData.title || !submitData.content) {
+        if (!submitData.title || !submitData.description || !submitData.content) {
           this.$Message.info('请将空余内容补充完整');
         } else {
           const _this = this;

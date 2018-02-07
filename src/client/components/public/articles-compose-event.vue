@@ -1,8 +1,8 @@
 <template>
   <Card disHover class="g-container">
     <div class="g-done">
-      <div class="m-upload-list" v-for="item in uploadList">
-        <div >
+      <div class="m-upload-list" v-for="item in toUploadList">
+        <div>
           <img :src="item.url">
           <div class="m-upload-list-cover">
             <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
@@ -21,11 +21,11 @@
             action="#">
       <div class="m-upload">
         <Icon type="ios-cloud-upload" size="120" style="color: #3399ff"></Icon>
-        <p>单击或拖拽到此处上传活动图集</p>
+        <p>单击或拖拽图片到此处以上传到活动图集</p>
       </div>
     </Upload>
-    <Modal title="View Image" v-model="visible">
-      <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+    <Modal title="View Image" v-model="visible" width="50">
+      <img :src="viewSrc" style="width: 100%">
     </Modal>
   </Card>
 </template>
@@ -35,20 +35,14 @@
     props: ['title', 'label', 'description'],
     data () {
       return {
-        defaultList: [
-          {
-            'name': 'a42bdcc1178e62b4694c830f028db5c0',
-            'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-          },
-          {
-            'name': 'bc7521e033abdd1e92222d733590f104',
-            'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
+        uploadConfig: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
           }
-        ],
-        imgName: '',
+        },
         visible: false,
-        toUploadList: [],
-        uploadList: []
+        viewSrc: '',
+        toUploadList: []
       };
     },
     methods: {
@@ -108,38 +102,13 @@
           };
         }
       },
-      submit () {
-        let submitData = {
-          type: 'project',
-          title: this.title,
-          description: this.description,
-          // content: this.$children[0].d_render,
-          content: this.$children[0].d_value,
-          cover_url: '',
-          photo_url: '',
-          author_id: JSON.parse(window.localStorage.user).school_id
-        };
-        if (!submitData.title || !submitData.content) {
-          this.$Message.info('请将空余内容补充完整');
-        } else {
-          const _this = this;
-          this.$ajax.post('/api/blog/publish', submitData)
-            .then(function (res) {
-              _this.$Message.success(res.data.msg);
-              _this.$router.push({path: '/articles'});
-            })
-            .catch(function (e) {
-              console.log(e);
-            });
-        }
-      },
-      handleView (name) {
-        this.imgName = name;
+      handleView (src) {
+        this.viewSrc = src;
         this.visible = true;
       },
       handleRemove (file) {
-        const fileList = this.uploadList;
-        this.uploadList.splice(fileList.indexOf(file), 1);
+        const fileList = this.toUploadList;
+        this.toUploadList.splice(fileList.indexOf(file), 1);
       },
       handleBeforeUpload (file) {
         let _this = this;
@@ -149,17 +118,54 @@
             console.log(err);
           }
           _this.toUploadList.push({
+            'blob': data,
             'url': window.URL.createObjectURL(data)
           });
-          _this.uploadList = _this.toUploadList;
-          console.log(_this.uploadList);
         });
         return false;
+      },
+      uploadImgList (id) {
+        const imgList = this.toUploadList;
+        let imgData = new FormData();
+        imgData.append('blog_id', id);
+        for (let i = 0; i < imgData.length; i++) {
+          imgData.append(`img_${i}`, imgList[i].blob);
+        }
+        this.$ajax.post('/api/blog/imgupload', imgData, this.uploadConfig)
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      submit () {
+        let submitData = {
+          type: 'event',
+          title: this.title,
+          description: this.description,
+          content: '',
+          cover_url: '',
+          photo_url: '',
+          author_id: JSON.parse(window.localStorage.user).school_id
+        };
+        if (!submitData.title || !submitData.description) {
+          this.$Message.info('请将空余内容补充完整');
+        } else if (!this.toUploadList.length) {
+          this.$Message.info('请上传相关图片');
+        } else {
+          const _this = this;
+          // publish the article
+          this.$ajax.post('/api/blog/publish', submitData)
+            .then(function (res) {
+              if (!(JSON.stringify(_this.img_file) === '{}')) {
+                _this.uploadImgList(res.data.blog_id);
+              }
+              _this.$Message.success(res.data.msg);
+              _this.$router.push({path: '/articles'});
+            })
+            .catch(function (e) {
+              console.log(e);
+            });
+        }
       }
-    },
-    mounted () {
-      console.log(this.$refs.upload.fileList);
-      this.uploadList = this.$refs.upload.fileList;
     }
   };
 </script>

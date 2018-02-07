@@ -1,5 +1,5 @@
 .g-container {
-  height: calc(100vh - 158px);
+  min-height: calc(100vh - 158px);
 }
 
 .g-done {
@@ -12,7 +12,7 @@
 
 .m-upload {
   min-height: calc(100vh - 318px);
-  padding-top: 118px;
+  padding: 118px 0 148px 0;
 
   p {
     margin-top: 20px;
