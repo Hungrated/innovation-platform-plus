@@ -167,7 +167,6 @@
           if (err) {
             console.log(err);
           }
-          console.log(data);
           _this.img_file[pos] = data;
         });
       },
