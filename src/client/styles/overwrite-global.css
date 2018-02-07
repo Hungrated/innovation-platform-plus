@@ -58,10 +58,6 @@
   color: rgba(255, 255, 255, 1);
 }
 
-.v-note-wrapper {
-  z-index: 0 !important;
-}
-
 .v-note-panel {
   box-shadow: none !important;
   border-radius: 5px;
@@ -69,4 +65,32 @@
 
 .ivu-input {
   resize: none;
+}
+
+.v-note-wrapper {
+  z-index: 500 !important;
+}
+
+.v-note-img-wrapper {
+  z-index: 2000 !important;
+}
+
+.v-note-wrapper .markdown-body .fullscreen {
+  z-index: 2000 !important;
+}
+
+.v-note-img-wrapper img {
+  max-width: 75%;
+  max-height: 83%;
+}
+
+.v-note-op {
+  border-bottom: 1px solid #DDDDDD;
+  /*box-shadow: 0 3px 5px #DDDDDD !important;*/
+  box-shadow: none !important;
+}
+
+[type=reset], [type=submit], button, html [type=button] {
+  -webkit-appearance: none;
+  outline: none !important;
 }

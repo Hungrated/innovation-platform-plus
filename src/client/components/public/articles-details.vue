@@ -11,7 +11,7 @@
                 <Icon type="ios-clock-outline"></Icon>&emsp;{{details.blog.publishTime}}&emsp;
               </span>
               <span>
-                <Button type="success" size="small" icon="social-markdown" @click="">导出为Markdown文档</Button>
+                <Button type="success" size="small" icon="social-markdown" @click="exportMd()">导出为Markdown文档</Button>
                 <Button type="text" size="small" @click="back()">返回文章列表</Button>
               </span>
             </div>
@@ -59,6 +59,7 @@
           </span>
       </div>
     </Card>
+    <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
   </div>
 </template>
 
@@ -79,9 +80,6 @@
         },
         comment: ''
       };
-    },
-    mounted () {
-      this.refreshData();
     },
     methods: {
       back () {
@@ -124,7 +122,29 @@
           .catch(function (e) {
             console.log(e);
           });
+      },
+      downloadFile (url) {
+        let a = document.getElementById('fileDownloadTmpFrame');
+        a.src = url;
+        this.$Message.success('文件下载成功');
+      },
+      exportMd () {
+        let _this = this;
+        this.$ajax.post('/api/blog/export', {
+          blog_id: this.index
+        })
+          .then(function (res) {
+            console.log(res.data.url);
+            _this.downloadFile(res.data.url);
+            // _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
+    },
+    mounted () {
+      this.refreshData();
     }
   };
 </script>

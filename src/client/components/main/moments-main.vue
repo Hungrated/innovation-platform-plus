@@ -9,7 +9,7 @@
         </span>
         <p v-if="moments.length === 0" style="text-align: center">暂无动态哦</p>
         <div class="g-moments container" v-else>
-          <TimelineItem v-for="moment in moments" key="moment.moment_id">
+          <TimelineItem v-for="moment in moments" :key="moment.moment_id">
             <div v-if="moment.type === 'planmod'" class="m-moment">
               <span class="m-moment time">{{ getTime(moment.created_at) }}</span>
               <div>

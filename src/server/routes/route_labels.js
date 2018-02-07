@@ -20,7 +20,7 @@ const router = express.Router();
  * @api {post} /api/label/query label.query
  * @apiName labelQuery
  * @apiGroup Label
- * @apiVersion 2.3.0
+ * @apiVersion 2.5.0
  * @apiPermission user.teacher
  *
  * @apiSuccess {JSON} data Response data.

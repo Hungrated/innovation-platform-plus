@@ -8,28 +8,27 @@
         <MenuItem name="1">
           <router-link tag="span" to="/index">
             <Icon type="home"></Icon>
-            &nbsp;<strong>主 页</strong>
+            &nbsp;<span>主 页</span>
           </router-link>
         </MenuItem>
         <MenuItem name="2">
           <router-link tag="span" to="/moments">
             <Icon type="compass"></Icon>
-            &nbsp;<strong>动 态</strong>
+            &nbsp;<span>动 态</span>
           </router-link>
         </MenuItem>
         <Submenu name="3">
           <span slot="title">
             <router-link tag="span" to="/articles">
               <Icon type="document-text"></Icon>
-              <strong>文 章</strong>
+              <span>文 章</span>
             </router-link>
           </span>
           <MenuGroup title="类 别">
-            <MenuItem name="3-1"><span @click="changeRoute('/articles?label=0')">所有文章</span></MenuItem>
-            <MenuItem name="3-2"><span @click="changeRoute('/articles?label=1')">项目成果</span></MenuItem>
-            <MenuItem name="3-3"><span @click="changeRoute('/articles?label=2')">技术交流</span></MenuItem>
-            <MenuItem name="3-4"><span @click="changeRoute('/articles?label=3')">活 动</span></MenuItem>
-            <MenuItem name="3-5"><span @click="changeRoute('/articles?label=4')">我的文章</span></MenuItem>
+            <MenuItem name="3-1"><span @click="changeRoute('/articles')">所有文章</span></MenuItem>
+            <MenuItem name="3-2"><span @click="changeRoute('/articles')">Markdown文档</span></MenuItem>
+            <MenuItem name="3-3"><span @click="changeRoute('/articles')">活动图集</span></MenuItem>
+            <MenuItem name="3-4"><span @click="changeRoute('/articles')">我的文章</span></MenuItem>
           </MenuGroup>
           <MenuGroup title="发 布">
             <MenuItem name="3-5"><span @click="changeRoute('/articles/compose')"><Icon
@@ -40,7 +39,7 @@
         <MenuItem name="4">
           <router-link tag="span" to="/resources">
             <Icon type="folder"></Icon>
-            &nbsp;<strong>资源共享</strong>
+            &nbsp;<span>资源共享</span>
           </router-link>
         </MenuItem>
         <!--<MenuItem name="5">-->

@@ -29,18 +29,16 @@
       </Card>
     </div>
     <div class="g-compose body">
-      <transition name="fade">
-        <markdown-editor v-if="editType === 'markdown'"
-                         ref="editor"
-                         :title="editor.title"
-                         :label="editor.label"
-                         :description="editor.description"/>
-        <event-editor v-if="editType === 'event'"
-                      ref="editor2"
-                      :title="editor.title"
-                      :label="editor.label"
-                      :description="editor.description"/>
-      </transition>
+      <markdown-editor v-if="editType === 'markdown'"
+                       ref="markdownEditor"
+                       :title="editor.title"
+                       :label="editor.label"
+                       :description="editor.description"/>
+      <event-editor v-if="editType === 'event'"
+                    ref="eventEditor"
+                    :title="editor.title"
+                    :label="editor.label"
+                    :description="editor.description"/>
     </div>
     <div class="g-compose footer">
       <Card disHover>
@@ -50,7 +48,7 @@
               {{ type.label }}
             </Option>
           </Select>
-          <Button class="m-container submit" size="large" type="primary" @click="submit()">
+          <Button class="m-container submit" size="large" type="primary" @click="submit(editType)">
             发&emsp;表
           </Button>
         </div>
@@ -98,7 +96,9 @@
     },
     methods: {
       changeEditType (name) {
-        if (name !== this.editType && this.$refs.editor.$children[0].d_value) {
+        if ((name === 'event' && this.$refs.markdownEditor.$children[0].d_value) ||
+          (name === 'markdown' && this.$refs.eventEditor.toUploadList.length)
+        ) {
           let _this = this;
           this.$Modal.confirm({
             title: '切换编辑类型',
@@ -111,8 +111,12 @@
           this.editType = name;
         }
       },
-      submit () {
-        this.$refs.editor.submit();
+      submit (type) {
+        if (type === 'markdown') {
+          this.$refs.markdownEditor.submit();
+        } else if (type === 'event') {
+          this.$refs.eventEditor.submit();
+        }
       }
     }
   };

@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
@@ -105,8 +105,7 @@ router.post('/publish', function (req, res) {
  */
 router.post('/imgupload', objMulter.any(), function (req, res, next) {
   // upload images for an article
-  let id = req.body.blog_id;
-  let folderName = id;
+  let folderName = req.body.blog_id;
   let dir = pathLib.join(path.blogs, folderName);
   let imgArr = [];
   // noinspection JSAnnotator
@@ -120,7 +119,6 @@ router.post('/imgupload', objMulter.any(), function (req, res, next) {
         // rename & move a file
         let newFilename = req.files[i].filename + pathLib.parse(req.files[i].originalname).ext;
         // seem to have problems
-        console.log(newFilename);
         let newDir = pathLib.join(dir, newFilename);
         let newUrl = path.host + '/images/blogs/' + folderName + '/' + newFilename;
         fs.rename(req.files[i].path, newDir, function (err) {
@@ -144,7 +142,7 @@ router.post('/imgupload', function (req, res) {
   let correctImgUrl = function (content, imgArr) {
     let contentCorrected = content;
     for (let i = 0; i < imgArr.length; i++) {
-      let reg = new RegExp(`\(${imgArr[i][0]}\)`, 'g');
+      let reg = new RegExp(`\(${imgArr[i][0]}\)`, 'g'); // needs improving
       contentCorrected = contentCorrected.replace(reg, imgArr[i][1]);
     }
     return contentCorrected;
@@ -172,7 +170,38 @@ router.post('/imgupload', function (req, res) {
     });
 });
 
-// import text of a file
+/**
+ *
+ * 从现有文件导入文章内容
+ *
+ * @api {post} /api/blog/import blog.import
+ * @apiName blogImport
+ * @apiGroup Blog
+ * @apiVersion 2.5.0
+ * @apiPermission user
+ *
+ * @apiDescription 用户导入文章内容。
+ *
+ * @apiParam {file} file 含有文本内容的文件
+ * @apiParam {String} type 文件类型
+ *
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "file": <text.md>,
+ *     "type": "md"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} content 导入的文章内容
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 3300,
+ *     "msg": "文章导入成功",
+ *     "content": "`机器学习` 是使用计算机来彰显数据背后的真实含义，它为了把无序的数据转换成有用的信息。"
+ * }
+ */
 router.post('/import', objMulter.any(), function (req, res, next) {
   // upload text file
   console.log('text file upload successful');
@@ -181,21 +210,33 @@ router.post('/import', objMulter.any(), function (req, res, next) {
   } else {
     fs.readFile(req.files[0].path, function (err, data) {
       if (err) {
-        throw err;
+        console.err(err);
+        console.log('blog import failed');
+        res.json(statusLib.BLOG_IMPORT_FAILED);
+      } else {
+        console.log('blog import successful');
+        res.json({
+          status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
+          msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
+          content: data.toString()
+        });
+        fs.unlink(req.files[0].path, function (err) {
+          if (err) {
+            console.err(err);
+          }
+        });
       }
-      console.log(data.toString());
-      res.json({
-        status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
-        msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
-        content: data.toString()
-      });
     });
   }
 });
 
-router.post('/import', objMulter.any(), function (req, res, next) {
+router.post('/import', function (req, res) {
   console.log('text file upload successful');
-  res.json({});
+  res.json({
+    status: statusLib.BLOG_IMPORT_SUCCESSFUL.status,
+    msg: statusLib.BLOG_IMPORT_SUCCESSFUL.msg,
+    content: 'word'
+  });
 });
 
 /**
@@ -205,7 +246,7 @@ router.post('/import', objMulter.any(), function (req, res, next) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
@@ -261,7 +302,7 @@ router.post('/query', function (req, res) {
  * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
- * @apiVersion 2.3.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 根据文章编号获取文章详细信息。
@@ -372,16 +413,46 @@ router.get('/details', function (req, res) {
     });
 });
 
-// export
+/**
+ *
+ * 导出文章内容
+ *
+ * @api {post} /api/blog/export blog.export
+ * @apiName blogExport
+ * @apiGroup Blog
+ * @apiVersion 2.5.0
+ * @apiPermission user
+ *
+ * @apiDescription 用户导出文章内容到Markdown文档。
+ *
+ * @apiParam {String} blog_id 文章编号
+ *
+ * @apiParamExample {json} 请求示例
+ * {
+ *     "blog_id": "blg408695"
+ * }
+ *
+ * @apiSuccess {Number} status 状态代码
+ * @apiSuccess {String} msg 反馈信息
+ * @apiSuccess {String} url 文章导出文件下载地址
+ * @apiSuccessExample {json} 成功返回示例
+ * HTTP/1.1 200 OK
+ * {
+ *     "status": 3400,
+ *     "msg": "文章导出成功",
+ *     "url": "/api/download?blog=blg408695"
+ * }
+ */
 router.post('/export', function (req, res, next) {
-  Blog.findByPrimary(id, {
+  Blog.findByPrimary(req.body.blog_id, {
     include: [{
       model: Profile,
       attributes: ['name']
     }]
   })
     .then(function (data) {
-      req.blogData = data;
+      data.dataValues.publishTime = timeFormat(data.dataValues.created_at);
+      req.blogData = data.dataValues;
       next();
     })
     .catch(function (e) {
@@ -393,13 +464,13 @@ router.post('/export', function (req, res, next) {
 
 router.post('/export', function (req, res, next) {
   const data = req.blogData;
-  const header = `# ${data.title}  \n\n
-                  > ${data.profile.name} 发表于 ${data.publishTime}  \n\n
-                  _描 述：${data.description}_  \n\n`;
+  const header = `# ${data.title}  \n\n` +
+    ` > ${data.profile.name} 发表于 ${data.publishTime}  \n\n` +
+    `_描 述：${data.description}_  \n\n`;
   const outputText = header + data.content;
   const outputPath = pathLib.join(path.blogs, data.blog_id);
   const outputFile = pathLib.join(outputPath, `${data.blog_id}.md`);
-  const outputUrl = path.host + '/images/blogs/' + data.blog_id + '/' + data.blog_id + '.md';
+  const downloadUrl = '/api/download?blog=' + data.blog_id;
 
   const writeFile = function(path, str, next) {
     fs.writeFile(path, str, function (err) {
@@ -411,7 +482,7 @@ router.post('/export', function (req, res, next) {
     });
   };
 
-  req.outputUrl = outputUrl;
+  req.downloadUrl = downloadUrl;
   fs.access(outputPath, function (err) {
     if (!(err && err.code === "ENOENT")) {
       writeFile(outputFile, outputText, next);
@@ -432,7 +503,7 @@ router.post('/export', function (req, res) {
   res.json({
     status: statusLib.BLOG_EXPORT_SUCCESSFUL.status,
     msg: statusLib.BLOG_EXPORT_SUCCESSFUL.msg,
-    src: req.outputUrl
+    url: req.downloadUrl
   });
 });
 

@@ -231,6 +231,7 @@
               _this.planEdit = false;
             }
             _this.refreshPlanList();
+            // _this.$parent.$refs.moments.fetchMoments(JSON.parse(window.localStorage.user).school_id);
           })
           .catch(function (e) {
             console.log(e);

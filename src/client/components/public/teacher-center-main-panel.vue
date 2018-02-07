@@ -99,7 +99,7 @@
         </span>
           <p v-if="moments.length === 0" style="text-align: center">暂无动态哦</p>
           <div class="m-moment" v-else>
-            <TimelineItem v-for="moment in moments" key="moment.moment_id">
+            <TimelineItem v-for="moment in moments" :key="moment.moment_id">
               <div v-if="moment.type === 'planmod'" class="m-moment item">
                 <div class="m-moment item time">{{ getTime(moment.created_at) }}</div>
                 <div>
@@ -261,30 +261,6 @@
               ]);
             }
           }
-          // {
-          //   title: '操 作',
-          //   key: 'action',
-          //   width: 150,
-          //   align: 'center',
-          //   render: (h, params) => {
-          //     return h('div', [
-          //       h('Button', {
-          //         props: {
-          //           type: 'primary',
-          //           size: 'small'
-          //         },
-          //         style: {
-          //           marginRight: '5px'
-          //         },
-          //         on: {
-          //           click: () => {
-          //             // this.modifyPlan(params.row);
-          //           }
-          //         }
-          //       }, '编 辑')
-          //     ]);
-          //   }
-          // }
         ],
         classData: [],
         moments: []
