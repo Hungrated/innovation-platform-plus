@@ -3,6 +3,17 @@
   display: flex;
   flex-direction: column;
 
+  .nav {
+    position: absolute;
+    top: -45px;
+    right: 170px;
+    padding: 0;
+    box-shadow: 0 0 3px #DDDDDD;
+    width: 124px;
+    overflow: hidden;
+    user-select: none;
+  }
+
   .container {
     padding: 0;
     margin-bottom: 10px;

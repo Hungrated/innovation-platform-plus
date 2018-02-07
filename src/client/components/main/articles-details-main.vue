@@ -1,5 +1,16 @@
 <template>
   <div class="g-details">
+    <div class="g-details nav">
+      <Menu mode="horizontal" theme="dark">
+        <div class="m-nav">
+          <MenuItem name="1">
+            <span @click="changeRoute('/articles/compose')">
+              <Icon type="compose"></Icon>&emsp;发布文章
+            </span>
+          </MenuItem>
+        </div>
+      </Menu>
+    </div>
     <Card disHover>
       <div class="g-details container">
         <div class="g-details container left">
@@ -82,9 +93,11 @@
       };
     },
     methods: {
+      changeRoute (path) {
+        this.$router.push(path);
+      },
       back () {
-        // window.history.back();
-        this.$router.push('/articles');
+        this.changeRoute('/articles');
       },
       refreshData () {
         let _this = this;
