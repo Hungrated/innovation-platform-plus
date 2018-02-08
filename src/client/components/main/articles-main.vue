@@ -15,7 +15,7 @@
       <article-view-carousel :carousel-list="carouselList"/>
     </div>
     <div class="g-articles body">
-      <article-view-list :articleList="articleList" :count="articleCount"/>
+      <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
       <article-view-waterfall :articleList="articleList" :count="articleCount"/>
     </div>
   </div>
@@ -131,58 +131,10 @@
             _this.articleList = res.data.articleList;
             _this.articleCount = res.data.articleList.length;
             _this.carouselList = res.data.carouselList;
-            // let Carousel = Vue.extend({
-            //   template: `<carousel-3d class="g-container">
-            //               <slide :index="0">
-            //                 <span class="g-carousel">
-            //                   <span class="g-img">
-            //                     <img :src="carouselList[0].cover">
-            //                   </span>
-            //                   <span class="g-title">
-            //                     {{carouselList[0].title}}
-            //                   </span>
-            //                 </span>
-            //               </slide>
-            //               <slide :index="1">
-            //                 <span class="g-carousel">
-            //                   <span class="g-img">
-            //                     <img :src="carouselList[1].cover">
-            //                   </span>
-            //                   <span class="g-title">
-            //                     {{carouselList[1].title}}
-            //                   </span>
-            //                 </span>
-            //               </slide>
-            //             </carousel-3d>`
-            // });
-            // let carousel = new Carousel({
-            //   data () {
-            //     return {
-            //       carouselList: res.data.carouselList
-            //     };
-            //   }
-            // });
-            // carousel.$mount('#carousel');
           })
           .catch(function (e) {
             console.log(e);
           });
-      },
-      getCarouselList (list) {
-        let count = 0;
-        let carouselList = [];
-        for (let i = 0; i < list.length; i++) {
-          let item = list[i];
-          if (count >= 5) {
-            break;
-          }
-          if (item.cover) {
-            item.index = count++;
-            carouselList.push(item);
-          }
-        }
-        console.log(carouselList);
-        return carouselList;
       }
     },
     components: {
@@ -192,7 +144,6 @@
     },
     mounted () {
       this.getArticleList();
-      console.log(this.carouselList);
     }
   };
 </script>

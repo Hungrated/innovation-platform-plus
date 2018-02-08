@@ -82,8 +82,6 @@
       revealDetails (index) {
         this.$router.push('/articles/details?index=' + index);
       }
-    },
-    mounted () {
     }
   };
 </script>
