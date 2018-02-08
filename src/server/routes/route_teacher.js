@@ -228,6 +228,60 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
+  if (req.body.type !== 'image') {
+    next();
+  } else {
+    let Blog = db.Blog;
+    let Image = db.Image;
+
+    Image.findByPrimary(req.body.id)
+      .then(function (image) {
+        let blogId = image.blog_id;
+        let imageId = image.image_id;
+        let imageUrl = pathLib.join(path.blogs, image.src.split(`/images/blogs/${blogId}/`)[1]);
+        fs.access(imageUrl, function (err) {
+          if (!(err && err.code === 'ENOENT')) {
+            fs.unlinkSync(imageUrl);
+            console.log('Image has been removed.');
+          } else {
+            console.log('Image not found. Skipped.');
+          }
+          Image.destroy({
+            where: {
+              image_id: imageId
+            }
+          })
+            .then(function () {
+              res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+              console.log('image delete successful');
+            })
+            .catch(function (e) {
+              console.error(e);
+              res.json(statusLib.CONNECTION_ERROR);
+            });
+        });
+        Blog.findByPrimary(blogId)
+          .then(function (blog) {
+            if(blog.type === 'project') {
+              let newContent = blog.content.replace(image.src, '');
+              Blog.update({
+                content: newContent
+              }, {
+                where: {
+                  blog_id: blogId
+                }
+              })
+            }
+          })
+      })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
+  }
+});
+
+router.post('/delete', function (req, res, next) {
   if (req.body.type !== 'banner') {
     next();
   } else {

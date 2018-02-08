@@ -456,7 +456,7 @@
             },
             {
               title: '操 作',
-              width: 180,
+              width: 100,
               align: 'center',
               render: (h, params) => {
                 return h('div', [
@@ -473,9 +473,9 @@
                         let _this = this;
                         this.$Modal.confirm({
                           title: '确认删除',
-                          content: '确定删除这张首页轮播图？',
+                          content: '确定删除这张图片？（可能导致其无法在文章中正常显示）',
                           onOk () {
-                            _this.infoDelete('banner', params.row.img_id);
+                            _this.infoDelete('image', params.row.image_id);
                           }
                         });
                       }
