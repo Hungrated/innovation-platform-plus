@@ -20,13 +20,19 @@
   }
 }
 
-.g-carousel {
+.g-carousel,
+.g-carousel-empty {
   width: 360px;
   height: 270px;
 
   * {
     display: block;
   }
+}
+
+.g-carousel-empty {
+  background: whitesmoke !important;
+  border: 1px solid transparent;
 }
 
 .g-img {

@@ -12,156 +12,7 @@
       </Menu>
     </div>
     <div class="g-articles header">
-      <carousel-3d class="g-container">
-        <slide :index="0">
-          <span class="g-carousel" v-if="!!carouselList[0]">
-            <span class="g-img">
-              <img :src="carouselList[0].cover">
-            </span>
-            <span class="g-title">
-              {{carouselList[0].title}}
-            </span>
-          </span>
-        </slide>
-        <slide :index="1">
-          <span class="g-carousel" v-if="!!carouselList[1]">
-            <span class="g-img">
-              <img :src="carouselList[1].cover">
-            </span>
-            <span class="g-title">
-              {{carouselList[1].title}}
-            </span>
-          </span>
-        </slide>
-        <slide :index="2">
-          <span class="g-carousel" v-if="!!carouselList[2]">
-            <span class="g-img">
-              <img :src="carouselList[2].cover">
-            </span>
-            <span class="g-title">
-              {{carouselList[2].title}}
-            </span>
-          </span>
-        </slide>
-        <slide :index="3">
-          <span class="g-carousel" v-if="!!carouselList[3]">
-            <span class="g-img">
-              <img :src="carouselList[3].cover || ''">
-            </span>
-            <span class="g-title">
-              {{carouselList[3].title || ''}}
-            </span>
-          </span>
-        </slide>
-        <slide :index="4">
-          <span class="g-carousel" v-if="!!carouselList[4]">
-            <span class="g-img">
-              <img :src="carouselList[4].cover|| ''">
-            </span>
-            <span class="g-title">
-              {{carouselList[4].title || ''}}
-            </span>
-          </span>
-        </slide>
-
-        <!--<slide v-for="item in carouselList" :key="item.blog_id" :index="item.index" v-model="carouselList">-->
-        <!--<span class="g-carousel">-->
-        <!--<span class="g-img">-->
-        <!--<img :src="carouselList[item.index].cover">-->
-        <!--</span>-->
-        <!--<span class="g-title">-->
-        <!--{{carouselList[item.index].title}}-->
-        <!--</span>-->
-        <!--</span>-->
-        <!--</slide>-->
-      </carousel-3d>
-      <!--<carousel-3d class="g-container" v-model="carouselList">-->
-      <!--<slide :index="0">-->
-      <!--<span class="g-carousel">-->
-      <!--<span class="g-img">-->
-      <!--<img :src="carouselList[0].cover">-->
-      <!--</span>-->
-      <!--<span class="g-title">-->
-      <!--{{carouselList[0].title}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</slide>-->
-      <!--<slide :index="1">-->
-      <!--<span class="g-carousel">-->
-      <!--<span class="g-img">-->
-      <!--&lt;!&ndash;<img :src="carouselList[1].cover">&ndash;&gt;-->
-      <!--</span>-->
-      <!--<span class="g-title">-->
-      <!--{{carouselList[1].title}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</slide>-->
-      <!--<slide :index="2">-->
-      <!--<span class="g-carousel">-->
-      <!--<span class="g-img">-->
-      <!--&lt;!&ndash;<img :src="carouselList[2].cover">&ndash;&gt;-->
-      <!--</span>-->
-      <!--<span class="g-title">-->
-      <!--{{carouselList[2].title}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</slide>-->
-      <!--<slide :index="3" :v-if="!!carouselList[3]">-->
-      <!--<span class="g-carousel">-->
-      <!--<span class="g-img">-->
-      <!--<img :src="carouselList[3].cover">-->
-      <!--</span>-->
-      <!--<span class="g-title">-->
-      <!--{{carouselList[3].title}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</slide>-->
-      <!--<slide :index="4" :v-if="!!carouselList[4]">-->
-      <!--<span class="g-carousel">-->
-      <!--<span class="g-img">-->
-      <!--<img :src="carouselList[4].cover">-->
-      <!--</span>-->
-      <!--<span class="g-title">-->
-      <!--{{carouselList[4].title}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</slide>-->
-      <!--</carousel-3d>-->
-      <!--<carousel-3d v-model="carouselList">-->
-      <!--<slide v-for="item in carouselList"-->
-      <!--:key="item.blog_id"-->
-      <!--:index="item.index">-->
-      <!--<div class="g-carousel">-->
-      <!--<div class="g-img">-->
-      <!--<img :src="item.cover">-->
-      <!--</div>-->
-      <!--<div class="g-title">-->
-      <!--{{item.title}}-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</slide>-->
-      <!--</carousel-3d>-->
-      <!--<article-view-carousel ref="carousel" :articleList="articleList"/>-->
-
-      <!--<Card class="m-card" disHover>-->
-      <!--<div class="m-card container">-->
-      <!--<strong>文 章</strong>-->
-      <!--<Dropdown class="m-card container type">-->
-      <!--<Button type="primary" v-model="articleListLabel">-->
-      <!--{{articleListLabel}}&nbsp;-->
-      <!--<Icon type="arrow-down-b"></Icon>-->
-      <!--</Button>-->
-      <!--<DropdownMenu slot="list">-->
-      <!--<DropdownItem v-for="type in labelList"-->
-      <!--:value="type.label"-->
-      <!--:key="type.index">-->
-      <!--<span @click="changeLabel(type)">{{type.label}}</span>-->
-      <!--</DropdownItem>-->
-      <!--</DropdownMenu>-->
-      <!--</Dropdown>-->
-      <!--</div>-->
-      <!--</Card>-->
-
+      <article-view-carousel :carousel-list="carouselList"/>
     </div>
     <div class="g-articles body">
       <article-view-list :articleList="articleList" :count="articleCount"/>
@@ -171,7 +22,6 @@
 </template>
 
 <script>
-  import { Carousel3d, Slide } from 'vue-carousel-3d';
   import articleViewCarousel from '../public/articles-view-carousel';
   import articleViewList from '../public/articles-view-list';
   import articleViewWaterfall from '../public/articles-view-waterfall';
@@ -281,6 +131,38 @@
             _this.articleList = res.data.articleList;
             _this.articleCount = res.data.articleList.length;
             _this.carouselList = res.data.carouselList;
+            // let Carousel = Vue.extend({
+            //   template: `<carousel-3d class="g-container">
+            //               <slide :index="0">
+            //                 <span class="g-carousel">
+            //                   <span class="g-img">
+            //                     <img :src="carouselList[0].cover">
+            //                   </span>
+            //                   <span class="g-title">
+            //                     {{carouselList[0].title}}
+            //                   </span>
+            //                 </span>
+            //               </slide>
+            //               <slide :index="1">
+            //                 <span class="g-carousel">
+            //                   <span class="g-img">
+            //                     <img :src="carouselList[1].cover">
+            //                   </span>
+            //                   <span class="g-title">
+            //                     {{carouselList[1].title}}
+            //                   </span>
+            //                 </span>
+            //               </slide>
+            //             </carousel-3d>`
+            // });
+            // let carousel = new Carousel({
+            //   data () {
+            //     return {
+            //       carouselList: res.data.carouselList
+            //     };
+            //   }
+            // });
+            // carousel.$mount('#carousel');
           })
           .catch(function (e) {
             console.log(e);
@@ -304,8 +186,6 @@
       }
     },
     components: {
-      Carousel3d,
-      Slide,
       articleViewCarousel,
       articleViewList,
       articleViewWaterfall

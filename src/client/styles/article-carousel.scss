@@ -1,4 +1,5 @@
-.g-carousel {
+.g-carousel, .g-carousel-empty {
+  display: block;
   width: 360px;
   height: 270px;
 
@@ -7,10 +8,23 @@
   }
 }
 
+.g-carousel-empty {
+  padding: 100px 0;
+  text-align: center;
+  font-size: 18px;
+  color: #999999;
+  width: 360px;
+  height: 270px;
+  box-shadow: 0 0 15px #999999;
+  border: 1px solid #EEEEEE;
+  border-radius: 5px;
+}
+
 .g-img {
   width: 360px;
   height: 240px;
   border-radius: 5px;
+  box-shadow: 0 0 15px #999999;
   overflow: hidden;
   cursor: pointer;
 
@@ -19,4 +33,12 @@
     min-width: 360px;
     min-height: 240px;
   }
+}
+
+.g-title {
+  color: #FFFFFF;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 5px;
+  text-shadow: 1px 1px 5px #000000;
 }
