@@ -69,7 +69,7 @@
 </template>
 
 <script>
-  import { Carousel3d, Slide } from 'vue-carousel-3d-modified';
+  import { Carousel3d, Slide } from 'vue-carousel-3d';
 
   export default {
     name: 'article-view-carousel',

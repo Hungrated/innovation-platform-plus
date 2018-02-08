@@ -1,17 +1,21 @@
 <template>
 
-  <waterfall :line-gap="200" :watch="articleList">
+  <waterfall :line-gap="350" :watch="articleList">
     <!-- each component is wrapped by a waterfall slot -->
     <waterfall-slot
       v-for="(item, index) in articleList"
-      :width="450"
-      :height="200"
+      :width="400"
+      :height="500"
       :order="index"
       :key="item.blog_id">
-      test
-      <!--
-        your component
-      -->
+      <Card style="margin: 5px;">
+        <span class="g-img" v-if="item.cover">
+          <img :src="item.cover" style="width: 100%">
+        </span>
+        <span class="g-title">
+          {{item.title}}
+        </span>
+      </Card>
     </waterfall-slot>
   </waterfall>
   <!--<Card disHover>-->
