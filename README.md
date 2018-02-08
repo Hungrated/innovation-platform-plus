@@ -8,6 +8,12 @@ The `Innovation Platform` is a showcase that teachers and students can display c
 
 ### 2 Version control
 
+**version `v2.6.0` on 8 Feb 2018**
+
+_added event publishing module_  
+_modified database for article image upload module_  
+_added image management feature for teachers & administrators_
+
 **version `v2.5.0` on 4 Feb 2018**
 
 _added content export feature for article review_
