@@ -18,7 +18,8 @@ _added content import feature for article publishing_
 
 **version `v2.3.0` on 2 Feb 2018**
 
-_totally modified image upload module & added image upload feature for article publishing_
+_totally modified image upload module_  
+_added image upload feature for article publishing_
 
 **version `v2.2.0` on 1 Feb 2018**
 
@@ -30,7 +31,8 @@ _added course-work module_
 
 **version `v2.0.0` on 19 Jan 2018**
 
-_majorly added info-manage module for teachers & administrators_
+_added info-manage module for teachers & administrators_  
+_added moment module_
 
 **version `v1.0.0` on 29 Dec 2017**
 

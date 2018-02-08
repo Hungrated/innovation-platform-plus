@@ -13,7 +13,7 @@ const Class = db.Class;
  * @api {get} /api/class/query class.query
  * @apiName classQuery
  * @apiGroup Class
- * @apiVersion 2.5.0
+ * @apiVersion 1.0.0
  * @apiPermission user.teacher
  *
  * @apiDescription 获取教师所带班级列表。
@@ -105,7 +105,7 @@ router.post('/query', function (req, res) {
  * @api {post} /api/class/switch class.switch
  * @apiName classSwitch
  * @apiGroup Class
- * @apiVersion 2.5.0
+ * @apiVersion 2.0.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师切换班级当前标记的状态。

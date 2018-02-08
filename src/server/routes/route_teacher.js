@@ -17,7 +17,7 @@ const moment = require('../middlewares/moment');
  * @api {get} /api/teacher/query teacher.query
  * @apiName teacherQuery
  * @apiGroup Teacher
- * @apiVersion 2.5.0
+ * @apiVersion 2.6.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件获取全站信息列表。
@@ -109,7 +109,7 @@ router.get('/query', function (req, res) {
  * @api {post} /api/teacher/delete teacher.delete
  * @apiName teacherDelete
  * @apiGroup Teacher
- * @apiVersion 2.5.0
+ * @apiVersion 2.6.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件删除特定信息。

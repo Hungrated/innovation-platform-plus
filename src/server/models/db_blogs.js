@@ -30,9 +30,6 @@ const schema = {
   },
   cover_url: {
     type: Sequelize.STRING
-  },
-  photo_url: {
-    type: Sequelize.STRING
   }
 };
 
