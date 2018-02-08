@@ -28,10 +28,7 @@ const schema = {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  cover_url: {
-    type: Sequelize.STRING
-  },
-  photo_url: {
+  cover: {
     type: Sequelize.STRING
   }
 };
