@@ -22,10 +22,10 @@ const moment = require('../middlewares/moment');
  *
  * @apiDescription 教师根据查询条件获取全站信息列表。
  *
- * @apiParam request 请求条件：可发送"all"获取所有资料，或根据学号、当前选课号或详细模式查询所需信息
+ * @apiParam type 查询类型 可选值有blog|image|plan|meeting|resource|comment|class|banner|label
  *
  * @apiParamExample {url} 请求示例
- * teacher/query?type=blog|image|plan|meeting|resource|comment|class|banner|label
+ * teacher/query?type=image
  *
  * @apiSuccess {Array} data 返回根据上述条件所请求的信息列表
  */
