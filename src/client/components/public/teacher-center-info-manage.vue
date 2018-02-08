@@ -28,7 +28,7 @@
               <div class="g-info options sid">
                 <Input size="large"
                        v-model="infoSid"
-                       placeholder="学生学号（选填）"
+                       placeholder="学号或工号（选填）"
                        :disabled="infoLabel === 'banner' || infoLabel === 'class'"/>
               </div>
             </div>
@@ -121,31 +121,36 @@
           },
           {
             index: 2,
-            value: '计 划',
-            label: 'plan'
+            value: '文章图片',
+            label: 'image'
           },
           {
             index: 3,
-            value: '课堂记录',
-            label: 'meeting'
-          },
-          {
-            index: 4,
-            value: '资源文件',
-            label: 'resource'
-          },
-          {
-            index: 5,
             value: '评 论',
             label: 'comment'
           },
           {
+            index: 4,
+            value: '计 划',
+            label: 'plan'
+          },
+          {
+            index: 5,
+            value: '课堂记录',
+            label: 'meeting'
+          },
+          {
             index: 6,
+            value: '资源文件',
+            label: 'resource'
+          },
+          {
+            index: 7,
             value: '班 级',
             label: 'class'
           },
           {
-            index: 7,
+            index: 8,
             value: '标 签',
             label: 'label'
           }
@@ -361,6 +366,116 @@
                           content: '确定删除此文章？（此文章所含评论与图片也将被删除）',
                           onOk () {
                             _this.infoDelete('blog', params.row.blog_id);
+                          }
+                        });
+                      }
+                    }
+                  }, '删 除')
+                ]);
+              }
+            }
+          ],
+          image: [
+            {
+              title: '图片ID',
+              key: 'image_id',
+              width: 120
+            },
+            {
+              title: '图片预览',
+              key: 'src',
+              align: 'center',
+              render: (h, params) => {
+                return h('div', {
+                  style: {
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }
+                }, [
+                  h('img', {
+                    style: {
+                      height: '50px',
+                      margin: '5px'
+                    },
+                    attrs: {
+                      src: params.row.src
+                    }
+                  }),
+                  h('Button', {
+                    props: {
+                      type: 'dashed',
+                      size: 'small'
+                    },
+                    style: {
+                      margin: '18px 10px'
+                    },
+                    on: {
+                      click: () => {
+                        this.$Modal.info({
+                          width: 75,
+                          render: (h) => {
+                            return h('img', {
+                              style: {
+                                width: '100%',
+                                margin: '5px',
+                                borderRadius: '5px'
+                              },
+                              attrs: {
+                                src: params.row.src
+                              }
+                            });
+                          }
+                        });
+                      }
+                    }
+                  }, [h('Icon', {
+                    props: {
+                      type: 'ios-search-strong'
+                    }
+                  })])
+                ]);
+              }
+            },
+            {
+              title: '所属文章ID',
+              sortable: true,
+              key: 'blog_id'
+            },
+            {
+              title: '上传者ID',
+              sortable: true,
+              key: 'uploader_id'
+            },
+            {
+              title: '上传时间',
+              key: 'created_at',
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '操 作',
+              width: 180,
+              align: 'center',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除这张首页轮播图？',
+                          onOk () {
+                            _this.infoDelete('banner', params.row.img_id);
                           }
                         });
                       }
@@ -762,7 +877,8 @@
                 ]);
               }
             }
-          ]
+          ],
+          labels: []
         },
         bannerMng: false,
         bannerModMng: false,
@@ -816,6 +932,9 @@
             switch (params.type) {
               case 'blog':
                 _this.infoCols = _this.queryCols.blog;
+                break;
+              case 'image':
+                _this.infoCols = _this.queryCols.image;
                 break;
               case 'plan':
                 _this.infoCols = _this.queryCols.plan;
