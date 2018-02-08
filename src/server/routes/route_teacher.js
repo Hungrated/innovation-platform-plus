@@ -25,7 +25,7 @@ const moment = require('../middlewares/moment');
  * @apiParam request 请求条件：可发送"all"获取所有资料，或根据学号、当前选课号或详细模式查询所需信息
  *
  * @apiParamExample {url} 请求示例
- * teacher/query?type=blog|plan|meeting|resource|comment|class|banner|label
+ * teacher/query?type=blog|image|plan|meeting|resource|comment|class|banner|label
  *
  * @apiSuccess {Array} data 返回根据上述条件所请求的信息列表
  */
@@ -39,6 +39,15 @@ router.get('/query', function (req, res) {
       database = db.Blog;
       if (query.sid) {
         where.author_id = query.sid;
+      }
+      break;
+    case 'image':
+      database = db.Image;
+      if (query.sid) {
+        where.uploader_id = query.sid;
+      }
+      if (query.bid) {
+        where.blog_id = query.bid
       }
       break;
     case 'plan':
