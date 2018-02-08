@@ -6,7 +6,37 @@
 
 The `Innovation Platform` is a showcase that teachers and students can display class culture, project status and events, etc. The platform is made for the Innovation Practice course, integrating functions of content publishing and sharing, course achievements showing, student events displaying, on-line file sharing, on- line plan management and so on, holding the features of simplicity, light-weight and easy-to-use.The platform can become an efficient course testing tool and information-sharing platform. It is suitable for small classes. It can contribute a lot to the construction of the Innovation Practice course.
 
-### 2 Version control
+### 2 Modules & Features
+
+#### 2.1 Course Showcase
+
+##### 2.1.1 Index - Banner Showcase
+
+##### 2.1.2 Moments - Daily Trends
+
+##### 2.1.3 Articles - Course Communications
+
+##### 2.1.4 Resources - File Downloading
+
+#### 2.2 Student Center
+
+##### 2.2.1 Profile
+
+##### 2.2.2 Plans
+
+##### 2.2.3 Course Meetings
+
+##### 2.2.4 Final Course-work
+
+#### 2.3 Teacher Center
+
+##### 2.3.1 Main Panel
+
+##### 2.3.2 Courses & Students
+
+##### 2.3.3 Info-managing Panel
+
+### 3 Version control
 
 **version `v2.6.0` on 8 Feb 2018**
 
@@ -45,25 +75,3 @@ _added moment module_
 _basic frame, basic modules_
 
 **initial commit on 27 Nov 2017**  
-
-### 3 Build setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
