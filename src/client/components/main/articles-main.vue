@@ -79,7 +79,8 @@
           label: '',
           description: ''
         },
-        articleList: []
+        articleList: [],
+        carouselList: []
       };
     },
     methods: {
@@ -96,8 +97,9 @@
           request: 'all'
         })
           .then(function (res) {
-            _this.articleList = res.data;
-            _this.articleCount = res.data.length;
+            _this.articleList = res.data.articleList;
+            _this.articleCount = res.data.articleList.length;
+            _this.carouselList = res.data.carouselList;
           })
           .catch(function (e) {
             console.log(e);
