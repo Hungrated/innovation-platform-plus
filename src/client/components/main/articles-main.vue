@@ -12,33 +12,35 @@
       </Menu>
     </div>
     <div class="g-articles header">
-      <Card class="m-card" disHover>
-        <div class="m-card container">
-          <strong>文 章</strong>
-          <Dropdown class="m-card container type">
-            <Button type="primary" v-model="articleListLabel">
-              {{articleListLabel}}&nbsp;
-              <Icon type="arrow-down-b"></Icon>
-            </Button>
-            <DropdownMenu slot="list">
-              <DropdownItem v-for="type in labelList"
-                            :value="type.label"
-                            :key="type.index">
-                <span @click="changeLabel(type)">{{type.label}}</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-      </Card>
+      <!--<Card class="m-card" disHover>-->
+        <!--<div class="m-card container">-->
+          <!--<strong>文 章</strong>-->
+          <!--<Dropdown class="m-card container type">-->
+            <!--<Button type="primary" v-model="articleListLabel">-->
+              <!--{{articleListLabel}}&nbsp;-->
+              <!--<Icon type="arrow-down-b"></Icon>-->
+            <!--</Button>-->
+            <!--<DropdownMenu slot="list">-->
+              <!--<DropdownItem v-for="type in labelList"-->
+                            <!--:value="type.label"-->
+                            <!--:key="type.index">-->
+                <!--<span @click="changeLabel(type)">{{type.label}}</span>-->
+              <!--</DropdownItem>-->
+            <!--</DropdownMenu>-->
+          <!--</Dropdown>-->
+        <!--</div>-->
+      <!--</Card>-->
+
     </div>
     <div class="g-articles body">
-      <article-list :articleList="articleList" :count="articleCount"/>
+      <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
+
     </div>
   </div>
 </template>
 
 <script>
-  import articleList from '../public/articles-article-list';
+  import articleViewList from '../public/articles-view-list';
 
   export default {
     name: 'articles-main',
@@ -99,7 +101,7 @@
       }
     },
     components: {
-      articleList
+      articleViewList
     },
     mounted () {
       this.getArticleList();
