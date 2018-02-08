@@ -141,8 +141,6 @@
           title: this.title,
           description: this.description,
           content: '这是一篇活动文章，请用图片查看方式浏览',
-          cover_url: '',
-          photo_url: '',
           author_id: JSON.parse(window.localStorage.user).school_id
         };
         if (!submitData.title || !submitData.description) {

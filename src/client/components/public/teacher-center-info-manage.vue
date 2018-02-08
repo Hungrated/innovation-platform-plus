@@ -307,14 +307,75 @@
           blog: [
             {
               title: '文章ID',
+              width: 135,
               key: 'blog_id'
             },
             {
               title: '发表时间',
               key: 'created_at',
+              width: 135,
               sortable: true,
               render: (h, params) => {
                 return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '封面图片',
+              key: 'cover',
+              align: 'center',
+              render: (h, params) => {
+                if (!params.row.cover) {
+                  return h('em', '无');
+                } else {
+                  return h('div', {
+                    style: {
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }
+                  }, [
+                    h('img', {
+                      style: {
+                        height: '50px',
+                        margin: '5px'
+                      },
+                      attrs: {
+                        src: params.row.cover
+                      }
+                    }),
+                    h('Button', {
+                      props: {
+                        type: 'dashed',
+                        size: 'small'
+                      },
+                      style: {
+                        margin: '18px 10px'
+                      },
+                      on: {
+                        click: () => {
+                          this.$Modal.info({
+                            width: 75,
+                            render: (h) => {
+                              return h('img', {
+                                style: {
+                                  width: '100%',
+                                  margin: '5px',
+                                  borderRadius: '5px'
+                                },
+                                attrs: {
+                                  src: params.row.cover
+                                }
+                              });
+                            }
+                          });
+                        }
+                      }
+                    }, [h('Icon', {
+                      props: {
+                        type: 'ios-search-strong'
+                      }
+                    })])
+                  ]);
+                }
               }
             },
             {
