@@ -6,6 +6,21 @@
     <slide :index="1">
       Slide 2 Content
     </slide>
+    <slide :index="2">
+      Slide 2 Content
+    </slide>
+    <slide :index="3">
+      Slide 2 Content
+    </slide>
+    <slide :index="4">
+      Slide 2 Content
+    </slide>
+    <slide :index="5">
+      Slide 2 Content
+    </slide>
+    <slide :index="6">
+      Slide 2 Content
+    </slide>
   </carousel-3d>
 </template>
 

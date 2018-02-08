@@ -12,6 +12,8 @@
       </Menu>
     </div>
     <div class="g-articles header">
+      <article-view-carousel :articleList="articleList" :count="articleCount"/>
+
       <!--<Card class="m-card" disHover>-->
         <!--<div class="m-card container">-->
           <!--<strong>文 章</strong>-->
@@ -34,13 +36,15 @@
     </div>
     <div class="g-articles body">
       <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
-
+      <article-view-waterfall :articleList="articleList" :count="articleCount"/>
     </div>
   </div>
 </template>
 
 <script>
+  import articleViewCarousel from '../public/articles-view-carousel';
   import articleViewList from '../public/articles-view-list';
+  import articleViewWaterfall from '../public/articles-view-waterfall';
 
   export default {
     name: 'articles-main',
@@ -101,7 +105,9 @@
       }
     },
     components: {
-      articleViewList
+      articleViewCarousel,
+      articleViewList,
+      articleViewWaterfall
     },
     mounted () {
       this.getArticleList();

@@ -28,7 +28,8 @@
     "vue-carousel-3d": "^0.1.20",
     "vue-croppa": "^1.1.4",
     "vue-html5-editor": "^1.1.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-waterfall": "^1.0.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
