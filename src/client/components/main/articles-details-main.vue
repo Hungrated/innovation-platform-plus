@@ -34,13 +34,15 @@
         </div>
         <div class="g-details container right">
           <div class="m-list m-list-rel">
-            <span class="m-list title"><strong>相关阅读</strong></span>
+            <span class="m-list title"><strong>类别标签</strong></span>
+            <!--列出所有标签-->
             <span>
               list1
             </span>
           </div>
           <div class="m-list m-list-rec">
             <span class="m-list title"><strong>推荐阅读</strong></span>
+            <!--同标签下的其他文章-->
             <span>
               list2
             </span>
