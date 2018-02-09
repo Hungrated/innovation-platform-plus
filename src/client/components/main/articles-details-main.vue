@@ -22,14 +22,25 @@
                 <Icon type="ios-clock-outline"></Icon>&emsp;{{details.blog.publishTime}}&emsp;
               </span>
               <span>
-                <Button type="success" size="small" icon="social-markdown" @click="exportMd()">导出为Markdown文档</Button>
-                <Button type="text" size="small" @click="back()">返回文章列表</Button>
+                <Button v-if="details.blog.type === 'project'"
+                        type="success"
+                        size="small"
+                        icon="social-markdown"
+                        @click="exportMd()">
+                  导出为Markdown文档
+                </Button>
+                <Button type="text"
+                        size="small"
+                        @click="back()">
+                  返回所有文章
+                </Button>
               </span>
             </div>
           </div>
           <div class="m-content">
-            <mavon-editor :value="details.blog.content" :editable="false" default_open="preview"
-                          :subfield="false" :toolbarsFlag="false"/>
+            <!--内容查看-->
+            <markdown-details v-if="details.blog.type === 'project'" :value="details.blog.content"/>
+            <event-details v-if="details.blog.type === 'event'" :images="details.images"/>
           </div>
         </div>
         <div class="g-details container right">
@@ -68,8 +79,8 @@
       <div class="m-edit">
         <i-input class="m-edit text" type="textarea" v-model="comment" placeholder="说点什么吧..."></i-input>
         <span>
-            <Button type="ghost" size="large" @click="commentSubmit()">提 交</Button>
-          </span>
+          <Button type="ghost" size="large" @click="commentSubmit()">提 交</Button>
+        </span>
       </div>
     </Card>
     <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
@@ -77,7 +88,8 @@
 </template>
 
 <script>
-  import 'mavon-editor/dist/css/index.css';
+  import markdownDetails from '../public/articles-details-markdown';
+  import eventDetails from '../public/articles-details-event';
 
   export default {
     name: 'article-details',
@@ -95,6 +107,10 @@
         comment: ''
       };
     },
+    components: {
+      markdownDetails,
+      eventDetails
+    },
     methods: {
       changeRoute (path) {
         this.$router.push(path);
@@ -109,7 +125,6 @@
         this.$ajax.get('/api/blog/details?' + query)
           .then(function (res) {
             _this.details = res.data;
-            console.log(res.data);
             if (!res.data) {
               this.$Message.error('无此文章，请浏览其他内容');
             }
@@ -152,7 +167,6 @@
           .then(function (res) {
             console.log(res.data.url);
             _this.downloadFile(res.data.url);
-            // _this.$Message.success(res.data.msg);
           })
           .catch(function (e) {
             console.log(e);
