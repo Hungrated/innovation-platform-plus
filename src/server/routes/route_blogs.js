@@ -251,6 +251,7 @@ router.post('/query', function (req, res) {
  *
  * @apiSuccess {Object} blog 文章列表信息
  * @apiSuccess {Array} comments 文章列表信息
+ * @apiSuccess {Array} [images] 文章所带图片信息（仅活动图集）
  *
  * @apiSuccessExample {json} 成功返回示例
  * HTTP/1.1 200 OK
