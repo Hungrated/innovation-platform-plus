@@ -8,7 +8,7 @@
     <waterfall-slot
       v-for="(item, index) in articleList"
       :width="400"
-      :height="item.cover ? 302 : 116"
+      :height="item.cover ? 301 : 116"
       :order="index"
       :key="item.blog_id">
       <Card class="m-unit m-unit-cover" v-if="item.cover">
@@ -30,7 +30,7 @@
       </Card>
       <Card class="m-unit m-unit-title" v-else>
         <div class="g-container">
-          <span class="g-title">
+          <span class="g-title" @click="revealDetails(item.blog_id)">
             <strong>{{item.title}}</strong>
           </span>
           <span class="g-details info">
