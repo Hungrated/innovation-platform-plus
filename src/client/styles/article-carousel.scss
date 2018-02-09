@@ -24,7 +24,8 @@
   width: 360px;
   height: 240px;
   border-radius: 5px;
-  box-shadow: 0 0 15px #999999;
+  box-shadow: 0 0 5px #999999;
+  border: 1px solid transparent;
   overflow: hidden;
   cursor: pointer;
 
@@ -40,5 +41,13 @@
   font-size: 18px;
   text-align: center;
   margin-top: 5px;
-  text-shadow: 1px 1px 5px #000000;
+  text-shadow: 1px 1px 3px #000000;
+  cursor: pointer;
+  transition: all 200ms;
+
+  &:hover {
+    color: #3096ff;
+    text-shadow: 1px 1px 3px #999999;
+
+  }
 }

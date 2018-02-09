@@ -1,51 +1,54 @@
 <template>
 
-  <waterfall :line-gap="350" :watch="articleList">
-    <!-- each component is wrapped by a waterfall slot -->
+  <waterfall :line-gap="315"
+             :min-line-gap="150"
+             :max-line-gap="370"
+             :fixed-height="true"
+             :watch="articleList">
     <waterfall-slot
       v-for="(item, index) in articleList"
       :width="400"
-      :height="500"
+      :height="item.cover ? 302 : 116"
       :order="index"
       :key="item.blog_id">
-      <Card style="margin: 5px;">
-        <span class="g-img" v-if="item.cover">
-          <img :src="item.cover" style="width: 100%">
-        </span>
-        <span class="g-title">
-          {{item.title}}
-        </span>
+      <Card class="m-unit m-unit-cover" v-if="item.cover">
+        <div class="g-container">
+          <span class="g-img" @click="revealDetails(item.blog_id)">
+            <img :src="item.cover">
+          </span>
+          <span class="g-title g-title-cover" @click="revealDetails(item.blog_id)">
+            <strong>{{item.title}}</strong>
+          </span>
+          <span class="g-details info">
+            <Icon type="ios-person-outline"></Icon>&nbsp;{{item.profile.name}}&emsp;
+            <Icon type="ios-clock-outline"></Icon>&nbsp;{{item.publishTime}}
+          </span>
+          <span class="g-details desc">
+            <Icon type="ios-star-outline"></Icon>&nbsp;{{item.description}}
+          </span>
+        </div>
+      </Card>
+      <Card class="m-unit m-unit-title" v-else>
+        <div class="g-container">
+          <span class="g-title">
+            <strong>{{item.title}}</strong>
+          </span>
+          <span class="g-details info">
+            <Icon type="ios-person-outline"></Icon>&nbsp;{{item.profile.name}}&emsp;
+            <Icon type="ios-clock-outline"></Icon>&nbsp;{{item.publishTime}}
+          </span>
+          <span class="g-details desc">
+            <Icon type="ios-star-outline"></Icon>&nbsp;{{item.description}}
+          </span>
+        </div>
       </Card>
     </waterfall-slot>
   </waterfall>
-  <!--<Card disHover>-->
-  <!--<div class="m-unit" v-for="article in articleList" :key="article.id">-->
-  <!--<span class="m-unit title">-->
-  <!--<Button type="text" size="large" @click="revealDetails(article.blog_id)">-->
-  <!--<strong>{{article.title}}</strong>-->
-  <!--</Button>-->
-  <!--</span>-->
-  <!--<span class="m-unit details">-->
-  <!--<span class="m-unit details info">-->
-  <!--<Icon type="ios-person-outline"></Icon>&nbsp;{{article.profile.name}}&emsp;-->
-  <!--<Icon type="ios-clock-outline"></Icon>&nbsp;{{article.publishTime}}&emsp;-->
-  <!--</span>-->
-  <!--<span class="m-unit details desc">-->
-  <!--<Icon type="ios-star-outline"></Icon>&nbsp;-->
-  <!--<p>{{article.description}}</p>-->
-  <!--</span>-->
-  <!--</span>-->
-  <!--</div>-->
-  <!--<div class="m-page">-->
-  <!--<Page size="small" :total="count"></Page>-->
-  <!--</div>-->
-
-  <!--</Card>-->
 </template>
 
 <script>
-  import Waterfall from 'vue-waterfall/lib/waterfall'
-  import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
+  import Waterfall from 'vue-waterfall/lib/waterfall';
+  import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot';
 
   export default {
     name: 'article-view-waterfall',
@@ -63,6 +66,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../../styles/article-list";
+  @import "../../styles/article-waterfall";
 </style>
 

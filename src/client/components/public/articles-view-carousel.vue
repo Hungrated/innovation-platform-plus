@@ -5,8 +5,8 @@
         <span class="g-img">
           <img :src="carouselList[0].cover">
         </span>
-        <span class="g-title">
-          {{carouselList[0].title}}
+        <span class="g-title" @click="revealDetails(carouselList[0].blog_id)">
+          <strong>{{carouselList[0].title}}</strong>
         </span>
       </span>
       <span class="g-carousel g-carousel-empty" v-else>
@@ -18,8 +18,8 @@
         <span class="g-img">
           <img :src="carouselList[1].cover">
         </span>
-        <span class="g-title">
-          {{carouselList[1].title}}
+        <span class="g-title" @click="revealDetails(carouselList[1].blog_id)">
+          <strong>{{carouselList[1].title}}</strong>
         </span>
       </span>
       <span class="g-carousel g-carousel-empty" v-else>
@@ -31,8 +31,8 @@
         <span class="g-img">
           <img :src="carouselList[2].cover">
         </span>
-        <span class="g-title">
-          {{carouselList[2].title}}
+        <span class="g-title" @click="revealDetails(carouselList[2].blog_id)">
+          <strong>{{carouselList[2].title}}</strong>
         </span>
       </span>
       <span class="g-carousel g-carousel-empty" v-else>
@@ -44,8 +44,8 @@
         <span class="g-img">
           <img :src="carouselList[3].cover">
         </span>
-        <span class="g-title">
-          {{carouselList[3].title}}
+        <span class="g-title" @click="revealDetails(carouselList[3].blog_id)">
+          <strong>{{carouselList[3].title}}</strong>
         </span>
       </span>
       <span class="g-carousel g-carousel-empty" v-else>
@@ -57,8 +57,8 @@
         <span class="g-img">
           <img :src="carouselList[4].cover">
         </span>
-        <span class="g-title">
-          {{carouselList[4].title}}
+        <span class="g-title" @click="revealDetails(carouselList[4].blog_id)">
+          <strong>{{carouselList[4].title}}</strong>
         </span>
       </span>
       <span class="g-carousel g-carousel-empty" v-else>
