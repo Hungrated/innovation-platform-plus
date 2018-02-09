@@ -28,7 +28,7 @@ const schema = {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  cover_url: {
+  cover: {
     type: Sequelize.STRING
   }
 };

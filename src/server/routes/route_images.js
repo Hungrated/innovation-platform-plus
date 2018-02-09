@@ -59,7 +59,21 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
     })
       .catch(function (e) {
         console.error(e);
-        res.json(statusLib.CONNECTION_ERROR);
+      });
+  };
+  let addCover = function (url) {
+    Blog.update({
+      cover: url
+    }, {
+      where: {
+        blog_id: req.body.blog_id
+      }
+    })
+      .then(function () {
+        console.log('cover added')
+      })
+      .catch(function (e) {
+        console.log(e);
       });
   };
 
@@ -75,6 +89,9 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
         let newFilename = req.files[i].filename + pathLib.parse(req.files[i].originalname).ext;
         let newDir = pathLib.join(dir, newFilename);
         let newUrl = path.host + '/images/blogs/' + folderName + '/' + newFilename;
+        if (i === 0) {
+          addCover(newUrl);
+        }
         fs.rename(req.files[i].path, newDir, function (err) {
           if (err) {
             console.log(err);

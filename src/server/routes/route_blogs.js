@@ -169,7 +169,7 @@ router.post('/import', function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 1.0.0
+ * @apiVersion 3.0.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
@@ -186,13 +186,13 @@ router.post('/import', function (req, res) {
  *     "request": 14051531
  * }
  *
- * @apiSuccess {Array} data 文章列表列表
+ * @apiSuccess {Array} articleList 文章列表
+ * @apiSuccess {Array} carouselList 文章轮播展示列表
  */
 router.post('/query', function (req, res) {
   // fetch blog list for brief browsing
   const request = req.body.request;
-  const where = (typeof request === 'string') ? (
-    (request === 'all') ? {} : {type: request}) : {author_id: request};
+  const where = (typeof request === 'string') ? ((request === 'all') ? {} : {type: request}) : {author_id: request};
 
   Blog.findAll({
     where: where,
@@ -208,7 +208,22 @@ router.post('/query', function (req, res) {
       for (let i = 0; i < data.length; i++) {
         data[i].dataValues.publishTime = timeFormat(data[i].dataValues.created_at);
       }
-      res.json(data);
+      let count = 0;
+      let carouselList = [];
+      for (let i = 0; i < data.length; i++) {
+        let item = data[i].dataValues;
+        if (item.cover) {
+          item.index = count++;
+          carouselList.push(item);
+        }
+        if (count >= 9) {
+          break;
+        }
+      }
+      res.json({
+        articleList: data,
+        carouselList: carouselList
+      });
       console.log('query successful');
     })
     .catch(function (e) {
@@ -395,7 +410,7 @@ router.post('/export', function (req, res, next) {
   const outputFile = pathLib.join(outputPath, `${data.blog_id}.md`);
   const downloadUrl = '/api/download?blog=' + data.blog_id;
 
-  const writeFile = function(path, str, next) {
+  const writeFile = function (path, str, next) {
     fs.writeFile(path, str, function (err) {
       if (err) {
         console.err(err);
