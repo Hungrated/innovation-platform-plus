@@ -36,6 +36,11 @@
   color: #1c2438;
   font-size: 18px;
   cursor: pointer;
+  transition: all 200ms;
+
+  &:hover {
+    color: #2b85e4;
+  }
 }
 
 .g-title-cover {
