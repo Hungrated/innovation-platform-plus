@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const sequelize = require('sequelize');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const urlLib = require('url');
@@ -241,7 +240,7 @@ router.post('/query', function (req, res) {
  * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
- * @apiVersion 1.0.0
+ * @apiVersion 3.0.0
  * @apiPermission user
  *
  * @apiDescription 根据文章编号获取文章详细信息。
@@ -263,8 +262,7 @@ router.post('/query', function (req, res) {
  *         "title": "title0",
  *         "description": "desccription0",
  *         "content": "content0",
- *         "cover_url": "",
- *         "photo_url": "",
+ *         "cover": null,
  *         "created_at": "2018-01-30T03:35:15.000Z",
  *         "updated_at": "2018-01-30T03:35:15.000Z",
  *         "author_id": 14051531,
