@@ -307,6 +307,12 @@ router.get('/details', function (req, res) {
       },
       {
         model: Comment,
+        include: [
+          {
+            model: Profile,
+            attributes: ['name']
+          }
+        ]
       },
       {
         model: Image,
@@ -316,19 +322,19 @@ router.get('/details', function (req, res) {
   })
     .then(function (data) {
       let blog = data.dataValues;
+      blog.publishTime = timeFormat(data.dataValues.created_at);
+      for (let i = 0; i < blog.comments.length; i++) {
+        blog.comments[i].dataValues.submitTime = timeFormat(blog.comments[i].dataValues.created_at);
+      }
       let images = blog.images;
       let comments = blog.comments;
-      blog.publishTime = (blog.created_at);
-      for (let i = 0; i < comments.length; i++) {
-        comments[i].submitTime = timeFormat(comments[i].created_at);
-      }
       delete blog.images;
       delete blog.comments;
       let resData = {
         blog: blog,
         comments: comments
       };
-      if(blog.type === 'event') {
+      if (blog.type === 'event') {
         resData.images = images;
       }
       res.json(resData);

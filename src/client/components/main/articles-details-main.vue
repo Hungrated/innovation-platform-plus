@@ -87,6 +87,7 @@
             content: '',
             profile: {}
           },
+          images: [],
           comments: []
         },
         comment: ''
@@ -106,10 +107,10 @@
         this.$ajax.get('/api/blog/details?' + query)
           .then(function (res) {
             _this.details = res.data;
+            console.log(res.data);
             if (!res.data) {
               this.$Message.error('无此文章，请浏览其他内容');
             }
-            // _this.refreshArticleList();
           })
           .catch(function (e) {
             console.log(e);
