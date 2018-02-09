@@ -3,8 +3,6 @@
                 :subfield="false" :toolbarsFlag="false"/>
 </template>
 <script>
-  import 'mavon-editor/dist/css/index.css';
-
   export default {
     name: 'event-details',
     props: ['value']

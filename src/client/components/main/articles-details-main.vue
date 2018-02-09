@@ -37,7 +37,9 @@
             </div>
           </div>
           <div class="m-content">
-            <markdown-details :value="details.blog.content"/>
+            <!--内容查看-->
+            <markdown-details v-if="details.blog.type === 'project'" :value="details.blog.content"/>
+            <event-details v-if="details.blog.type === 'event'" :images="details.blog.images"/>
           </div>
         </div>
         <div class="g-details container right">

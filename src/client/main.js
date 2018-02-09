@@ -10,6 +10,7 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import mavonEditor from 'mavon-editor';
 import vueCroppa from 'vue-croppa';
+import 'mavon-editor/dist/css/index.css';
 import 'vue-croppa/dist/vue-croppa.css';
 import './styles/overwrite-global.css';
 
