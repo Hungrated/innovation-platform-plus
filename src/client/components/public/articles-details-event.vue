@@ -76,7 +76,11 @@
         console.log(this.formatImgArray());
 
         let options = {
-          index: index || 0
+          index: index || 0,
+          history: false,
+          focus: false,
+          showAnimationDuration: 0,
+          hideAnimationDuration: 0
         };
 
         let gallery = new PhotoSwipe(pswpElement, PhotoSwipeUIDefault, items, options);
