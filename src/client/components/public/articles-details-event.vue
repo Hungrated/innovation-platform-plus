@@ -73,7 +73,6 @@
         let pswpElement = document.querySelectorAll('.pswp')[0];
 
         let items = this.formatImgArray();
-        console.log(this.formatImgArray());
 
         let options = {
           index: index || 0,

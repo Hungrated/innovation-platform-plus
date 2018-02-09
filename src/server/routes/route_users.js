@@ -358,15 +358,7 @@ router.post('/import', function (req, res) {
       }
     })
       .then(function (user) {
-        Final.create({
-          cswk_id: 'cwk' + uid.generate(),
-          class_id: users[userIdx].cur_class,
-          student_id: users[userIdx].school_id
-        })
-          .then(function () {
-            console.log('cswk record created');
-          });
-        if (user !== null) { // exists duplication
+        if (user !== null) { // user exists
           console.log('user already exists');
           Profile.update({
             cur_class: users[userIdx].cur_class
@@ -376,6 +368,14 @@ router.post('/import', function (req, res) {
             }
           })
             .then(function () {
+              Final.create({
+                cswk_id: 'cwk' + uid.generate(),
+                class_id: users[userIdx].cur_class,
+                student_id: users[userIdx].school_id
+              })
+                .then(function () {
+                  console.log('cswk record created');
+                });
               flag++;
               if (flag === users.length) {
                 console.log('all users modified');
@@ -400,7 +400,7 @@ router.post('/import', function (req, res) {
               })
                 .then(function (profile) {
                   // create a profile record for a student
-                  if (profile !== null) { // exists duplication
+                  if (profile !== null) { // user profile exists
                     console.log('user already exists');
                   } else {
                     Profile.create({
@@ -414,6 +414,15 @@ router.post('/import', function (req, res) {
                       supervisor: users[userIdx].supervisor,
                       user_id: user.id
                     }).then(function () {
+                      // create a final course-work record for a student
+                      Final.create({
+                        cswk_id: 'cwk' + uid.generate(),
+                        class_id: users[userIdx].cur_class,
+                        student_id: users[userIdx].school_id
+                      })
+                        .then(function () {
+                          console.log('cswk record created');
+                        });
                       flag++;
                       if (flag === users.length) {
                         console.log('all users imported');
