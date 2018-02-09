@@ -22,14 +22,22 @@
                 <Icon type="ios-clock-outline"></Icon>&emsp;{{details.blog.publishTime}}&emsp;
               </span>
               <span>
-                <Button type="success" size="small" icon="social-markdown" @click="exportMd()">导出为Markdown文档</Button>
-                <Button type="text" size="small" @click="back()">返回文章列表</Button>
+                <Button type="success"
+                        size="small"
+                        icon="social-markdown"
+                        @click="exportMd()">
+                  导出为Markdown文档
+                </Button>
+                <Button type="text"
+                        size="small"
+                        @click="back()">
+                  返回文章列表
+                </Button>
               </span>
             </div>
           </div>
           <div class="m-content">
-            <mavon-editor :value="details.blog.content" :editable="false" default_open="preview"
-                          :subfield="false" :toolbarsFlag="false"/>
+            <markdown-details :value="details.blog.content"/>
           </div>
         </div>
         <div class="g-details container right">
@@ -77,7 +85,8 @@
 </template>
 
 <script>
-  import 'mavon-editor/dist/css/index.css';
+  import markdownDetails from '../public/articles-details-markdown';
+  import eventDetails from '../public/articles-details-event';
 
   export default {
     name: 'article-details',
@@ -95,6 +104,10 @@
         comment: ''
       };
     },
+    components: {
+      markdownDetails,
+      eventDetails
+    },
     methods: {
       changeRoute (path) {
         this.$router.push(path);
@@ -109,7 +122,6 @@
         this.$ajax.get('/api/blog/details?' + query)
           .then(function (res) {
             _this.details = res.data;
-            console.log(res.data);
             if (!res.data) {
               this.$Message.error('无此文章，请浏览其他内容');
             }
