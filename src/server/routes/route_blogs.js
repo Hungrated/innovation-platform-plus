@@ -169,7 +169,7 @@ router.post('/import', function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 1.0.0
+ * @apiVersion 3.0.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
@@ -186,13 +186,13 @@ router.post('/import', function (req, res) {
  *     "request": 14051531
  * }
  *
- * @apiSuccess {Array} data 文章列表列表
+ * @apiSuccess {Array} articleList 文章列表
+ * @apiSuccess {Array} carouselList 文章轮播展示列表
  */
 router.post('/query', function (req, res) {
   // fetch blog list for brief browsing
   const request = req.body.request;
-  const where = (typeof request === 'string') ? (
-    (request === 'all') ? {} : {type: request}) : {author_id: request};
+  const where = (typeof request === 'string') ? ((request === 'all') ? {} : {type: request}) : {author_id: request};
 
   Blog.findAll({
     where: where,
