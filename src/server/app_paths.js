@@ -55,6 +55,8 @@ const mkdirIfNotExist = function (dir) {
   });
 };
 
+
+mkdirIfNotExist(plans);
 mkdirIfNotExist(finalout);
 mkdirIfNotExist(blogs);
 mkdirIfNotExist(pathLib.join(blogs, '__temp__'));
