@@ -22,7 +22,8 @@
                 <Icon type="ios-clock-outline"></Icon>&emsp;{{details.blog.publishTime}}&emsp;
               </span>
               <span>
-                <Button type="success"
+                <Button v-if="details.blog.type === 'project'"
+                        type="success"
                         size="small"
                         icon="social-markdown"
                         @click="exportMd()">
@@ -31,7 +32,7 @@
                 <Button type="text"
                         size="small"
                         @click="back()">
-                  返回文章列表
+                  返回所有文章
                 </Button>
               </span>
             </div>
@@ -39,7 +40,7 @@
           <div class="m-content">
             <!--内容查看-->
             <markdown-details v-if="details.blog.type === 'project'" :value="details.blog.content"/>
-            <event-details v-if="details.blog.type === 'event'" :images="details.blog.images"/>
+            <event-details v-if="details.blog.type === 'event'" :images="details.images"/>
           </div>
         </div>
         <div class="g-details container right">
@@ -78,8 +79,8 @@
       <div class="m-edit">
         <i-input class="m-edit text" type="textarea" v-model="comment" placeholder="说点什么吧..."></i-input>
         <span>
-            <Button type="ghost" size="large" @click="commentSubmit()">提 交</Button>
-          </span>
+          <Button type="ghost" size="large" @click="commentSubmit()">提 交</Button>
+        </span>
       </div>
     </Card>
     <iframe id="fileDownloadTmpFrame" style="display: none"></iframe>
@@ -166,7 +167,6 @@
           .then(function (res) {
             console.log(res.data.url);
             _this.downloadFile(res.data.url);
-            // _this.$Message.success(res.data.msg);
           })
           .catch(function (e) {
             console.log(e);
