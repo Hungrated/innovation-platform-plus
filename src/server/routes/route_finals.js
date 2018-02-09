@@ -228,8 +228,10 @@ router.post('/rate', function (req, res) {
         return 'C';
       case 2:
         return 'D';
-      default:
+      case 1:
         return 'F';
+      default:
+        return null;
     }
   };
 
@@ -243,8 +245,10 @@ router.post('/rate', function (req, res) {
         return '中 等';
       case 2:
         return '及 格';
-      default:
+      case 1:
         return '不及格';
+      default:
+        return null;
     }
   };
 

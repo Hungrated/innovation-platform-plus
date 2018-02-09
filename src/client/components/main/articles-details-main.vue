@@ -34,13 +34,15 @@
         </div>
         <div class="g-details container right">
           <div class="m-list m-list-rel">
-            <span class="m-list title"><strong>相关阅读</strong></span>
+            <span class="m-list title"><strong>类别标签</strong></span>
+            <!--列出所有标签-->
             <span>
               list1
             </span>
           </div>
           <div class="m-list m-list-rec">
             <span class="m-list title"><strong>推荐阅读</strong></span>
+            <!--同标签下的其他文章-->
             <span>
               list2
             </span>
@@ -87,6 +89,7 @@
             content: '',
             profile: {}
           },
+          images: [],
           comments: []
         },
         comment: ''
@@ -106,10 +109,10 @@
         this.$ajax.get('/api/blog/details?' + query)
           .then(function (res) {
             _this.details = res.data;
+            console.log(res.data);
             if (!res.data) {
               this.$Message.error('无此文章，请浏览其他内容');
             }
-            // _this.refreshArticleList();
           })
           .catch(function (e) {
             console.log(e);

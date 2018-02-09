@@ -221,7 +221,6 @@
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
               if (!(JSON.stringify(_this.img_file) === '{}')) {
-                console.log(res.data.blog_id, res.data.type, res.data.author_id);
                 _this.uploadImg(res.data.blog_id, res.data.type, res.data.author_id);
               }
               _this.$Message.success(res.data.msg);

@@ -52,10 +52,6 @@ Blog.hasMany(Image, {
   foreignKey: 'blog_id'
 });
 
-Image.belongsTo(Profile, {
-  foreignKey: 'uploader_id'
-});
-
 Comment.belongsTo(Profile, {
   foreignKey: 'student_id'
 });

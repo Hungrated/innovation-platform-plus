@@ -23,7 +23,6 @@
     "mavon-editor": "^2.4.9",
     "scriptjs": "^2.5.8",
     "scss-loader": "0.0.1",
-    "tinymce-vue-2": "0.0.5",
     "vue": "^2.5.2",
     "vue-carousel-3d": "^0.1.20",
     "vue-croppa": "^1.1.4",

@@ -1,6 +1,6 @@
 <template>
   <Card disHover>
-    <div class="m-unit" v-for="article in articleList" :key="article.id">
+    <div class="m-unit" v-for="article in articleList" :key="article.blog_id">
       <span class="m-unit title">
         <Button type="text" size="large" @click="revealDetails(article.blog_id)">
           <strong>{{article.title}}</strong>

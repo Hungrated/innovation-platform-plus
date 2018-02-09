@@ -94,3 +94,9 @@
   -webkit-appearance: none;
   outline: none !important;
 }
+
+.carousel-3d-slide {
+  border: transparent !important;
+  background: transparent !important;
+  padding: 1px;
+}
