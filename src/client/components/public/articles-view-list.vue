@@ -26,7 +26,7 @@
 
 <script>
   export default {
-    name: 'article-list',
+    name: 'article-view-list',
     props: ['articleList', 'count'],
     methods: {
       revealDetails (index) {

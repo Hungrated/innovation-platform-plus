@@ -47,7 +47,7 @@ router.get('/query', function (req, res) {
         where.uploader_id = query.sid;
       }
       if (query.bid) {
-        where.blog_id = query.bid
+        where.blog_id = query.bid;
       }
       break;
     case 'plan':
@@ -238,7 +238,7 @@ router.post('/delete', function (req, res, next) {
       .then(function (image) {
         let blogId = image.blog_id;
         let imageId = image.image_id;
-        let imageUrl = pathLib.join(path.blogs, image.src.split(`/images/blogs/${blogId}/`)[1]);
+        let imageUrl = pathLib.join(path.blogs, blogId, image.src.split(`/images/blogs/${blogId}/`)[1]);
         fs.access(imageUrl, function (err) {
           if (!(err && err.code === 'ENOENT')) {
             fs.unlinkSync(imageUrl);
@@ -262,7 +262,7 @@ router.post('/delete', function (req, res, next) {
         });
         Blog.findByPrimary(blogId)
           .then(function (blog) {
-            if(blog.type === 'project') {
+            if (blog.type === 'project') {
               let newContent = blog.content.replace(image.src, '');
               Blog.update({
                 content: newContent
@@ -270,9 +270,9 @@ router.post('/delete', function (req, res, next) {
                 where: {
                   blog_id: blogId
                 }
-              })
+              });
             }
-          })
+          });
       })
       .catch(function (e) {
         console.error(e);

@@ -17,3 +17,4 @@ yarn-error.log*
 /src/server/public/files/
 /src/server/public/static/
 /src/server/public/index.html
+/package-lock.json

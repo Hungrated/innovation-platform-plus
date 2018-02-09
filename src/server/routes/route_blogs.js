@@ -208,7 +208,22 @@ router.post('/query', function (req, res) {
       for (let i = 0; i < data.length; i++) {
         data[i].dataValues.publishTime = timeFormat(data[i].dataValues.created_at);
       }
-      res.json(data);
+      let count = 0;
+      let carouselList = [];
+      for (let i = 0; i < data.length; i++) {
+        let item = data[i].dataValues;
+        if (item.cover) {
+          item.index = count++;
+          carouselList.push(item);
+        }
+        if (count >= 9) {
+          break;
+        }
+      }
+      res.json({
+        articleList: data,
+        carouselList: carouselList
+      });
       console.log('query successful');
     })
     .catch(function (e) {
@@ -395,7 +410,7 @@ router.post('/export', function (req, res, next) {
   const outputFile = pathLib.join(outputPath, `${data.blog_id}.md`);
   const downloadUrl = '/api/download?blog=' + data.blog_id;
 
-  const writeFile = function(path, str, next) {
+  const writeFile = function (path, str, next) {
     fs.writeFile(path, str, function (err) {
       if (err) {
         console.err(err);

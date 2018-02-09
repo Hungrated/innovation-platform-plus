@@ -12,33 +12,39 @@
       </Menu>
     </div>
     <div class="g-articles header">
-      <Card class="m-card" disHover>
-        <div class="m-card container">
-          <strong>文 章</strong>
-          <Dropdown class="m-card container type">
-            <Button type="primary" v-model="articleListLabel">
-              {{articleListLabel}}&nbsp;
-              <Icon type="arrow-down-b"></Icon>
-            </Button>
-            <DropdownMenu slot="list">
-              <DropdownItem v-for="type in labelList"
-                            :value="type.label"
-                            :key="type.index">
-                <span @click="changeLabel(type)">{{type.label}}</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-      </Card>
+      <article-view-carousel :articleList="articleList" :count="articleCount"/>
+
+      <!--<Card class="m-card" disHover>-->
+        <!--<div class="m-card container">-->
+          <!--<strong>文 章</strong>-->
+          <!--<Dropdown class="m-card container type">-->
+            <!--<Button type="primary" v-model="articleListLabel">-->
+              <!--{{articleListLabel}}&nbsp;-->
+              <!--<Icon type="arrow-down-b"></Icon>-->
+            <!--</Button>-->
+            <!--<DropdownMenu slot="list">-->
+              <!--<DropdownItem v-for="type in labelList"-->
+                            <!--:value="type.label"-->
+                            <!--:key="type.index">-->
+                <!--<span @click="changeLabel(type)">{{type.label}}</span>-->
+              <!--</DropdownItem>-->
+            <!--</DropdownMenu>-->
+          <!--</Dropdown>-->
+        <!--</div>-->
+      <!--</Card>-->
+
     </div>
     <div class="g-articles body">
-      <article-list :articleList="articleList" :count="articleCount"/>
+      <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
+      <article-view-waterfall :articleList="articleList" :count="articleCount"/>
     </div>
   </div>
 </template>
 
 <script>
-  import articleList from '../public/articles-article-list';
+  import articleViewCarousel from '../public/articles-view-carousel';
+  import articleViewList from '../public/articles-view-list';
+  import articleViewWaterfall from '../public/articles-view-waterfall';
 
   export default {
     name: 'articles-main',
@@ -73,7 +79,8 @@
           label: '',
           description: ''
         },
-        articleList: []
+        articleList: [],
+        carouselList: []
       };
     },
     methods: {
@@ -90,8 +97,9 @@
           request: 'all'
         })
           .then(function (res) {
-            _this.articleList = res.data;
-            _this.articleCount = res.data.length;
+            _this.articleList = res.data.articleList;
+            _this.articleCount = res.data.articleList.length;
+            _this.carouselList = res.data.carouselList;
           })
           .catch(function (e) {
             console.log(e);
@@ -99,7 +107,9 @@
       }
     },
     components: {
-      articleList
+      articleViewCarousel,
+      articleViewList,
+      articleViewWaterfall
     },
     mounted () {
       this.getArticleList();
