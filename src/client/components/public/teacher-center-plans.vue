@@ -147,8 +147,14 @@
           <Rate class="m-rate mark" v-model="finalRateData.rate" show-text></Rate>&emsp;
           <span class="m-rate info">
             <Icon type="information-circled"></Icon>&nbsp;
-            5星: 优秀&emsp;4星: 良好&emsp;3星: 中等&emsp;2星: 及格&emsp;1星: 不及格
+            5星: 优秀&emsp;4星: 良好&emsp;3星: 中等&emsp;2星: 及格&emsp;1星: 不及格&emsp;&emsp;
           </span>
+          <Button v-if="finalRateData.remark"
+                  type="dashed"
+                  size="small"
+                  @click="markAsNotRated()">
+            撤销总评
+          </Button>
         </span>
         <br><br>
         <i-input v-model="finalRateData.remark"
@@ -822,6 +828,20 @@
         this.finalRateData.remark = profile.remark;
         this.finalRateData.rate = profile.rate ? this.parseRate(profile.rate) : 5;
         this.finalRate = true;
+      },
+      markAsNotRated () {
+        let _this = this;
+        this.finalRateData.rate = 0;
+        this.finalRateData.remark = '';
+        this.$ajax.post('/api/final/rate', this.finalRateData)
+          .then(function (res) {
+            _this.$Message.success('取消总评成功');
+            _this.finalRate = false;
+            _this.refreshStudentList(_this.cur_class.class_id);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       },
       submitFinalRate () {
         let _this = this;
