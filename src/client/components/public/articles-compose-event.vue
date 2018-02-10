@@ -11,6 +11,7 @@
     </div>
     <Upload ref="upload"
             :show-upload-list="false"
+            accept="image/*"
             :format="['jpg','jpeg','png']"
             :max-size="2048"
             :before-upload="handleBeforeUpload"
