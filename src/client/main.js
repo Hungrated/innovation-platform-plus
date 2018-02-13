@@ -4,31 +4,29 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Routers from './routers';
-import axios from 'axios';
+import Axios from 'axios';
 import App from './App';
 import iView from 'iview';
-import 'iview/dist/styles/iview.css';
-import mavonEditor from 'mavon-editor';
-import vueCroppa from 'vue-croppa';
+import MavonEditor from 'mavon-editor';
+import VueCroppa from 'vue-croppa';
 
+import 'iview/dist/styles/iview.css';
 import 'mavon-editor/dist/css/index.css';
 import 'vue-croppa/dist/vue-croppa.css';
 import './styles/overwrite-global.css';
 
 Vue.use(iView);
 Vue.use(VueRouter);
-Vue.use(mavonEditor);
-Vue.use(vueCroppa);
+Vue.use(MavonEditor);
+Vue.use(VueCroppa);
 
-axios.defaults.withCredentials = true;
-Vue.prototype.$ajax = axios;
+Axios.defaults.withCredentials = true;
+Vue.prototype.$ajax = Axios;
 
 const router = new VueRouter({
   history: true,
   routes: Routers
 });
-
-/* eslint-disable no-unused-vars */
 
 let vm = new Vue({
   el: '#app',
