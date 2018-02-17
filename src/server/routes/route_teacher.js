@@ -30,6 +30,7 @@ const moment = require('../middlewares/moment');
  * @apiSuccess {Array} data 返回根据上述条件所请求的信息列表
  */
 router.get('/query', function (req, res) {
+
   // query by type
   let query = urlLib.parse(req.url, true).query;
   let where = {};

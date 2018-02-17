@@ -16,7 +16,7 @@ const fs = require('fs');
 const multer = require('multer');
 
 let objMulter = multer({
-  dest: path.avatars // file upload destination
+  dest: path.avatars
 });
 
 /**
