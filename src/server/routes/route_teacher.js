@@ -115,7 +115,7 @@ router.get('/query', function (req, res) {
  *
  * @apiDescription 教师根据查询条件删除特定信息。
  *
- * @apiParam {String} type 目标信息类型："blog"|"meeting"|"resource"|"comment"|"banner"|"label"
+ * @apiParam {String} type 目标信息类型："blog"|"image"|"meeting"|"resource"|"comment"|"banner"|"label"
  * @apiParam {String} id 目标信息编号
  *
  * @apiParamExample {json} 请求示例
