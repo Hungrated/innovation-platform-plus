@@ -397,7 +397,6 @@
             sortable: true,
             width: 135,
             align: 'center',
-
             key: 'upload_time',
             render: (h, params) => {
               return h('div', [
@@ -489,7 +488,8 @@
                     h('Button', {
                       props: {
                         type: 'dashed',
-                        size: 'small'
+                        size: 'small',
+                        disabled: !params.row.cswk_src
                       },
                       on: {
                         click: () => {
