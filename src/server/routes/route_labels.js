@@ -9,9 +9,6 @@ const router = express.Router();
 // const path = require('../app_paths');
 // const pathLib = require('path');
 // const urlLib = require('url');
-//
-// const fs = require('fs');
-// const multer = require('multer');
 
 /**
  *
@@ -26,7 +23,7 @@ const router = express.Router();
  * @apiSuccess {JSON} data Response data.
  *
  */
-// router.post('/upload', objMulter.any(), function (req, res, next) {
+// router.post('/upload', function (req, res, next) {
 //   // upload a course-work file
 //   Final.findOne({
 //     where: {
