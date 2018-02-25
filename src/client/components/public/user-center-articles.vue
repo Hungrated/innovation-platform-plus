@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-if="articleList.length === 0" style="text-align: center">暂无文章哦</p>
+    <p v-if="!articleList.length" style="text-align: center">暂无文章哦</p>
     <div v-else class="m-unit" v-for="article in articleList" :key="article.blog_id">
       <span class="m-unit title">
        <Button type="text" size="large" @click="revealDetails(article.blog_id)">
@@ -29,7 +29,7 @@
           request: req
         })
           .then(function (res) {
-            _this.articleList = res.data;
+            _this.articleList = res.data.articleList;
           })
           .catch(function (e) {
             console.log(e);
