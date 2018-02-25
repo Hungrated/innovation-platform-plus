@@ -207,14 +207,16 @@ router.post('/query', function (req, res) {
       }
       let count = 0;
       let carouselList = [];
-      for (let i = 0; i < data.length; i++) {
-        let item = data[i].dataValues;
-        if (item.cover) {
-          item.index = count++;
-          carouselList.push(item);
-        }
-        if (count >= 9) {
-          break;
+      if(req.body.student) {
+        for (let i = 0; i < data.length; i++) {
+          let item = data[i].dataValues;
+          if (item.cover) {
+            item.index = count++;
+            carouselList.push(item);
+          }
+          if (count >= 9) {
+            break;
+          }
         }
       }
       res.json({

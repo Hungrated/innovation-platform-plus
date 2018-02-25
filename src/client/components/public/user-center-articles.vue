@@ -26,10 +26,11 @@
       getStuArticleList (req) {
         let _this = this;
         this.$ajax.post('/api/blog/query', {
-          request: req
+          request: req,
+          student: true
         })
           .then(function (res) {
-            _this.articleList = res.data;
+            _this.articleList = res.data.articleList;
           })
           .catch(function (e) {
             console.log(e);
