@@ -12,8 +12,10 @@ const schema = {
   name: {
     type: Sequelize.STRING(16)
   },
-  category_id: {
-    type: Sequelize.INTEGER(11)
+  category: {
+    type: Sequelize.ENUM,
+    values: ['blog', 'file'],
+    allowNull: false
   }
 };
 

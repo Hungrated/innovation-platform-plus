@@ -330,6 +330,16 @@ module.exports = {
     'msg': '轮播图更改失败'
   },
 
+  LABEL_CREATE_SUCCESSFUL: {
+    'status': 8400,
+    'msg': '标签创建成功'
+  },
+
+  LABEL_CREATE_FAILED: {
+    'status': 8401,
+    'msg': '标签创建失败'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'
