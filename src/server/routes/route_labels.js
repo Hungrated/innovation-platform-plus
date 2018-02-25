@@ -55,8 +55,12 @@ router.post('/submit', function (req, res) {
     category: req.body.category,
     adder_id: req.body.adder_id
   })
-    .then(function () {
-      res.json(statusLib.LABEL_CREATE_SUCCESSFUL);
+    .then(function (label) {
+      res.json({
+        status: statusLib.LABEL_CREATE_SUCCESSFUL.status,
+        msg: statusLib.LABEL_CREATE_SUCCESSFUL.msg,
+        label_id: label.label_id
+      });
       console.log('label create successful');
     })
     .catch(function (e) {
