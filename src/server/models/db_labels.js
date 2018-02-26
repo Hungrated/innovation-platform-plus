@@ -14,7 +14,7 @@ const schema = {
   },
   category: {
     type: Sequelize.ENUM,
-    values: ['blog', 'file'],
+    values: ['blog', 'file', 'both'],
     allowNull: false
   }
 };

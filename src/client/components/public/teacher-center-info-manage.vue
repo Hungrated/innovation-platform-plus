@@ -121,7 +121,7 @@
           },
           {
             index: 2,
-            value: '文章图片',
+            value: '图 片',
             label: 'image'
           },
           {
@@ -386,6 +386,29 @@
             {
               title: '标 题',
               key: 'title'
+            },
+            {
+              title: '标 签',
+              key: 'labels',
+              align: 'center',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'ghost',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.showDetails(params.row.labels);
+                      }
+                    }
+                  }, '查 看')
+                ]);
+              }
             },
             {
               title: '描 述',
@@ -939,7 +962,41 @@
               }
             }
           ],
-          labels: []
+          labels: [
+            {
+              title: '标签ID',
+              key: 'label_id'
+            },
+            {
+              title: '标签名称',
+              key: 'name',
+              sortable: true
+            },
+            {
+              title: '所属种类',
+              key: 'category',
+              sortable: true
+            },
+            {
+              title: '添加时间',
+              key: 'created_at',
+              width: 135,
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '添加者ID',
+              key: 'adder_id',
+              width: 135,
+              sortable: true
+            },
+            {
+              title: '操作',
+              width: 150
+            }
+          ]
         },
         bannerMng: false,
         bannerModMng: false,
@@ -1014,6 +1071,9 @@
                 break;
               case 'banner':
                 _this.infoCols = _this.queryCols.banner;
+                break;
+              case 'label':
+                _this.infoCols = _this.queryCols.labels;
                 break;
             }
             _this.infoData = res.data;
