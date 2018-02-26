@@ -5,7 +5,7 @@
         <span slot="title"><strong>发表文章</strong></span>
         <div class="m-container1">
           <div class="m-container1 label">
-            <Select placeholder="文章分类..." size="large" v-model="editor.label">
+            <Select placeholder="文章分组..." size="large" v-model="editor.label">
               <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
                 {{ type.label }}
               </Option>
@@ -43,7 +43,7 @@
     <div class="g-compose footer">
       <Card disHover>
         <div class="m-container2">
-          <Select class="m-container2 label" placeholder="文章分类..." size="large" v-model="editor.label">
+          <Select class="m-container2 label" placeholder="文章分组..." size="large" v-model="editor.label">
             <Option v-for="type in articleTypes" :value="type.label" :key="type.index">
               {{ type.label }}
             </Option>
