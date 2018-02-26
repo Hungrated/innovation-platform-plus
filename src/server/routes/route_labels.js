@@ -13,19 +13,7 @@ const Label = db.Label;
 // const fs = require('fs');
 // const multer = require('multer');
 
-/**
- *
- * 获取标签列表
- *
- * @api {post} /api/label/query label.query
- * @apiName labelQuery
- * @apiGroup Label
- * @apiVersion 2.5.0
- * @apiPermission user.teacher
- *
- * @apiSuccess {JSON} data Response data.
- *
- */
+
 // router.post('/upload', objMulter.any(), function (req, res, next) {
 //   // upload a course-work file
 //   Final.findOne({
@@ -49,6 +37,19 @@ const Label = db.Label;
 //     });
 // });
 
+/**
+*
+* 提交标签
+*
+* @api {post} /api/label/query label.query
+* @apiName labelQuery
+* @apiGroup Label
+* @apiVersion 2.5.0
+* @apiPermission user.teacher
+*
+* @apiSuccess {JSON} data Response data.
+*
+*/
 router.post('/submit', function (req, res) {
   Label.create({
     name: req.body.name,
