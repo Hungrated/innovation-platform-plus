@@ -5,13 +5,13 @@
         <span slot="title"><strong>发表文章</strong></span>
         <div class="m-container1">
           <div class="m-container1 label">
-            <Select placeholder="文章分类" size="large" v-model="editor.label">
+            <Select placeholder="文章分类..." size="large" v-model="editor.label">
               <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
                 {{ type.label }}
               </Option>
             </Select>
           </div>
-          <Input class="m-container1 title" v-model="editor.title" size="large" placeholder="文章标题"/>
+          <Input class="m-container1 title" v-model="editor.title" size="large" placeholder="文章标题..."/>
           <ButtonGroup class="m-container1 type" shape="circle" size="large">
             <Button :type="(editType === 'markdown') ? ('primary') : ('default')" @click="changeEditType('markdown')">
               <Icon type="document-text" style="font-size: 17px"></Icon>
@@ -24,7 +24,7 @@
           </ButtonGroup>
         </div>
         <div class="m-desc">
-          <Input v-model="editor.description" size="large" placeholder="文章描述"/>
+          <Input v-model="editor.description" size="large" placeholder="文章描述..."/>
         </div>
       </Card>
     </div>
@@ -43,17 +43,17 @@
     <div class="g-compose footer">
       <Card disHover>
         <div class="m-container2">
-          <label-selector/>
-        </div>
-        <div class="m-container2">
-          <Select class="m-container2 label" placeholder="文章分类" size="large" v-model="editor.label">
-            <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
+          <Select class="m-container2 label" placeholder="文章分类..." size="large" v-model="editor.label">
+            <Option v-for="type in articleTypes" :value="type.label" :key="type.index">
               {{ type.label }}
             </Option>
           </Select>
           <Button class="m-container submit" size="large" type="primary" @click="submit(editType)">
             发&emsp;表
           </Button>
+        </div>
+        <div class="m-container2">
+          <label-selector/>
         </div>
       </Card>
     </div>

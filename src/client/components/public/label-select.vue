@@ -1,12 +1,35 @@
 <template>
-  <div style="display: flex; border: 1px dashed black; border-radius: 5px; width: 100%; margin: 10px 5px; padding: 10px;">
-    labels
+  <div class="m-labels">
+    <div class="m-labels info">
+      <span>
+        <Icon type="information-circled"></Icon>&nbsp;
+        请选择至少一个分类标签：
+      </span>
+    </div>
+    <div class="m-labels body">
+      labelList
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'label-select'
+    name: 'label-select',
+    props: ['type', 'labels'],
+    data () {
+      return {
+        selectList: [],
+        labelList: []
+      };
+    },
+    methods: {
+      refresh () {
+
+      }
+    },
+    mounted () {
+      // this.refresh();
+    }
   };
 </script>
 

@@ -42,7 +42,14 @@
             </div>
             <div class="m-upload body">
               <div class="m-upload body op">
-                <span class="m-left">
+                <span class="m-left m-left-category">
+                  <Select placeholder="资源文件分类..." size="large" v-model="resourceCategory">
+                    <Option v-for="type in resourceTypes" :value="type.label" :key="type.index">
+                      {{ type.label }}
+                    </Option>
+                  </Select>
+                </span>
+                <span class="m-left m-left-select">
                   <Upload class="button"
                           action="#"
                           :data="uploadData"
@@ -96,6 +103,25 @@
           desc: '',
           file: null
         },
+        resourceTypes: [
+          {
+            index: 0,
+            label: '学习资料'
+          },
+          {
+            index: 1,
+            label: '专业论文'
+          },
+          {
+            index: 2,
+            label: '通 知'
+          },
+          {
+            index: 3,
+            label: '其 他'
+          }
+        ],
+        resourceCategory: '',
         resourceTableColumns: [
           {
             title: '文件名',
