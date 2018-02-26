@@ -1,9 +1,26 @@
 <template>
   <div class="g-resources">
+    <div class="g-resources nav">
+      <Menu mode="horizontal" theme="dark">
+        <div class="m-nav">
+          <MenuItem name="1">
+            <span @click="editFile()">
+              <Icon type="upload"></Icon>&emsp;上传文件
+            </span>
+          </MenuItem>
+        </div>
+      </Menu>
+    </div>
     <Card disHover>
       <span slot="title" class="g-resources header">
         <span><strong>资源共享</strong></span>
-        <span><Button type="primary" size="small" @click="editFile()">上 传</Button></span>
+        <span>
+          <Button type="dashed"
+                  size="small"
+                  @click="editFile()">
+            <Icon type="upload"></Icon>
+          </Button>
+        </span>
       </span>
       <div class="g-resources body">
         <transition name="fade">

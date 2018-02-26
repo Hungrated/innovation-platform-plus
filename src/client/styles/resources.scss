@@ -1,6 +1,17 @@
 .g-resources {
   padding: 20px 50px;
 
+  .nav {
+    position: absolute;
+    top: -45px;
+    right: 170px;
+    padding: 0;
+    box-shadow: 0 0 3px #DDDDDD;
+    width: 124px;
+    overflow: hidden;
+    user-select: none;
+  }
+
   .header {
     padding: 0;
     display: flex;
