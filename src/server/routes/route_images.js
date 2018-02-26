@@ -25,12 +25,23 @@ let objMulter = multer({
  * @api {post} /api/image/upload image.upload
  * @apiName imageUpload
  * @apiGroup Image
- * @apiVersion 2.5.0
+ * @apiVersion 2.6.0
  * @apiPermission user
  *
  * @apiDescription 用户上传文章中的图片。
  *
- * @apiParam {formdata} imageList 文件列表
+ * @apiParam {String} blog_id 图片所属文章编号
+ * @apiParam {String} type 图片所属文章类型
+ * @apiParam {file} image 图片文件
+ * @apiParamExample {formdata} 请求示例
+ * {
+ *     "blog_id": "blg259942",
+ *     "type": "event",
+ *     "./0": <0.jpg>,
+ *     "./1": <1.jpg>,
+ *     "./2": <2.jpg>,
+ *     "./3": <3.jpg>
+ * }
  *
  * @apiSuccess / 默认成功无返回
  */

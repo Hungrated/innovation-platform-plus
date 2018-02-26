@@ -3,7 +3,6 @@ const pathLib = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-// const statusLib = require('./libs/status');
 const path = require('./app_paths');
 
 const app = express();

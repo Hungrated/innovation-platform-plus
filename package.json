@@ -1,6 +1,6 @@
 {
   "name": "innovation-platform-plus",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "An advanced on-line information-managing & resource-sharing platform for Innovation Practice courses.",
   "author": "hungrated <zhang295415658@qq.com>",
   "private": true,
@@ -21,6 +21,7 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "mavon-editor": "^2.4.9",
+    "photoswipe": "^4.1.2",
     "scriptjs": "^2.5.8",
     "scss-loader": "0.0.1",
     "vue": "^2.5.2",
@@ -107,7 +108,7 @@
   ],
   "apidoc": {
     "title": "innovation-platform-plus",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "url": "http://[host]"
   }
 }

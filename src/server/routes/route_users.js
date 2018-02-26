@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/user/reg user.reg
  * @apiName userReg
  * @apiGroup User
- * @apiVersion 2.5.0
+ * @apiVersion 1.0.0
  * @apiPermission administrator
  *
  * @apiDescription 教师用户注册。
@@ -93,7 +93,7 @@ router.post('/reg', function (req, res) {
  * @api {post} /api/user/parse user.parse
  * @apiName userParse
  * @apiGroup User
- * @apiVersion 2.5.0
+ * @apiVersion 2.0.0
  * @apiPermission user.teacher
  *
  * @apiDescription 学生用户解析。
@@ -250,7 +250,7 @@ router.post('/parse', function (req, res) {
  * @api {post} /api/user/import user.import
  * @apiName userImport
  * @apiGroup User
- * @apiVersion 2.5.0
+ * @apiVersion 2.0.0
  * @apiPermission user.teacher
  *
  * @apiDescription 学生用户导入。
@@ -358,15 +358,7 @@ router.post('/import', function (req, res) {
       }
     })
       .then(function (user) {
-        Final.create({
-          cswk_id: 'cwk' + uid.generate(),
-          class_id: users[userIdx].cur_class,
-          student_id: users[userIdx].school_id
-        })
-          .then(function () {
-            console.log('cswk record created');
-          });
-        if (user !== null) { // exists duplication
+        if (user !== null) { // user exists
           console.log('user already exists');
           Profile.update({
             cur_class: users[userIdx].cur_class
@@ -376,6 +368,14 @@ router.post('/import', function (req, res) {
             }
           })
             .then(function () {
+              Final.create({
+                cswk_id: 'cwk' + uid.generate(),
+                class_id: users[userIdx].cur_class,
+                student_id: users[userIdx].school_id
+              })
+                .then(function () {
+                  console.log('cswk record created');
+                });
               flag++;
               if (flag === users.length) {
                 console.log('all users modified');
@@ -400,7 +400,7 @@ router.post('/import', function (req, res) {
               })
                 .then(function (profile) {
                   // create a profile record for a student
-                  if (profile !== null) { // exists duplication
+                  if (profile !== null) { // user profile exists
                     console.log('user already exists');
                   } else {
                     Profile.create({
@@ -414,6 +414,15 @@ router.post('/import', function (req, res) {
                       supervisor: users[userIdx].supervisor,
                       user_id: user.id
                     }).then(function () {
+                      // create a final course-work record for a student
+                      Final.create({
+                        cswk_id: 'cwk' + uid.generate(),
+                        class_id: users[userIdx].cur_class,
+                        student_id: users[userIdx].school_id
+                      })
+                        .then(function () {
+                          console.log('cswk record created');
+                        });
                       flag++;
                       if (flag === users.length) {
                         console.log('all users imported');
@@ -451,7 +460,7 @@ router.post('/import', function (req, res) {
  * @api {post} /api/user/login user.login
  * @apiName userLogin
  * @apiGroup User
- * @apiVersion 2.5.0
+ * @apiVersion 2.0.0
  * @apiPermission all
  *
  * @apiDescription 用户登入系统。
@@ -549,7 +558,7 @@ router.post('/login', function (req, res) {
  * @api {post} /api/user/logout user.logout
  * @apiName userLogout
  * @apiGroup User
- * @apiVersion 2.5.0
+ * @apiVersion 1.0.0
  * @apiPermission user
  *
  * @apiDescription 用户登出系统。
@@ -581,7 +590,7 @@ router.post('/logout', function (req, res) {
  * @api {post} /api/user/pwdmod user.pwdmod
  * @apiName userPwdMod
  * @apiGroup User
- * @apiVersion 2.5.0
+ * @apiVersion 2.0.0
  * @apiPermission user
  *
  * @apiDescription 用户修改密码。

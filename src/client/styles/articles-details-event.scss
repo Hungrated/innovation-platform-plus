@@ -1,0 +1,37 @@
+.g-container {
+  padding: 0 10px 10px 10px;
+
+  .info {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 25px;
+    color: #999999;
+    margin-bottom: 10px;
+    background: #FAFAFA;
+    border-radius: 5px;
+  }
+}
+
+.g-details-event {
+  * {
+    display: inline-block;
+  }
+
+  .img {
+    padding: 5px 10px;
+    cursor: pointer;
+
+    img {
+      border-radius: 5px;
+      min-height: 102px;
+      height: calc((100vw - 585px) / 5);
+      max-width: 450px;
+      transition: all 200ms;
+
+      &:hover {
+        box-shadow: 0 0 5px #555555;
+      }
+    }
+  }
+
+}

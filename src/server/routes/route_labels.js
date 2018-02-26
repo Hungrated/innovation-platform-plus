@@ -9,9 +9,6 @@ const Label = db.Label;
 // const path = require('../app_paths');
 // const pathLib = require('path');
 // const urlLib = require('url');
-//
-// const fs = require('fs');
-// const multer = require('multer');
 
 /**
  *
@@ -20,13 +17,13 @@ const Label = db.Label;
  * @api {post} /api/label/query label.query
  * @apiName labelQuery
  * @apiGroup Label
- * @apiVersion 2.5.0
+ * @apiVersion 2.0.0
  * @apiPermission user.teacher
  *
  * @apiSuccess {JSON} data Response data.
  *
  */
-// router.post('/upload', objMulter.any(), function (req, res, next) {
+// router.post('/upload', function (req, res, next) {
 //   // upload a course-work file
 //   Final.findOne({
 //     where: {
