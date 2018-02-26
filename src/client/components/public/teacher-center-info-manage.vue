@@ -77,12 +77,12 @@
               </span>
               <Button @click="labelEdit()" type="dashed" size="small">新 增</Button>
               <Modal v-model="labelMng"
-                     title="编辑标签"
+                     title="添加标签"
                      width="350"
-                     @on-ok=""
+                     @on-ok="labelSubmit()"
                      @on-cancel="labelEditCancel()">
                 <div class="m-edit-label">
-                  <Select placeholder="标签类别..." size="large" v-model="labelData.type">
+                  <Select placeholder="标签类别..." size="large" v-model="labelData.category">
                     <Option v-for="type in  labelTypes" :value="type.value" :key="type.index">
                       {{ type.type }}
                     </Option>
@@ -1026,7 +1026,7 @@
         ],
         labelData: {
           name: '',
-          type: 'both'
+          category: 'both'
         },
         uploadConfig: {
           headers: {
@@ -1229,7 +1229,25 @@
         this.labelMng = false;
       },
       labelSubmit () {
-
+        if (this.labelData.name === '') {
+          this.$Message.info('请填写标签名称');
+          return;
+        }
+        let _this = this;
+        let labelData = this.labelData;
+        labelData.adder_id = JSON.parse(window.localStorage.user).school_id;
+        this.$ajax.post('/api/label/submit', labelData)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            _this.labelData = {
+              name: '',
+              category: 'both'
+            };
+            _this.refreshData();
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
       }
     },
     mounted () {
