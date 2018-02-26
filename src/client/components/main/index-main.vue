@@ -1,8 +1,8 @@
 <template>
   <div id="index">
-    <index-main-banner></index-main-banner>
+    <index-main-banner/>
     <div class="g-extras">
-      <moments-main :limit="10"></moments-main>
+      <moments-main :limit="5"/>
     </div>
   </div>
 </template>
