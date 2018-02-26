@@ -96,11 +96,8 @@
   flex-direction: column;
   padding: 20px;
 
-  span {
-    font-size: 14px;
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    color: #777777;
+  & > * {
+    margin: 10px;
+    width: auto;
   }
 }

@@ -78,11 +78,18 @@
               <Button @click="labelEdit()" type="dashed" size="small">新 增</Button>
               <Modal v-model="labelMng"
                      title="编辑标签"
-                     width="712"
+                     width="350"
                      @on-ok=""
                      @on-cancel="labelEditCancel()">
                 <div class="m-edit-label">
-                  test
+                  <Select placeholder="标签类别..." size="large" v-model="labelData.type">
+                    <Option v-for="type in  labelTypes" :value="type.value" :key="type.index">
+                      {{ type.type }}
+                    </Option>
+                  </Select>
+                  <Input size="large"
+                         v-model="labelData.name"
+                         placeholder="标签名..."/>
                 </div>
               </Modal>
             </div>
@@ -111,7 +118,7 @@
         // pageLimit: 15,
         // curPage: 1,
         dataCount: 0,
-        infoLabel: 'banner',
+        infoLabel: 'label',
         infoCols: [],
         infoData: [],
         infoTypeList: [
@@ -217,11 +224,13 @@
                         });
                       }
                     }
-                  }, [h('Icon', {
-                    props: {
-                      type: 'ios-search-strong'
-                    }
-                  })])
+                  }, [
+                    h('Icon', {
+                      props: {
+                        type: 'ios-search-strong'
+                      }
+                    })
+                  ])
                 ]);
               }
             },
@@ -696,17 +705,6 @@
                     })
                   ])
                 ]);
-                // if (params.row.status === '未审核') {
-                //
-                // } else {
-                //   return h('div', [
-                //     h('em', {
-                //       style: {
-                //         color: '#999999'
-                //       }
-                //     }, '已审核')
-                //   ]);
-                // }
               }
             }
           ],
@@ -1009,6 +1007,27 @@
         bannerImgId: null,
         bannerSrc: null,
         labelMng: false,
+        labelTypes: [
+          {
+            index: 0,
+            type: '文章标签',
+            value: 'blog'
+          },
+          {
+            index: 1,
+            type: '资源文件标签',
+            value: 'file'
+          },
+          {
+            index: 2,
+            type: '通用标签',
+            value: 'both'
+          }
+        ],
+        labelData: {
+          name: '',
+          type: 'both'
+        },
         uploadConfig: {
           headers: {
             'Content-Type': 'multipart/form-data'
