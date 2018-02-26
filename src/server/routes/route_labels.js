@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// const db = require('../models/db_global');
-// const statusLib = require('../libs/status');
-//
-// const Final = db.Final;
+const db = require('../models/db_global');
+const statusLib = require('../libs/status');
+
+const Label = db.Label;
 //
 // const path = require('../app_paths');
 // const pathLib = require('path');
@@ -13,19 +13,7 @@ const router = express.Router();
 // const fs = require('fs');
 // const multer = require('multer');
 
-/**
- *
- * 获取标签列表
- *
- * @api {post} /api/label/query label.query
- * @apiName labelQuery
- * @apiGroup Label
- * @apiVersion 2.0.0
- * @apiPermission user.teacher
- *
- * @apiSuccess {JSON} data Response data.
- *
- */
+
 // router.post('/upload', objMulter.any(), function (req, res, next) {
 //   // upload a course-work file
 //   Final.findOne({
@@ -48,5 +36,39 @@ const router = express.Router();
 //       res.json(statusLib.CONNECTION_ERROR);
 //     });
 // });
+
+/**
+*
+* 提交标签
+*
+* @api {post} /api/label/query label.query
+* @apiName labelQuery
+* @apiGroup Label
+* @apiVersion 2.5.0
+* @apiPermission user.teacher
+*
+* @apiSuccess {JSON} data Response data.
+*
+*/
+router.post('/submit', function (req, res) {
+  Label.create({
+    name: req.body.name,
+    category: req.body.category,
+    adder_id: req.body.adder_id
+  })
+    .then(function (label) {
+      res.json({
+        status: statusLib.LABEL_CREATE_SUCCESSFUL.status,
+        msg: statusLib.LABEL_CREATE_SUCCESSFUL.msg,
+        label_id: label.label_id
+      });
+      console.log('label create successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.LABEL_CREATE_FAILED);
+      console.log('label create failed');
+    });
+});
 
 module.exports = router;

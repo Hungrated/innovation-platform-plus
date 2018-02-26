@@ -10,6 +10,8 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const moment = require('../middlewares/moment');
 
+const labelArray = require('../middlewares/label_array');
+
 /**
  *
  * （教师）获取全站信息列表
@@ -166,7 +168,7 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
-  if (req.body.type !== 'blog') {
+  if (req.body.type !== 'blog' && req.body.type !== 'label') {
     next();
   } else {
     let removeDir = function (fileUrl) {
@@ -354,6 +356,60 @@ router.post('/delete', function (req, res, next) {
         res.json(statusLib.CONNECTION_ERROR);
       });
   }
+});
+
+router.post('/delete', function (req, res, next) {
+  // delete labels
+  if (req.body.type !== 'label') {
+    next();
+  } else {
+    let Label = db.Label;
+    let Blog = db.Blog;
+    Blog.findAll()
+      .then(function (data) {
+        for (let i = 0; i < data.length; i++) {
+          let labels = data[i].dataValues.labels;
+          if (labelArray.containsLabel(labels, req.body.id)) {
+            Blog.update({
+              labels: labelArray.removeLabel(labels, req.body.id)
+            }, {
+              where: {
+                blog_id: data[i].dataValues.blog_id
+              }
+            });
+          }
+        }
+        Label.destroy({
+          where: {
+            label_id: req.body.id
+          }
+        })
+          .then(function () {
+            res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+            console.log('label info delete successful');
+          })
+          .catch(function (e) {
+            console.error(e);
+            res.json(statusLib.CONNECTION_ERROR);
+          });
+      });
+  }
+
+  let File = db.File;
+  File.destroy({
+    where: {
+      file_id: req.body.id
+    }
+  })
+    .then(function () {
+      moment.deleteMoment(req.body.id);
+      res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+      console.log('info delete successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+    });
 });
 
 router.post('/delete', function (req, res) {

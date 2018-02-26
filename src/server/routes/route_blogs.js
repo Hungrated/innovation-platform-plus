@@ -18,6 +18,7 @@ const moment = require('../middlewares/moment');
 const Blog = db.Blog;
 const Profile = db.Profile;
 const Comment = db.Comment;
+const Image = db.Image;
 
 let objMulter = multer({
   dest: pathLib.join(path.blogs, '__temp__')
@@ -210,14 +211,16 @@ router.post('/query', function (req, res) {
       }
       let count = 0;
       let carouselList = [];
-      for (let i = 0; i < data.length; i++) {
-        let item = data[i].dataValues;
-        if (item.cover) {
-          item.index = count++;
-          carouselList.push(item);
-        }
-        if (count >= 9) {
-          break;
+      if(req.body.student) {
+        for (let i = 0; i < data.length; i++) {
+          let item = data[i].dataValues;
+          if (item.cover) {
+            item.index = count++;
+            carouselList.push(item);
+          }
+          if (count >= 9) {
+            break;
+          }
         }
       }
       res.json({
@@ -303,46 +306,45 @@ router.get('/details', function (req, res) {
   // fetch blog details
   const id = urlLib.parse(req.url, true).query.index;
   Blog.findByPrimary(id, {
-    include: [{
-      model: Profile,
-      where: {
-        school_id: sequelize.col('blog.author_id')
+    include: [
+      {
+        model: Profile,
+        attributes: ['name']
       },
-      attributes: ['name']
-    }]
+      {
+        model: Comment,
+        include: [
+          {
+            model: Profile,
+            attributes: ['name']
+          }
+        ]
+      },
+      {
+        model: Image,
+        attributes: ['src']
+      }
+    ]
   })
     .then(function (data) {
-      data.dataValues.publishTime = timeFormat(data.dataValues.created_at);
-      Comment.findAll({
-        where: {
-          blog_id: id
-        },
-        order: [
-          ['created_at', 'DESC']
-        ],
-        include: [{
-          model: Profile,
-          where: {
-            school_id: sequelize.col('comment.student_id')
-          },
-          attributes: ['name']
-        }]
-      })
-        .then(function (comments) {
-          for (let i = 0; i < comments.length; i++) {
-            comments[i].dataValues.submitTime = timeFormat(comments[i].dataValues.created_at);
-          }
-          res.json({
-            blog: data,
-            comments: comments
-          });
-          console.log('fetch detail successful');
-        })
-        .catch(function (e) {
-          console.error(e);
-          res.json(statusLib.BLOG_DETAILS_FETCH_FAILED);
-          console.log('fetch detail failed');
-        });
+      let blog = data.dataValues;
+      blog.publishTime = timeFormat(data.dataValues.created_at);
+      for (let i = 0; i < blog.comments.length; i++) {
+        blog.comments[i].dataValues.submitTime = timeFormat(blog.comments[i].dataValues.created_at);
+      }
+      let images = blog.images;
+      let comments = blog.comments;
+      delete blog.images;
+      delete blog.comments;
+      let resData = {
+        blog: blog,
+        comments: comments
+      };
+      if (blog.type === 'event') {
+        resData.images = images;
+      }
+      res.json(resData);
+      console.log('fetch detail successful');
     })
     .catch(function (e) {
       console.error(e);

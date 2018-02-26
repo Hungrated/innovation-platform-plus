@@ -12,27 +12,7 @@
       </Menu>
     </div>
     <div class="g-articles header">
-      <article-view-carousel :articleList="articleList" :count="articleCount"/>
-
-      <!--<Card class="m-card" disHover>-->
-        <!--<div class="m-card container">-->
-          <!--<strong>文 章</strong>-->
-          <!--<Dropdown class="m-card container type">-->
-            <!--<Button type="primary" v-model="articleListLabel">-->
-              <!--{{articleListLabel}}&nbsp;-->
-              <!--<Icon type="arrow-down-b"></Icon>-->
-            <!--</Button>-->
-            <!--<DropdownMenu slot="list">-->
-              <!--<DropdownItem v-for="type in labelList"-->
-                            <!--:value="type.label"-->
-                            <!--:key="type.index">-->
-                <!--<span @click="changeLabel(type)">{{type.label}}</span>-->
-              <!--</DropdownItem>-->
-            <!--</DropdownMenu>-->
-          <!--</Dropdown>-->
-        <!--</div>-->
-      <!--</Card>-->
-
+      <article-view-carousel :carousel-list="carouselList"/>
     </div>
     <div class="g-articles body">
       <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
@@ -80,7 +60,58 @@
           description: ''
         },
         articleList: [],
-        carouselList: []
+        carouselList: [
+          {
+            index: 0,
+            blog_id: '',
+            labels: null,
+            title: '',
+            description: '',
+            content: '',
+            cover: null,
+            publishTime: ''
+          },
+          {
+            index: 1,
+            blog_id: '',
+            labels: null,
+            title: '',
+            description: '',
+            content: '',
+            cover: null,
+            publishTime: ''
+          },
+          {
+            index: 2,
+            blog_id: '',
+            labels: null,
+            title: '',
+            description: '',
+            content: '',
+            cover: null,
+            publishTime: ''
+          },
+          {
+            index: 3,
+            blog_id: '',
+            labels: null,
+            title: '',
+            description: '',
+            content: '',
+            cover: null,
+            publishTime: ''
+          },
+          {
+            index: 4,
+            blog_id: '',
+            labels: null,
+            title: '',
+            description: '',
+            content: '',
+            cover: null,
+            publishTime: ''
+          }
+        ]
       };
     },
     methods: {
