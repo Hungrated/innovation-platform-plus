@@ -9,7 +9,7 @@
           <div class="g-info options body">
             <div class="g-info options list">
               <div class="g-info options type">
-                <Select placeholder="类 别" size="large" v-model="infoLabel" @on-change="refreshData()">
+                <Select placeholder="类 别..." size="large" v-model="infoLabel" @on-change="refreshData()">
                   <Option v-for="type in infoTypeList" :value="type.label" :key="type.index">
                     {{ type.value }}
                   </Option>
@@ -20,7 +20,7 @@
                             size="large"
                             format="yyyy-MM-dd"
                             type="daterange"
-                            placeholder="时间范围（选填）"
+                            placeholder="时间范围（选填）..."
                             :disabled="true"
                             style="width: 100%">
                 </DatePicker>
@@ -28,11 +28,17 @@
               <div class="g-info options sid">
                 <Input size="large"
                        v-model="infoSid"
-                       placeholder="学号或工号（选填）"
+                       placeholder="学号或工号（选填）..."
                        :disabled="infoLabel === 'banner' || infoLabel === 'class'"/>
               </div>
+              <div class="g-info options label">
+                <Input size="large"
+                       v-model="infoSid"
+                       placeholder="标签名（选填）..."
+                       :disabled="infoLabel !== 'blog' && infoLabel !== 'resource'"/>
+              </div>
             </div>
-            <div>
+            <div class="g-info options query">
               <Button @click="refreshData()" type="primary" size="large">查 询</Button>
             </div>
           </div>

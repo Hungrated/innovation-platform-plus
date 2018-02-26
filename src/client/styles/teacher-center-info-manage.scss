@@ -3,29 +3,37 @@
     .body {
       display: flex;
       line-height: 36px;
-      justify-content: space-between;
     }
 
     .list {
-      display: flex;
+      display: inline-block;
       flex: auto;
-      max-width: 700px;
     }
 
-    .type, .range, .sid {
+    .type, .range, .sid, .label {
       margin-right: 10px;
+      float: left;
+      padding-bottom: 5px;
     }
 
     .type {
-      flex: 0 0 200px;
+      width: 200px;
     }
 
     .range {
-      flex: 1 0 300px;
+      width: 350px;
     }
 
     .sid {
-      flex: 1 1 auto;
+      width: 200px;
+    }
+
+    .label {
+      width: 200px;
+    }
+
+    .query {
+      float: right;
     }
 
     .banner {
