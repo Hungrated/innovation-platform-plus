@@ -59,3 +59,7 @@ npm run unit
 # run all tests
 npm test
 ```
+
+### 4 User Manual
+
+SEE: [**MANUAL**](./static/manual/innovation-platform.md)
