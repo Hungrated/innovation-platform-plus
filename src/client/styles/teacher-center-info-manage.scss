@@ -21,7 +21,7 @@
     }
 
     .range {
-      width: 350px;
+      width: 290px;
     }
 
     .sid {
@@ -36,7 +36,7 @@
       float: right;
     }
 
-    .banner {
+    .banner, .label-edit {
       display: flex;
       justify-content: space-between;
       background: #FAFAFA;
@@ -76,6 +76,21 @@
 }
 
 .m-edit-bnr {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+
+  span {
+    font-size: 14px;
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #777777;
+  }
+}
+
+.m-edit-label {
   display: flex;
   justify-content: center;
   flex-direction: column;

@@ -51,7 +51,7 @@
 }
 
 .ivu-select-dropdown {
-  /*max-height: 300px;*/
+  max-height: 500px;
 }
 
 .router-link-active {

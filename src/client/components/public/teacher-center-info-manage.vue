@@ -70,18 +70,18 @@
                 </div>
               </Modal>
             </div>
-            <div v-if="infoLabel === 'label'" class="g-info options banner">
+            <div v-if="infoLabel === 'label'" class="g-info options label-edit">
               <span>
                 &emsp;<Icon type="information-circled"></Icon>&nbsp;
-                标签用于文章和资源文件的分类筛选，要新增标签，请点击右边的"新增"按钮
+                标签用于文章和资源文件的分类与筛选，要新增标签，请点击右边的"新增"按钮
               </span>
-              <Button @click="bannerEdit()" type="dashed" size="small">新 增</Button>
-              <Modal v-model="bannerMng"
+              <Button @click="labelEdit()" type="dashed" size="small">新 增</Button>
+              <Modal v-model="labelMng"
                      title="编辑标签"
                      width="712"
                      @on-ok=""
-                     @on-cancel="bannerEditCancel()">
-                <div class="m-edit-bnr">
+                     @on-cancel="labelEditCancel()">
+                <div class="m-edit-label">
                   test
                 </div>
               </Modal>
@@ -1008,6 +1008,7 @@
         bannerModMng: false,
         bannerImgId: null,
         bannerSrc: null,
+        labelMng: false,
         uploadConfig: {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -1201,6 +1202,15 @@
           .catch(function (e) {
             console.log(e);
           });
+      },
+      labelEdit () {
+        this.labelMng = true;
+      },
+      labelEditCancel () {
+        this.labelMng = false;
+      },
+      labelSubmit () {
+
       }
     },
     mounted () {
