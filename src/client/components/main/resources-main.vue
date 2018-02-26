@@ -24,6 +24,7 @@
               </span>
             </div>
             <div class="m-upload body">
+              <div class="m-upload body op">
                 <span class="m-left">
                   <Upload class="button"
                           action="#"
@@ -32,12 +33,18 @@
                     <Button type="primary" size="large" icon="ios-cloud-upload-outline">&emsp;选择文件&emsp;</Button>
                   </Upload>
                 </span>
-
-              <span class="m-right">
-                  <i-input type="text" size="large" v-model="uploadData.desc" placeholder="文件描述..."
-                           style="width: 100%"></i-input>
+                <span class="m-right">
+                    <i-input type="text"
+                             size="large"
+                             v-model="uploadData.desc"
+                             placeholder="文件描述..."
+                             style="width: 100%">
+                    </i-input>
                 </span>
-
+              </div>
+              <div class="m-upload body labels">
+                <label-selector/>
+              </div>
             </div>
           </div>
         </transition>
@@ -52,8 +59,13 @@
 </template>
 
 <script>
+  import labelSelector from '../public/label-select';
+
   export default {
     name: 'resources-main',
+    components: {
+      labelSelector
+    },
     data () {
       return {
         count: 0,

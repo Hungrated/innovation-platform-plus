@@ -207,7 +207,7 @@ router.post('/query', function (req, res) {
       }
       let count = 0;
       let carouselList = [];
-      if(req.body.student) {
+      if(!req.body.student) {
         for (let i = 0; i < data.length; i++) {
           let item = data[i].dataValues;
           if (item.cover) {
