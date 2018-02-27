@@ -16,7 +16,7 @@
         <span>
           <span><strong>分 组&nbsp;<Icon type="arrow-right-a"></Icon>&emsp;</strong></span>
           <span class="m-label" v-for="group in groupList" :key="group.index">
-            <Button @click="getArticleList()"
+            <Button @click="getArticleList({group: group.label})"
                     size="small"
                     type="warning">
               <strong>{{group.label}}</strong>
@@ -25,7 +25,7 @@
         </span>
         <span>
             <span class="m-label" v-for="label in labelList" :key="label.label_id">
-              <Button @click="getArticleList()"
+              <Button @click="getArticleList({labels: label.label_id})"
                       size="small"
                       :type="label.category === 'both'
                       ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
@@ -60,6 +60,9 @@
         <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
         <article-view-waterfall :articleList="articleList" :count="articleCount"/>
       </div>
+      <div class="g-articles page">
+        <Page size="small" :total="count"></Page>
+      </div>
     </Card>
   </div>
 </template>
@@ -78,23 +81,28 @@
         groupList: [
           {
             index: 0,
-            label: '所有文章'
+            label: '所有文章',
+            value: 'all'
+          },
+          {
+            index: 0,
+            label: '项目成果',
+            value: 'projects'
           },
           {
             index: 1,
-            label: '项目成果'
+            label: '活 动',
+            value: 'events'
           },
           {
             index: 2,
-            label: '技术交流'
+            label: '技术交流',
+            value: 'techs'
           },
           {
             index: 3,
-            label: '活 动'
-          },
-          {
-            index: 4,
-            label: '我的文章'
+            label: '其 他',
+            value: 'others'
           }
         ],
         editor: {
@@ -181,7 +189,8 @@
         let _this = this;
         let request = mode || 'all';
         this.$ajax.post('/api/blog/query', {
-          request: request
+          request: request,
+          carousel: request === 'all'
         })
           .then(function (res) {
             _this.articleList = res.data.articleList;

@@ -186,7 +186,6 @@ router.post('/import', function (req, res) {
  * @apiSuccess {Array} data 文章列表列表
  */
 router.post('/query', function (req, res) {
-  // fetch blog list for brief browsing
   const request = req.body.request;
   let where = {};
   if (typeof request === 'string' && request !== 'all') {
@@ -200,14 +199,14 @@ router.post('/query', function (req, res) {
     };
   }
   if (typeof request === 'object') {
-    if (!!request.group) {
+    if (!!request.group && request.group !== '所有文章') {
       where.group = request.group;
     }
     if (!!request.labels) {
       where.labels = {
         $or: []
       };
-      let labelArr = request.labels.split(',');
+      let labelArr = request.labels.toString().split(',');
       for (let i = 0; i < labelArr.length; i++) {
         where.labels.$or.push({
           $like: '%' + labelArr[i] + '%'
@@ -231,7 +230,7 @@ router.post('/query', function (req, res) {
       }
       let count = 0;
       let carouselList = [];
-      if (!req.body.student) {
+      if (req.body.carousel) {
         for (let i = 0; i < data.length; i++) {
           let item = data[i].dataValues;
           if (item.cover) {
