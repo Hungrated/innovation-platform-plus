@@ -66,7 +66,7 @@
                                 :count="articleCount"/>
       </div>
       <div class="g-articles page">
-        <Page size="small" :total="count"></Page>
+        <Page size="small" :total="articleCount"></Page>
       </div>
     </Card>
   </div>
@@ -91,22 +91,22 @@
             value: 'all'
           },
           {
-            index: 0,
+            index: 1,
             label: '项目成果',
             value: 'projects'
           },
           {
-            index: 1,
+            index: 2,
             label: '活 动',
             value: 'events'
           },
           {
-            index: 2,
+            index: 3,
             label: '技术交流',
             value: 'techs'
           },
           {
-            index: 3,
+            index: 4,
             label: '其 他',
             value: 'others'
           }

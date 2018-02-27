@@ -7,14 +7,9 @@
         </Button>
       </span>
       <span class="m-unit details">
-        <span class="m-unit details info">
         <Icon type="ios-person-outline"></Icon>&nbsp;{{article.profile.name}}&emsp;
         <Icon type="ios-clock-outline"></Icon>&nbsp;{{article.publishTime}}&emsp;
-      </span>
-      <span class="m-unit details desc">
-        <Icon type="ios-star-outline"></Icon>&nbsp;
-        <p>{{article.description}}</p>
-      </span>
+        <Icon type="ios-star-outline"></Icon>&nbsp;{{article.description}}
       </span>
     </div>
   </div>
