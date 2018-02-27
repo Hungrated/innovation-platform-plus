@@ -26,12 +26,12 @@
           </span>
           <MenuGroup title="类 别">
             <MenuItem name="3-1"><span @click="changeRoute('/articles')">所有文章</span></MenuItem>
-            <MenuItem name="3-2"><span @click="changeRoute('/articles')">Markdown文档</span></MenuItem>
-            <MenuItem name="3-3"><span @click="changeRoute('/articles')">活动图集</span></MenuItem>
-            <MenuItem name="3-4"><span @click="changeRoute('/articles')">我的文章</span></MenuItem>
+            <!--<MenuItem name="3-2"><span @click="changeRoute('/articles')">Markdown文档</span></MenuItem>-->
+            <!--<MenuItem name="3-3"><span @click="changeRoute('/articles')">活动图集</span></MenuItem>-->
+            <!--<MenuItem name="3-4"><span @click="changeRoute('/articles')">我的文章</span></MenuItem>-->
           </MenuGroup>
           <MenuGroup title="发 布">
-            <MenuItem name="3-5"><span @click="changeRoute('/articles/compose')"><Icon
+            <MenuItem name="3-2"><span @click="changeRoute('/articles/compose')"><Icon
               type="compose"></Icon>&emsp;发 布</span>
             </MenuItem>
           </MenuGroup>
