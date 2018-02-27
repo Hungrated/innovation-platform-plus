@@ -80,6 +80,8 @@ router.post('/upload', function (req, res) {
       filename: req.files[i].originalname,
       size: req.files[i].size,
       url: downloadUrl,
+      group: req.body.group,
+      labels: req.body.labels,
       uploader_id: schoolId,
       description: fileDescriptions[i]
     };

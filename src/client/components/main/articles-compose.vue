@@ -6,7 +6,7 @@
         <div class="m-container1">
           <div class="m-container1 label">
             <Select placeholder="文章分组..." size="large" v-model="editor.group">
-              <Option v-for="type in  articleTypes" :value="type.value" :key="type.index">
+              <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
                 {{ type.label }}
               </Option>
             </Select>
@@ -46,7 +46,7 @@
       <Card disHover>
         <div class="m-container2">
           <Select class="m-container2 label" placeholder="文章分组..." size="large" v-model="editor.group">
-            <Option v-for="type in articleTypes" :value="type.value" :key="type.index">
+            <Option v-for="type in articleTypes" :value="type.label" :key="type.index">
               {{ type.label }}
             </Option>
           </Select>
@@ -68,7 +68,10 @@
           </span>
         </div>
         <div class="m-container2">
-          <label-selector ref="labels" :type="'blog'" :selectList="labelSelect" @changeLabels="changeLabels"/>
+          <label-selector ref="labels"
+                          :type="'blog'"
+                          :selectList="labelSelect"
+                          @changeLabels="changeLabels"/>
         </div>
       </Card>
     </div>
@@ -151,7 +154,6 @@
         for (let i = 0; i < this.labelSelect.length; i++) {
           labels.push(this.labelSelect[i].label_id);
         }
-        console.log(labels.toString());
         return labels.toString();
       },
       submit (type) {

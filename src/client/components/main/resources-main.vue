@@ -43,8 +43,8 @@
             <div class="m-upload body">
               <div class="m-upload body op">
                 <span class="m-left m-left-category">
-                  <Select placeholder="资源文件分类..." size="large" v-model="resourceCategory">
-                    <Option v-for="type in resourceTypes" :value="type.value" :key="type.index">
+                  <Select placeholder="资源文件分类..." size="large" v-model="uploadData.group">
+                    <Option v-for="type in resourceTypes" :value="type.label" :key="type.index">
                       {{ type.label }}
                     </Option>
                   </Select>
@@ -66,8 +66,22 @@
                     </i-input>
                 </span>
               </div>
+              <div class="g-label-select">
+                <span v-for="(label, index) in labelSelect" :key="label.label_id">
+                  <Tag closable
+                       type="dot"
+                       @on-close="delLabel(label)"
+                       :name="index"
+                       :color="label.category === 'both' ? 'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+                      {{label.name}}
+                  </Tag>
+                </span>
+              </div>
               <div class="m-upload body labels">
-                <label-selector/>
+                <label-selector ref="labels"
+                                :type="'file'"
+                                :selectList="labelSelect"
+                                @changeLabels="changeLabels"/>
               </div>
             </div>
           </div>
@@ -100,7 +114,9 @@
           }
         },
         uploadData: {
+          group: '',
           desc: '',
+          labels: '',
           file: null
         },
         resourceTypes: [
@@ -125,7 +141,6 @@
             value: 'others'
           }
         ],
-        resourceCategory: '',
         resourceTableColumns: [
           {
             title: '文件名',
@@ -157,8 +172,31 @@
             width: 200
           },
           {
+            title: '分 组',
+            key: 'group',
+            sortable: true,
+            width: 120
+          },
+          {
             title: '文件描述',
-            key: 'description'
+            key: 'description',
+            render: (h, params) => {
+              let labels = params.row.labels.split(',');
+              let labelViews = [];
+              for (let i = 0; i < labels.length; i++) {
+                labelViews.push(
+                  h('Tag', {
+                    props: {
+                      color: 'yellow'
+                    }
+                  }, labels[i])
+                );
+              }
+              return h('div', [
+                h('span', labelViews),
+                h('span', ' ' + params.row.description)
+              ]);
+            }
           },
           {
             title: '操 作',
@@ -181,7 +219,8 @@
             }
           }
         ],
-        resourceList: []
+        resourceList: [],
+        labelSelect: []
       };
     },
     methods: {
@@ -189,35 +228,65 @@
         this.uploadPanel = true;
       },
       editFileCancel () {
-        // this.$Message.info('文件上传取消');
         this.uploadPanel = false;
-        this.uploadData.desc = '';
-        this.uploadData.file = null;
+        this.uploadData = {
+          group: '',
+          desc: '',
+          labels: '',
+          file: null
+        };
       },
       handleUpload (file) {
         this.uploadData.file = file;
         return false;
       },
       fileSizeFormat (size) {
-        return (size / 1048576).toFixed(2) + ' MB';
+        return size >= 1048576
+          ? (size / 1048576).toFixed(1) + ' MB'
+          : (size / 1024).toFixed(1) + ' KB';
+      },
+      stringifyLabels () {
+        let labels = [];
+        for (let i = 0; i < this.labelSelect.length; i++) {
+          labels.push(this.labelSelect[i].label_id);
+        }
+        return labels.toString();
+      },
+      changeLabels (labelSelect) {
+        this.labelSelect = labelSelect;
+        this.uploadData.labels = this.stringifyLabels();
+      },
+      delLabel (label) {
+        const index = this.labelSelect.indexOf(label);
+        this.labelSelect.splice(index, 1);
       },
       submitFile () {
-        if (this.uploadData.file === null || this.uploadData.desc === '') {
+        if (this.uploadData.file === null ||
+          !this.uploadData.desc ||
+          !this.uploadData.group ||
+          !this.uploadData.labels
+        ) {
           this.$Message.info('请将文件上传信息补充完整');
           return;
         }
         let _this = this;
         let formData = new FormData();
         formData.append('file', this.uploadData.file);
+        formData.append('group', this.uploadData.group);
+        formData.append('labels', this.uploadData.labels);
         formData.append('school_id', JSON.parse(window.localStorage.user).school_id);
         formData.append('descriptions', this.uploadData.desc);
 
         this.$ajax.post('/api/file/upload', formData, this.uploadConfig)
           .then(function (res) {
             _this.$Message.success(res.data.msg);
-            _this.uploadData.desc = '';
-            _this.uploadData.file = null;
             _this.uploadPanel = false;
+            _this.uploadData = {
+              group: '',
+              desc: '',
+              labels: '',
+              file: null
+            };
             _this.refreshFileList();
           })
           .catch(function (e) {

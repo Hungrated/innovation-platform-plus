@@ -10,7 +10,7 @@
       <span class="m-label" v-for="label in labelList" :key="label.label_id">
         <Button @click="addLabel(label)"
                 size="small"
-                :type="label.category === 'both' ? 'success' : 'primary'">
+                :type="label.category === 'both' ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
           <strong>{{label.name}}</strong>
         </Button>
       </span>
