@@ -23,10 +23,16 @@
   }
 
   .body {
-
+    margin: 0;
+    padding: 0 10px;
+    display: inline-block;
   }
 }
 
+.m-label {
+  display: inline-block;
+  margin: 0 5px;
+}
 
 
 

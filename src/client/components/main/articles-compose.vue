@@ -48,12 +48,25 @@
               {{ type.label }}
             </Option>
           </Select>
-          <Button class="m-container submit" size="large" type="primary" @click="submit(editType)">
-            发&emsp;表
-          </Button>
+          <span class="g-label-select">
+            <span v-for="(label, index) in labelSelect" :key="label.label_id">
+              <Tag closable
+                   type="dot"
+                   @on-close="delLabel(label)"
+                   :name="index"
+                   :color="label.category === 'both' ? 'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+                  {{label.name}}
+              </Tag>
+            </span>
+          </span>
+          <span>
+            <Button class="m-container submit" size="large" type="primary" @click="submit(editType)">
+              发&emsp;表
+            </Button>
+          </span>
         </div>
         <div class="m-container2">
-          <label-selector/>
+          <label-selector ref="labels" :type="'blog'" :selectList="labelSelect" @changeLabels="changeLabels"/>
         </div>
       </Card>
     </div>
@@ -95,9 +108,9 @@
         editType: 'markdown',
         editor: {
           title: '',
-          label: '',
           description: ''
-        }
+        },
+        labelSelect: []
       };
     },
     methods: {
@@ -116,6 +129,13 @@
         } else {
           this.editType = name;
         }
+      },
+      changeLabels (labelSelect) {
+        this.labelSelect = labelSelect;
+      },
+      delLabel (label) {
+        const index = this.labelSelect.indexOf(label);
+        this.labelSelect.splice(index, 1);
       },
       submit (type) {
         if (type === 'markdown') {

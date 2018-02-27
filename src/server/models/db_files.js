@@ -8,6 +8,10 @@ const schema = {
     primaryKey: true,
     unique: true
   },
+  group: {
+    type: Sequelize.STRING(16),
+    allowNull: false
+  },
   labels: {
     type: Sequelize.STRING
   },
