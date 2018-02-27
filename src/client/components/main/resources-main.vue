@@ -135,21 +135,26 @@
         groupList: [
           {
             index: 0,
+            label: '所有资源',
+            value: 'all'
+          },
+          {
+            index: 1,
             label: '学习资料',
             value: 'studies'
           },
           {
-            index: 1,
+            index: 2,
             label: '专业论文',
             value: 'theses'
           },
           {
-            index: 2,
+            index: 3,
             label: '通 知',
             value: 'notices'
           },
           {
-            index: 3,
+            index: 4,
             label: '其 他',
             value: 'others'
           }

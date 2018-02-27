@@ -163,10 +163,34 @@ router.post('/upload', function (req, res) {
  * ]
  */
 router.post('/query', function (req, res) {
-  // fetch file list
   const request = req.body.request;
-  const where = (request === 'all') ? {} : {uploader_id: request};
-
+  let where = {};
+  if (typeof request === 'string' && request !== 'all') {
+    where = {
+      type: request
+    };
+  }
+  if (typeof request === 'number') {
+    where = {
+      uploader_id: request
+    };
+  }
+  if (typeof request === 'object') {
+    if (!!request.group && request.group !== '所有资源') {
+      where.group = request.group;
+    }
+    if (!!request.labels) {
+      where.labels = {
+        $or: []
+      };
+      let labelArr = request.labels.toString().split(',');
+      for (let i = 0; i < labelArr.length; i++) {
+        where.labels.$or.push({
+          $like: '%' + labelArr[i] + '%'
+        });
+      }
+    }
+  }
   File.findAll({
     where: where,
     order: [
