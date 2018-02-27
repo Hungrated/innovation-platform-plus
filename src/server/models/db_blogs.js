@@ -13,10 +13,6 @@ const schema = {
     values: ['project', 'event'],
     allowNull: false
   },
-  group: {
-    type: Sequelize.STRING(16),
-    allowNull: false
-  },
   labels: {
     type: Sequelize.STRING
   },
