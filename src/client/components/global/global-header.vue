@@ -59,9 +59,11 @@
         <global-header-user v-if="userIdentity === 'none'"
                             @updateUserStatus="changeUserStatus()"/>
         <global-header-user-student :name="name"
+                                    :schoolId="schoolId"
                                     v-if="userIdentity === 'student'"
                                     @updateUserStatus="changeUserStatus()"/>
         <global-header-user-teacher :name="name"
+                                    :schoolId="schoolId"
                                     v-if="userIdentity === 'teacher'"
                                     @updateUserStatus="changeUserStatus()">/</global-header-user-teacher>
       </div>
@@ -83,7 +85,8 @@
         },
         userIdentity: 'none',
         username: '',
-        name: ''
+        name: '',
+        schoolId: 0
       };
     },
     components: {
@@ -111,6 +114,7 @@
           this.userIdentity = cookie.identity;
           this.username = cookie.username;
           this.name = user.name;
+          this.schoolId = user.school_id;
         }
       },
       changeRoute: function (path) {

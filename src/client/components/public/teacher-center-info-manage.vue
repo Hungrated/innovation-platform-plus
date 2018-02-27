@@ -970,7 +970,8 @@
           labels: [
             {
               title: '标签ID',
-              key: 'label_id'
+              key: 'label_id',
+              width: 100
             },
             {
               title: '标签名称',
@@ -985,7 +986,6 @@
             {
               title: '添加时间',
               key: 'created_at',
-              width: 135,
               sortable: true,
               render: (h, params) => {
                 return h('span', this.getTime(params.row.created_at));
@@ -994,7 +994,6 @@
             {
               title: '添加者ID',
               key: 'adder_id',
-              width: 135,
               sortable: true
             },
             {

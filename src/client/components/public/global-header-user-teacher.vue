@@ -6,6 +6,17 @@
           <Icon type="person"></Icon>{{name}}
         </router-link>
       </template>
+      <MenuGroup title="档 案">
+        <MenuItem name="9-0" @click="changeRoute('/teacher-center')">
+          <span>
+            <strong><Icon type="person"></Icon>&emsp;{{name}}</strong>
+          </span>
+          <br>
+          <span>
+            <Icon type="card"></Icon>&emsp;{{schoolId}}
+          </span>
+        </MenuItem>
+      </MenuGroup>
       <MenuGroup title="管 理">
         <MenuItem name="9-1"><span @click="changeRoute('/teacher-center')">管理中心</span></MenuItem>
         <MenuItem name="9-2"><span @click="pwdMod = true">修改密码</span></MenuItem>
@@ -40,7 +51,7 @@
 <script>
   export default {
     name: 'global-header-user-teacher',
-    props: ['name'],
+    props: ['name', 'schoolId'],
     data () {
       return {
         pwdMod: false,

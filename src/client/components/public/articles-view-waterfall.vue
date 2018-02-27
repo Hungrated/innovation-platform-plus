@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="g-empty" v-if="!count">
-      <strong>暂无文章哦，点击右上角发布文章按钮，发布第一篇文章吧</strong>
+      <strong>此类别下暂无文章哦，点击右上角发布文章按钮，发布第一篇文章吧</strong>
     </div>
     <waterfall v-else
                :line-gap="315"
