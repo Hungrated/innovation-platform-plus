@@ -44,7 +44,7 @@
               <div class="m-upload body op">
                 <span class="m-left m-left-category">
                   <Select placeholder="资源文件分类..." size="large" v-model="resourceCategory">
-                    <Option v-for="type in resourceTypes" :value="type.label" :key="type.index">
+                    <Option v-for="type in resourceTypes" :value="type.value" :key="type.index">
                       {{ type.label }}
                     </Option>
                   </Select>
@@ -106,19 +106,23 @@
         resourceTypes: [
           {
             index: 0,
-            label: '学习资料'
+            label: '学习资料',
+            value: 'studies'
           },
           {
             index: 1,
-            label: '专业论文'
+            label: '专业论文',
+            value: 'theses'
           },
           {
             index: 2,
-            label: '通 知'
+            label: '通 知',
+            value: 'notices'
           },
           {
             index: 3,
-            label: '其 他'
+            label: '其 他',
+            value: 'others'
           }
         ],
         resourceCategory: '',

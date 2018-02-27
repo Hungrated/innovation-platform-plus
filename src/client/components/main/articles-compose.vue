@@ -5,8 +5,8 @@
         <span slot="title"><strong>发表文章</strong></span>
         <div class="m-container1">
           <div class="m-container1 label">
-            <Select placeholder="文章分组..." size="large" v-model="editor.label">
-              <Option v-for="type in  articleTypes" :value="type.label" :key="type.index">
+            <Select placeholder="文章分组..." size="large" v-model="editor.group">
+              <Option v-for="type in  articleTypes" :value="type.value" :key="type.index">
                 {{ type.label }}
               </Option>
             </Select>
@@ -32,19 +32,21 @@
       <markdown-editor v-if="editType === 'markdown'"
                        ref="markdownEditor"
                        :title="editor.title"
-                       :label="editor.label"
+                       :group="editor.group"
+                       :labels="editor.labels"
                        :description="editor.description"/>
       <event-editor v-if="editType === 'event'"
                     ref="eventEditor"
                     :title="editor.title"
-                    :label="editor.label"
+                    :group="editor.group"
+                    :labels="editor.labels"
                     :description="editor.description"/>
     </div>
     <div class="g-compose footer">
       <Card disHover>
         <div class="m-container2">
-          <Select class="m-container2 label" placeholder="文章分组..." size="large" v-model="editor.label">
-            <Option v-for="type in articleTypes" :value="type.label" :key="type.index">
+          <Select class="m-container2 label" placeholder="文章分组..." size="large" v-model="editor.group">
+            <Option v-for="type in articleTypes" :value="type.value" :key="type.index">
               {{ type.label }}
             </Option>
           </Select>
@@ -90,25 +92,31 @@
         articleTypes: [
           {
             index: 0,
-            label: '项目成果'
+            label: '项目成果',
+            value: 'projects'
           },
           {
             index: 1,
-            label: '活 动'
+            label: '活 动',
+            value: 'events'
           },
           {
             index: 2,
-            label: '技术交流'
+            label: '技术交流',
+            value: 'techs'
           },
           {
             index: 3,
-            label: '其 他'
+            label: '其 他',
+            value: 'others'
           }
         ],
         editType: 'markdown',
         editor: {
           title: '',
-          description: ''
+          description: '',
+          group: '',
+          labels: ''
         },
         labelSelect: []
       };
@@ -132,10 +140,19 @@
       },
       changeLabels (labelSelect) {
         this.labelSelect = labelSelect;
+        this.editor.labels = this.stringifyLabels();
       },
       delLabel (label) {
         const index = this.labelSelect.indexOf(label);
         this.labelSelect.splice(index, 1);
+      },
+      stringifyLabels () {
+        let labels = [];
+        for (let i = 0; i < this.labelSelect.length; i++) {
+          labels.push(this.labelSelect[i].label_id);
+        }
+        console.log(labels.toString());
+        return labels.toString();
       },
       submit (type) {
         if (type === 'markdown') {

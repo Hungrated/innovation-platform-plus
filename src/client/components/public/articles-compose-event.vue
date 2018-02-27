@@ -31,7 +31,7 @@
 <script>
   export default {
     name: 'event-editor',
-    props: ['title', 'label', 'description'],
+    props: ['title', 'group', 'labels', 'description'],
     data () {
       return {
         uploadConfig: {
@@ -140,17 +140,23 @@
         let submitData = {
           type: 'event',
           title: this.title,
+          cover: '',
           description: this.description,
+          group: this.group,
+          labels: this.labels,
           content: '这是一篇活动文章，请用图片查看方式浏览',
           author_id: JSON.parse(window.localStorage.user).school_id
         };
-        if (!submitData.title || !submitData.description) {
+        if (!submitData.title ||
+          !submitData.description ||
+          !submitData.content ||
+          !submitData.group ||
+          !submitData.labels) {
           this.$Message.info('请将空余内容补充完整');
         } else if (!this.toUploadList.length) {
           this.$Message.info('请上传相关图片');
         } else {
           const _this = this;
-          // publish the article
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
               _this.uploadImgList(res.data.blog_id, res.data.type, res.data.author_id);
