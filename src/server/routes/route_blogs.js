@@ -166,7 +166,7 @@ router.post('/import', function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 2.5.0
+ * @apiVersion 3.0.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
