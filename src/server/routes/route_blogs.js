@@ -188,9 +188,33 @@ router.post('/import', function (req, res) {
 router.post('/query', function (req, res) {
   // fetch blog list for brief browsing
   const request = req.body.request;
-  const where = (typeof request === 'string') ? (
-    (request === 'all') ? {} : {type: request}) : {author_id: request};
-
+  let where = {};
+  if (typeof request === 'string' && request !== 'all') {
+    where = {
+      type: request
+    };
+  }
+  if (typeof request === 'number') {
+    where = {
+      author_id: request
+    };
+  }
+  if (typeof request === 'object') {
+    if (!!request.group) {
+      where.group = request.group;
+    }
+    if (!!request.labels) {
+      where.labels = {
+        $or: []
+      };
+      let labelArr = request.labels.split(',');
+      for (let i = 0; i < labelArr.length; i++) {
+        where.labels.$or.push({
+          $like: '%' + labelArr[i] + '%'
+        });
+      }
+    }
+  }
   Blog.findAll({
     where: where,
     order: [
@@ -207,7 +231,7 @@ router.post('/query', function (req, res) {
       }
       let count = 0;
       let carouselList = [];
-      if(!req.body.student) {
+      if (!req.body.student) {
         for (let i = 0; i < data.length; i++) {
           let item = data[i].dataValues;
           if (item.cover) {
