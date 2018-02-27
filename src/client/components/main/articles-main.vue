@@ -58,7 +58,7 @@
       </div>
       <div class="g-articles body">
         <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
-        <article-view-waterfall :articleList="articleList" :count="articleCount"/>
+        <article-view-waterfall :articleList="articleList" :labelList="labelList" :count="articleCount"/>
       </div>
       <div class="g-articles page">
         <Page size="small" :total="count"></Page>

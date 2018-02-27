@@ -80,7 +80,7 @@
         <span>
           <span><strong>分 组&nbsp;<Icon type="arrow-right-a"></Icon>&emsp;</strong></span>
           <span class="m-label" v-for="group in groupList" :key="group.index">
-            <Button @click="getArticleList()"
+            <Button @click="refreshFileList({group: group.label})"
                     size="small"
                     type="warning">
               <strong>{{group.label}}</strong>
@@ -89,7 +89,7 @@
         </span>
           <span>
           <span class="m-label" v-for="label in labelList" :key="label.label_id">
-            <Button @click="getArticleList()"
+            <Button @click="refreshFileList({labels: label.label_id})"
                     size="small"
                     :type="label.category === 'both'
                     ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
@@ -329,10 +329,11 @@
             console.log(e);
           });
       },
-      refreshFileList () {
+      refreshFileList (mode) {
         let _this = this;
+        let request = mode || 'all';
         this.$ajax.post('/api/file/query', {
-          request: 'all'
+          request: request
         })
           .then(function (res) {
             _this.resourceList = res.data;
