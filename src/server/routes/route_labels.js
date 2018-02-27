@@ -38,6 +38,43 @@ const Label = db.Label;
 // });
 
 /**
+ *
+ * 提交标签
+ *
+ * @api {post} /api/label/query label.query
+ * @apiName labelQuery
+ * @apiGroup Label
+ * @apiVersion 3.0.0
+ * @apiPermission user
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res) {
+  Label.findAll({
+    where: {
+      $or: [
+        {
+          category: 'both'
+        },
+        {
+          category: req.body.type
+        }
+      ]
+    }
+  })
+    .then(function (labels) {
+      res.json(labels);
+      console.log('label query successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+      console.log('label query failed');
+    });
+});
+
+/**
 *
 * 提交标签
 *
