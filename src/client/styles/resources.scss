@@ -20,6 +20,7 @@
   }
 
   .body {
+    min-height: calc(100vh - 158px);
     padding: 0;
   }
 
@@ -28,6 +29,20 @@
     padding: 20px;
     text-align: center;
   }
+}
+
+.g-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 5px;
+  background: #FAFAFA;
+  margin-bottom: 15px;
+}
+
+.m-label {
+  display: inline-block;
+  margin: 0 5px;
 }
 
 .m-upload {

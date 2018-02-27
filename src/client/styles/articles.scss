@@ -1,4 +1,11 @@
 .g-articles {
+  padding: 20px 50px;
+
+  & > * {
+    padding: 0;
+    margin: 0;
+  }
+
   .nav {
     position: absolute;
     top: -45px;
@@ -11,13 +18,49 @@
   }
 
   .header {
-    padding-top: 20px;
+    padding: 0 20px;
+    display: flex;
   }
 
   .body {
     min-height: calc(100vh - 158px);
-    padding: 0 50px 20px 50px;
+    padding: 0;
   }
+}
+
+.g-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 5px;
+  background: #FAFAFA;
+}
+
+.m-label {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.g-button {
+  height: 300px;
+
+  .button {
+    font-size: 120px;
+
+    .inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
+.g-carousel-container {
+  flex: 1 1 auto
 }
 
 .g-carousel,

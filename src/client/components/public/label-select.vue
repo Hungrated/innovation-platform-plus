@@ -35,7 +35,7 @@
         let selectList = this.selectList;
         for (let i = 0; i < selectList.length; i++) {
           if (this.compareLabel(selectList[i], label)) {
-            this.$emit('changeLabels', this.selectList);
+            this.$emit('changeLabels', selectList);
             return;
           }
         }

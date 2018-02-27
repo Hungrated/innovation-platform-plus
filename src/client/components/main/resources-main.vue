@@ -12,16 +12,6 @@
       </Menu>
     </div>
     <Card disHover>
-      <span slot="title" class="g-resources header">
-        <span><strong>资源共享</strong></span>
-        <span>
-          <Button type="dashed"
-                  size="small"
-                  @click="editFile()">
-            <Icon type="upload"></Icon>
-          </Button>
-        </span>
-      </span>
       <div class="g-resources body">
         <transition name="fade">
           <div v-if="uploadPanel" class="m-upload">
@@ -44,7 +34,7 @@
               <div class="m-upload body op">
                 <span class="m-left m-left-category">
                   <Select placeholder="资源文件分类..." size="large" v-model="uploadData.group">
-                    <Option v-for="type in resourceTypes" :value="type.label" :key="type.index">
+                    <Option v-for="type in groupList" :value="type.label" :key="type.index">
                       {{ type.label }}
                     </Option>
                   </Select>
@@ -86,6 +76,29 @@
             </div>
           </div>
         </transition>
+        <div class="g-labels">
+        <span>
+          <span><strong>分 组&nbsp;<Icon type="arrow-right-a"></Icon>&emsp;</strong></span>
+          <span class="m-label" v-for="group in groupList" :key="group.index">
+            <Button @click="getArticleList()"
+                    size="small"
+                    type="warning">
+              <strong>{{group.label}}</strong>
+            </Button>
+          </span>
+        </span>
+          <span>
+          <span class="m-label" v-for="label in labelList" :key="label.label_id">
+            <Button @click="getArticleList()"
+                    size="small"
+                    :type="label.category === 'both'
+                    ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
+              <strong>{{label.name}}</strong>
+            </Button>
+          </span>
+          <span><strong>&emsp;<Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong></span>
+        </span>
+        </div>
         <Table stripe :columns="resourceTableColumns" :data="resourceList"></Table>
       </div>
       <div class="g-resources page">
@@ -119,7 +132,7 @@
           labels: '',
           file: null
         },
-        resourceTypes: [
+        groupList: [
           {
             index: 0,
             label: '学习资料',
@@ -220,7 +233,8 @@
           }
         ],
         resourceList: [],
-        labelSelect: []
+        labelSelect: [],
+        labelList: []
       };
     },
     methods: {
@@ -298,6 +312,18 @@
         a.src = url;
         this.$Message.success('文件下载成功');
       },
+      getLabelList () {
+        let _this = this;
+        this.$ajax.post('/api/label/query', {
+          type: 'file'
+        })
+          .then(function (res) {
+            _this.labelList = res.data;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
       refreshFileList () {
         let _this = this;
         this.$ajax.post('/api/file/query', {
@@ -314,6 +340,7 @@
     },
     mounted () {
       this.refreshFileList();
+      this.getLabelList();
     }
   };
 </script>

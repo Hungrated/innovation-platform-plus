@@ -83,7 +83,7 @@
                      @on-cancel="labelEditCancel()">
                 <div class="m-edit-label">
                   <Select placeholder="标签类别..." size="large" v-model="labelData.category">
-                    <Option v-for="type in  labelTypes" :value="type.label" :key="type.index">
+                    <Option v-for="type in labelTypes" :value="type.value" :key="type.index">
                       {{ type.type }}
                     </Option>
                   </Select>
