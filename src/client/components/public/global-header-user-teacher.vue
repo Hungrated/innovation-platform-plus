@@ -32,7 +32,6 @@
       v-model="pwdMod"
       title="修改密码"
       @on-ok="userPwdMod()">
-      <!--用户输入框-->
       <div class="m-login">
         <i-input class="m-login input" type="password" v-model="password.currentPwd" placeholder="当前密码">
           <Icon type="ios-locked-outline" slot="prepend"></Icon>
