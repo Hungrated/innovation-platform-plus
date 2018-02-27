@@ -10,7 +10,9 @@ const schema = {
     unique: true
   },
   name: {
-    type: Sequelize.STRING(16)
+    type: Sequelize.STRING(16),
+    unique: true,
+    allowNull: false
   },
   category: {
     type: Sequelize.ENUM,
