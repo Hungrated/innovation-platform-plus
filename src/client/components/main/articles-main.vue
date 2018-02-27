@@ -57,8 +57,13 @@
         </div>
       </div>
       <div class="g-articles body">
-        <!--<article-view-list :articleList="articleList" :count="articleCount"/>-->
-        <article-view-waterfall :articleList="articleList" :labelList="labelList" :count="articleCount"/>
+        <article-view-list v-if="articleListView === 'list'"
+                           :articleList="articleList"
+                           :count="articleCount"/>
+        <article-view-waterfall v-if="articleListView === 'waterfall'"
+                                :articleList="articleList"
+                                :labelList="labelList"
+                                :count="articleCount"/>
       </div>
       <div class="g-articles page">
         <Page size="small" :total="count"></Page>
@@ -77,6 +82,7 @@
     data () {
       return {
         articleCount: 0,
+        articleListView: 'waterfall',
         articleListLabel: '所有文章',
         groupList: [
           {
@@ -171,14 +177,13 @@
         this.$router.push(path);
       },
       changeMode (mode) {
-        if (mode === 'all') {
-          this.getArticleList();
-        }
         if (mode === 'markdown') {
           this.getArticleList('project');
+          this.articleListView = 'list';
         }
         if (mode === 'event') {
           this.getArticleList('event');
+          this.articleListView = 'waterfall';
         }
       },
       changeLabel (type) {

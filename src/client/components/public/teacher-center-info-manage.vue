@@ -34,7 +34,7 @@
               <div class="g-info options label">
                 <Input size="large"
                        v-model="infoSid"
-                       placeholder="标签名（选填）..."
+                       placeholder="标签ID（选填）..."
                        :disabled="infoLabel !== 'blog' && infoLabel !== 'resource'"/>
               </div>
             </div>
@@ -98,7 +98,7 @@
       </div>
       <div class="m-manage">
         <Card disHover>
-          <div class="m-manage table">
+          <div class="g-body m-manage table">
             <Table stripe :columns="infoCols" :data="infoData"></Table>
           </div>
           <div class="m-manage pages">
@@ -396,6 +396,7 @@
             {
               title: '作者ID',
               key: 'author_id',
+              width: 100,
               sortable: true
             },
             {

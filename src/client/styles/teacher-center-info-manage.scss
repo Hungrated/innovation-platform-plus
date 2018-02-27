@@ -56,6 +56,10 @@
   }
 }
 
+.g-body {
+  min-height: calc(100vh - 158px);
+}
+
 .m-manage {
   margin-top: 20px;
 

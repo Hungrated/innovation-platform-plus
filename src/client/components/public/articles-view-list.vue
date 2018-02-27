@@ -1,5 +1,5 @@
 <template>
-  <Card disHover>
+  <div>
     <div class="m-unit" v-for="article in articleList" :key="article.blog_id">
       <span class="m-unit title">
         <Button type="text" size="large" @click="revealDetails(article.blog_id)">
@@ -17,11 +17,7 @@
       </span>
       </span>
     </div>
-    <div class="m-page">
-      <Page size="small" :total="count"></Page>
-    </div>
-
-  </Card>
+  </div>
 </template>
 
 <script>
