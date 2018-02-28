@@ -42,12 +42,24 @@ router.get('/query', function (req, res) {
       if (query.sid) {
         where.author_id = query.sid;
       }
+      if (query.lid) {
+        where.labels = {
+          $or: [
+            {
+              $like: '%,' + query.lid
+            },
+            {
+              $like: '%,' + query.lid + ',%'
+            },
+            {
+              $like: query.lid + ',%'
+            }
+          ]
+        }
+      }
       break;
     case 'image':
       database = db.Image;
-      if (query.sid) {
-        where.uploader_id = query.sid;
-      }
       if (query.bid) {
         where.blog_id = query.bid;
       }
@@ -69,6 +81,9 @@ router.get('/query', function (req, res) {
       if (query.sid) {
         where.uploader_id = query.sid;
       }
+      if (query.lid) {
+        where.label_id = query.lid;
+      }
       break;
     case 'comment':
       database = db.Comment;
@@ -84,6 +99,9 @@ router.get('/query', function (req, res) {
       break;
     case 'label':
       database = db.Label;
+      if (query.sid) {
+        where.adder_id = query.sid;
+      }
       break;
     default:
       res.json(statusLib.CONNECTION_ERROR);

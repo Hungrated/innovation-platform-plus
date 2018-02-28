@@ -29,11 +29,11 @@
                 <Input size="large"
                        v-model="infoSid"
                        placeholder="学号或工号（选填）..."
-                       :disabled="infoLabel === 'banner' || infoLabel === 'class'"/>
+                       :disabled="infoLabel === 'banner' || infoLabel === 'class' || infoLabel === 'image'"/>
               </div>
               <div class="g-info options label">
                 <Input size="large"
-                       v-model="infoSid"
+                       v-model="infoLid"
                        placeholder="标签ID（选填）..."
                        :disabled="infoLabel !== 'blog' && infoLabel !== 'resource'"/>
               </div>
@@ -197,6 +197,7 @@
         ],
         infoRange: ['', ''],
         infoSid: '',
+        infoLid: '',
         queryCols: {
           banner: [
             {
@@ -1152,8 +1153,12 @@
         let queryString = '/api/teacher/query?type=' + params.type/* + '&limit=' + limit + '&page=' + page */;
         if (params.sid) {
           queryString = queryString + '&sid=' + params.sid;
-        } else if (params.start !== '' && params.end !== '') {
+        }
+        if (params.start && params.end) {
           queryString = queryString + '&start=' + params.start + '&end=' + params.end;
+        }
+        if (params.lid && (params.type === 'blog' || params.type === 'file')) {
+          queryString = queryString + '&lid=' + params.lid;
         }
         this.$ajax.get(queryString)
           .then(function (res) {
@@ -1214,7 +1219,8 @@
           type: this.infoLabel,
           start: '',
           end: '',
-          sid: this.infoSid
+          sid: this.infoSid,
+          lid: this.infoLid
         });
       },
       verifyPlan (id, op) {
