@@ -186,7 +186,7 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
-  if (req.body.type !== 'blog' && req.body.type !== 'label') {
+  if (req.body.type !== 'blog') {
     next();
   } else {
     let removeDir = function (fileUrl) {
