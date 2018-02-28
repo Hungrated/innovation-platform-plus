@@ -179,7 +179,7 @@
         }
       }
     },
-    mounted() {
+    mounted () {
       this.refreshLabelList();
     }
   };

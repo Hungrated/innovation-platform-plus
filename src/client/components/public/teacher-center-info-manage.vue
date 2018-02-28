@@ -97,7 +97,7 @@
           <Modal v-model="labelModFlag"
                  title="标签管理"
                  width="730"
-                 @on-ok="labelModSubmit()"
+                 @on-ok="labelModSubmit(labelModData)"
                  @on-cancel="labelModCancel()">
             <span>
               <span v-for="(label, index) in labelSelect" :key="label.label_id">
@@ -1344,21 +1344,18 @@
       },
       changeLabels (labelSelect) {
         this.labelSelect = labelSelect;
-        this.labels = this.stringifyLabels();
+        this.labelModData.labels = this.stringifyLabels();
       },
       delLabel (label) {
         const index = this.labelSelect.indexOf(label);
         this.labelSelect.splice(index, 1);
-        this.labels = this.stringifyLabels();
+        this.labelModData.labels = this.stringifyLabels();
       },
       getLabel (index) {
         let labelList = this.labelList;
         for (let i = 0; i < labelList.length; i++) {
           if (labelList[i].label_id.toString() === index.toString()) {
-            return {
-              name: labelList[i].name,
-              category: labelList[i].category
-            };
+            return labelList[i];
           }
         }
         return null;
@@ -1377,9 +1374,11 @@
       labelMod (type, id, labels) {
         this.labelSelect = this.parseLabel(labels);
         this.labelModFlag = true;
-        this.labelModData.type = type;
-        this.labelModData.labels = labels;
-        this.labelModData.id = id;
+        this.labelModData = {
+          type: type,
+          id: id,
+          labels: labels
+        }
       },
       labelModCancel () {
         this.labelModFlag = false;

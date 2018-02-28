@@ -22,11 +22,6 @@
   export default {
     name: 'label-select',
     props: ['type', 'labelList', 'selectList'],
-    data () {
-      return {
-        labelList: []
-      };
-    },
     methods: {
       compareLabel (label1, label2) {
         return label1.label_id === label2.label_id;
