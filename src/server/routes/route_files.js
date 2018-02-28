@@ -30,17 +30,21 @@ router.use(objMulter.any()); // any file type
  * @api {post} /api/file/upload file.upload
  * @apiName fileUpload
  * @apiGroup File
- * @apiVersion 1.0.0
+ * @apiVersion 3.1.0
  * @apiPermission user
  *
  * @apiDescription 用户上传资源文件。上传方式为form-data。
  *
  * @apiParam {File} file 资源文件
+ * @apiParam {String} group 文件分组
+ * @apiParam {String} labels 文件标签列表
  * @apiParam {Number} school_id 上传者编号
  * @apiParam {String} descriptions 文件描述
  * @apiParamExample {formdata} 请求示例
  * {
  *     "file": <file>,
+ *     "group": "论文资料",
+ *     "labels": "2,3,5,7",
  *     "school_id": 14051531,
  *     "descriptions": "A file"
  * }

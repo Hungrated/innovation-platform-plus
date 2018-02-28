@@ -30,13 +30,15 @@ let objMulter = multer({
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 2.5.0
+ * @apiVersion 3.1.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
  *
  * @apiParam {String} type 文章类别
  * @apiParam {String} title 文章标题
+ * @apiParam {String} group 文章分组
+ * @apiParam {String} labels 文章标签列表
  * @apiParam {String} description 文章简介
  * @apiParam {String} content 文章内容
  * @apiParam {String} [cover_url] 文章封面图地址
@@ -47,6 +49,8 @@ let objMulter = multer({
  * {
  *     "type": "project",
  *     "title": "title0",
+ *     "group": "技术交流",
+ *     "labels": "1,2,6,15",
  *     "description": "description0",
  *     "content": "content0",
  *     "cover_url": "",
@@ -165,12 +169,14 @@ router.post('/import', function (req, res) {
  * @api {post} /api/blog/query blog.query
  * @apiName blogQuery
  * @apiGroup Blog
- * @apiVersion 3.0.0
+ * @apiVersion 3.1.0
  * @apiPermission user
  *
  * @apiDescription 根据条件查询并获取文章列表。
  *
- * @apiParam request 查询条件：文章类型或用户编号
+ * @apiParam {String|Object} request 查询条件
+ * @apiParam {Boolean} carousel 是否提供轮播图列表
+ * @apiParam {Number} limit 查询数限制
  *
  * @apiParamExample {json} 请求示例1
  * {
@@ -180,6 +186,22 @@ router.post('/import', function (req, res) {
  * @apiParamExample {json} 请求示例2
  * {
  *     "request": 14051531
+ * }
+ *
+ * @apiParamExample {json} 请求示例3
+ * {
+ *     "request": {
+ *         "group": "技术交流"
+ *     },
+ *     "limit": 8
+ * }
+ *
+ * @apiParamExample {json} 请求示例4
+ * {
+ *     "request": {
+ *         "labels": "1"
+ *     },
+ *     "carousel": false
  * }
  *
  * @apiSuccess {Array} data 文章列表列表
