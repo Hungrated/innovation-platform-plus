@@ -44,18 +44,18 @@ router.post('/query', function (req, res) {
 });
 
 /**
-*
-* 提交标签
-*
-* @api {post} /api/label/query label.query
-* @apiName labelQuery
-* @apiGroup Label
-* @apiVersion 2.5.0
-* @apiPermission user.teacher
-*
-* @apiSuccess {JSON} data Response data.
-*
-*/
+ *
+ * 提交标签
+ *
+ * @api {post} /api/label/query label.query
+ * @apiName labelQuery
+ * @apiGroup Label
+ * @apiVersion 2.5.0
+ * @apiPermission user.teacher
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
 router.post('/submit', function (req, res) {
   Label.create({
     name: req.body.name,
@@ -74,6 +74,28 @@ router.post('/submit', function (req, res) {
       console.error(e);
       res.json(statusLib.LABEL_CREATE_FAILED);
       console.log('label create failed');
+    });
+});
+
+router.post('/mod', function (req, res) {
+  let database = req.body.type === 'blog'
+    ? db.Blog : db.File;
+
+  let where = req.body.type === 'blog'
+    ? {blog_id: req.body.id} : {file_id: req.body.id};
+
+  database.update({
+    labels: req.body.labels
+  }, {
+    where: where
+  })
+    .then(function () {
+      res.json(statusLib.LABEL_MOD_SUCCESSFUL);
+      console.log('labels modified');
+    })
+    .catch(function (e) {
+      console.log(e);
+      res.json(statusLib.CONNECTION_ERROR);
     });
 });
 
