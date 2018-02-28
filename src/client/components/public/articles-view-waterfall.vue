@@ -71,7 +71,7 @@
 
   export default {
     name: 'article-view-waterfall',
-    props: ['articleList', 'labelList', 'count'],
+    props: ['articleList', 'count'],
     components: {
       Waterfall,
       WaterfallSlot

@@ -23,16 +23,18 @@
             </Button>
           </span>
         </span>
-        <span>
-            <span class="m-label" v-for="label in labelList" :key="label.label_id">
-              <Button @click="getArticleList({labels: label.label_id})"
-                      size="small"
-                      :type="label.category === 'both'
+        <span class="m-label m-label-right" >
+          <span class="m-label" v-for="label in labelList" :key="label.label_id">
+            <Button @click="getArticleList({labels: label.label_id})"
+                    size="small"
+                    :type="label.category === 'both'
                       ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
-                <strong>{{label.name}}</strong>
-              </Button>
-            </span>
-            <span><strong>&emsp;<Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong></span>
+              <strong>{{label.name}}</strong>
+            </Button>
+          </span>
+          <span>
+            <strong>&emsp;<Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong>
+          </span>
           </span>
       </div>
       <div class="g-articles header">
@@ -60,12 +62,10 @@
         <article-view-list ref="list"
                            v-if="articleListView === 'list'"
                            :articleList="articleList"
-                           :labelList="labelList"
                            :count="articleCount"/>
         <article-view-waterfall ref="waterfall"
                                 v-if="articleListView === 'waterfall'"
                                 :articleList="articleList"
-                                :labelList="labelList"
                                 :count="articleCount"/>
       </div>
       <div class="g-articles page">

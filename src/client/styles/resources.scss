@@ -9,6 +9,7 @@
     padding: 0;
     box-shadow: 0 0 3px #DDDDDD;
     width: 124px;
+    min-height: unset;
     overflow: hidden;
     user-select: none;
   }
@@ -26,9 +27,11 @@
 }
 
 .g-labels {
-  display: flex;
+  display: inline-block;
+  width: 100%;
   justify-content: space-between;
   padding: 15px;
+  line-height: 28px;
   border-radius: 5px;
   background: #FAFAFA;
   margin-bottom: 15px;
@@ -37,6 +40,10 @@
 .m-label {
   display: inline-block;
   margin: 0 5px;
+}
+
+.m-label-right {
+  float: right;
 }
 
 .m-upload {

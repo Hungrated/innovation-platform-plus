@@ -87,16 +87,16 @@
             </Button>
           </span>
         </span>
-          <span>
-          <span class="m-label" v-for="label in labelList" :key="label.label_id">
-            <Button @click="refreshFileList({labels: label.label_id})"
-                    size="small"
-                    :type="label.category === 'both'
-                    ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
-              <strong>{{label.name}}</strong>
-            </Button>
-          </span>
-          <span><strong>&emsp;<Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong></span>
+          <span class="m-label m-label-right">
+            <span class="m-label" v-for="label in labelList" :key="label.label_id">
+              <Button @click="refreshFileList({labels: label.label_id})"
+                      size="small"
+                      :type="label.category === 'both'
+                      ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
+                <strong>{{label.name}}</strong>
+              </Button>
+            </span>
+            <span><strong>&emsp;<Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong></span>
         </span>
         </div>
         <Table stripe :columns="resourceTableColumns" :data="resourceList"></Table>
@@ -162,8 +162,7 @@
         resourceTableColumns: [
           {
             title: '文件名',
-            key: 'filename',
-            width: 200
+            key: 'filename'
           },
           {
             title: '上传者',
@@ -186,8 +185,7 @@
           {
             title: '上传时间',
             key: 'uploadTime',
-            sortable: true,
-            width: 200
+            sortable: true
           },
           {
             title: '分 组',
