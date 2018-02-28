@@ -24,10 +24,12 @@ const moment = require('../middlewares/moment');
  *
  * @apiDescription 教师根据查询条件获取全站信息列表。
  *
- * @apiParam request 请求条件：可发送"all"获取所有资料，或根据学号、当前选课号或详细模式查询所需信息
+ * @apiParam type 查询类型 可选值有blog|image|plan|meeting|resource|comment|class|banner|label
  *
  * @apiParamExample {url} 请求示例
- * teacher/query?type=blog|image|plan|meeting|resource|comment|class|banner|label
+ * teacher/query?type=image
+ * teacher/query?type=blog&sid=14051531
+ * teacher/query?type=label&lid=1
  *
  * @apiSuccess {Array} data 返回根据上述条件所请求的信息列表
  */
@@ -129,7 +131,7 @@ router.get('/query', function (req, res) {
  * @api {post} /api/teacher/delete teacher.delete
  * @apiName teacherDelete
  * @apiGroup Teacher
- * @apiVersion 2.5.0
+ * @apiVersion 2.6.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件删除特定信息。
@@ -186,7 +188,7 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
-  if (req.body.type !== 'blog') {
+  if (req.body.type !== 'blog' && req.body.type !== 'label') {
     next();
   } else {
     let removeDir = function (fileUrl) {
@@ -382,35 +384,6 @@ router.post('/delete', function (req, res, next) {
     next();
   } else {
     let Label = db.Label;
-    // let Blog = db.Blog;
-    // Blog.findAll()
-    //   .then(function (data) {
-    //     for (let i = 0; i < data.length; i++) {
-    //       let labels = data[i].dataValues.labels;
-    //       if (labelArray.containsLabel(labels, req.body.id)) {
-    //         Blog.update({
-    //           labels: labelArray.removeLabel(labels, req.body.id)
-    //         }, {
-    //           where: {
-    //             blog_id: data[i].dataValues.blog_id
-    //           }
-    //         });
-    //       }
-    //     }
-    //     Label.destroy({
-    //       where: {
-    //         label_id: req.body.id
-    //       }
-    //     })
-    //       .then(function () {
-    //         res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-    //         console.log('label info delete successful');
-    //       })
-    //       .catch(function (e) {
-    //         console.error(e);
-    //         res.json(statusLib.CONNECTION_ERROR);
-    //       });
-    //   });
     Label.destroy({
       where: {
         label_id: req.body.id
