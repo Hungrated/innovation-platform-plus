@@ -186,7 +186,7 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
-  if (req.body.type !== 'blog' && req.body.type !== 'label') {
+  if (req.body.type !== 'blog') {
     next();
   } else {
     let removeDir = function (fileUrl) {
@@ -342,41 +342,6 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
-  // delete file if exists
-  if (req.body.type !== 'resource') {
-    res.json(statusLib.CONNECTION_ERROR);
-    console.log('type error');
-  } else {
-    let File = db.File;
-    File.findOne({
-      where: {
-        file_id: req.body.id
-      }
-    })
-      .then(function (file) {
-        let url = pathLib.join(path.sources, urlLib.parse(file.url, true).query.resource);
-        fs.access(url, function (err) {
-          if (err && err.code === 'ENOENT') {
-            console.log('delete: file no longer exists, skipped');
-            next();
-          } else {
-            fs.unlink(url, function (err) {
-              if (err) throw err;
-              else {
-                next();
-              }
-            });
-          }
-        });
-      })
-      .catch(function (e) {
-        console.error(e);
-        res.json(statusLib.CONNECTION_ERROR);
-      });
-  }
-});
-
-router.post('/delete', function (req, res, next) {
   // delete labels
   if (req.body.type !== 'label') {
     next();
@@ -425,22 +390,41 @@ router.post('/delete', function (req, res, next) {
         res.json(statusLib.CONNECTION_ERROR);
       });
   }
+});
 
-  let File = db.File;
-  File.destroy({
-    where: {
-      file_id: req.body.id
-    }
-  })
-    .then(function () {
-      moment.deleteMoment(req.body.id);
-      res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-      console.log('info delete successful');
+router.post('/delete', function (req, res, next) {
+  // delete file if exists
+  if (req.body.type !== 'resource') {
+    res.json(statusLib.CONNECTION_ERROR);
+    console.log('type error');
+  } else {
+    let File = db.File;
+    File.findOne({
+      where: {
+        file_id: req.body.id
+      }
     })
-    .catch(function (e) {
-      console.error(e);
-      res.json(statusLib.CONNECTION_ERROR);
-    });
+      .then(function (file) {
+        let url = pathLib.join(path.sources, urlLib.parse(file.url, true).query.resource);
+        fs.access(url, function (err) {
+          if (err && err.code === 'ENOENT') {
+            console.log('delete: file no longer exists, skipped');
+            next();
+          } else {
+            fs.unlink(url, function (err) {
+              if (err) throw err;
+              else {
+                next();
+              }
+            });
+          }
+        });
+      })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
+      });
+  }
 });
 
 router.post('/delete', function (req, res) {

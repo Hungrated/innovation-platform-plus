@@ -21,12 +21,7 @@
 <script>
   export default {
     name: 'label-select',
-    props: ['type', 'selectList'],
-    data () {
-      return {
-        labelList: []
-      };
-    },
+    props: ['type', 'labelList', 'selectList'],
     methods: {
       compareLabel (label1, label2) {
         return label1.label_id === label2.label_id;
@@ -41,22 +36,7 @@
         }
         selectList.push(label);
         this.$emit('changeLabels', this.selectList);
-      },
-      refresh (type) {
-        let _this = this;
-        this.$ajax.post('/api/label/query', {
-          type: type
-        })
-          .then(function (res) {
-            _this.labelList = res.data;
-          })
-          .catch(function (e) {
-            console.log(e);
-          });
       }
-    },
-    mounted () {
-      this.refresh(this.type);
     }
   };
 </script>
