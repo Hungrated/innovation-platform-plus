@@ -10,7 +10,7 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const moment = require('../middlewares/moment');
 
-const labelArray = require('../middlewares/label_array');
+// const labelArray = require('../middlewares/label_array');
 
 /**
  *
@@ -19,7 +19,7 @@ const labelArray = require('../middlewares/label_array');
  * @api {get} /api/teacher/query teacher.query
  * @apiName teacherQuery
  * @apiGroup Teacher
- * @apiVersion 2.5.0
+ * @apiVersion 3.1.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件获取全站信息列表。
@@ -364,34 +364,47 @@ router.post('/delete', function (req, res, next) {
     next();
   } else {
     let Label = db.Label;
-    let Blog = db.Blog;
-    Blog.findAll()
-      .then(function (data) {
-        for (let i = 0; i < data.length; i++) {
-          let labels = data[i].dataValues.labels;
-          if (labelArray.containsLabel(labels, req.body.id)) {
-            Blog.update({
-              labels: labelArray.removeLabel(labels, req.body.id)
-            }, {
-              where: {
-                blog_id: data[i].dataValues.blog_id
-              }
-            });
-          }
-        }
-        Label.destroy({
-          where: {
-            label_id: req.body.id
-          }
-        })
-          .then(function () {
-            res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-            console.log('label info delete successful');
-          })
-          .catch(function (e) {
-            console.error(e);
-            res.json(statusLib.CONNECTION_ERROR);
-          });
+    // let Blog = db.Blog;
+    // Blog.findAll()
+    //   .then(function (data) {
+    //     for (let i = 0; i < data.length; i++) {
+    //       let labels = data[i].dataValues.labels;
+    //       if (labelArray.containsLabel(labels, req.body.id)) {
+    //         Blog.update({
+    //           labels: labelArray.removeLabel(labels, req.body.id)
+    //         }, {
+    //           where: {
+    //             blog_id: data[i].dataValues.blog_id
+    //           }
+    //         });
+    //       }
+    //     }
+    //     Label.destroy({
+    //       where: {
+    //         label_id: req.body.id
+    //       }
+    //     })
+    //       .then(function () {
+    //         res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+    //         console.log('label info delete successful');
+    //       })
+    //       .catch(function (e) {
+    //         console.error(e);
+    //         res.json(statusLib.CONNECTION_ERROR);
+    //       });
+    //   });
+    Label.destroy({
+      where: {
+        label_id: req.body.id
+      }
+    })
+      .then(function () {
+        res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+        console.log('label info delete successful');
+      })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
       });
   }
 

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const sequelize = require('sequelize');
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const urlLib = require('url');
@@ -209,12 +208,18 @@ router.post('/query', function (req, res) {
       let labelArr = request.labels.toString().split(',');
       for (let i = 0; i < labelArr.length; i++) {
         where.labels.$or.push({
-          $like: '%' + labelArr[i] + '%'
+          $like: '%,' + labelArr[i]
+        });
+        where.labels.$or.push({
+          $like: labelArr[i] + ',%'
+        });
+        where.labels.$or.push({
+          $like: '%,' + labelArr[i] + ',%'
         });
       }
     }
   }
-  Blog.findAll({
+  let query = {
     where: where,
     order: [
       ['created_at', 'DESC']
@@ -223,7 +228,11 @@ router.post('/query', function (req, res) {
       model: Profile,
       attributes: ['name']
     }]
-  })
+  };
+  if (req.body.limit) {
+    query.limit = req.body.limit;
+  }
+  Blog.findAll(query)
     .then(function (data) {
       for (let i = 0; i < data.length; i++) {
         data[i].dataValues.publishTime = timeFormat(data[i].dataValues.created_at);
@@ -369,6 +378,24 @@ router.get('/details', function (req, res) {
       console.error(e);
       res.json(statusLib.BLOG_DETAILS_FETCH_FAILED);
       console.log('fetch detail failed');
+    });
+});
+
+router.post('/labelmod', function (req, res) {
+  Blog.update({
+    labels: req.body.labels
+  }, {
+    where: {
+      blog_id: req.body.blog_id
+    }
+  })
+    .then(function () {
+      res.json(statusLib.LABEL_MOD_SUCCESSFUL);
+      console.log('labels modified')
+    })
+    .catch(function (e) {
+      console.log(e);
+      res.json(statusLib.CONNECTION_ERROR);
     });
 });
 

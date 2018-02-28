@@ -186,7 +186,13 @@ router.post('/query', function (req, res) {
       let labelArr = request.labels.toString().split(',');
       for (let i = 0; i < labelArr.length; i++) {
         where.labels.$or.push({
-          $like: '%' + labelArr[i] + '%'
+          $like: '%,' + labelArr[i]
+        });
+        where.labels.$or.push({
+          $like: labelArr[i] + ',%'
+        });
+        where.labels.$or.push({
+          $like: '%,' + labelArr[i] + ',%'
         });
       }
     }
