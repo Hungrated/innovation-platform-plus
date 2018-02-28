@@ -57,10 +57,13 @@
         </div>
       </div>
       <div class="g-articles body">
-        <article-view-list v-if="articleListView === 'list'"
+        <article-view-list ref="list"
+                           v-if="articleListView === 'list'"
                            :articleList="articleList"
+                           :labelList="labelList"
                            :count="articleCount"/>
-        <article-view-waterfall v-if="articleListView === 'waterfall'"
+        <article-view-waterfall ref="waterfall"
+                                v-if="articleListView === 'waterfall'"
                                 :articleList="articleList"
                                 :labelList="labelList"
                                 :count="articleCount"/>
@@ -190,6 +193,49 @@
         this.changeRoute('/articles?label=' + type.index);
         this.articleListLabel = type.label;
       },
+      getLabel (index) {
+        let labelList = this.labelList;
+        for (let i = 0; i < labelList.length; i++) {
+          if (labelList[i].label_id.toString() === index.toString()) {
+            return {
+              name: labelList[i].name,
+              category: labelList[i].category
+            };
+          }
+        }
+        return null;
+      },
+      parseLabel (labels) {
+        let res = [];
+        let labelIds = labels.toString().split(',');
+        for (let i = 0; i < labelIds.length; i++) {
+          let label = this.getLabel(labelIds[i]);
+          if (label) {
+            res.push(label);
+          }
+        }
+        return res;
+      },
+      parseLabels () {
+        let list = this.articleList;
+        for (let i = 0; i < list.length; i++) {
+          list[i].labels = this.parseLabel(list[i].labels);
+        }
+        this.articleList = list;
+      },
+      getLabelList () {
+        let _this = this;
+        this.$ajax.post('/api/label/query', {
+          type: 'blog'
+        })
+          .then(function (res) {
+            _this.labelList = res.data;
+            _this.parseLabels();
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
       getArticleList (mode) {
         let _this = this;
         let request = mode || 'all';
@@ -203,18 +249,7 @@
             if (request === 'all') {
               _this.carouselList = res.data.carouselList;
             }
-          })
-          .catch(function (e) {
-            console.log(e);
-          });
-      },
-      getLabelList () {
-        let _this = this;
-        this.$ajax.post('/api/label/query', {
-          type: 'blog'
-        })
-          .then(function (res) {
-            _this.labelList = res.data;
+            _this.getLabelList();
           })
           .catch(function (e) {
             console.log(e);
@@ -228,7 +263,6 @@
     },
     mounted () {
       this.getArticleList();
-      this.getLabelList();
     }
   };
 </script>

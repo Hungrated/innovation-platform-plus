@@ -5,6 +5,14 @@
         <Button type="text" size="large" @click="revealDetails(article.blog_id)">
           <strong>{{article.title}}</strong>
         </Button>
+        <span class="g-labels">
+          <span v-for="(label, index) in article.labels" :key="index">
+            <Tag size="small" :color="label.category === 'both' ?
+                 'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+              {{label.name}}
+            </Tag>
+          </span>
+        </span>
       </span>
       <span class="m-unit details">
         <Icon type="ios-person-outline"></Icon>&nbsp;{{article.profile.name}}&emsp;

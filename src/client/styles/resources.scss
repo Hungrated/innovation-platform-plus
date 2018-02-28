@@ -1,5 +1,6 @@
 .g-resources {
   padding: 20px 50px;
+  min-height: calc(100vh - 158px);
 
   .nav {
     position: absolute;
@@ -20,14 +21,7 @@
   }
 
   .body {
-    min-height: calc(100vh - 158px);
     padding: 0;
-  }
-
-  .page {
-    margin-top: 10px;
-    padding: 20px;
-    text-align: center;
   }
 }
 
@@ -98,4 +92,11 @@
   margin: 0 0 0 15px;
   flex: 1 0 auto;
   overflow: auto;
+}
+
+.g-page {
+  margin-top: 10px;
+  padding: 20px;
+  text-align: center;
+  height: auto;
 }

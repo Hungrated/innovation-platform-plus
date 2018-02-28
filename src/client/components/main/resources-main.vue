@@ -11,7 +11,7 @@
         </div>
       </Menu>
     </div>
-    <Card disHover>
+    <Card disHover class="g-body">
       <div class="g-resources body">
         <transition name="fade">
           <div v-if="uploadPanel" class="m-upload">
@@ -101,7 +101,7 @@
         </div>
         <Table stripe :columns="resourceTableColumns" :data="resourceList"></Table>
       </div>
-      <div class="g-resources page">
+      <div class="g-page">
         <Page size="small" :total="count"></Page>
       </div>
     </Card>
@@ -199,15 +199,17 @@
             title: '文件描述',
             key: 'description',
             render: (h, params) => {
-              let labels = params.row.labels.split(',');
+              let labels = params.row.labels;
               let labelViews = [];
               for (let i = 0; i < labels.length; i++) {
                 labelViews.push(
                   h('Tag', {
                     props: {
-                      color: 'yellow'
+                      color: labels[i].category === 'both'
+                        ? 'blue'
+                        : (labels[i].category === 'blog' ? 'green' : 'yellow')
                     }
-                  }, labels[i])
+                  }, labels[i].name)
                 );
               }
               return h('div', [
@@ -317,6 +319,36 @@
         a.src = url;
         this.$Message.success('文件下载成功');
       },
+      getLabel (index) {
+        let labelList = this.labelList;
+        for (let i = 0; i < labelList.length; i++) {
+          if (labelList[i].label_id.toString() === index.toString()) {
+            return {
+              name: labelList[i].name,
+              category: labelList[i].category
+            };
+          }
+        }
+        return null;
+      },
+      parseLabel (labels) {
+        let res = [];
+        let labelIds = labels.toString().split(',');
+        for (let i = 0; i < labelIds.length; i++) {
+          let label = this.getLabel(labelIds[i]);
+          if (label) {
+            res.push(label);
+          }
+        }
+        return res;
+      },
+      parseLabels () {
+        let list = this.resourceList;
+        for (let i = 0; i < list.length; i++) {
+          list[i].labels = this.parseLabel(list[i].labels);
+        }
+        this.resourceList = list;
+      },
       getLabelList () {
         let _this = this;
         this.$ajax.post('/api/label/query', {
@@ -324,6 +356,7 @@
         })
           .then(function (res) {
             _this.labelList = res.data;
+            _this.parseLabels();
           })
           .catch(function (e) {
             console.log(e);
@@ -338,6 +371,7 @@
           .then(function (res) {
             _this.resourceList = res.data;
             _this.count = res.data.length;
+            _this.getLabelList();
           })
           .catch(function (e) {
             console.log(e);
@@ -346,7 +380,6 @@
     },
     mounted () {
       this.refreshFileList();
-      this.getLabelList();
     }
   };
 </script>
