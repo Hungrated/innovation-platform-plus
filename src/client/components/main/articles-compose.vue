@@ -148,6 +148,7 @@
       delLabel (label) {
         const index = this.labelSelect.indexOf(label);
         this.labelSelect.splice(index, 1);
+        this.editor.labels = this.stringifyLabels();
       },
       stringifyLabels () {
         let labels = [];

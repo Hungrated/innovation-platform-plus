@@ -34,7 +34,7 @@
               <div class="m-upload body op">
                 <span class="m-left m-left-category">
                   <Select placeholder="资源文件分类..." size="large" v-model="uploadData.group">
-                    <Option v-for="type in groupList" :value="type.label" :key="type.index">
+                    <Option v-for="type in uploadGroupList" :value="type.label" :key="type.index">
                       {{ type.label }}
                     </Option>
                   </Select>
@@ -132,6 +132,28 @@
           labels: '',
           file: null
         },
+        uploadGroupList: [
+          {
+            index: 0,
+            label: '学习资料',
+            value: 'studies'
+          },
+          {
+            index: 1,
+            label: '专业论文',
+            value: 'theses'
+          },
+          {
+            index: 2,
+            label: '通 知',
+            value: 'notices'
+          },
+          {
+            index: 3,
+            label: '其 他',
+            value: 'others'
+          }
+        ],
         groupList: [
           {
             index: 0,
@@ -248,6 +270,7 @@
       },
       editFileCancel () {
         this.uploadPanel = false;
+        this.labelSelect = [];
         this.uploadData = {
           group: '',
           desc: '',
@@ -274,10 +297,13 @@
       changeLabels (labelSelect) {
         this.labelSelect = labelSelect;
         this.uploadData.labels = this.stringifyLabels();
+        console.log(this.uploadData.labels);
       },
       delLabel (label) {
         const index = this.labelSelect.indexOf(label);
         this.labelSelect.splice(index, 1);
+        this.uploadData.labels = this.stringifyLabels();
+        console.log(this.uploadData.labels);
       },
       submitFile () {
         if (this.uploadData.file === null ||
@@ -300,6 +326,7 @@
           .then(function (res) {
             _this.$Message.success(res.data.msg);
             _this.uploadPanel = false;
+            _this.labelSelect = [];
             _this.uploadData = {
               group: '',
               desc: '',
@@ -334,7 +361,7 @@
         let labelIds = labels.toString().split(',');
         for (let i = 0; i < labelIds.length; i++) {
           let label = this.getLabel(labelIds[i]);
-          if (label) {
+          if (label !== null) {
             res.push(label);
           }
         }
