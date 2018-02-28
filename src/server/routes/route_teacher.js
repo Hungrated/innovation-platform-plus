@@ -10,8 +10,6 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const moment = require('../middlewares/moment');
 
-// const labelArray = require('../middlewares/label_array');
-
 /**
  *
  * （教师）获取全站信息列表
@@ -131,7 +129,7 @@ router.get('/query', function (req, res) {
  * @api {post} /api/teacher/delete teacher.delete
  * @apiName teacherDelete
  * @apiGroup Teacher
- * @apiVersion 2.6.0
+ * @apiVersion 3.1.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件删除特定信息。

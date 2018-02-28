@@ -174,7 +174,7 @@ router.post('/import', function (req, res) {
  *
  * @apiDescription 根据条件查询并获取文章列表。
  *
- * @apiParam {String|Object} request 查询条件
+ * @apiParam request 查询条件(String|Object)
  * @apiParam {Boolean} carousel 是否提供轮播图列表
  * @apiParam {Number} limit 查询数限制
  *
