@@ -27,8 +27,10 @@
 /* class */
 
 .m-classes {
-  width: calc(100vw - 469px);
-  min-width: 446px;
+  //width: calc(100vw - 469px);
+  //min-width: 446px;
+  width: calc(100vw - 149px);
+  min-width: 766px;
   overflow: auto;
 }
 
@@ -50,6 +52,7 @@
     padding: 16px 0;
     margin-bottom: 10px;
     border-bottom: 1px solid #EEEEEE;
+    border-radius: unset;
   }
 
   .body {
@@ -98,6 +101,8 @@
 /* profile */
 
 .m-profile {
+  height: 100%;
+
   span {
     margin-bottom: 10px;
   }

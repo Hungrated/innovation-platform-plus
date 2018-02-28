@@ -489,6 +489,7 @@
                     h('Button', {
                       props: {
                         type: 'dashed',
+                        disabled: !params.row.cswk_src,
                         size: 'small'
                       },
                       on: {

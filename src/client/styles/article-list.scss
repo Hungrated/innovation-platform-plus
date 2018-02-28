@@ -1,51 +1,32 @@
 .m-unit {
-  display: flex;
+  display: inline-block;
+  width: 100%;
   justify-content: space-between;
-  padding: 20px;
-  border-bottom: 1px solid #EEEEEE;
+  padding: 0 20px;
+  border-bottom: 1px dashed #EEEEEE;
   transition: all 250ms;
   border-radius: 5px;
+  line-height: 48px;
 
   &:hover {
     background: #F9F9F9;
   }
 
   .title {
+    width: auto;
     padding: 0;
     flex: 1 0 auto;
     border: none;
   }
 
   .details {
+    width: 45%;
     padding: 0;
-    display: flex;
-    flex: 0 1 45%;
     flex-direction: column;
     justify-content: right;
     border: none;
-
-    .info {
-      flex-direction: row;
-      line-height: 100%;
-      margin-bottom: 10px;
-      justify-content: right;
-      color: #999999;
-    }
-
-    .desc {
-      flex-direction: row;
-      line-height: 100%;
-      color: #999999;
-
-      p {
-        word-break: break-all;
-      }
-    }
+    color: #999999;
+    display: inline-block;
+    float: right;
   }
-}
-
-.m-page {
-  margin-top: 10px;
-  padding: 20px;
-  text-align: center;
 }

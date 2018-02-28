@@ -9,7 +9,7 @@
           <div class="g-info options body">
             <div class="g-info options list">
               <div class="g-info options type">
-                <Select placeholder="类 别" size="large" v-model="infoLabel" @on-change="refreshData()">
+                <Select placeholder="类 别..." size="large" v-model="infoLabel" @on-change="refreshData()">
                   <Option v-for="type in infoTypeList" :value="type.label" :key="type.index">
                     {{ type.value }}
                   </Option>
@@ -20,7 +20,7 @@
                             size="large"
                             format="yyyy-MM-dd"
                             type="daterange"
-                            placeholder="时间范围（选填）"
+                            placeholder="时间范围（选填）..."
                             :disabled="true"
                             style="width: 100%">
                 </DatePicker>
@@ -28,11 +28,17 @@
               <div class="g-info options sid">
                 <Input size="large"
                        v-model="infoSid"
-                       placeholder="学号或工号（选填）"
-                       :disabled="infoLabel === 'banner' || infoLabel === 'class'"/>
+                       placeholder="学号或工号（选填）..."
+                       :disabled="infoLabel === 'banner' || infoLabel === 'class' || infoLabel === 'image'"/>
+              </div>
+              <div class="g-info options label">
+                <Input size="large"
+                       v-model="infoLid"
+                       placeholder="标签ID（选填）..."
+                       :disabled="infoLabel !== 'blog' && infoLabel !== 'resource'"/>
               </div>
             </div>
-            <div>
+            <div class="g-info options query">
               <Button @click="refreshData()" type="primary" size="large">查 询</Button>
             </div>
           </div>
@@ -64,19 +70,26 @@
                 </div>
               </Modal>
             </div>
-            <div v-if="infoLabel === 'label'" class="g-info options banner">
+            <div v-if="infoLabel === 'label'" class="g-info options label-edit">
               <span>
                 &emsp;<Icon type="information-circled"></Icon>&nbsp;
-                标签用于文章和资源文件的分类筛选，要新增标签，请点击右边的"新增"按钮
+                标签用于文章和资源文件的分类与筛选，要新增标签，请点击右边的"新增"按钮
               </span>
-              <Button @click="bannerEdit()" type="dashed" size="small">新 增</Button>
-              <Modal v-model="bannerMng"
-                     title="编辑标签"
-                     width="712"
-                     @on-ok=""
-                     @on-cancel="bannerEditCancel()">
-                <div class="m-edit-bnr">
-                  test
+              <Button @click="labelEdit()" type="dashed" size="small">新 增</Button>
+              <Modal v-model="labelMng"
+                     title="添加标签"
+                     width="350"
+                     @on-ok="labelSubmit()"
+                     @on-cancel="labelEditCancel()">
+                <div class="m-edit-label">
+                  <Select placeholder="标签类别..." size="large" v-model="labelData.category">
+                    <Option v-for="type in labelTypes" :value="type.value" :key="type.index">
+                      {{ type.type }}
+                    </Option>
+                  </Select>
+                  <Input size="large"
+                         v-model="labelData.name"
+                         placeholder="标签名..."/>
                 </div>
               </Modal>
             </div>
@@ -85,7 +98,7 @@
       </div>
       <div class="m-manage">
         <Card disHover>
-          <div class="m-manage table">
+          <div class="g-body m-manage table">
             <Table stripe :columns="infoCols" :data="infoData"></Table>
           </div>
           <div class="m-manage pages">
@@ -105,7 +118,7 @@
         // pageLimit: 15,
         // curPage: 1,
         dataCount: 0,
-        infoLabel: 'banner',
+        infoLabel: 'label',
         infoCols: [],
         infoData: [],
         infoTypeList: [
@@ -121,7 +134,7 @@
           },
           {
             index: 2,
-            value: '文章图片',
+            value: '图 片',
             label: 'image'
           },
           {
@@ -157,6 +170,7 @@
         ],
         infoRange: ['', ''],
         infoSid: '',
+        infoLid: '',
         queryCols: {
           banner: [
             {
@@ -211,11 +225,13 @@
                         });
                       }
                     }
-                  }, [h('Icon', {
-                    props: {
-                      type: 'ios-search-strong'
-                    }
-                  })])
+                  }, [
+                    h('Icon', {
+                      props: {
+                        type: 'ios-search-strong'
+                      }
+                    })
+                  ])
                 ]);
               }
             },
@@ -381,11 +397,35 @@
             {
               title: '作者ID',
               key: 'author_id',
+              width: 100,
               sortable: true
             },
             {
               title: '标 题',
               key: 'title'
+            },
+            {
+              title: '标 签',
+              key: 'labels',
+              align: 'center',
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'ghost',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.showDetails(params.row.labels);
+                      }
+                    }
+                  }, '查 看')
+                ]);
+              }
             },
             {
               title: '描 述',
@@ -667,17 +707,6 @@
                     })
                   ])
                 ]);
-                // if (params.row.status === '未审核') {
-                //
-                // } else {
-                //   return h('div', [
-                //     h('em', {
-                //       style: {
-                //         color: '#999999'
-                //       }
-                //     }, '已审核')
-                //   ]);
-                // }
               }
             }
           ],
@@ -939,12 +968,67 @@
               }
             }
           ],
-          labels: []
+          labels: [
+            {
+              title: '标签ID',
+              key: 'label_id',
+              width: 100
+            },
+            {
+              title: '标签名称',
+              key: 'name',
+              sortable: true
+            },
+            {
+              title: '所属种类',
+              key: 'category',
+              sortable: true
+            },
+            {
+              title: '添加时间',
+              key: 'created_at',
+              sortable: true,
+              render: (h, params) => {
+                return h('span', this.getTime(params.row.created_at));
+              }
+            },
+            {
+              title: '添加者ID',
+              key: 'adder_id',
+              sortable: true
+            },
+            {
+              title: '操作',
+              width: 150
+            }
+          ]
         },
         bannerMng: false,
         bannerModMng: false,
         bannerImgId: null,
         bannerSrc: null,
+        labelMng: false,
+        labelTypes: [
+          {
+            index: 0,
+            type: '文章标签',
+            value: 'blog'
+          },
+          {
+            index: 1,
+            type: '资源文件标签',
+            value: 'file'
+          },
+          {
+            index: 2,
+            type: '通用标签',
+            value: 'both'
+          }
+        ],
+        labelData: {
+          name: '',
+          category: 'both'
+        },
         uploadConfig: {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -985,8 +1069,12 @@
         let queryString = '/api/teacher/query?type=' + params.type/* + '&limit=' + limit + '&page=' + page */;
         if (params.sid) {
           queryString = queryString + '&sid=' + params.sid;
-        } else if (params.start !== '' && params.end !== '') {
+        }
+        if (params.start && params.end) {
           queryString = queryString + '&start=' + params.start + '&end=' + params.end;
+        }
+        if (params.lid && (params.type === 'blog' || params.type === 'file')) {
+          queryString = queryString + '&lid=' + params.lid;
         }
         this.$ajax.get(queryString)
           .then(function (res) {
@@ -1015,6 +1103,9 @@
               case 'banner':
                 _this.infoCols = _this.queryCols.banner;
                 break;
+              case 'label':
+                _this.infoCols = _this.queryCols.labels;
+                break;
             }
             _this.infoData = res.data;
             _this.dataCount = res.data.length;
@@ -1042,7 +1133,8 @@
           type: this.infoLabel,
           start: '',
           end: '',
-          sid: this.infoSid
+          sid: this.infoSid,
+          lid: this.infoLid
         });
       },
       verifyPlan (id, op) {
@@ -1131,6 +1223,33 @@
         })
           .then(function (res) {
             _this.$Message.success(res.data.msg);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      labelEdit () {
+        this.labelMng = true;
+      },
+      labelEditCancel () {
+        this.labelMng = false;
+      },
+      labelSubmit () {
+        if (this.labelData.name === '') {
+          this.$Message.info('请填写标签名称');
+          return;
+        }
+        let _this = this;
+        let labelData = this.labelData;
+        labelData.adder_id = JSON.parse(window.localStorage.user).school_id;
+        this.$ajax.post('/api/label/submit', labelData)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            _this.labelData = {
+              name: '',
+              category: 'both'
+            };
+            _this.refreshData();
           })
           .catch(function (e) {
             console.log(e);

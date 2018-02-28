@@ -45,7 +45,7 @@
             </div>
           </transition>
           <div class="m-classes">
-            <Table :columns="classCols" :data="classData" style="min-width: 800px" stripe></Table>
+            <Table :columns="classCols" :data="classData" style="min-width: 766px" stripe></Table>
           </div>
           <Modal
             v-model="classImport"
@@ -72,22 +72,21 @@
           </Modal>
         </Card>
       </div>
-      <div class="g-panel right">
-        <Card disHover>
-          <span slot="title">
-            <span class="g-panel header-card">
-              <strong>我的资料</strong>
-              <!--<Button @click="" type="text" size="small">管 理</Button>-->
-            </span>
-          </span>
-          <div class="m-profile" v-model="teacherProfile">
-            <span><strong><Icon type="person"></Icon>&nbsp;{{teacherProfile.name}}</strong>&emsp;<em>导 师</em>&emsp;&emsp;</span>
-            <span>
-              <Icon type="card"></Icon>&emsp;{{teacherProfile.school_id}}
-            </span>
-          </div>
-        </Card>
-      </div>
+      <!--<div class="g-panel right">-->
+        <!--<Card disHover>-->
+          <!--<span slot="title">-->
+            <!--<span class="g-panel header-card">-->
+              <!--<strong>我的资料</strong>-->
+            <!--</span>-->
+          <!--</span>-->
+          <!--<div class="m-profile" v-model="teacherProfile">-->
+            <!--<span><strong><Icon type="person"></Icon>&nbsp;{{teacherProfile.name}}</strong>&emsp;<em>导 师</em>&emsp;&emsp;</span>-->
+            <!--<span>-->
+              <!--<Icon type="card"></Icon>&emsp;{{teacherProfile.school_id}}-->
+            <!--</span>-->
+          <!--</div>-->
+        <!--</Card>-->
+      <!--</div>-->
     </div>
     <div class="g-panel body">
       <Timeline>

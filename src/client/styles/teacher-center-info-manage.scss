@@ -3,32 +3,40 @@
     .body {
       display: flex;
       line-height: 36px;
-      justify-content: space-between;
     }
 
     .list {
-      display: flex;
+      display: inline-block;
       flex: auto;
-      max-width: 700px;
     }
 
-    .type, .range, .sid {
+    .type, .range, .sid, .label {
       margin-right: 10px;
+      float: left;
+      padding-bottom: 5px;
     }
 
     .type {
-      flex: 0 0 200px;
+      width: 200px;
     }
 
     .range {
-      flex: 1 0 300px;
+      width: 290px;
     }
 
     .sid {
-      flex: 1 1 auto;
+      width: 200px;
     }
 
-    .banner {
+    .label {
+      width: 200px;
+    }
+
+    .query {
+      float: right;
+    }
+
+    .banner, .label-edit {
       display: flex;
       justify-content: space-between;
       background: #FAFAFA;
@@ -46,6 +54,10 @@
   .header-card {
     line-height: 24px;
   }
+}
+
+.g-body {
+  min-height: calc(100vh - 158px);
 }
 
 .m-manage {
@@ -79,5 +91,17 @@
     margin-top: 20px;
     text-align: center;
     color: #777777;
+  }
+}
+
+.m-edit-label {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+
+  & > * {
+    margin: 10px;
+    width: auto;
   }
 }

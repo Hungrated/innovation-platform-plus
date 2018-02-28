@@ -55,7 +55,7 @@
 
   export default {
     name: 'markdown-editor',
-    props: ['title', 'label', 'description'],
+    props: ['title', 'group', 'labels', 'description'],
     data () {
       return {
         value: '',
@@ -208,16 +208,23 @@
       submit () {
         let submitData = {
           type: 'project',
+          group: this.group,
+          labels: this.labels,
           title: this.title,
+          cover: '',
           description: this.description,
           content: this.$refs.md.d_value,
           author_id: JSON.parse(window.localStorage.user).school_id
         };
-        if (!submitData.title || !submitData.description || !submitData.content) {
+        if (!submitData.title ||
+          !submitData.description ||
+          !submitData.content ||
+          !submitData.group ||
+          !submitData.labels) {
+          console.log(submitData);
           this.$Message.info('请将空余内容补充完整');
         } else {
           const _this = this;
-          // publish the article
           this.$ajax.post('/api/blog/publish', submitData)
             .then(function (res) {
               if (!(JSON.stringify(_this.img_file) === '{}')) {

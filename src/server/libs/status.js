@@ -340,6 +340,16 @@ module.exports = {
     'msg': '标签创建失败'
   },
 
+  LABEL_MOD_SUCCESSFUL: {
+    'status': 8500,
+    'msg': '标签修改成功'
+  },
+
+  LABEL_MOD_FAILED: {
+    'status': 8501,
+    'msg': '标签修改失败'
+  },
+
   CONNECTION_ERROR: {
     'status': 9001,
     'msg': '通信故障'

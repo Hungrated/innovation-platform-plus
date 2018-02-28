@@ -10,14 +10,15 @@
 
 .m-unit {
   margin: 5px;
+  font-size: 90%;
 }
 
 .m-unit-cover {
-  height: 290px;
+  height: 328px;
 }
 
 .m-unit-title {
-  height: 105px;
+  height: 143px;
 }
 
 .g-container {
@@ -44,7 +45,7 @@
 .g-title {
   margin-bottom: 5px;
   color: #1c2438;
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
   transition: all 200ms;
 
@@ -55,6 +56,13 @@
 
 .g-title-cover {
   margin-top: 8px;
+}
+
+.g-labels {
+  display: inline-block;
+  height: 48px;
+  line-height: 18px;
+  overflow: auto;
 }
 
 .g-details {

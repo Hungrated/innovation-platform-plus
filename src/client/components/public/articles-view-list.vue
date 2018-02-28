@@ -1,27 +1,26 @@
 <template>
-  <Card disHover>
+  <div>
     <div class="m-unit" v-for="article in articleList" :key="article.blog_id">
       <span class="m-unit title">
         <Button type="text" size="large" @click="revealDetails(article.blog_id)">
           <strong>{{article.title}}</strong>
         </Button>
+        <span class="g-labels">
+          <span v-for="(label, index) in article.labels" :key="index">
+            <Tag size="small" :color="label.category === 'both' ?
+                 'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+              {{label.name}}
+            </Tag>
+          </span>
+        </span>
       </span>
       <span class="m-unit details">
-        <span class="m-unit details info">
         <Icon type="ios-person-outline"></Icon>&nbsp;{{article.profile.name}}&emsp;
         <Icon type="ios-clock-outline"></Icon>&nbsp;{{article.publishTime}}&emsp;
-      </span>
-      <span class="m-unit details desc">
-        <Icon type="ios-star-outline"></Icon>&nbsp;
-        <p>{{article.description}}</p>
-      </span>
+        <Icon type="ios-star-outline"></Icon>&nbsp;{{article.description}}
       </span>
     </div>
-    <div class="m-page">
-      <Page size="small" :total="count"></Page>
-    </div>
-
-  </Card>
+  </div>
 </template>
 
 <script>

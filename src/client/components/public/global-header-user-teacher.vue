@@ -6,6 +6,17 @@
           <Icon type="person"></Icon>{{name}}
         </router-link>
       </template>
+      <MenuGroup title="档 案">
+        <MenuItem name="9-0" @click="changeRoute('/teacher-center')">
+          <span>
+            <strong><Icon type="person"></Icon>&emsp;{{name}}</strong>
+          </span>
+          <br>
+          <span>
+            <Icon type="card"></Icon>&emsp;{{schoolId}}
+          </span>
+        </MenuItem>
+      </MenuGroup>
       <MenuGroup title="管 理">
         <MenuItem name="9-1"><span @click="changeRoute('/teacher-center')">管理中心</span></MenuItem>
         <MenuItem name="9-2"><span @click="pwdMod = true">修改密码</span></MenuItem>
@@ -21,7 +32,6 @@
       v-model="pwdMod"
       title="修改密码"
       @on-ok="userPwdMod()">
-      <!--用户输入框-->
       <div class="m-login">
         <i-input class="m-login input" type="password" v-model="password.currentPwd" placeholder="当前密码">
           <Icon type="ios-locked-outline" slot="prepend"></Icon>
@@ -40,7 +50,7 @@
 <script>
   export default {
     name: 'global-header-user-teacher',
-    props: ['name'],
+    props: ['name', 'schoolId'],
     data () {
       return {
         pwdMod: false,

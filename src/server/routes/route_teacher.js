@@ -10,7 +10,7 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 const moment = require('../middlewares/moment');
 
-const labelArray = require('../middlewares/label_array');
+// const labelArray = require('../middlewares/label_array');
 
 /**
  *
@@ -19,15 +19,15 @@ const labelArray = require('../middlewares/label_array');
  * @api {get} /api/teacher/query teacher.query
  * @apiName teacherQuery
  * @apiGroup Teacher
- * @apiVersion 2.6.0
+ * @apiVersion 3.1.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件获取全站信息列表。
  *
- * @apiParam type 查询类型 可选值有blog|image|plan|meeting|resource|comment|class|banner|label
+ * @apiParam request 请求条件：可发送"all"获取所有资料，或根据学号、当前选课号或详细模式查询所需信息
  *
  * @apiParamExample {url} 请求示例
- * teacher/query?type=image
+ * teacher/query?type=blog|image|plan|meeting|resource|comment|class|banner|label
  *
  * @apiSuccess {Array} data 返回根据上述条件所请求的信息列表
  */
@@ -42,12 +42,24 @@ router.get('/query', function (req, res) {
       if (query.sid) {
         where.author_id = query.sid;
       }
+      if (query.lid) {
+        where.labels = {
+          $or: [
+            {
+              $like: '%,' + query.lid
+            },
+            {
+              $like: '%,' + query.lid + ',%'
+            },
+            {
+              $like: query.lid + ',%'
+            }
+          ]
+        }
+      }
       break;
     case 'image':
       database = db.Image;
-      if (query.sid) {
-        where.uploader_id = query.sid;
-      }
       if (query.bid) {
         where.blog_id = query.bid;
       }
@@ -69,6 +81,9 @@ router.get('/query', function (req, res) {
       if (query.sid) {
         where.uploader_id = query.sid;
       }
+      if (query.lid) {
+        where.label_id = query.lid;
+      }
       break;
     case 'comment':
       database = db.Comment;
@@ -84,6 +99,9 @@ router.get('/query', function (req, res) {
       break;
     case 'label':
       database = db.Label;
+      if (query.sid) {
+        where.adder_id = query.sid;
+      }
       break;
     default:
       res.json(statusLib.CONNECTION_ERROR);
@@ -111,7 +129,7 @@ router.get('/query', function (req, res) {
  * @api {post} /api/teacher/delete teacher.delete
  * @apiName teacherDelete
  * @apiGroup Teacher
- * @apiVersion 2.6.0
+ * @apiVersion 2.5.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师根据查询条件删除特定信息。
@@ -364,34 +382,47 @@ router.post('/delete', function (req, res, next) {
     next();
   } else {
     let Label = db.Label;
-    let Blog = db.Blog;
-    Blog.findAll()
-      .then(function (data) {
-        for (let i = 0; i < data.length; i++) {
-          let labels = data[i].dataValues.labels;
-          if (labelArray.containsLabel(labels, req.body.id)) {
-            Blog.update({
-              labels: labelArray.removeLabel(labels, req.body.id)
-            }, {
-              where: {
-                blog_id: data[i].dataValues.blog_id
-              }
-            });
-          }
-        }
-        Label.destroy({
-          where: {
-            label_id: req.body.id
-          }
-        })
-          .then(function () {
-            res.json(statusLib.INFO_DELETE_SUCCESSFUL);
-            console.log('label info delete successful');
-          })
-          .catch(function (e) {
-            console.error(e);
-            res.json(statusLib.CONNECTION_ERROR);
-          });
+    // let Blog = db.Blog;
+    // Blog.findAll()
+    //   .then(function (data) {
+    //     for (let i = 0; i < data.length; i++) {
+    //       let labels = data[i].dataValues.labels;
+    //       if (labelArray.containsLabel(labels, req.body.id)) {
+    //         Blog.update({
+    //           labels: labelArray.removeLabel(labels, req.body.id)
+    //         }, {
+    //           where: {
+    //             blog_id: data[i].dataValues.blog_id
+    //           }
+    //         });
+    //       }
+    //     }
+    //     Label.destroy({
+    //       where: {
+    //         label_id: req.body.id
+    //       }
+    //     })
+    //       .then(function () {
+    //         res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+    //         console.log('label info delete successful');
+    //       })
+    //       .catch(function (e) {
+    //         console.error(e);
+    //         res.json(statusLib.CONNECTION_ERROR);
+    //       });
+    //   });
+    Label.destroy({
+      where: {
+        label_id: req.body.id
+      }
+    })
+      .then(function () {
+        res.json(statusLib.INFO_DELETE_SUCCESSFUL);
+        console.log('label info delete successful');
+      })
+      .catch(function (e) {
+        console.error(e);
+        res.json(statusLib.CONNECTION_ERROR);
       });
   }
 
