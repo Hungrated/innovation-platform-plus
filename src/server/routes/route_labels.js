@@ -5,47 +5,57 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
 const Label = db.Label;
-//
-// const path = require('../app_paths');
-// const pathLib = require('path');
-// const urlLib = require('url');
 
 /**
  *
- * 获取标签列表
+ * 提交标签
  *
  * @api {post} /api/label/query label.query
  * @apiName labelQuery
  * @apiGroup Label
- * @apiVersion 2.0.0
+ * @apiVersion 3.0.0
+ * @apiPermission user
+ *
+ * @apiSuccess {JSON} data Response data.
+ *
+ */
+router.post('/query', function (req, res) {
+  Label.findAll({
+    where: {
+      $or: [
+        {
+          category: 'both'
+        },
+        {
+          category: req.body.type
+        }
+      ]
+    }
+  })
+    .then(function (labels) {
+      res.json(labels);
+      console.log('label query successful');
+    })
+    .catch(function (e) {
+      console.error(e);
+      res.json(statusLib.CONNECTION_ERROR);
+      console.log('label query failed');
+    });
+});
+
+/**
+ *
+ * 提交标签
+ *
+ * @api {post} /api/label/query label.query
+ * @apiName labelQuery
+ * @apiGroup Label
+ * @apiVersion 2.5.0
  * @apiPermission user.teacher
  *
  * @apiSuccess {JSON} data Response data.
  *
  */
-// router.post('/upload', function (req, res, next) {
-//   // upload a course-work file
-//   Final.findOne({
-//     where: {
-//       student_id: req.body.student_id,
-//       class_id: req.body.class_id
-//     }
-//   })
-//     .then(function (final) {
-//       if (final.cswk_src) {
-//         req.preExists = true;
-//       }
-//       req.cswk_id = final.cswk_id;
-//       req.cswk_name = final.cswk_id + pathLib.parse(req.files[0].originalname).ext;
-//       req.cswkURL = pathLib.join(path.final, final.cswk_id) + pathLib.parse(req.files[0].originalname).ext;
-//       next();
-//     })
-//     .catch(function (e) {
-//       console.error(e);
-//       res.json(statusLib.CONNECTION_ERROR);
-//     });
-// });
-
 router.post('/submit', function (req, res) {
   Label.create({
     name: req.body.name,
@@ -64,6 +74,28 @@ router.post('/submit', function (req, res) {
       console.error(e);
       res.json(statusLib.LABEL_CREATE_FAILED);
       console.log('label create failed');
+    });
+});
+
+router.post('/mod', function (req, res) {
+  let database = req.body.type === 'blog'
+    ? db.Blog : db.File;
+
+  let where = req.body.type === 'blog'
+    ? {blog_id: req.body.id} : {file_id: req.body.id};
+
+  database.update({
+    labels: req.body.labels
+  }, {
+    where: where
+  })
+    .then(function () {
+      res.json(statusLib.LABEL_MOD_SUCCESSFUL);
+      console.log('labels modified');
+    })
+    .catch(function (e) {
+      console.log(e);
+      res.json(statusLib.CONNECTION_ERROR);
     });
 });
 

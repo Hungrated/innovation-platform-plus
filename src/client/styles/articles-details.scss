@@ -41,19 +41,24 @@
   border-bottom: 1px solid #EEEEEE;
   margin-bottom: 20px;
 
-  .title {
+  .title, .info, .labels {
     padding: 0;
     border: none;
+  }
+
+  .title {
     font-size: 32px;
     margin-bottom: 5px;
   }
 
   .info {
-    padding: 0;
-    border: none;
-    line-height: 100%;
-    margin-bottom: 10px;
+    line-height: 24px;
+    margin: 0;
     color: #999999;
+  }
+
+  .labels {
+    display: inline-block;
   }
 }
 
@@ -77,6 +82,35 @@
   .title {
     padding: 10px 0;
     border: none;
+  }
+
+  .empty {
+    font-size: 90%;
+    color: #999999;
+  }
+}
+
+.m-label {
+  display: inline-block;
+  line-height: 32px;
+
+  & > * {
+    margin: 0 5px;
+  }
+}
+
+.m-unit {
+  display: inline-block;
+  flex-direction: column;
+
+  .utitle {
+    margin-bottom: 5px;
+    line-height: 20px;
+  }
+
+  .details {
+    color: #999999;
+    font-size: 90%;
   }
 }
 

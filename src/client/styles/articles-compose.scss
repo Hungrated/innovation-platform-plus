@@ -33,6 +33,7 @@
 .m-container2 {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 5px;
 
   .label {
     display: block;
@@ -44,4 +45,9 @@
     flex: 0 0 100px;
     font-size: 15px;
   }
+}
+
+.g-label-select {
+  flex: 1 1 auto;
+  justify-content: flex-start;
 }

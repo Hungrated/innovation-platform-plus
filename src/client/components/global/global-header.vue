@@ -26,12 +26,12 @@
           </span>
           <MenuGroup title="类 别">
             <MenuItem name="3-1"><span @click="changeRoute('/articles')">所有文章</span></MenuItem>
-            <MenuItem name="3-2"><span @click="changeRoute('/articles')">Markdown文档</span></MenuItem>
-            <MenuItem name="3-3"><span @click="changeRoute('/articles')">活动图集</span></MenuItem>
-            <MenuItem name="3-4"><span @click="changeRoute('/articles')">我的文章</span></MenuItem>
+            <!--<MenuItem name="3-2"><span @click="changeRoute('/articles')">Markdown文档</span></MenuItem>-->
+            <!--<MenuItem name="3-3"><span @click="changeRoute('/articles')">活动图集</span></MenuItem>-->
+            <!--<MenuItem name="3-4"><span @click="changeRoute('/articles')">我的文章</span></MenuItem>-->
           </MenuGroup>
           <MenuGroup title="发 布">
-            <MenuItem name="3-5"><span @click="changeRoute('/articles/compose')"><Icon
+            <MenuItem name="3-2"><span @click="changeRoute('/articles/compose')"><Icon
               type="compose"></Icon>&emsp;发 布</span>
             </MenuItem>
           </MenuGroup>
@@ -59,9 +59,11 @@
         <global-header-user v-if="userIdentity === 'none'"
                             @updateUserStatus="changeUserStatus()"/>
         <global-header-user-student :name="name"
+                                    :schoolId="schoolId"
                                     v-if="userIdentity === 'student'"
                                     @updateUserStatus="changeUserStatus()"/>
         <global-header-user-teacher :name="name"
+                                    :schoolId="schoolId"
                                     v-if="userIdentity === 'teacher'"
                                     @updateUserStatus="changeUserStatus()">/</global-header-user-teacher>
       </div>
@@ -83,7 +85,8 @@
         },
         userIdentity: 'none',
         username: '',
-        name: ''
+        name: '',
+        schoolId: 0
       };
     },
     components: {
@@ -111,6 +114,7 @@
           this.userIdentity = cookie.identity;
           this.username = cookie.username;
           this.name = user.name;
+          this.schoolId = user.school_id;
         }
       },
       changeRoute: function (path) {

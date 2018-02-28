@@ -27,7 +27,7 @@
         let _this = this;
         this.$ajax.post('/api/blog/query', {
           request: req,
-          student: true
+          carousel: false
         })
           .then(function (res) {
             _this.articleList = res.data.articleList;

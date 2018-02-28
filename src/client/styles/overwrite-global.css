@@ -51,7 +51,7 @@
 }
 
 .ivu-select-dropdown {
-  /*max-height: 300px;*/
+  max-height: 500px;
 }
 
 .router-link-active {
@@ -86,7 +86,6 @@
 
 .v-note-op {
   border-bottom: 1px solid #DDDDDD;
-  /*box-shadow: 0 3px 5px #DDDDDD !important;*/
   box-shadow: none !important;
 }
 

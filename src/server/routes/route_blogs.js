@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 2.6.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
@@ -40,6 +40,7 @@ let objMulter = multer({
  * @apiParam {String} description 文章简介
  * @apiParam {String} content 文章内容
  * @apiParam {String} [cover_url] 文章封面图地址
+ * @apiParam {String} [photo_url] 文章所有图片地址
  * @apiParam {Number} aurhor_id 文章作者编号
  *
  * @apiParamExample {json} 请求示例
@@ -49,22 +50,17 @@ let objMulter = multer({
  *     "description": "description0",
  *     "content": "content0",
  *     "cover_url": "",
+ *     "photo_url": "",
  *     "author_id": 14051531
  * }
  *
  * @apiSuccess {Number} status 状态代码
  * @apiSuccess {String} msg 反馈信息
- * @apiSuccess {String} blog_id 反馈信息
- * @apiSuccess {String} type 文章类型
- * @apiSuccess {Number} author_id 作者编号
  * @apiSuccessExample {json} 成功返回示例
  * HTTP/1.1 200 OK
  * {
  *     "status": 3000,
- *     "msg": "文章发布成功",
- *     "blog_id": "blg0f8e82",
- *     "type": "project",
- *     "author_id": 40429
+ *     "msg": "文章发布成功"
  * }
  */
 router.post('/publish', function (req, res) {
@@ -100,7 +96,7 @@ router.post('/publish', function (req, res) {
  * @api {post} /api/blog/import blog.import
  * @apiName blogImport
  * @apiGroup Blog
- * @apiVersion 2.4.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 用户导入文章内容。
@@ -186,15 +182,44 @@ router.post('/import', function (req, res) {
  *     "request": 14051531
  * }
  *
- * @apiSuccess {Array} articleList 文章列表
- * @apiSuccess {Array} carouselList 文章轮播展示列表
+ * @apiSuccess {Array} data 文章列表列表
  */
 router.post('/query', function (req, res) {
-  // fetch blog list for brief browsing
   const request = req.body.request;
-  const where = (typeof request === 'string') ? ((request === 'all') ? {} : {type: request}) : {author_id: request};
-
-  Blog.findAll({
+  let where = {};
+  if (typeof request === 'string' && request !== 'all') {
+    where = {
+      type: request
+    };
+  }
+  if (typeof request === 'number') {
+    where = {
+      author_id: request
+    };
+  }
+  if (typeof request === 'object') {
+    if (!!request.group && request.group !== '所有文章') {
+      where.group = request.group;
+    }
+    if (!!request.labels) {
+      where.labels = {
+        $or: []
+      };
+      let labelArr = request.labels.toString().split(',');
+      for (let i = 0; i < labelArr.length; i++) {
+        where.labels.$or.push({
+          $like: '%,' + labelArr[i]
+        });
+        where.labels.$or.push({
+          $like: labelArr[i] + ',%'
+        });
+        where.labels.$or.push({
+          $like: '%,' + labelArr[i] + ',%'
+        });
+      }
+    }
+  }
+  let query = {
     where: where,
     order: [
       ['created_at', 'DESC']
@@ -203,14 +228,18 @@ router.post('/query', function (req, res) {
       model: Profile,
       attributes: ['name']
     }]
-  })
+  };
+  if (req.body.limit) {
+    query.limit = req.body.limit;
+  }
+  Blog.findAll(query)
     .then(function (data) {
       for (let i = 0; i < data.length; i++) {
         data[i].dataValues.publishTime = timeFormat(data[i].dataValues.created_at);
       }
       let count = 0;
       let carouselList = [];
-      if(req.body.student) {
+      if (req.body.carousel) {
         for (let i = 0; i < data.length; i++) {
           let item = data[i].dataValues;
           if (item.cover) {
@@ -242,7 +271,7 @@ router.post('/query', function (req, res) {
  * @api {get} /api/blog/details?index=:blog_id blog.details
  * @apiName blogDetails
  * @apiGroup Blog
- * @apiVersion 3.0.0
+ * @apiVersion 2.5.0
  * @apiPermission user
  *
  * @apiDescription 根据文章编号获取文章详细信息。
@@ -252,7 +281,6 @@ router.post('/query', function (req, res) {
  *
  * @apiSuccess {Object} blog 文章列表信息
  * @apiSuccess {Array} comments 文章列表信息
- * @apiSuccess {Array} [images] 文章所带图片信息（仅活动图集）
  *
  * @apiSuccessExample {json} 成功返回示例
  * HTTP/1.1 200 OK
@@ -264,7 +292,8 @@ router.post('/query', function (req, res) {
  *         "title": "title0",
  *         "description": "desccription0",
  *         "content": "content0",
- *         "cover": null,
+ *         "cover_url": "",
+ *         "photo_url": "",
  *         "created_at": "2018-01-30T03:35:15.000Z",
  *         "updated_at": "2018-01-30T03:35:15.000Z",
  *         "author_id": 14051531,

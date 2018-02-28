@@ -16,6 +16,14 @@
         <div class="g-details container left">
           <div class="m-header">
             <div class="m-header title"><strong>{{details.blog.title}}</strong></div>
+            <div class="m-header labels">
+              <span v-for="(label, index) in details.blog.labels" :key="index">
+                <Tag size="small" :color="label.category === 'both' ?
+                     'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+                  {{label.name}}
+                </Tag>
+              </span>
+            </div>
             <div style="display: flex; justify-content: space-between">
               <span class="m-header info">
                 <Icon type="ios-person-outline"></Icon>&emsp;{{details.blog.profile.name}}&emsp;&emsp;
@@ -38,7 +46,6 @@
             </div>
           </div>
           <div class="m-content">
-            <!--内容查看-->
             <markdown-details v-if="details.blog.type === 'project'" :value="details.blog.content"/>
             <event-details v-if="details.blog.type === 'event'" :images="details.images"/>
           </div>
@@ -46,17 +53,30 @@
         <div class="g-details container right">
           <div class="m-list m-list-rel">
             <span class="m-list title"><strong>类别标签</strong></span>
-            <!--列出所有标签-->
-            <span>
-              list1
+            <span class="m-label">
+              <span v-for="label in labelList" :key="label.label_id">
+                <Button @click="getArticleList({labels: label.label_id})"
+                        size="small"
+                        :type="label.category === 'both'
+                          ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
+                  <strong>{{label.name}}</strong>
+                </Button>
+              </span>
             </span>
           </div>
           <div class="m-list m-list-rec">
-            <span class="m-list title"><strong>推荐阅读</strong></span>
-            <!--同标签下的其他文章-->
-            <span>
-              list2
-            </span>
+            <span class="m-list title"><strong>阅读列表</strong></span>
+            <div v-if="!articleList.length" class="m-list empty">暂无内容哦</div>
+            <div v-else class="m-unit" v-for="article in articleList" :key="article.blog_id">
+              <span class="m-unit utitle">
+                <Button size="small" type="text" @click="revealDetails(article.blog_id)">
+                  <strong>{{article.title}}</strong>
+                </Button>
+              </span>
+              <span class="m-unit details">
+                <Icon type="ios-person-outline"></Icon>&nbsp;{{article.profile.name}}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -99,11 +119,14 @@
         details: {
           blog: {
             content: '',
+            labels: '',
             profile: {}
           },
           images: [],
           comments: []
         },
+        labelList: [],
+        articleList: [],
         comment: ''
       };
     },
@@ -118,6 +141,42 @@
       back () {
         this.changeRoute('/articles');
       },
+      getLabel (index) {
+        let labelList = this.labelList;
+        for (let i = 0; i < labelList.length; i++) {
+          if (labelList[i].label_id.toString() === index.toString()) {
+            return {
+              name: labelList[i].name,
+              category: labelList[i].category
+            };
+          }
+        }
+        return null;
+      },
+      parseLabel (labels) {
+        let res = [];
+        let labelIds = labels.toString().split(',');
+        for (let i = 0; i < labelIds.length; i++) {
+          let label = this.getLabel(labelIds[i]);
+          if (label) {
+            res.push(label);
+          }
+        }
+        return res;
+      },
+      getLabelList () {
+        let _this = this;
+        this.$ajax.post('/api/label/query', {
+          type: 'blog'
+        })
+          .then(function (res) {
+            _this.labelList = res.data;
+            _this.details.blog.labels = _this.parseLabel(_this.details.blog.labels);
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
       refreshData () {
         let _this = this;
         const query = window.location.href.split('?')[1];
@@ -125,6 +184,7 @@
         this.$ajax.get('/api/blog/details?' + query)
           .then(function (res) {
             _this.details = res.data;
+            _this.getLabelList();
             if (!res.data) {
               this.$Message.error('无此文章，请浏览其他内容');
             }
@@ -171,10 +231,30 @@
           .catch(function (e) {
             console.log(e);
           });
+      },
+      getArticleList (mode) {
+        let _this = this;
+        let request = mode || 'all';
+        this.$ajax.post('/api/blog/query', {
+          request: request,
+          carousel: false,
+          limit: 8
+        })
+          .then(function (res) {
+            _this.articleList = res.data.articleList;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      revealDetails (index) {
+        this.$router.push('/articles/details?index=' + index);
+        this.refreshData();
       }
     },
     mounted () {
       this.refreshData();
+      this.getArticleList();
     }
   };
 </script>

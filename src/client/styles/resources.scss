@@ -1,5 +1,18 @@
 .g-resources {
   padding: 20px 50px;
+  min-height: calc(100vh - 158px);
+
+  .nav {
+    position: absolute;
+    top: -45px;
+    right: 170px;
+    padding: 0;
+    box-shadow: 0 0 3px #DDDDDD;
+    width: 124px;
+    min-height: unset;
+    overflow: hidden;
+    user-select: none;
+  }
 
   .header {
     padding: 0;
@@ -11,12 +24,26 @@
   .body {
     padding: 0;
   }
+}
 
-  .page {
-    margin-top: 10px;
-    padding: 20px;
-    text-align: center;
-  }
+.g-labels {
+  display: inline-block;
+  width: 100%;
+  justify-content: space-between;
+  padding: 15px;
+  line-height: 28px;
+  border-radius: 5px;
+  background: #FAFAFA;
+  margin-bottom: 15px;
+}
+
+.m-label {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.m-label-right {
+  float: right;
 }
 
 .m-upload {
@@ -40,12 +67,30 @@
     margin: 0;
     padding: 10px 0 20px 0;
     display: flex;
+    flex-direction: column;
+
+    .op, .labels {
+      margin: 0;
+      padding: 0;
+    }
+
+    .op {
+      flex-direction: row;
+    }
   }
 }
 
 .m-left {
   margin: 0;
   padding: 0;
+}
+
+.m-left-category {
+  width: 200px;
+  margin-right: 15px;
+}
+
+.m-left-select {
   width: 130px;
 }
 
@@ -54,4 +99,11 @@
   margin: 0 0 0 15px;
   flex: 1 0 auto;
   overflow: auto;
+}
+
+.g-page {
+  margin-top: 10px;
+  padding: 20px;
+  text-align: center;
+  height: auto;
 }
