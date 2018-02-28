@@ -1391,6 +1391,10 @@
         this.labelModData.type = '';
       },
       labelModSubmit (data) {
+        if(!this.labelSelect.length) {
+          this.$Message.info('请至少添加一个标签再试');
+          return;
+        }
         let _this = this;
         this.$ajax.post('/api/label/mod', data)
           .then(function (res) {
