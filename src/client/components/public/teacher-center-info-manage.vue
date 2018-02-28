@@ -419,10 +419,11 @@
                     },
                     on: {
                       click: () => {
-                        this.showDetails(params.row.labels);
+                        // manageLabels
+                        console.log('manage labels');
                       }
                     }
-                  }, '查 看')
+                  }, '管 理')
                 ]);
               }
             },
@@ -795,6 +796,31 @@
               }
             },
             {
+              title: '标 签',
+              key: 'labels',
+              align: 'center',
+              width: 80,
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'ghost',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        // manageLabels
+                        console.log('manage labels');
+                      }
+                    }
+                  }, '管 理')
+                ]);
+              }
+            },
+            {
               title: '文件名',
               key: 'filename'
             },
@@ -997,8 +1023,33 @@
               sortable: true
             },
             {
-              title: '操作',
-              width: 150
+              title: '操 作',
+              width: 150,
+              render: (h, params) => {
+                return h('div', [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        let _this = this;
+                        this.$Modal.confirm({
+                          title: '确认删除',
+                          content: '确定删除此标签？（标记此标签的文章或资源文件将不受影响）',
+                          onOk () {
+                            _this.infoDelete('label', params.row.label_id);
+                          }
+                        });
+                      }
+                    }
+                  }, '删 除')
+                ]);
+              }
             }
           ]
         },
