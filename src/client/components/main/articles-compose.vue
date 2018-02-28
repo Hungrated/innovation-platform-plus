@@ -70,6 +70,7 @@
         <div class="m-container2">
           <label-selector ref="labels"
                           :type="'blog'"
+                          :labelList="labelList"
                           :selectList="labelSelect"
                           @changeLabels="changeLabels"/>
         </div>
@@ -121,6 +122,7 @@
           group: '',
           labels: ''
         },
+        labelList: [],
         labelSelect: []
       };
     },
@@ -157,6 +159,18 @@
         }
         return labels.toString();
       },
+      refreshLabelList () {
+        let _this = this;
+        this.$ajax.post('/api/label/query', {
+          type: 'blog'
+        })
+          .then(function (res) {
+            _this.labelList = res.data;
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
       submit (type) {
         if (type === 'markdown') {
           this.$refs.markdownEditor.submit();
@@ -164,6 +178,9 @@
           this.$refs.eventEditor.submit();
         }
       }
+    },
+    mounted() {
+      this.refreshLabelList();
     }
   };
 </script>

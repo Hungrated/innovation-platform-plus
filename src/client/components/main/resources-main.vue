@@ -70,6 +70,7 @@
               <div class="m-upload body labels">
                 <label-selector ref="labels"
                                 :type="'file'"
+                                :labelList="labelList"
                                 :selectList="labelSelect"
                                 @changeLabels="changeLabels"/>
               </div>
@@ -297,13 +298,11 @@
       changeLabels (labelSelect) {
         this.labelSelect = labelSelect;
         this.uploadData.labels = this.stringifyLabels();
-        console.log(this.uploadData.labels);
       },
       delLabel (label) {
         const index = this.labelSelect.indexOf(label);
         this.labelSelect.splice(index, 1);
         this.uploadData.labels = this.stringifyLabels();
-        console.log(this.uploadData.labels);
       },
       submitFile () {
         if (this.uploadData.file === null ||

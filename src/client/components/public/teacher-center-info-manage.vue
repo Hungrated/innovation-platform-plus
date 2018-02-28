@@ -94,6 +94,28 @@
               </Modal>
             </div>
           </transition>
+          <Modal v-model="labelModFlag"
+                 title="标签管理"
+                 width="730"
+                 @on-ok="labelModSubmit()"
+                 @on-cancel="labelModCancel()">
+            <span>
+              <span v-for="(label, index) in labelSelect" :key="label.label_id">
+                <Tag closable
+                     type="dot"
+                     @on-close="delLabel(label)"
+                     :name="index"
+                     :color="label.category === 'both' ? 'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+                    {{label.name}}
+                </Tag>
+              </span>
+            </span>
+            <label-selector ref="labels"
+                            :type="labelModData.type"
+                            :labelList="labelList"
+                            :selectList="labelSelect"
+                            @changeLabels="changeLabels"/>
+          </Modal>
         </Card>
       </div>
       <div class="m-manage">
@@ -111,14 +133,19 @@
 </template>
 
 <script>
+  import labelSelector from '../public/label-select';
+
   export default {
     name: 'teacher-center-info-manage',
+    components: {
+      labelSelector
+    },
     data () {
       return {
         // pageLimit: 15,
         // curPage: 1,
         dataCount: 0,
-        infoLabel: 'label',
+        infoLabel: 'blog',
         infoCols: [],
         infoData: [],
         infoTypeList: [
@@ -419,8 +446,7 @@
                     },
                     on: {
                       click: () => {
-                        // manageLabels
-                        console.log('manage labels');
+                        this.labelMod('blog', params.row.blog_id, params.row.labels);
                       }
                     }
                   }, '管 理')
@@ -812,8 +838,7 @@
                     },
                     on: {
                       click: () => {
-                        // manageLabels
-                        console.log('manage labels');
+                        this.labelMod('file', params.row.file_id, params.row.labels);
                       }
                     }
                   }, '管 理')
@@ -1084,7 +1109,15 @@
             'Content-Type': 'multipart/form-data'
           }
         },
-        myCroppa: {}
+        myCroppa: {},
+        labelModFlag: false,
+        labelModData: {
+          type: '',
+          labels: '',
+          id: ''
+        },
+        labelList: [],
+        labelSelect: []
       };
     },
     methods: {
@@ -1127,6 +1160,7 @@
             switch (params.type) {
               case 'blog':
                 _this.infoCols = _this.queryCols.blog;
+                _this.refreshLabelList('blog');
                 break;
               case 'image':
                 _this.infoCols = _this.queryCols.image;
@@ -1139,6 +1173,7 @@
                 break;
               case 'resource':
                 _this.infoCols = _this.queryCols.resource;
+                _this.refreshLabelList('file');
                 break;
               case 'comment':
                 _this.infoCols = _this.queryCols.comment;
@@ -1295,6 +1330,80 @@
               category: 'both'
             };
             _this.refreshData();
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      stringifyLabels () {
+        let labels = [];
+        for (let i = 0; i < this.labelSelect.length; i++) {
+          labels.push(this.labelSelect[i].label_id);
+        }
+        return labels.toString();
+      },
+      changeLabels (labelSelect) {
+        this.labelSelect = labelSelect;
+        this.labels = this.stringifyLabels();
+      },
+      delLabel (label) {
+        const index = this.labelSelect.indexOf(label);
+        this.labelSelect.splice(index, 1);
+        this.labels = this.stringifyLabels();
+      },
+      getLabel (index) {
+        let labelList = this.labelList;
+        for (let i = 0; i < labelList.length; i++) {
+          if (labelList[i].label_id.toString() === index.toString()) {
+            return {
+              name: labelList[i].name,
+              category: labelList[i].category
+            };
+          }
+        }
+        return null;
+      },
+      parseLabel (labels) {
+        let res = [];
+        let labelIds = labels.toString().split(',');
+        for (let i = 0; i < labelIds.length; i++) {
+          let label = this.getLabel(labelIds[i]);
+          if (label !== null) {
+            res.push(label);
+          }
+        }
+        return res;
+      },
+      labelMod (type, id, labels) {
+        this.labelSelect = this.parseLabel(labels);
+        this.labelModFlag = true;
+        this.labelModData.type = type;
+        this.labelModData.labels = labels;
+        this.labelModData.id = id;
+      },
+      labelModCancel () {
+        this.labelModFlag = false;
+        this.labelModData.type = '';
+      },
+      labelModSubmit (data) {
+        let _this = this;
+        this.$ajax.post('/api/label/mod', data)
+          .then(function (res) {
+            _this.$Message.success(res.data.msg);
+            _this.labelSelect = [];
+            _this.refreshData();
+          })
+          .catch(function (e) {
+            console.log(e);
+          });
+      },
+      refreshLabelList (type) {
+        let _this = this;
+        this.$ajax.post('/api/label/query', {
+          type: type
+        })
+          .then(function (res) {
+            _this.labelList = res.data;
           })
           .catch(function (e) {
             console.log(e);
