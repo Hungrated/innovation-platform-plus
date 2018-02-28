@@ -381,24 +381,6 @@ router.get('/details', function (req, res) {
     });
 });
 
-router.post('/labelmod', function (req, res) {
-  Blog.update({
-    labels: req.body.labels
-  }, {
-    where: {
-      blog_id: req.body.blog_id
-    }
-  })
-    .then(function () {
-      res.json(statusLib.LABEL_MOD_SUCCESSFUL);
-      console.log('labels modified')
-    })
-    .catch(function (e) {
-      console.log(e);
-      res.json(statusLib.CONNECTION_ERROR);
-    });
-});
-
 /**
  *
  * 导出文章内容
