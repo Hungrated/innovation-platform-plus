@@ -1384,14 +1384,14 @@
           type: type,
           id: id,
           labels: labels
-        }
+        };
       },
       labelModCancel () {
         this.labelModFlag = false;
         this.labelModData.type = '';
       },
       labelModSubmit (data) {
-        if(!this.labelSelect.length) {
+        if (!this.labelSelect.length) {
           this.$Message.info('请至少添加一个标签再试');
           return;
         }
