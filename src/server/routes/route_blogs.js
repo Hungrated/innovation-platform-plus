@@ -488,8 +488,7 @@ router.post('/export', function (req, res, next) {
     if (!(err && err.code === "ENOENT")) {
       writeFile(outputFile, outputText, next);
     } else {
-      // noinspection JSAnnotator
-      fs.mkdir(outputPath, 0777, function (err) {
+      fs.mkdir(outputPath, function (err) {
         if (err) {
           console.log(err);
         } else {

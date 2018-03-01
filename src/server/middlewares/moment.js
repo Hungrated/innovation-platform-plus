@@ -20,6 +20,35 @@ module.exports = {
         console.log('moment: ' + uid + ' create failed');
       });
   },
+  addCoverToArticleMoment(id, cover) {
+    Moment.findOne({
+      where: {
+        uid: id
+      }
+    })
+      .then(function (moment) {
+        let oExtras = JSON.parse(moment.dataValues.extras);
+        oExtras.cover = cover;
+        Moment.update({
+          extras: JSON.stringify(oExtras)
+        }, {
+          where: {
+            uid: id
+          }
+        })
+          .then(function () {
+            console.log('moment: ' + id + ' add cover successful');
+          })
+          .catch(function (e) {
+            console.error(e);
+            console.log('moment: ' + id + ' add cover failed');
+          });
+      })
+      .catch(function (e) {
+        console.error(e);
+        console.log('moment: ' + id + ' add cover failed');
+      });
+  },
   validatePlanMoment (id, status) {
     Moment.findOne({
       where: {
