@@ -1,6 +1,6 @@
 <template>
   <div id="moments" class="g-moments">
-    <div class="g-moments nav">
+    <div class="g-moments nav" v-if="nav">
       <Menu mode="horizontal" theme="dark">
         <div class="m-nav">
           <MenuItem name="1">
@@ -130,6 +130,9 @@
     props: {
       limit: {
         default: 40
+      },
+      nav: {
+        default: true
       }
     },
     data () {

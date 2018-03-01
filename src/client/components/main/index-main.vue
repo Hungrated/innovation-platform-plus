@@ -2,7 +2,7 @@
   <div id="index">
     <index-main-banner/>
     <div class="g-extras">
-      <moments-main :limit="5"/>
+      <moments-main :limit="5" :nav="false"/>
     </div>
   </div>
 </template>
