@@ -68,4 +68,12 @@
 
 .g-details {
   color: #999999;
+
+
+}
+
+.g-details-desc {
+   overflow:hidden;
+   text-overflow:ellipsis;
+   white-space:nowrap
 }

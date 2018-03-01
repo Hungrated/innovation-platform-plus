@@ -156,6 +156,7 @@
         if (mode === 'history') {
           window.history.back();
           this.refreshData(this.browseHistory.pop());
+          window.scrollTo(0, 0);
         } else {
           this.changeRoute('/articles');
         }
@@ -257,7 +258,7 @@
         this.$ajax.post('/api/blog/query', {
           request: request,
           carousel: false,
-          limit: 8
+          limit: 20
         })
           .then(function (res) {
             _this.articleList = res.data.articleList;
@@ -270,6 +271,7 @@
         this.browseHistory.push(window.location.href);
         this.$router.push('/articles/details?index=' + index);
         this.refreshData();
+        window.scrollTo(0, 0);
       }
     },
     mounted () {
