@@ -30,7 +30,7 @@ router.use(objMulter.any()); // any file type
  * @api {post} /api/file/upload file.upload
  * @apiName fileUpload
  * @apiGroup File
- * @apiVersion 3.1.0
+ * @apiVersion 3.2.0
  * @apiPermission user
  *
  * @apiDescription 用户上传资源文件。上传方式为form-data。
@@ -90,12 +90,24 @@ router.post('/upload', function (req, res) {
       description: fileDescriptions[i]
     };
 
+    let extras = {
+      desc: fileInfo.description,
+      url: fileInfo.url,
+      labels: fileInfo.labels
+    };
+
     // create a record for table `files`
     File.create(fileInfo)
       .then(function () {
         flag++;
         if (flag === req.files.length) {
-          moment.createMoment('resource', fileInfo.filename + ' | ' + fileInfo.description, fileInfo.url, fileInfo.uploader_id, fileInfo.file_id);
+          moment.createMoment(
+            'resource',
+            fileInfo.filename,
+            extras,
+            fileInfo.uploader_id,
+            fileInfo.file_id
+          );
           res.json(statusLib.FILE_UPLOAD_SUCCESSFUL);
           console.log('file upload successful');
         }
