@@ -63,7 +63,7 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
       });
   };
   let addCover = function (url) {
-    moment.addCoverToArticleMoment(req.boy.blog_id, url);
+    moment.addCoverToArticleMoment(req.body.blog_id, url);
     Blog.update({
       cover: url
     }, {
