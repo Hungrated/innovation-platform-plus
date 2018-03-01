@@ -35,8 +35,7 @@ const apidoc = pathLib.join(root, 'public', 'apidoc');
 
 // make dir functions
 const makeDir = function (dir) {
-  // noinspection JSAnnotator
-  fs.mkdir(dir, 0777, function (err) {
+  fs.mkdir(dir, function (err) {
     if (err) {
       console.log('dir: `' + dir + '` exists.');
     } else {
