@@ -1,7 +1,6 @@
 .m-unit {
   display: inline-block;
   width: 100%;
-  justify-content: space-between;
   padding: 0 20px;
   border-bottom: 1px dashed #EEEEEE;
   transition: all 250ms;
@@ -19,11 +18,16 @@
     border: none;
   }
 
+  .desc {
+    width: auto;
+    color: #999999;
+    border-radius: unset;
+    border: none;
+  }
+
   .details {
-    width: 45%;
+    width: auto;
     padding: 0;
-    flex-direction: column;
-    justify-content: right;
     border: none;
     color: #999999;
     display: inline-block;

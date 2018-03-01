@@ -13,11 +13,11 @@
             </Tag>
           </span>
         </span>
+        <span class="m-unit desc">{{article.description}}</span>
       </span>
       <span class="m-unit details">
         <Icon type="ios-person-outline"></Icon>&nbsp;{{article.profile.name}}&emsp;
         <Icon type="ios-clock-outline"></Icon>&nbsp;{{article.publishTime}}&emsp;
-        <Icon type="ios-star-outline"></Icon>&nbsp;{{article.description}}
       </span>
     </div>
   </div>
