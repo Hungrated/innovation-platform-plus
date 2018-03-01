@@ -43,7 +43,7 @@ let objMulter = multer({
  * @apiParam {String} content 文章内容
  * @apiParam {String} [cover_url] 文章封面图地址
  * @apiParam {String} [photo_url] 文章所有图片地址
- * @apiParam {Number} aurhor_id 文章作者编号
+ * @apiParam {Number} author_id 文章作者编号
  *
  * @apiParamExample {json} 请求示例
  * {
@@ -53,8 +53,6 @@ let objMulter = multer({
  *     "labels": "1,2,6,15",
  *     "description": "description0",
  *     "content": "content0",
- *     "cover_url": "",
- *     "photo_url": "",
  *     "author_id": 14051531
  * }
  *
@@ -321,12 +319,11 @@ router.post('/query', function (req, res) {
  *     "blog": {
  *         "blog_id": "blg782148",
  *         "type": "project",
- *         "labels": null,
+ *         "group": "技术交流",
+ *         "labels": "1,2,6,15",
  *         "title": "title0",
  *         "description": "desccription0",
  *         "content": "content0",
- *         "cover_url": "",
- *         "photo_url": "",
  *         "created_at": "2018-01-30T03:35:15.000Z",
  *         "updated_at": "2018-01-30T03:35:15.000Z",
  *         "author_id": 14051531,
@@ -364,7 +361,6 @@ router.post('/query', function (req, res) {
  * }
  */
 router.get('/details', function (req, res) {
-  // fetch blog details
   const id = urlLib.parse(req.url, true).query.index;
   Blog.findByPrimary(id, {
     include: [
