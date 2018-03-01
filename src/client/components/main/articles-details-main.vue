@@ -54,6 +54,13 @@
           <div class="m-list m-list-rel">
             <span class="m-list title"><strong>类别标签</strong></span>
             <span class="m-label">
+              <div>
+                <Button @click="getArticleList()"
+                        size="small"
+                        type="warning">
+                  <strong>所有文章</strong>
+                </Button>
+              </div>
               <span v-for="label in labelList" :key="label.label_id">
                 <Button @click="getArticleList({labels: label.label_id})"
                         size="small"
