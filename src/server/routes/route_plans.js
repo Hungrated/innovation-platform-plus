@@ -25,7 +25,7 @@ const officeGen = require('officegen');
  * @api {post} /api/plan/submit plan.submit
  * @apiName planSubmit
  * @apiGroup Plan
- * @apiVersion 1.0.0
+ * @apiVersion 3.2.0
  * @apiPermission user.student
  *
  * @apiDescription 学生提交计划。
@@ -123,7 +123,7 @@ router.post('/submit', function (req, res) {
  * @api {post} /api/plan/modify plan.modify
  * @apiName planModify
  * @apiGroup Plan
- * @apiVersion 1.0.0
+ * @apiVersion 3.2.0
  * @apiPermission user.student
  *
  * @apiDescription 学生修改计划。
@@ -237,7 +237,7 @@ router.post('/modify', function (req, res) {
  * @api {post} /api/plan/op plan.op
  * @apiName planOp
  * @apiGroup Plan
- * @apiVersion 3.1.0
+ * @apiVersion 3.2.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师审核学生计划。
@@ -341,7 +341,6 @@ router.post('/op', function (req, res) {
  * ]
  */
 router.post('/query', function (req, res) {
-  // get list of all (or personal) plans
   const request = req.body.request;
   const where = (request === 'all') ? {} : {student_id: request};
 
@@ -368,7 +367,7 @@ router.post('/query', function (req, res) {
 
 /**
  *
- * 导出计划到Word
+ * 导出计划为Word文档
  *
  * @api {post} /api/plan/export plan.export
  * @apiName planExport
