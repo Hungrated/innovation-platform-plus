@@ -6,7 +6,7 @@ module.exports = {
     let momentData = {
       type: type,
       desc: desc,
-      href: extras,
+      extras: JSON.stringify(extras),
       student_id: sid,
       uid: uid
     };
@@ -21,15 +21,28 @@ module.exports = {
       });
   },
   validatePlanMoment (id, status) {
-    Moment.update({
-      href: status
-    }, {
+    Moment.findOne({
       where: {
         uid: id
       }
     })
-      .then(function () {
-        console.log('moment: ' + id + ' validate successful');
+      .then(function (moment) {
+        let oExtras = JSON.parse(moment.dataValues.extras);
+        oExtras.status = status;
+        Moment.update({
+          extras: JSON.stringify(oExtras)
+        }, {
+          where: {
+            uid: id
+          }
+        })
+          .then(function () {
+            console.log('moment: ' + id + ' validate successful');
+          })
+          .catch(function (e) {
+            console.error(e);
+            console.log('moment: ' + id + ' validate failed');
+          });
       })
       .catch(function (e) {
         console.error(e);
@@ -38,8 +51,10 @@ module.exports = {
   },
   createPlanModifyMoment (type, desc, extras, sid, uid) {
     let _this = this;
+    let oExtras = JSON.parse(extras);
+    oExtras.status = '已修改';
     Moment.update({
-      href: '已修改',
+      extras: JSON.stringify(oExtras),
       uid: 'm_' + uid
     }, {
       where: {
@@ -47,7 +62,7 @@ module.exports = {
       }
     })
       .then(function () {
-        _this.createMoment(type, desc, extras, sid, uid);
+        _this.createMoment(type, desc, oExtras, sid, uid);
         console.log('moment: ' + uid + ' modify successful');
       })
       .catch(function (e) {

@@ -30,7 +30,7 @@ let objMulter = multer({
  * @api {post} /api/blog/publish blog.publish
  * @apiName blogPublish
  * @apiGroup Blog
- * @apiVersion 3.1.0
+ * @apiVersion 3.2.0
  * @apiPermission user
  *
  * @apiDescription 用户发表文章。
@@ -72,11 +72,22 @@ router.post('/publish', function (req, res) {
   let publishData = req.body;
   publishData.blog_id = 'blg' + uid.generate();
 
-  let href = '/articles/details?index=' + publishData.blog_id;
+  let extras = {
+    href: '/articles/details?index=' + publishData.blog_id,
+    desc: publishData.description,
+    labels: publishData.labels,
+    cover: ''
+  };
 
   Blog.create(publishData)
     .then(function (blog) {
-      moment.createMoment('article', publishData.title, href, publishData.author_id, publishData.blog_id);
+      moment.createMoment(
+        'article',
+        publishData.title,
+        extras,
+        publishData.author_id,
+        publishData.blog_id
+      );
       res.json({
         status: statusLib.BLOG_PUB_SUCCESSFUL.status,
         msg: statusLib.BLOG_PUB_SUCCESSFUL.msg,

@@ -18,9 +18,8 @@ const schema = {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  href: {
-    type: Sequelize.STRING(64),
-    allowNull: false
+  extras: {
+    type: Sequelize.STRING
   },
   uid: {
     type: Sequelize.STRING(32),
