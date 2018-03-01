@@ -7,15 +7,15 @@
   }
 
   .nav {
-    position: absolute;
-    top: -45px;
-    right: 170px;
-    padding: 0;
-    box-shadow: 0 0 3px #DDDDDD;
-    width: 124px;
-    overflow: hidden;
-    user-select: none;
-  }
+     position: absolute;
+     top: -45px;
+     right: 170px;
+     padding: 0;
+     box-shadow: 0 0 3px #DDDDDD;
+     width: 124px;
+     overflow: hidden;
+     user-select: none;
+   }
 
   .header {
     margin-bottom: 15px;
@@ -29,7 +29,7 @@
     border-top: 1px solid #EEEEEE;
     border-bottom: 1px solid #EEEEEE;
     min-height: calc(100vh - 158px);
-    padding: 10px 0 0 0;
+    padding: 10px 0;
   }
 
   .page {

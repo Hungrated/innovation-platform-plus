@@ -92,10 +92,10 @@
                   <span>{{moment.desc}}</span>
                 </div>
                 <div v-if="moment.extras.status !== ''">
-                  <strong v-if="moment.extras.status === '已通过'"
+                  <strong v-if="moment.extras.status !== '未审核'"
                           class="m-moment item status">{{moment.extras.status}}</strong>
                   <span v-else class="m-moment item">
-                    <strong class="m-moment item status">{{moment.extras.status}}</strong>
+                    <strong class="m-moment item status">未审核</strong>
                     <span>
                       <Button @click="verifyPlan(moment.uid, 1)" type="success" size="small">
                       <Icon type="checkmark"></Icon> 通 过
