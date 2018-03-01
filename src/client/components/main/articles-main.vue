@@ -14,7 +14,9 @@
     <Card disHover>
       <div class="g-labels">
         <span class="m-labels">
-          <span class="m-label m-label-fixed"><strong>分 组&nbsp;<Icon type="arrow-right-a"></Icon></strong></span>
+          <span class="m-label m-label-fixed">
+            <strong>分 组&nbsp;<Icon type="arrow-right-a"></Icon></strong>
+          </span>
           <span class="m-label m-label-inline">
             <span class="m-label" v-for="group in groupList" :key="group.index">
               <Button @click="getArticleList({group: group.label})"
@@ -36,7 +38,9 @@
               </Button>
             </span>
           </span>
-          <span class="m-label m-label-fixed"><strong><Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong></span>
+          <span class="m-label m-label-fixed">
+            <strong><Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong>
+          </span>
         </span>
       </div>
       <div class="g-articles header">
