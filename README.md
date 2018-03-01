@@ -38,6 +38,11 @@ The `Innovation Platform` is a showcase that teachers and students can display c
 
 ### 3 Version control
 
+**version `v3.2.0` on 1 Mar 2018**  
+
+_updated pages moments & index_  
+_improved moment creating interface_  
+
 **version `v3.1.0` on 28 Feb 2018**  
 
 _added label system for content publishing & uploading_  
