@@ -5,9 +5,9 @@
         <Button type="text" size="large" @click="revealDetails(article.blog_id)">
           <strong>{{article.title}}</strong>
         </Button>
-        <span class="g-labels">
+        <span class="g-labels" v-if="!disableLabels">
           <span v-for="(label, index) in article.labels" :key="index">
-            <Tag size="small" :color="label.category === 'both' ?
+            <Tag type="border" size="small" :color="label.category === 'both' ?
                  'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
               {{label.name}}
             </Tag>
@@ -26,7 +26,7 @@
 <script>
   export default {
     name: 'article-view-list',
-    props: ['articleList', 'count'],
+    props: ['articleList', 'count', 'disableLabels'],
     methods: {
       revealDetails (index) {
         this.$router.push('/articles/details?index=' + index);

@@ -140,6 +140,7 @@
       },
       changeRoute (path) {
         this.$router.push(path);
+        window.scrollTo(0, 0);
       }
     },
     components: {

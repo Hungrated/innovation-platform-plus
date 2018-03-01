@@ -178,6 +178,7 @@
     methods: {
       changeRoute (path) {
         this.$router.push(path);
+        window.scrollTo(0, 0);
       },
       changeMode (mode) {
         if (mode === 'markdown') {

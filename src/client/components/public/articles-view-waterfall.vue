@@ -24,8 +24,10 @@
             </span>
             <span class="g-labels">
               <span v-for="(label, index) in item.labels" :key="index">
-                <Tag size="small" :color="label.category === 'both' ? 'blue' : (label.category === 'blog' ? 'green' :
-                'yellow')">
+                <Tag type="border"
+                     size="small"
+                     :color="label.category === 'both' ? 'blue' : (label.category === 'blog'
+                      ? 'green' : 'yellow')">
                     {{label.name}}
                 </Tag>
               </span>
@@ -46,7 +48,9 @@
             </span>
             <span class="g-labels">
               <span v-for="(label, index) in item.labels" :key="index">
-                <Tag :color="label.category === 'both' ? 'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+                <Tag type="border"
+                     :color="label.category === 'both'
+                       ? 'blue': (label.category === 'blog' ? 'green' : 'yellow')">
                     {{label.name}}
                 </Tag>
               </span>

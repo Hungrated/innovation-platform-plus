@@ -39,6 +39,11 @@
                 </Button>
                 <Button type="text"
                         size="small"
+                        @click="back('history')">
+                  返回上一页
+                </Button>
+                <Button type="text"
+                        size="small"
                         @click="back()">
                   返回所有文章
                 </Button>
@@ -134,6 +139,7 @@
         },
         labelList: [],
         articleList: [],
+        browseHistory: [],
         comment: ''
       };
     },
@@ -144,9 +150,15 @@
     methods: {
       changeRoute (path) {
         this.$router.push(path);
+        window.scrollTo(0, 0);
       },
-      back () {
-        this.changeRoute('/articles');
+      back (mode) {
+        if (mode === 'history') {
+          window.history.back();
+          this.refreshData(this.browseHistory.pop());
+        } else {
+          this.changeRoute('/articles');
+        }
       },
       getLabel (index) {
         let labelList = this.labelList;
@@ -184,9 +196,9 @@
             console.log(e);
           });
       },
-      refreshData () {
+      refreshData (href) {
         let _this = this;
-        const query = window.location.href.split('?')[1];
+        const query = (href || window.location.href).split('?')[1];
         this.index = query.split('=')[1];
         this.$ajax.get('/api/blog/details?' + query)
           .then(function (res) {
@@ -255,6 +267,7 @@
           });
       },
       revealDetails (index) {
+        this.browseHistory.push(window.location.href);
         this.$router.push('/articles/details?index=' + index);
         this.refreshData();
       }

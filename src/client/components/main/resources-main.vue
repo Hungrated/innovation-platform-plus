@@ -226,6 +226,8 @@
                 labelViews.push(
                   h('Tag', {
                     props: {
+                      type: 'border',
+                      size: 'small',
                       color: labels[i].category === 'both'
                         ? 'blue'
                         : (labels[i].category === 'blog' ? 'green' : 'yellow')

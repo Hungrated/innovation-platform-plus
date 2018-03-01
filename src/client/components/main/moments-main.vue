@@ -45,7 +45,7 @@
                 <div class="m-unit details">
                   <span>
                     <span v-for="(label, index) in moment.extras.labels" :key="index">
-                      <Tag size="small" :color="label.category === 'both' ?
+                      <Tag type="border" size="small" :color="label.category === 'both' ?
                              'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
                         {{label.name}}
                       </Tag>
@@ -76,7 +76,7 @@
                 <div class="m-unit details">
                   <span>
                     <span v-for="(label, index) in moment.extras.labels" :key="index">
-                      <Tag size="small" :color="label.category === 'both' ?
+                      <Tag type="border" size="small" :color="label.category === 'both' ?
                              'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
                         {{label.name}}
                       </Tag>
@@ -97,22 +97,24 @@
                 <Icon type="ios-lightbulb"></Icon>&nbsp;&nbsp;
                 <strong>{{moment.profile.name}}</strong>&nbsp;更新了计划：
                 <strong>{{moment.desc}}</strong>
-                <!--<span class="m-details">-->
-                <!--<a :href="'/#/resources'">查看所有资源</a>&nbsp;&nbsp;|&nbsp;-->
-                <!--<a :href="moment.extras.url">下 载</a>-->
-                <!--</span>-->
               </span>
               <div class="m-unit">
                 <img v-if="!!moment.extras.cover" :src="moment.extras.cover">
                 <div class="m-unit details">
                   <span>
                     <span v-for="(label, index) in moment.extras.labels" :key="index">
-                      <Tag size="small" :color="label.category === 'both' ?
+                      <Tag type="border" size="small" :color="label.category === 'both' ?
                              'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
                         {{label.name}}
                       </Tag>
                     </span>
-                    <span>&emsp;<strong>描 述： </strong>{{moment.extras.desc}}</span>
+                    <span><strong>时 间： </strong>
+                      <Tag type="border" size="small" color="green">
+                        {{moment.extras.start}} - {{moment.extras.deadline}}
+                      </Tag>
+                    </span>
+                    &emsp;
+                    <span><strong>描 述： </strong>{{moment.desc}}</span>
                    </span>
                 </div>
               </div>
