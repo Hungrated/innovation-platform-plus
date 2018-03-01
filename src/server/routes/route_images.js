@@ -5,6 +5,7 @@ const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
 const uid = require('../middlewares/id_gen');
+const moment = require('../middlewares/moment');
 const Blog = db.Blog;
 const Image = db.Image;
 
@@ -25,7 +26,7 @@ let objMulter = multer({
  * @api {post} /api/image/upload image.upload
  * @apiName imageUpload
  * @apiGroup Image
- * @apiVersion 2.6.0
+ * @apiVersion 3.1.0
  * @apiPermission user
  *
  * @apiDescription 用户上传文章中的图片。
@@ -62,6 +63,7 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
       });
   };
   let addCover = function (url) {
+    moment.addCoverToArticleMoment(req.body.blog_id, url);
     Blog.update({
       cover: url
     }, {
@@ -77,8 +79,7 @@ router.post('/upload', objMulter.any(), function (req, res, next) {
       });
   };
 
-  // noinspection JSAnnotator
-  fs.mkdir(dir, 0777, function (err) {
+  fs.mkdir(dir, function (err) {
     if (err) {
       console.log(err);
     } else {

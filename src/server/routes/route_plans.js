@@ -75,6 +75,12 @@ router.post('/submit', function (req, res) {
   const status = '未审核';
   const plan_id = 'pln' + uid.generate();
 
+  let extras = {
+    start: start,
+    deadline: deadline,
+    status: status
+  }
+
   Plan.create({
     plan_id: plan_id,
     year: year,
@@ -89,7 +95,13 @@ router.post('/submit', function (req, res) {
     .then(function () {
       // if plan is not validated,
       // params[2] should be plan_id, otherwise it should be ''.
-      moment.createMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', status, student_id, plan_id);
+      moment.createMoment(
+        'planmod',
+        content,
+        extras,
+        student_id,
+        plan_id
+      );
       res.json({
         'status': statusLib.PLAN_SUBMIT_SUCCESSFUL.status,
         'msg': statusLib.PLAN_SUBMIT_SUCCESSFUL.msg,
@@ -189,13 +201,25 @@ router.post('/modify', function (req, res) {
     status: status
   };
 
+  let extras = {
+    start: start,
+    deadline: deadline,
+    status: status
+  }
+
   Plan.update(modData, {
     where: {
       plan_id: req.body.plan_id
     }
   })
     .then(function () {
-      moment.createPlanModifyMoment('planmod', content + '  ( ' + start + ' - ' + deadline + ' )', status, student_id, req.body.plan_id);
+      moment.createPlanModifyMoment(
+        'planmod',
+        content,
+        extras,
+        student_id,
+        req.body.plan_id
+      );
       res.json(statusLib.PLAN_MOD_SUCCESSFUL);
       console.log('plan modify successful');
     })
@@ -213,7 +237,7 @@ router.post('/modify', function (req, res) {
  * @api {post} /api/plan/op plan.op
  * @apiName planOp
  * @apiGroup Plan
- * @apiVersion 2.0.0
+ * @apiVersion 3.1.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师审核学生计划。
@@ -579,31 +603,7 @@ router.post('/export', function (req, res) {
           },
           fontFamily: 'Times New Roman'
         }
-      },
-      // {
-      //   val: '评 级',
-      //   opts: {
-      //     cellColWidth: 1250,
-      //     b: true,
-      //     sz: 20,
-      //     shd: {
-      //       fill: 'DDDDDD'
-      //     },
-      //     fontFamily: 'Times New Roman'
-      //   }
-      // },
-      // {
-      //   val: '评 语',
-      //   opts: {
-      //     cellColWidth: 2000,
-      //     b: true,
-      //     sz: 20,
-      //     shd: {
-      //       fill: 'DDDDDD'
-      //     },
-      //     fontFamily: 'Times New Roman'
-      //   }
-      // }
+      }
     ]
   ];
 
