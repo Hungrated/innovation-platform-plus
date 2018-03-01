@@ -11,7 +11,7 @@
                :watch="articleList">
       <waterfall-slot v-for="(item, index) in articleList"
                       :width="400"
-                      :height="item.cover ? 345 : 160"
+                      :height="item.cover ? 355 : 170"
                       :order="index"
                       :key="item.blog_id">
         <Card class="m-unit m-unit-cover" v-if="item.cover">

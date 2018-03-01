@@ -27,7 +27,7 @@
 }
 
 .g-labels {
-  display: inline-block;
+  display: flex;
   width: 100%;
   justify-content: space-between;
   padding: 15px;
@@ -37,13 +37,34 @@
   margin-bottom: 15px;
 }
 
-.m-label {
+.m-labels {
+  display: flex;
+  flex: auto;
+}
+
+.m-labels-right {
+  justify-content: flex-end;
+}
+
+.m-label, .m-label-fixed {
   display: inline-block;
-  margin: 0 5px;
+  margin: 0 2px;
+}
+
+.m-label {
+  flex: 0 1 auto;
 }
 
 .m-label-right {
   float: right;
+}
+
+.m-label-fixed {
+  flex: 0 0 50px;
+}
+
+.m-label-inline {
+  display: inline-block;
 }
 
 .m-upload {
