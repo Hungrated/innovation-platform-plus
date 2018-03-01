@@ -80,7 +80,7 @@ module.exports = {
   },
   createPlanModifyMoment (type, desc, extras, sid, uid) {
     let _this = this;
-    let oExtras = JSON.parse(extras);
+    let oExtras = JSON.parse(JSON.stringify(extras));
     oExtras.status = '已修改';
     Moment.update({
       extras: JSON.stringify(oExtras),
@@ -91,7 +91,7 @@ module.exports = {
       }
     })
       .then(function () {
-        _this.createMoment(type, desc, oExtras, sid, uid);
+        _this.createMoment(type, desc, extras, sid, uid);
         console.log('moment: ' + uid + ' modify successful');
       })
       .catch(function (e) {

@@ -221,7 +221,6 @@
           !submitData.content ||
           !submitData.group ||
           !submitData.labels) {
-          console.log(submitData);
           this.$Message.info('请将空余内容补充完整');
         } else {
           const _this = this;

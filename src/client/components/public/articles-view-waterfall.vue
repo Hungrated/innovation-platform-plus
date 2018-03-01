@@ -11,7 +11,7 @@
                :watch="articleList">
       <waterfall-slot v-for="(item, index) in articleList"
                       :width="400"
-                      :height="item.cover ? 339 : 154"
+                      :height="item.cover ? 355 : 170"
                       :order="index"
                       :key="item.blog_id">
         <Card class="m-unit m-unit-cover" v-if="item.cover">
@@ -24,8 +24,10 @@
             </span>
             <span class="g-labels">
               <span v-for="(label, index) in item.labels" :key="index">
-                <Tag size="small" :color="label.category === 'both' ? 'blue' : (label.category === 'blog' ? 'green' :
-                'yellow')">
+                <Tag type="border"
+                     size="small"
+                     :color="label.category === 'both' ? 'blue' : (label.category === 'blog'
+                      ? 'green' : 'yellow')">
                     {{label.name}}
                 </Tag>
               </span>
@@ -46,7 +48,9 @@
             </span>
             <span class="g-labels">
               <span v-for="(label, index) in item.labels" :key="index">
-                <Tag :color="label.category === 'both' ? 'blue' : (label.category === 'blog' ? 'green' : 'yellow')">
+                <Tag type="border"
+                     :color="label.category === 'both'
+                       ? 'blue': (label.category === 'blog' ? 'green' : 'yellow')">
                     {{label.name}}
                 </Tag>
               </span>

@@ -72,21 +72,6 @@
           </Modal>
         </Card>
       </div>
-      <!--<div class="g-panel right">-->
-        <!--<Card disHover>-->
-          <!--<span slot="title">-->
-            <!--<span class="g-panel header-card">-->
-              <!--<strong>我的资料</strong>-->
-            <!--</span>-->
-          <!--</span>-->
-          <!--<div class="m-profile" v-model="teacherProfile">-->
-            <!--<span><strong><Icon type="person"></Icon>&nbsp;{{teacherProfile.name}}</strong>&emsp;<em>导 师</em>&emsp;&emsp;</span>-->
-            <!--<span>-->
-              <!--<Icon type="card"></Icon>&emsp;{{teacherProfile.school_id}}-->
-            <!--</span>-->
-          <!--</div>-->
-        <!--</Card>-->
-      <!--</div>-->
     </div>
     <div class="g-panel body">
       <Timeline>
@@ -106,8 +91,9 @@
                   <strong>{{moment.profile.name}}</strong>&nbsp;：
                   <span>{{moment.desc}}</span>
                 </div>
-                <div v-if="moment.href !== ''">
-                  <strong v-if="moment.href !== '未审核'" class="m-moment item status">{{ moment.href }}</strong>
+                <div v-if="moment.extras.status !== ''">
+                  <strong v-if="moment.extras.status !== '未审核'"
+                          class="m-moment item status">{{moment.extras.status}}</strong>
                   <span v-else class="m-moment item">
                     <strong class="m-moment item status">未审核</strong>
                     <span>
@@ -345,6 +331,9 @@
         this.$ajax.get('/api/moment/fetch?type=planmod&limit=40')
           .then(function (res) {
             _this.moments = res.data;
+            for (let i = 0; i < res.data.length; i++) {
+              _this.moments[i].extras = JSON.parse(res.data[i].extras);
+            }
           })
           .catch(function (e) {
             console.log(e);

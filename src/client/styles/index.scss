@@ -1,10 +1,26 @@
 .g-extras {
-  .item {
-    display: inline-block;
-    width: calc(50% - 5px);
+  display: flex;
+  margin-bottom: 20px;
+
+  .left {
+    display: block;
+    flex: 1 0 auto;
+    margin: 0;
+  }
+
+  .right {
+    width: 400px;
+    margin: 20px 50px 20px -50px;
+    padding: 5px;
   }
 }
 
-.moments-main {
-  padding: 0;
+.g-button {
+  position: absolute;
+  bottom: 10px;
+
+}
+
+.g-button-moments {
+  left: 240px;
 }

@@ -78,27 +78,35 @@
           </div>
         </transition>
         <div class="g-labels">
-        <span>
-          <span><strong>分 组&nbsp;<Icon type="arrow-right-a"></Icon>&emsp;</strong></span>
-          <span class="m-label" v-for="group in groupList" :key="group.index">
-            <Button @click="refreshFileList({group: group.label})"
-                    size="small"
-                    type="warning">
-              <strong>{{group.label}}</strong>
-            </Button>
-          </span>
-        </span>
-          <span class="m-label m-label-right">
-            <span class="m-label" v-for="label in labelList" :key="label.label_id">
-              <Button @click="refreshFileList({labels: label.label_id})"
-                      size="small"
-                      :type="label.category === 'both'
-                      ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
-                <strong>{{label.name}}</strong>
-              </Button>
+          <span class="m-labels">
+            <span class="m-label m-label-fixed">
+              <strong>分 组&nbsp;<Icon type="arrow-right-a"></Icon></strong>
             </span>
-            <span><strong>&emsp;<Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong></span>
-        </span>
+            <span class="m-label m-label-inline">
+              <span class="m-label" v-for="group in groupList" :key="group.index">
+                <Button @click="getArticleList({group: group.label})"
+                        size="small"
+                        type="warning">
+                  <strong>{{group.label}}</strong>
+                </Button>
+              </span>
+            </span>
+          </span>
+          <span class="m-labels m-labels-right">
+            <span class="m-label m-label-inline">
+              <span class="m-label m-label-right" v-for="label in labelList" :key="label.label_id">
+                <Button @click="getArticleList({labels: label.label_id})"
+                        size="small"
+                        :type="label.category === 'both'
+                          ? 'success' : (label.category === 'blog' ? 'primary' : 'warning')">
+                  <strong>{{label.name}}</strong>
+                </Button>
+              </span>
+            </span>
+            <span class="m-label m-label-fixed">
+              <strong><Icon type="arrow-left-a"></Icon>&nbsp;标 签</strong>
+            </span>
+          </span>
         </div>
         <Table stripe :columns="resourceTableColumns" :data="resourceList"></Table>
       </div>
@@ -226,6 +234,8 @@
                 labelViews.push(
                   h('Tag', {
                     props: {
+                      type: 'border',
+                      size: 'small',
                       color: labels[i].category === 'both'
                         ? 'blue'
                         : (labels[i].category === 'blog' ? 'green' : 'yellow')

@@ -39,6 +39,11 @@
                 </Button>
                 <Button type="text"
                         size="small"
+                        @click="back('history')">
+                  返回上一页
+                </Button>
+                <Button type="text"
+                        size="small"
                         @click="back()">
                   返回所有文章
                 </Button>
@@ -54,6 +59,13 @@
           <div class="m-list m-list-rel">
             <span class="m-list title"><strong>类别标签</strong></span>
             <span class="m-label">
+              <div>
+                <Button @click="getArticleList()"
+                        size="small"
+                        type="warning">
+                  <strong>所有文章</strong>
+                </Button>
+              </div>
               <span v-for="label in labelList" :key="label.label_id">
                 <Button @click="getArticleList({labels: label.label_id})"
                         size="small"
@@ -127,6 +139,7 @@
         },
         labelList: [],
         articleList: [],
+        browseHistory: [],
         comment: ''
       };
     },
@@ -137,9 +150,15 @@
     methods: {
       changeRoute (path) {
         this.$router.push(path);
+        window.scrollTo(0, 0);
       },
-      back () {
-        this.changeRoute('/articles');
+      back (mode) {
+        if (mode === 'history') {
+          window.history.back();
+          this.refreshData(this.browseHistory.pop());
+        } else {
+          this.changeRoute('/articles');
+        }
       },
       getLabel (index) {
         let labelList = this.labelList;
@@ -177,9 +196,9 @@
             console.log(e);
           });
       },
-      refreshData () {
+      refreshData (href) {
         let _this = this;
-        const query = window.location.href.split('?')[1];
+        const query = (href || window.location.href).split('?')[1];
         this.index = query.split('=')[1];
         this.$ajax.get('/api/blog/details?' + query)
           .then(function (res) {
@@ -248,6 +267,7 @@
           });
       },
       revealDetails (index) {
+        this.browseHistory.push(window.location.href);
         this.$router.push('/articles/details?index=' + index);
         this.refreshData();
       }
