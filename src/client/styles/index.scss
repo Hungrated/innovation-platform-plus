@@ -1,6 +1,11 @@
 .g-extras {
   display: flex;
   margin-bottom: 20px;
+  padding-bottom: 30px;
+
+  .left, .right {
+    position: relative;
+  }
 
   .left {
     display: block;
@@ -16,11 +21,10 @@
 }
 
 .g-button {
-  position: absolute;
-  bottom: 10px;
-
+  margin-top: 18px;
 }
 
 .g-button-moments {
-  left: 240px;
+  margin-left: 240px;
+  margin-top: -60px;
 }
