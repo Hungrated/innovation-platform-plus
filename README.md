@@ -2,6 +2,8 @@
 
 > An advanced on-line information-managing & resource-sharing platform for Innovation Practice courses.
 
+> This project has already been transferred to GitLab for further development.
+
 ### 1 Introduction
 
 The `Innovation Platform` is a showcase that teachers and students can display class culture, project status and events, etc. The platform is made for the Innovation Practice course, integrating functions of content publishing and sharing, course achievements showing, student events displaying, on-line file sharing, on- line plan management and so on, holding the features of simplicity, light-weight and easy-to-use.The platform can become an efficient course testing tool and information-sharing platform. It is suitable for small classes. It can contribute a lot to the construction of the Innovation Practice course.
@@ -37,6 +39,10 @@ The `Innovation Platform` is a showcase that teachers and students can display c
 ##### 2.3.3 Info-managing Panel
 
 ### 3 Version control
+
+**version `v3.3.0` on 2 Mar 2018**  
+
+_added back-to-top button & fixed bugs_  
 
 **version `v3.2.0` on 1 Mar 2018**  
 
@@ -91,9 +97,3 @@ _added moment module_
 _basic frame, basic modules_
 
 **initial commit on 27 Nov 2017**  
-
-### 4 User Manual
-
-SEE: [**MANUAL**](manual/innovation-platform.md)
-
-> End of File

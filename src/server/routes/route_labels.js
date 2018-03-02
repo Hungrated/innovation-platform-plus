@@ -141,7 +141,7 @@ router.post('/submit', function (req, res) {
  * @api {post} /api/label/mod label.mod
  * @apiName labelMod
  * @apiGroup Label
- * @apiVersion 3.1.0
+ * @apiVersion 3.3.0
  * @apiPermission user.teacher
  *
  * @apiDescription 教师修改类型标签。
