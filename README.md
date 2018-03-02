@@ -97,3 +97,7 @@ _added moment module_
 _basic frame, basic modules_
 
 **initial commit on 27 Nov 2017**  
+
+### 4 Details
+
+SEE：[MANUAL](./manual/innovation-platform.md)
