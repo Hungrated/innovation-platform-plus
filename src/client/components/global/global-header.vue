@@ -69,7 +69,6 @@
       </div>
     </Menu>
   </header>
-
 </template>
 <script>
   import globalHeaderUser from '../public/global-header-user';
@@ -119,6 +118,7 @@
       },
       changeRoute: function (path) {
         this.$router.push(path);
+        window.scrollTo(0, 0);
       }
     },
     mounted () {

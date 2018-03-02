@@ -55,7 +55,7 @@
         this.$ajax.post('/api/blog/query', {
           request: request,
           carousel: false,
-          limit: 8
+          limit: 10
         })
           .then(function (res) {
             _this.articleList = res.data.articleList;

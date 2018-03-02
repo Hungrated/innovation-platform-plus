@@ -162,6 +162,7 @@
               _this.uploadImgList(res.data.blog_id, res.data.type, res.data.author_id);
               _this.$Message.success(res.data.msg);
               _this.$router.push({path: '/articles'});
+              window.scrollTo(0, 0);
             })
             .catch(function (e) {
               console.log(e);

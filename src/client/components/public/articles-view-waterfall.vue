@@ -36,7 +36,7 @@
               <Icon type="ios-person-outline"></Icon>&nbsp;{{item.profile.name}}&nbsp;
               <Icon type="ios-clock-outline"></Icon>&nbsp;{{item.publishTime}}
             </span>
-            <span class="g-details desc">
+            <span class="g-details g-details-desc">
               <Icon type="ios-star-outline"></Icon>&nbsp;{{item.description}}
             </span>
           </div>
@@ -55,11 +55,11 @@
                 </Tag>
               </span>
             </span>
-            <span class="g-details info">
+            <span class="g-details">
               <Icon type="ios-person-outline"></Icon>&nbsp;{{item.profile.name}}&nbsp;
               <Icon type="ios-clock-outline"></Icon>&nbsp;{{item.publishTime}}
             </span>
-            <span class="g-details desc">
+            <span class="g-details g-details-desc">
               <Icon type="ios-star-outline"></Icon>&nbsp;{{item.description}}
             </span>
           </div>
@@ -83,6 +83,7 @@
     methods: {
       revealDetails (index) {
         this.$router.push('/articles/details?index=' + index);
+        window.scrollTo(0, 0);
       }
     }
   };

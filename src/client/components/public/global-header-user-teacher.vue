@@ -64,6 +64,7 @@
     methods: {
       changeRoute: function (path) {
         this.$router.push(path);
+        window.scrollTo(0, 0);
       },
       revealAPI () {
         let location = window.location;
@@ -99,7 +100,7 @@
             _this.$Message.success(res.data.msg);
             delete window.localStorage.user;
             _this.$emit('updateUserStatus');
-            _this.$router.push('/index');
+            _this.changeRoute('/index');
           })
           .catch(function (e) {
             console.log(e);

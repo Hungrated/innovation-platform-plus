@@ -1,6 +1,7 @@
 <template>
   <main id="global-main" class="g-container">
     <router-view></router-view>
+    <BackTop></BackTop>
   </main>
 </template>
 

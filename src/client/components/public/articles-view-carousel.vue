@@ -81,6 +81,7 @@
     methods: {
       revealDetails (index) {
         this.$router.push('/articles/details?index=' + index);
+        window.scrollTo(0, 0);
       }
     }
   };

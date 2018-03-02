@@ -99,3 +99,9 @@
   background: transparent !important;
   padding: 1px;
 }
+
+.ivu-back-top-inner {
+  position: fixed;
+  bottom: 50px;
+  right: 3px;
+}

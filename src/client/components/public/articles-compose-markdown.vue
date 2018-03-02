@@ -231,6 +231,7 @@
               }
               _this.$Message.success(res.data.msg);
               _this.$router.push({path: '/articles'});
+              window.scrollTo(0, 0);
             })
             .catch(function (e) {
               console.log(e);
