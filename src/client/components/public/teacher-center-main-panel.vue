@@ -6,7 +6,9 @@
           <span slot="title">
             <span class="g-panel header-card">
               <strong>我的班级</strong>
-              <Button @click="parseClass()" type="text" size="small">导 入</Button>
+              <Button @click="parseClass()" type="dashed" size="small">
+                <Icon type="plus"></Icon>&emsp;导 入
+              </Button>
             </span>
           </span>
           <transition name="fade">

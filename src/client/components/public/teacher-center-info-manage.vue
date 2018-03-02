@@ -145,7 +145,7 @@
         // pageLimit: 15,
         // curPage: 1,
         dataCount: 0,
-        infoLabel: 'blog',
+        infoLabel: 'banner',
         infoCols: [],
         infoData: [],
         infoTypeList: [
