@@ -94,6 +94,6 @@ _basic frame, basic modules_
 
 ### 4 User Manual
 
-SEE: [**MANUAL**](./static/manual/innovation-platform.md)
+SEE: [**MANUAL**](manual/innovation-platform.md)
 
 > End of File
