@@ -4,6 +4,8 @@ const router = express.Router();
 const db = require('../models/db_global');
 const statusLib = require('../libs/status');
 
+const moment = require('../middlewares/moment');
+
 const Label = db.Label;
 
 /**
@@ -23,7 +25,7 @@ const Label = db.Label;
  * @apiParamExample {json} 请求示例
  * {
  *     "name": "JavaScript",
- *     "category": "blog",
+ *     "type": "blog",
  *     "adder_id": 40429
  * }
  *
@@ -34,7 +36,7 @@ const Label = db.Label;
  *     {
  *         "label_id": 1,
  *         "name": "JavaScript",
- *         "category": "both",
+ *         "category": "blog",
  *         "created_at": "2018-02-26T10:41:18.000Z",
  *         "updated_at": "2018-02-26T10:41:18.000Z",
  *         "adder_id": 40429
@@ -42,7 +44,7 @@ const Label = db.Label;
  *     {
  *         "label_id": 2,
  *         "name": "TypeScript",
- *         "category": "both",
+ *         "category": "blog",
  *         "created_at": "2018-02-27T14:50:28.000Z",
  *         "updated_at": "2018-02-27T14:50:28.000Z",
  *         "adder_id": 40429
@@ -51,18 +53,21 @@ const Label = db.Label;
  *
  */
 router.post('/query', function (req, res) {
-  Label.findAll({
-    where: {
-      $or: [
-        {
-          category: 'both'
-        },
-        {
-          category: req.body.type
-        }
-      ]
-    }
-  })
+  let type = req.body.type || 'all';
+  let ops = type === 'all'
+    ? {} : {
+      where: {
+        $or: [
+          {
+            category: 'both'
+          },
+          {
+            category: req.body.type
+          }
+        ]
+      }
+    };
+  Label.findAll(ops)
     .then(function (labels) {
       res.json(labels);
       console.log('label query successful');
@@ -174,6 +179,7 @@ router.post('/mod', function (req, res) {
     where: where
   })
     .then(function () {
+      moment.labelsMod(req.body.labels, req.body.id);
       res.json(statusLib.LABEL_MOD_SUCCESSFUL);
       console.log('labels modified');
     })

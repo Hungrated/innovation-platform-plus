@@ -1,11 +1,11 @@
 .m-unit {
   display: inline-block;
+  vertical-align: baseline;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 15px;
   border-bottom: 1px dashed #EEEEEE;
   transition: all 250ms;
   border-radius: 5px;
-  line-height: 48px;
 
   &:hover {
     background: #F9F9F9;
@@ -23,14 +23,16 @@
     color: #999999;
     border-radius: unset;
     border: none;
+    padding: 5px 15px;
   }
 
   .details {
     width: auto;
-    padding: 0;
     border: none;
     color: #999999;
     display: inline-block;
     float: right;
+    padding: 0;
+    line-height: 37px;
   }
 }

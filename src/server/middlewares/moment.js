@@ -20,7 +20,7 @@ module.exports = {
         console.log('moment: ' + uid + ' create failed');
       });
   },
-  addCoverToArticleMoment(id, cover) {
+  addCoverToArticleMoment (id, cover) {
     Moment.findOne({
       where: {
         uid: id
@@ -97,6 +97,34 @@ module.exports = {
       .catch(function (e) {
         console.error(e);
         console.log('moment: ' + uid + ' modify failed');
+      });
+  },
+  labelsMod (labels, uid) {
+    Moment.findOne({
+      where: {
+        uid: uid
+      }
+    })
+      .then(function (moment) {
+        let oExtras = JSON.parse(moment.dataValues.extras);
+        oExtras.labels = labels;
+        Moment.update({
+          extras: JSON.stringify(oExtras),
+        }, {
+          where: {
+            uid: uid
+          }
+        })
+          .then(function () {
+            console.log('moment: ' + uid + ' modify label successful');
+          })
+          .catch(function (e) {
+            console.error(e);
+            console.log('moment: ' + uid + ' modify label failed');
+          });
+      })
+      .catch(function (e) {
+        console.error(e);
       });
   },
   deleteMoment (uid) {

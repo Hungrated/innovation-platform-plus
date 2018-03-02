@@ -13,7 +13,7 @@
         <div>
           <Card disHover>
             <articles-list :articleList="articleList"
-                           :count="articleCount"
+                           :count="articlesCount"
                            :disableLabels="true"/>
           </Card>
           <Button class="g-button"
@@ -40,8 +40,8 @@
     },
     data () {
       return {
-        articlesList: [],
-        articleCount: 0
+        articleList: [],
+        articlesCount: 0
       };
     },
     methods: {
@@ -60,10 +60,6 @@
           .then(function (res) {
             _this.articleList = res.data.articleList;
             _this.articleCount = res.data.articleList.length;
-            if (request === 'all') {
-              _this.carouselList = res.data.carouselList;
-            }
-            _this.getLabelList();
           })
           .catch(function (e) {
             console.log(e);
