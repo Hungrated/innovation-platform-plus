@@ -1,8 +1,10 @@
-# innovation-platform-plus
+# Innovation Platform
 
-> An advanced on-line information-managing & resource-sharing platform for Innovation Practice courses.
+An advanced on-line information-managing & resource-sharing platform for `Innovation Practice` courses.
 
-> This project has already been transferred to GitLab for further development.
+### * This project has been transferred to GitLab since version 0.3.3. Code in this repository is therefore not up-to-date.
+
+![](./manual/img/man_general_01.png)
 
 ### 1 Introduction
 
@@ -10,94 +12,33 @@ The `Innovation Platform` is a showcase that teachers and students can display c
 
 ### 2 Modules & Features
 
-#### 2.1 Course Showcase
+SEE: [**Common Guide - Innovation Platform**](./manual/innovation-platform.md)
 
-##### 2.1.1 Index - Banner Showcase
+### 3 Version control & Change Log
 
-##### 2.1.2 Moments - Daily Trends
+**version `0.4.3` on 11 Apr 2018**
 
-##### 2.1.3 Articles - Course Communications
+_added query-by-datetime feature in info-manage module_  
+_improved query-by-label feature_  
+_updated manual_
 
-##### 2.1.4 Resources - File Downloading
+**version `0.4.2` on 10 Apr 2018**
 
-#### 2.2 Student Center
+_updated plan export module for teachers_  
+_adjusted banner aspect ratio_  
+_updated manual_
 
-##### 2.2.1 Profile
+**version `0.4.1` on 1 Apr 2018**
 
-##### 2.2.2 Plans
+_added functions to modify labelname for teachers_  
+_fixed bugs_
 
-##### 2.2.3 Course Meetings
+**version `0.4.0` on 9 Mar 2018**
 
-##### 2.2.4 Final Course-work
+**BRANCH MASTER: MERGED**
 
-#### 2.3 Teacher Center
+_added frontend pre-crypt feature for users' signing in_  
+_updated manual_
+_fixed bugs of file operation_
 
-##### 2.3.1 Main Panel
-
-##### 2.3.2 Courses & Students
-
-##### 2.3.3 Info-managing Panel
-
-### 3 Version control
-
-**version `v3.3.0` on 2 Mar 2018**  
-
-_added back-to-top button & fixed bugs_  
-
-**version `v3.2.0` on 1 Mar 2018**  
-
-_updated pages moments & index_  
-_improved moment creating interface_  
-
-**version `v3.1.0` on 28 Feb 2018**  
-
-_added label system for content publishing & uploading_  
-_improved layout & styles of article & resource pages_  
-_established user manual editing_
-
-**version `v3.0.0` on 9 Feb 2018**  
-
-_finished event publishing & reviewing module_  
-_rebased article & article details pages with 3D carousel & waterfall layout_
-
-**version `v2.6.0` on 8 Feb 2018**
-
-_added event publishing module_  
-_modified database for article image upload module_  
-_added image management feature for teachers & administrators_
-
-**version `v2.5.0` on 4 Feb 2018**
-
-_added content export feature for article review_
-
-**version `v2.4.0` on 3 Feb 2018**
-
-_added content import feature for article publishing_
-
-**version `v2.3.0` on 2 Feb 2018**
-
-_totally modified image upload module_  
-_added image upload feature for article publishing_
-
-**version `v2.2.0` on 1 Feb 2018**
-
-_added final mark export module_
-
-**version `v2.1.0` on 25 Jan 2018**
-
-_added course-work module_
-
-**version `v2.0.0` on 19 Jan 2018**
-
-_added info-manage module for teachers & administrators_  
-_added moment module_
-
-**version `v1.0.0` on 29 Dec 2017**
-
-_basic frame, basic modules_
-
-**initial commit on 27 Nov 2017**  
-
-### 4 Details
-
-SEE：[MANUAL](./manual/innovation-platform.md)
+MORE: [**Change Log - Innovation Platform**](./CHANGELOG.md)
