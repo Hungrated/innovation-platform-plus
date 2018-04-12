@@ -1,3 +1,9 @@
+**version `0.4.4` on 12 Apr 2018**
+
+_added lazy-load to all frontend routes_  
+_modified header style_  
+_added common guide link to footer_
+
 **version `0.4.3` on 11 Apr 2018**
 
 _added query-by-datetime feature in info-manage module_  
