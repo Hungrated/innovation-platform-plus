@@ -1,3 +1,11 @@
+**version `0.5.0` on 13 Apr 2018**
+
+**BRANCH MASTER: MERGED**
+
+_reduced bundle size & increased speed_  
+_reformatted code_
+_fixed bugs_
+
 **version `0.4.4` on 12 Apr 2018**
 
 _added lazy-load to all frontend routes_  
