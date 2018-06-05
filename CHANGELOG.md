@@ -1,3 +1,8 @@
+**version `0.5.1` on 5 Jun 2018**
+
+_added teacher reg & password reset features for administrators_  
+_fixed bugs_
+
 **version `0.5.0` on 13 Apr 2018**
 
 **BRANCH MASTER: MERGED**
