@@ -1,3 +1,13 @@
+**version `1.0.0` on 15 Jun 2018**
+
+_added initial-admin-creating operation when app starts_  
+_fixed bugs & updated papers_
+
+**version `0.5.2` on 6 Jun 2018**
+
+_improved user import feature_  
+_fixed bugs_
+
 **version `0.5.1` on 5 Jun 2018**
 
 _added teacher reg & password reset features for administrators_  
