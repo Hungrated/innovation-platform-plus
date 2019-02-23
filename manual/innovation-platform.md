@@ -8,6 +8,10 @@
 
 * 平台由三大模块组成：课程内容对外展示、学生个人中心、教师管理中心。
 
+### 访问：《创新实践》课程交流互动平台
+
+#### [http://inno.zjuhungrated.com](http://inno.zjuhungrated.com)
+
 ### 使用说明
 
 #### 1 通用功能： [Innovation-Platform: 通用功能说明书](./manual-general.md)
